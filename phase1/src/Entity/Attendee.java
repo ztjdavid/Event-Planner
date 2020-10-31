@@ -3,17 +3,19 @@ import java.util.ArrayList;
 
 /**
  * !!!!!!!!!!!!NOT COMPLETED!!!!!!!!!!
+ * <p>
  * The Attendee class stores all info of an attendee account.
- * Level in Clean Architecture：Entity
+ * <p>
+ * Level in Clean Architecture:Entity
  */
 public class Attendee {
     private String username;
     private String password;
     private final int userId;
     private final int userType;
-    private ArrayList<Integer> sentMessage;
-    private ArrayList<Integer> inbox;
-    private ArrayList<Integer> talksList;
+    private final ArrayList<Integer> sentMessage;
+    private final ArrayList<Integer> inbox;
+    private final ArrayList<Integer> talksList;
 
 
     public Attendee(String username, String password, int userId){
@@ -21,9 +23,9 @@ public class Attendee {
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.sentMessage = new ArrayList<Integer>();
-        this.inbox = new ArrayList<Integer>();
-        this.talksList = new ArrayList<Integer>();
+        this.sentMessage = new ArrayList<>();
+        this.inbox = new ArrayList<>();
+        this.talksList = new ArrayList<>();
     }
 
     /**
@@ -51,7 +53,7 @@ public class Attendee {
     }
 
     /**
-     * Get the password od this account.
+     * Get the password of this account.
      * @return The password of this account.
      */
     private String getPassword(){
@@ -84,6 +86,7 @@ public class Attendee {
 
     /**
      * Add new message sent by this account.
+     * <p>
      * NOTICE: This method is not responsible for checking correctness of the input.
      * @param mesID ID of new message sent by this account.
      */
@@ -102,6 +105,7 @@ public class Attendee {
 
     /**
      * Add new message received by this account.
+     * <p>
      * NOTICE: This method is not responsible for checking correctness of the input.
      * @param mesID ID of new message received by this account.
      */
@@ -119,6 +123,7 @@ public class Attendee {
 
     /**
      * Attend a new talk.
+     * <p>
      * NOTICE: This method is not responsible for checking correctness of the input.
      * @param talkId The id of new talk that this account wants to attend.
      */
@@ -127,7 +132,7 @@ public class Attendee {
     }
 
     /**
-     *
+     * Cancel appointment of a talk in talkList.
      * @param talkId The id of talk that is going to be removed.
      * @return Return true if the talk is successfully removed from talkList, otherwise return False.
      */
@@ -142,8 +147,5 @@ public class Attendee {
             return true;
         }
     }
-
-
-
 
 }
