@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.function.IntBinaryOperator;
 
 /**
- * This class is the superclass of all account classes.<br>
+ * Account is a abstract class as the superclass of all account classes.<br>
  * It implements methods and stores basic info that all account classes have in common.
  */
 public abstract class Account {
@@ -70,7 +70,7 @@ public abstract class Account {
      *   1 - Attendee <br>
      *   2 - Speaker <br>
      */
-    abstract int getUserType();
+    public abstract int getUserType();
 
     /**
      * Get all message IDs sent by this account.

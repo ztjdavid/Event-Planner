@@ -2,8 +2,6 @@ package Entity;
 import java.util.ArrayList;
 
 /**
- * !!!!!!!!!!!!NOT COMPLETED!!!!!!!!!!
- * <p>
  * The Attendee class stores all info of an attendee account.
  * <p>
  * Level in Clean Architecture: Entity
@@ -22,7 +20,7 @@ public class Attendee extends Account{
      * @return 1 indicating this is an Attendee account.
      */
     @Override
-    public int getUserType(){return 1;}
+    public int getUserType(){ return 1;}
 
 
     /**

@@ -2,6 +2,10 @@ package Entity;
 
 import java.util.ArrayList;
 
+/**
+ * The Speaker class stores all info of a speaker.<br>
+ * Level in Clean Architecture: Entity.
+ */
 public class Speaker extends Account{
     ArrayList<Integer> talkList;
 
