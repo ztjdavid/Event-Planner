@@ -6,128 +6,40 @@ import java.util.ArrayList;
  * <p>
  * The Attendee class stores all info of an attendee account.
  * <p>
- * Level in Clean Architecture:Entity
+ * Level in Clean Architecture: Entity
  */
-public class Attendee {
-    private String username;
-    private String password;
-    private final int userId;
-    private final int userType;
-    private final ArrayList<Integer> sentMessage;
-    private final ArrayList<Integer> inbox;
-    private final ArrayList<Integer> talksList;
-
+public class Attendee extends Account{
+    protected final ArrayList<Integer> talksList;
 
     public Attendee(String username, String password, int userId){
-        this.userType = 1;
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.sentMessage = new ArrayList<>();
-        this.inbox = new ArrayList<>();
+        super(username, password, userId);
         this.talksList = new ArrayList<>();
     }
 
-    /**
-     * Set the username for this account.
-     * @param username The new username.
-     */
-    private void setUsername(String username){
-        this.username = username;
-    }
-
-    /**
-     * Get the username of this account.
-     * @return The username of this account.
-     */
-    private String getUsername(){
-        return this.username;
-    }
-
-    /**
-     * Set the password for this account.
-     * @param password Set password for this account.
-     */
-    private void setPassword(String password){
-        this.password = password;
-    }
-
-    /**
-     * Get the password of this account.
-     * @return The password of this account.
-     */
-    private String getPassword(){
-        return this.password;
-    }
-
-    /**
-     * Get the UID of this account.
-     * @return the userid of this account.
-     */
-    private int getUserId(){
-        return this.userId;
-    }
 
     /**
      * Get the user type of this account
      * @return 1 indicating this is an Attendee account.
      */
-    private int getUserType(){
-        return this.userType;
-    }
+    @Override
+    public int getUserType(){return 1;}
 
-    /**
-     * Get all message IDs sent by this account.
-     * @return A list of message IDs.
-     */
-    private ArrayList<Integer> getSentMessage(){
-        return this.sentMessage;
-    }
-
-    /**
-     * Add new message sent by this account.
-     * <p>
-     * NOTICE: This method is not responsible for checking correctness of the input.
-     * @param mesID ID of new message sent by this account.
-     */
-    private void addSentMessage(int mesID){
-        this.sentMessage.add(mesID);
-    }
-
-
-    /**
-     * Get all message IDs received by this account.
-     * @return A list of message IDs.
-     */
-    private ArrayList<Integer> getInbox(){
-        return this.inbox;
-    }
-
-    /**
-     * Add new message received by this account.
-     * <p>
-     * NOTICE: This method is not responsible for checking correctness of the input.
-     * @param mesID ID of new message received by this account.
-     */
-    private void addInbox(int mesID){
-        this.inbox.add(mesID);
-    }
 
     /**
      * Get all talks that this account attends.
-     * @return A list of all talks this account attends.
+     * @return A copy of tlkList containing all talks this account attends.
      */
-    private ArrayList<Integer> getTalkList(){
-        return this.talksList;
+    public ArrayList<Integer> getTalkList(){
+        return new ArrayList<>(this.talksList);
     }
 
     /**
      * Attend a new talk.
      * <p>
-     * NOTICE: This method is not responsible for checking correctness of the input.
+     * <b>NOTICE: This method is not responsible for checking correctness of the input.</b>
      * @param talkId The id of new talk that this account wants to attend.
      */
-    private void addTalk(int talkId){
+    public void addTalk(int talkId){
         this.talksList.add(talkId);
     }
 
@@ -136,7 +48,7 @@ public class Attendee {
      * @param talkId The id of talk that is going to be removed.
      * @return Return true if the talk is successfully removed from talkList, otherwise return False.
      */
-    private boolean cancelTalk(int talkId){
+    public boolean cancelTalk(int talkId){
         int deleteID = -1;
         for (int i = 0; i < this.talksList.size(); i++){
             if (this.talksList.get(i) == talkId) deleteID = i;
