@@ -24,7 +24,7 @@ public abstract class AccountManager {
     public abstract boolean createAccount(String username, String password);
 
     /**
-     * Set the login account.
+     * Set the current login account.
      * @param accountId The id of the current login account.
      */
     public void setCurrAccountId(int accountId){
@@ -48,7 +48,7 @@ public abstract class AccountManager {
 
     /**
      * Change the username of current login account.<br>
-     * (Username is unique for each account.)
+     * (This method checks duplicated username.)
      * @param username The new username.
      * @return True iff username is successfully changed.
      */

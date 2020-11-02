@@ -35,4 +35,7 @@ public class OrganizerManager extends AccountManager{
         return other.getUserType() != 0;
     }
 
+    //TODO
+    public boolean responsibleForTalk(){return false;}
+
 }
