@@ -1,6 +1,5 @@
 package Entity;
 import java.util.ArrayList;
-import java.util.function.IntBinaryOperator;
 
 /**
  * The Account class is an abstract class as the superclass of all account classes.<br>
