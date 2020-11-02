@@ -17,7 +17,7 @@ public class SpeakerManager extends AccountManager{
      */
     @Override
     public boolean createAccount(String username, String password) {
-        if (duplicateUsername(username)) return false;
+        if (duplicatedUsername(username)) return false;
         Speaker newAcc = new Speaker(username, password, 2);
         this.accountList.put(TotalNumOfAccount, newAcc);
         TotalNumOfAccount += 1;

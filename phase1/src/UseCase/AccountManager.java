@@ -40,6 +40,13 @@ public abstract class AccountManager {
     }
 
     /**
+     * Get the account with a given account id.
+     * @param accountId The account id.
+     * @return An account with the given id.
+     */
+    public Account getAccountWithId(int accountId){ return this.accountList.get(accountId);}
+
+    /**
      * Change the username of current login account.<br>
      * (Username is unique for each account.)
      * @param username The new username.
@@ -102,7 +109,7 @@ public abstract class AccountManager {
         return true;
     }
 
-    public boolean duplicateUsername(String username){
+    public boolean duplicatedUsername(String username){
         for (Account x: this.accountList.values()){
             if(x.getUsername().equals(username)) return false;
         }

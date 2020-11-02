@@ -18,7 +18,7 @@ public class OrganizerManager extends AccountManager{
      * @return True iff the new account is successfully created.
      */
     public boolean createAccount(String username, String password){
-        if(duplicateUsername(username)) return false;
+        if(duplicatedUsername(username)) return false;
         Organizer newAcc = new Organizer(username, password, 0);
         this.accountList.put(TotalNumOfAccount, newAcc);
         TotalNumOfAccount += 1;
