@@ -72,10 +72,10 @@ public abstract class AccountManager {
 
     /**
      * Check if the current login account can message a given account.
-     * @param other Another account that the current login account is going to message.
+     * @param otherId ID of another account that the current login account is going to message.
      * @return True iff the current login account can message the given account.
      */
-    public abstract boolean messageable(Account other);
+    public abstract boolean messageable(int otherId);
 
     /**
      * Show all messages that the current login account has received.
@@ -87,9 +87,9 @@ public abstract class AccountManager {
 
     /**
      * Show messages between the current login account and a given account.
-     * @param other Another account.
+     * @param otherId ID of another account.
      */
-    public void showMsgWith(Account other){
+    public void showMsgWith(int otherId){
         Account currAcc = getCurrAccount();
         //TODO: print all Messages between this account and <other>.
         // (through presenter use case?)
@@ -97,12 +97,13 @@ public abstract class AccountManager {
 
     /**
      * Send a given message to a given account.
-     * @param other Another account.
+     * @param otherId ID of another account.
      * @param MsgId The id of message being sent.
      * @return True iff the message is successfully sent.
      */
-    public boolean sendMessageTo(Account other, int MsgId){
-        if (!messageable(other)) return false;
+    public boolean sendMessageTo(int otherId, int MsgId){
+        if (!messageable(otherId)) return false;
+        Account other = getAccountWithId(otherId);
         Account currAcc = getCurrAccount();
         currAcc.addSentMessage(MsgId);
         other.addInbox(MsgId);

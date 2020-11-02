@@ -6,9 +6,9 @@ import java.util.HashMap;
  * Level in Clean Architecture: Entity.
  */
 public class Room {
-    protected final int roomId;
-    protected String roomName;
-    protected HashMap<Integer, Integer> timetable;
+    private final int roomId;
+    private String roomName;
+    private final HashMap<Integer, Integer> timetable;
 
     public Room(String roomName, int roomId){
         this.roomId = roomId;
@@ -50,6 +50,19 @@ public class Room {
     public boolean scheduleTalk(int talkId, int startTime){
         if (timetable.containsKey(startTime)) return false;
         timetable.put(startTime, talkId);
+        return true;
+    }
+
+    /**
+     * Remove a specified talk with given start time.
+     * @param talkId The talk being removed.
+     * @param startTime The star time of that talk.
+     * @return True iff the talk at given time is removed from timetable.
+     */
+    public boolean removeTalk(int talkId, int startTime){
+        if (!(timetable.containsKey(startTime)
+                && timetable.get(startTime) == talkId)) return false;
+        timetable.remove(startTime, talkId);
         return true;
     }
 

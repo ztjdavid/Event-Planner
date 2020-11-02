@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Level in Clean Architecture: Entity
  */
 public class Attendee extends Account{
-    protected final ArrayList<Integer> talksList;
+    private final ArrayList<Integer> talksList;
 
     public Attendee(String username, String password, int userId){
         super(username, password, userId);

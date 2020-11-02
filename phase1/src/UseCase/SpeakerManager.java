@@ -26,12 +26,20 @@ public class SpeakerManager extends AccountManager{
 
     /**
      * Check if the current login account can message a given account.
-     * @param other Another account that the current login account is going to message.
+     * @param otherId ID of another account that the current login account is going to message.
      * @return True iff the current login account can message the given account.
      */
     @Override
-    public boolean messageable(Account other){
+    public boolean messageable(int otherId){
+        Account other = getAccountWithId(otherId);
         return other.getUserType() == 1;
     }
 
+
+    //TODO
+    public boolean responsibleForTalk(int talkId){
+        Account currAcc = getCurrAccount();
+        //t = getTalkWithId(talkId);
+        //return t.getSpeaker().contain(currAcc);
+        return false;}
 }
