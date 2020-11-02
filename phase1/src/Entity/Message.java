@@ -1,3 +1,5 @@
+package Entity;
+
 public class Message {
     protected int messageid;
     private String txt;

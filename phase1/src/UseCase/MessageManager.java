@@ -1,3 +1,5 @@
+package UseCase;
+import Entity.*;
 import java.util.ArrayList;
 
 public class MessageManager {
