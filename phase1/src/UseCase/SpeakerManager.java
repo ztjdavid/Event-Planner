@@ -2,24 +2,23 @@ package UseCase;
 import Entity.*;
 
 /**
- * The OrganizerManager class implements all functionalities of an organizer.
+ * The SpeakerManager class implements all functionalities of a speaker.
  */
-public class OrganizerManager extends AccountManager{
-
-    public OrganizerManager(){
+public class SpeakerManager extends AccountManager{
+    public SpeakerManager(){
         super();
     }
 
-
     /**
-     * Create an Organizer account.
+     * Create a Speaker account.
      * @param username The username of the new account.
      * @param password The password of the new account.
      * @return True iff the new account is successfully created.
      */
-    public boolean createAccount(String username, String password){
-        if(duplicateUsername(username)) return false;
-        Organizer newAcc = new Organizer(username, password, 0);
+    @Override
+    public boolean createAccount(String username, String password) {
+        if (duplicateUsername(username)) return false;
+        Speaker newAcc = new Speaker(username, password, 2);
         this.accountList.put(TotalNumOfAccount, newAcc);
         TotalNumOfAccount += 1;
         return true;
@@ -32,7 +31,7 @@ public class OrganizerManager extends AccountManager{
      */
     @Override
     public boolean messageable(Account other){
-        return other.getUserType() != 0;
+        return other.getUserType() == 1;
     }
 
 }

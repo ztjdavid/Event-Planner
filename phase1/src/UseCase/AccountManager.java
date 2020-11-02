@@ -102,4 +102,11 @@ public abstract class AccountManager {
         return true;
     }
 
+    public boolean duplicateUsername(String username){
+        for (Account x: this.accountList.values()){
+            if(x.getUsername().equals(username)) return false;
+        }
+        return true;
+    }
+
 }
