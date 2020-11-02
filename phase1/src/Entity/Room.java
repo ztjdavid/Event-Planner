@@ -2,7 +2,7 @@ package Entity;
 import java.util.HashMap;
 
 /**
- * Room class contains info about a room and can schedule talks in a room.<br>
+ * The Room class contains info about a room and can schedule talks in a room.<br>
  * Level in Clean Architecture: Entity.
  */
 public class Room {

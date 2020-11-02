@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.function.IntBinaryOperator;
 
 /**
- * Account is a abstract class as the superclass of all account classes.<br>
+ * The Account class is an abstract class as the superclass of all account classes.<br>
  * It implements methods and stores basic info that all account classes have in common.
  */
 public abstract class Account {
