@@ -54,14 +54,32 @@ public class Room {
     }
 
     /**
+     * Check if the given time is occupied by another talk.
+     * @param startTime The given time.
+     * @return True iff no talk holds at this time
+     */
+    public boolean isOccupiedAt(int startTime){
+        return timetable.containsKey(startTime);
+    }
+
+    /**
+     * Check if a given talk at the given time is hold in this room.
+     * @param startTime The given time.
+     * @param talkId The given talk id.
+     * @return True iff the given talk is hold in this room at the given time.
+     */
+    public boolean hasTalk(int startTime, int talkId){
+        return isOccupiedAt(startTime) && timetable.get(startTime) == talkId;
+    }
+
+    /**
      * Remove a specified talk with given start time.
      * @param talkId The talk being removed.
      * @param startTime The star time of that talk.
      * @return True iff the talk at given time is removed from timetable.
      */
     public boolean removeTalk(int talkId, int startTime){
-        if (!(timetable.containsKey(startTime)
-                && timetable.get(startTime) == talkId)) return false;
+        if (!hasTalk(startTime, talkId)) return false;
         timetable.remove(startTime, talkId);
         return true;
     }
