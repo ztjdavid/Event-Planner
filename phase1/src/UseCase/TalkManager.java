@@ -1,0 +1,133 @@
+package UseCase;
+import Entity.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * TalkManager class contains talks and methods that modify talks
+ * Level in Clean Architecture: Use case class.
+ */
+
+public class TalkManager {
+    protected static int totalTalkCount = 0;
+    protected HashMap<Integer, Talk> talkList;
+    protected static int currentTalkID = 0; // Track which Talk this program is working on now.
+
+    public TalkManager() {
+        this.talkList = new HashMap<>();
+    }
+
+    /**
+     *Set the currentTalkID.
+     */
+    public void setCurrentTalkID(int talkID){
+        currentTalkID = talkID;
+    }
+
+    /**
+     * Getter for the ID of the talk currently working with.
+     * @return int currentTalkID.
+     */
+
+    public Talk getCurrentTalkID(){
+        return this.talkList.get(currentTalkID);
+    }
+
+    /**
+     * Add the attendee to the Talk.
+     * @param attendee The new attendee.
+     */
+
+    public void addAttendee(Attendee attendee){
+        this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
+    }
+
+    /**
+     * Remove the attendee from the Talk.
+     * @param attendee The unwanted attendee.
+     */
+
+    public void removeAttendee(Attendee attendee){
+        this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
+    }
+
+    /**
+     * Change the time of the Talk.
+     * @param time The new time to be updated.
+     */
+
+    public void changeTalkTime(int time){
+        this.talkList.get(currentTalkID).setStartTime(time);
+    }
+
+    /**
+     * Change the speaker of the Talk.
+     * @param speaker The new speaker to be updated.
+     */
+
+    public void changeTalkSpeaker(Speaker speaker){
+        this.talkList.get(currentTalkID).setSpeaker(speaker);
+    }
+
+    /**
+     * Gets the number of remaining seats.
+     * @return the number of remaining seats.
+     */
+
+    public int getRemainingSeats(){
+        return this.talkList.get(currentTalkID).getRemainingSeat();
+    }
+
+    /**
+     * Check whether a talk has a time conflict with the current talk.
+     * @param talk The talk to be checked.
+     * @return true iff the talk's time is in conflict with the current talk.
+     */
+
+    public boolean checkTimeConflict(Talk talk){
+        return this.talkList.get(currentTalkID).getStartTime() == talk.getStartTime();
+    }
+
+    /**
+     * Return the Talk given the talkID
+     * @param talkID The ID of the talk.
+     * @return the Talk with the given talkID.
+     */
+
+    public Talk getTalk(int talkID){
+        return this.talkList.get(talkID);
+    }
+
+    /**
+     * Return an ArrayList of all the Talks.
+     * @return An ArrayList containing all the Talks.
+     */
+
+    public ArrayList<Talk> getAllTalks(){
+        return (ArrayList<Talk>) talkList.values();
+    }
+
+    /**
+     * Creates a talk and updates the talkList.
+     * @param talkId the ID of the talk.
+     * @param talkTitle the title of the talk.
+     * @param startTime the time of the talk.
+     * @param roomId the roomId of the talk.
+     * @param speaker the speaker of the talk.
+     * @return true iff the talk is successfully created.
+     */
+
+    public boolean createTalk(int talkId, String talkTitle, int startTime, int roomId, Speaker speaker){
+        if(this.talkList.containsKey(talkId)){
+            return false;
+        }else{
+            Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speaker);
+            this.talkList.put(talkId, newTalk);
+            return true;
+        }
+    }
+}
+
+
+
