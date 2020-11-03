@@ -15,14 +15,11 @@ public class OrganizerManager extends AccountManager{
      * Create an Organizer account.
      * @param username The username of the new account.
      * @param password The password of the new account.
-     * @return True iff the new account is successfully created.
      */
-    public boolean createAccount(String username, String password){
-        if(duplicatedUsername(username)) return false;
+    public void createAccount(String username, String password){
         Organizer newAcc = new Organizer(username, password, 0);
-        this.accountList.put(TotalNumOfAccount, newAcc);
+        accountList.put(TotalNumOfAccount, newAcc);
         TotalNumOfAccount += 1;
-        return true;
     }
 
     /**
