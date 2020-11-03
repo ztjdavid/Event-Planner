@@ -21,11 +21,12 @@ public class AppSystem {
     public void run(){
         Scanner scannerApp = new Scanner(System.in);
         int userInput;
+        boolean validInput = false;
         System.out.println("Hi, user! Would you like to\n1 -> login\n2 -> signup");
-        userInput = Integer.parseInt(scannerApp.nextLine());
-        int currAccountId = -1;
+        userInput = chooseMode(scannerApp);
 
-        switch (userInput){ // 软件系统
+        int currAccountId = -1;
+        switch (userInput){ // 软件初始界面
             case 1:
                 currAccountId = loginS.run(); //登录系统
                 break;
@@ -35,7 +36,7 @@ public class AppSystem {
                 break;
         }
 
-        switch (currAccountId){ //用户操作系统
+        switch (currAccountId){ //依照用户类型进入各自操作系统
             case 0:
                 System.out.println("run organizer system");
                 //organizerS.run();
@@ -48,9 +49,36 @@ public class AppSystem {
                 System.out.println("run speaker system");
                 //speakerS.run();
                 break;
+            default:
+                System.out.println("To be implemented. Some necessary classes are not finished.");
         }
     }
 
 
+    private int chooseMode(Scanner scannerApp){
+        String userInput;
+        int mode = -1;
+        boolean valid = false;
+        while(!valid){
+            userInput = scannerApp.nextLine();
+            if (!isValidChoice(userInput))
+                System.out.println("Please select one operation from below:\n1 -> login\n2 -> signup");
+            else {
+                valid = true;
+                mode = Integer.parseInt(userInput);}
+            }
+        return mode;
+        }
+
+    private boolean isValidChoice(String userInput){
+        int num;
+        try{
+            num = Integer.parseInt(userInput);
+        }
+        catch (NumberFormatException nfe){
+            return false;
+        }
+        return num == 1 || num == 2;
+    }
 
 }
