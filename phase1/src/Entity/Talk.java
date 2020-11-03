@@ -11,11 +11,11 @@ public class Talk {
     protected String talkTitle;
     protected int startTime; /** 有一点不太确定怎么规定这个时间是在9am-5pm之间的 */
     protected int roomId;
-    protected String speaker;
+    protected Speaker speaker;
     protected ArrayList<Integer> attendeeId;
     protected int remainingSeat;
 
-    public Talk(int talkId, String talkTitle, int startTime, int roomId, String speaker){
+    public Talk(int talkId, String talkTitle, int startTime, int roomId, Speaker speaker){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
@@ -53,7 +53,7 @@ public class Talk {
      * Set talk start time.
      * @param startTime The new talk startTime, where it should be from 9am to 4pm(if one hour duration).
      */
-    public void setTalkTitle(int startTime){this.startTime = startTime;}
+    public void setStartTime(int startTime){this.startTime = startTime;}
 
     /**
      * Get the room id of this talk.
@@ -71,13 +71,13 @@ public class Talk {
      * Get the speaker of this talk.
      * @return A string representing talk speaker.
      */
-    public String getSpeaker(){return this.speaker;}
+    public Speaker getSpeaker(){return this.speaker;}
 
     /**
      * Set talk speaker.
      * @param speaker The new talk speaker.
      */
-    public void setSpeaker(String speaker){this.speaker = speaker;}
+    public void setSpeaker(Speaker speaker){this.speaker = speaker;}
 
     /**
      * Get a copy of the attendees' id of this talk.
