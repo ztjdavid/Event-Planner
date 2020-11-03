@@ -69,7 +69,7 @@ public class Talk {
 
     /**
      * Get the speaker of this talk.
-     * @return A string representing talk speaker.
+     * @return A talk speaker.
      */
     public Speaker getSpeaker(){return this.speaker;}
 
