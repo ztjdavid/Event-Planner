@@ -42,7 +42,7 @@ public class AppSystem {
                 break;
         }
 
-        switch (currAccountType){ //依照用户类型进入各自操作系统
+        switch (currAccountType){
             case 0:
                 System.out.println("run organizer system");
                 //organizerS.run();
