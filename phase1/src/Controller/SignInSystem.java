@@ -26,16 +26,16 @@ public class SignInSystem {
     }
 
 
-    //Helper methods:
+    //Helper method:
 
     private String confirmUsername(){
         boolean valid = false;
-        String username = "TBD";
-        while (!valid){
+        String username;
+        do{
             username = signInUI.requestUsername();
             if (loginM.existsUsername(username)) valid = true;
             else signInUI.informAccountNotExist();
-        }
+        }while (!valid);
         return username;
     }
 }

@@ -62,6 +62,7 @@ public class AppSystem {
 
 
 
+    //Helper methods:
     private int chooseMode(){
         String userInput;
         int mode = -1;
