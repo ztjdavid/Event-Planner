@@ -90,12 +90,12 @@ public class AccountManager{
         // (through presenter use case?)
     }
 
-    public boolean duplicatedUsername(String username){
+    public boolean existsUsername(String username){
         if (accountList.size() == 0) return false;
         for (Account x: accountList.values()){
-            if(x.getUsername().equals(username)) return false;
+            if(x.getUsername().equals(username)) return true;
         }
-        return true;
+        return false;
     }
 
     public boolean loginAccount(String username, String password){

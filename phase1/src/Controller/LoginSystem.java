@@ -3,10 +3,10 @@ import UseCase.*;
 import java.util.Scanner;
 
 public class LoginSystem {
-    protected AccountManager aM;
+    protected AccountManager acM;
 
     public LoginSystem(){
-        this.aM = new AccountManager();
+        this.acM = new AccountManager();
     }
     public int run(){
         boolean isValid = false;
@@ -15,16 +15,28 @@ public class LoginSystem {
         String password;
         System.out.println("----------------LoginSystem-----------------");
         while(!isValid){
-            System.out.println("Please enter your username:");
-            username = scannerLogin.nextLine();
+            username = verifyUsername(scannerLogin);
             System.out.println("Please enter your password:");
             password = scannerLogin.nextLine();
-            isValid = aM.loginAccount(username, password);
+            isValid = acM.loginAccount(username, password);
             if (!isValid) System.out.println(
                     "###########################################################\n" +
                     "#    Incorrect username or password. Please try again.    #\n" +
                     "###########################################################");
         }
-        return aM.getCurrAccountId();
+        return acM.getCurrAccountId();
+    }
+
+
+    private String verifyUsername(Scanner scannerLogin){
+        boolean valid = false;
+        String userInput = "TBD";
+        while (!valid){
+            System.out.println("Please enter your username:");
+            userInput = scannerLogin.nextLine();
+            if (acM.existsUsername(userInput)) valid = true;
+            else System.out.println("Username does not exist.\n");
+        }
+        return userInput;
     }
 }
