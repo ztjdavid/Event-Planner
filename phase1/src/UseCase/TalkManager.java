@@ -63,11 +63,11 @@ public class TalkManager {
 
     /**
      * Change the speaker of the Talk.
-     * @param speaker The new speaker to be updated.
+     * @param speakerID The new ID of the new speaker to be updated.
      */
 
-    public void changeTalkSpeaker(Speaker speaker){
-        this.talkList.get(currentTalkID).setSpeaker(speaker);
+    public void changeTalkSpeaker(int speakerID){
+        this.talkList.get(currentTalkID).setSpeaker(speakerID);
     }
 
     /**
@@ -114,15 +114,15 @@ public class TalkManager {
      * @param talkTitle the title of the talk.
      * @param startTime the time of the talk.
      * @param roomId the roomId of the talk.
-     * @param speaker the speaker of the talk.
+     * @param speakerID the ID of the speaker of the talk.
      * @return true iff the talk is successfully created.
      */
 
-    public boolean createTalk(int talkId, String talkTitle, int startTime, int roomId, Speaker speaker){
+    public boolean createTalk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
         if(this.talkList.containsKey(talkId)){
             return false;
         }else{
-            Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speaker);
+            Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
             this.talkList.put(talkId, newTalk);
             return true;
         }
