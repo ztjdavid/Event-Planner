@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * The Account class is a class as the superclass of all account classes.<br>
  * It implements methods and stores basic info that all account classes have in common.
  */
-public class Account {
+public abstract class Account {
     protected String username;
     protected String password;
     protected final int userId;
@@ -69,7 +69,7 @@ public class Account {
      *   1 - Attendee <br>
      *   2 - Speaker <br>
      */
-    public int getUserType(){ return -1;}
+    public abstract int getUserType();
 
     /**
      * Get all message IDs sent by this account.

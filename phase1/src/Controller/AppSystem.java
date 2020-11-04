@@ -1,5 +1,6 @@
 package Controller;
 import Entity.Speaker;
+import UseCase.LoginManager;
 
 import java.util.Scanner;
 
@@ -9,13 +10,15 @@ public class AppSystem {
     protected OrganizerSystem organizerS;
     protected AttendeeSystem attendeeS;
     protected SpeakerSystem speakerS;
+    protected LoginManager loginM;
 
     public AppSystem(){
-        this.loginS = new LoginSystem();
-        this.signS = new SignUpSystem();
-        this.attendeeS = new AttendeeSystem();
-        this.organizerS = new OrganizerSystem();
-        this.speakerS = new SpeakerSystem();
+        this.loginM = new LoginManager();
+        this.loginS = new LoginSystem(loginM);
+        this.signS = new SignUpSystem(loginM);
+        this.attendeeS = new AttendeeSystem(loginM);
+        this.organizerS = new OrganizerSystem(loginM);
+        this.speakerS = new SpeakerSystem(loginM);
     }
 
     public void run(){
@@ -24,18 +27,18 @@ public class AppSystem {
         System.out.println("Hi, user! Would you like to\n1 -> login\n2 -> signup");
         userInput = chooseMode(scannerApp);
 
-        int currAccountId = -1;
+        int currAccountType = -1;
         switch (userInput){ // 软件初始界面
             case 1:
-                currAccountId = loginS.run(); //登录系统
+                currAccountType = loginS.run(); //登录系统
                 break;
             case 2:
                 signS.run(); //注册系统
-                currAccountId = loginS.run(); //注册后登录
+                currAccountType = loginS.run(); //注册后登录
                 break;
         }
 
-        switch (currAccountId){ //依照用户类型进入各自操作系统
+        switch (currAccountType){ //依照用户类型进入各自操作系统
             case 0:
                 System.out.println("run organizer system");
                 //organizerS.run();

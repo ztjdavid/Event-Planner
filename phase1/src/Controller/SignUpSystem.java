@@ -8,14 +8,10 @@ import java.util.Scanner;
 
 public class SignUpSystem {
     private final ArrayList<Integer> USER_TYPES = new ArrayList<>(Arrays.asList(0,1,2));
-    protected AccountManager acM;
-    protected OrganizerManager oM;
-    protected SpeakerManager sM;
+    protected LoginManager loginM;
 
-    public SignUpSystem() {
-        this.acM = new AccountManager();
-        this.oM = new OrganizerManager();
-        this.sM = new SpeakerManager();
+    public SignUpSystem(LoginManager loginM) {
+        this.loginM = loginM;
     }
 
 
@@ -32,15 +28,7 @@ public class SignUpSystem {
         userType = chooseType(scannerSignUp);
         username = createUsername(scannerSignUp);
         password = createPassword(scannerSignUp);
-
-        switch (userType) {
-            case 0:
-                oM.createAccount(username, password);
-                break;
-            case 2:
-                sM.createAccount(username, password);
-                break;
-        }
+        loginM.createAccount(username, password, userType);
 
         System.out.println("Perfect! Now you can log in to your account.");
     }
@@ -79,7 +67,7 @@ public class SignUpSystem {
         while (!succeed) {
             System.out.println("Please tell me what username you would like to use:");
             userInput = scannerSignUp.nextLine();
-            if (!acM.existsUsername(userInput)) {
+            if (!loginM.existsUsername(userInput)) {
                 System.out.println("Nice name!");
                 succeed = true;
             } else System.out.println("I'm sorry but it seems someone has taken this name.\n" +
