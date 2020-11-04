@@ -11,16 +11,16 @@ public class Talk {
     protected String talkTitle;
     protected int startTime; /** 有一点不太确定怎么规定这个时间是在9am-5pm之间的 */
     protected int roomId;
-    protected Speaker speaker;
+    protected int speakerId;
     protected ArrayList<Integer> attendeeId;
     protected int remainingSeat;
 
-    public Talk(int talkId, String talkTitle, int startTime, int roomId, Speaker speaker){
+    public Talk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
         this.roomId = roomId;
-        this.speaker = speaker;
+        this.speakerId = speakerID;
         this.attendeeId = new ArrayList<>();
         this.remainingSeat = 2;
     }
@@ -69,15 +69,15 @@ public class Talk {
 
     /**
      * Get the speaker of this talk.
-     * @return A talk speaker.
+     * @return The ID of a talk speaker.
      */
-    public Speaker getSpeaker(){return this.speaker;}
+    public int getSpeaker(){return this.speakerId;}
 
     /**
      * Set talk speaker.
-     * @param speaker The new talk speaker.
+     * @param speakerID The ID of the new talk speaker.
      */
-    public void setSpeaker(Speaker speaker){this.speaker = speaker;}
+    public void setSpeaker(int speakerID){this.speakerId = speakerID;}
 
     /**
      * Get a copy of the attendees' id of this talk.
