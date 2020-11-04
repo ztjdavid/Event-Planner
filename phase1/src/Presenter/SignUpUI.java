@@ -15,7 +15,7 @@ public class SignUpUI {
                 "0 -> Organizer\n1 -> Attendee\n2 -> Speaker");
     }
 
-    public void informNotValid(){
+    public void informInValidChoice(){
         System.out.println("Please select one type from below:\n"
                 + "0 -> Organizer\n1 -> Attendee\n2 -> Speaker");
     }

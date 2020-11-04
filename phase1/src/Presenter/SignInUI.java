@@ -30,8 +30,8 @@ public class SignInUI {
     public void informLoginFailed(){
         System.out.println(
                 "###########################################################\n" +
-                        "#    Incorrect username or password. Please try again.    #\n" +
-                        "###########################################################");
+                "#    Incorrect username or password. Please try again.    #\n" +
+                "###########################################################");
     }
 
 
