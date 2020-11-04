@@ -4,7 +4,7 @@ import Entity.*;
 import java.util.HashMap;
 
 /**
- * The AccountManager class is an abstract class with basic functionalities implemented.
+ * The AccountManager class is a class with basic functionalities implemented.
  */
 public class AccountManager{
     protected static int TotalNumOfAccount = 0;

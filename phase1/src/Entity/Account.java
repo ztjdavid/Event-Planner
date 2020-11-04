@@ -2,7 +2,7 @@ package Entity;
 import java.util.ArrayList;
 
 /**
- * The Account class is an abstract class as the superclass of all account classes.<br>
+ * The Account class is a class as the superclass of all account classes.<br>
  * It implements methods and stores basic info that all account classes have in common.
  */
 public class Account {
