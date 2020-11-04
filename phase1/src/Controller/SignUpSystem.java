@@ -41,7 +41,7 @@ public class SignUpSystem {
         while(!valid){
             userInput = signUpUI.requestUserType();
             if (!isValidType(userInput))
-                signUpUI.informNotValid();
+                signUpUI.informInValidChoice();
             else {
                 valid = true;
                 type = Integer.parseInt(userInput);}
