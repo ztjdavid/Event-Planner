@@ -21,7 +21,6 @@ public class AppSystem {
     public void run(){
         Scanner scannerApp = new Scanner(System.in);
         int userInput;
-        boolean validInput = false;
         System.out.println("Hi, user! Would you like to\n1 -> login\n2 -> signup");
         userInput = chooseMode(scannerApp);
 
