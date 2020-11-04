@@ -62,27 +62,27 @@ public class SignUpSystem {
 
     private String createUsername(){
         boolean succeed = false;
-        String userInput = "TBD";
-        while (!succeed) {
+        String userInput;
+        do{
             userInput = signUpUI.requestUsername();
             if (!loginM.existsUsername(userInput)) {
                 signUpUI.informValidUsername();
                 succeed = true;
             } else signUpUI.informInvalidUsername();
-        }
+        }while (!succeed);
         return userInput;
     }
 
     private String createPassword(){
-        String userInput1 = "TBD";
+        String userInput1;
         String userInput2;
         boolean succeed = false;
-        while (!succeed){
+        do{
             userInput1 = signUpUI.requestPassword();
             userInput2 = signUpUI.confirmPassword();
             if (userInput1.equals(userInput2)) succeed = true;
             else signUpUI.informTwoInputsNotMatch();
-        }
+        }while (!succeed);
         return userInput1;
     }
 
