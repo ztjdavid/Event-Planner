@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class SignUpSystem {
-    //Update this when we have new user type.
     private final ArrayList<Integer> USER_TYPES = new ArrayList<>(Arrays.asList(0,1,2));
     protected LoginManager loginM;
     protected SignUpUI signUpUI;
