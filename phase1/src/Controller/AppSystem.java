@@ -28,17 +28,17 @@ public class AppSystem {
         userInput = chooseMode(scannerApp);
 
         int currAccountType = -1;
-        switch (userInput){ // 软件初始界面
+        switch (userInput){
             case 1:
-                currAccountType = loginS.run(); //登录系统
+                currAccountType = loginS.run();
                 break;
             case 2:
-                signS.run(); //注册系统
-                currAccountType = loginS.run(); //注册后登录
+                signS.run();
+                currAccountType = loginS.run();
                 break;
         }
 
-        switch (currAccountType){ //依照用户类型进入各自操作系统
+        switch (currAccountType){
             case 0:
                 System.out.println("run organizer system");
                 //organizerS.run();
