@@ -1,11 +1,10 @@
 package Controller;
-import Presenter.SignUpUI;
+import UI.SignUpUI;
 import UseCase.*;
 import java.util.ArrayList;
 
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class SignUpSystem {
     private final ArrayList<Integer> USER_TYPES = new ArrayList<>(Arrays.asList(0,1,2));
