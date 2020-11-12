@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SignUpSystem {
-    private final ArrayList<Integer> USER_TYPES = new ArrayList<>(Arrays.asList(0,1,2));
     protected LoginManager loginM;
     protected SignUpUI signUpUI;
     protected StrategyManager strategyM;
@@ -35,29 +34,19 @@ public class SignUpSystem {
 
 
     private int chooseType(){
+        ArrayList<Integer> validTypes = new ArrayList<>(Arrays.asList(0,1,2));
         String userInput;
         int type = -1;
         boolean valid = false;
         while(!valid){
             userInput = signUpUI.requestUserType();
-            if (!isValidType(userInput))
+            if (!strategyM.isValidChoice(userInput, validTypes))
                 signUpUI.informInValidChoice();
             else {
                 valid = true;
                 type = Integer.parseInt(userInput);}
         }
         return type;
-    }
-
-    private boolean isValidType(String userInput){
-        int num;
-        try{
-            num = Integer.parseInt(userInput);
-        }
-        catch (NumberFormatException nfe){
-            return false;
-        }
-        return USER_TYPES.contains(num);
     }
 
     private String createUsername(){
