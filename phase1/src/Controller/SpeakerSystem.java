@@ -11,18 +11,17 @@ import java.util.HashMap;
 public class SpeakerSystem {
     protected LoginManager loginM;
     protected TalkManager talkManager;
-    protected Speaker speaker;
+    protected Speaker currSpeaker;
 
     public SpeakerSystem(LoginManager loginM, TalkManager TalkM) {
         this.loginM = loginM;
         this.talkManager = TalkM;
-        Account a = loginM.getCurrAccount();
-        this.speaker = a; //Casting not finished
+        this.currSpeaker = (Speaker)loginM.getCurrAccount(); //Casting not finished
 
         }
 
     public void messageallv1(String a){
-        ArrayList<Integer> att = getallattendeev1(this.speaker);
+        ArrayList<Integer> att = getallattendeev1(this.currSpeaker);
 
 
 
