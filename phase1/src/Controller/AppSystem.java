@@ -1,30 +1,37 @@
 package Controller;
-import Entity.Speaker;
-import UseCase.LoginManager;
+
+import UI.*;
+import UseCase.*;
 
 import java.util.Scanner;
 
 public class AppSystem {
-    protected LoginSystem loginS;
-    protected SignUpSystem signS;
+    protected SignInSystem signInS;
+    protected SignUpSystem signUpS;
     protected OrganizerSystem organizerS;
     protected AttendeeSystem attendeeS;
     protected SpeakerSystem speakerS;
     protected LoginManager loginM;
+    protected SignInUI signInUI;
+    protected SignUpUI signUpUI;
+    protected StartUI startUI;
 
     public AppSystem(){
+        this.startUI = new StartUI();
         this.loginM = new LoginManager();
-        this.loginS = new LoginSystem(loginM);
-        this.signS = new SignUpSystem(loginM);
+        this.signUpS = new SignUpSystem(loginM, signUpUI);
+        this.signInS = new SignInSystem(loginM, signInUI);
+        this.signInS = new SignInSystem(loginM, signInUI);
+        this.signUpS = new SignUpSystem(loginM, signUpUI);
         this.attendeeS = new AttendeeSystem(loginM);
         this.organizerS = new OrganizerSystem(loginM);
-        this.speakerS = new SpeakerSystem(loginM);
+        this.speakerS = new SpeakerSystem(loginM,);
     }
 
     public void run(){
         Scanner scannerApp = new Scanner(System.in);
         int userInput;
-        System.out.println("Hi, user! Would you like to\n1 -> login\n2 -> signup");
+        startUI.startup();
         userInput = chooseMode(scannerApp);
 
         int currAccountType = -1;
