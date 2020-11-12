@@ -1,6 +1,10 @@
 package Controller;
 import UseCase.LoginManager;
 import UI.*;
+import UseCase.StrategyManager;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AppSystem {
     protected SignInSystem signInS;
@@ -8,6 +12,7 @@ public class AppSystem {
     protected OrganizerSystem organizerS;
     protected AttendeeSystem attendeeS;
     protected SpeakerSystem speakerS;
+    protected StrategyManager strategyM;
     protected LoginManager loginM;
     protected StartUI startUI;
     protected SignInUI signInUI;
@@ -18,8 +23,9 @@ public class AppSystem {
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
         this.loginM = new LoginManager();
+        this.strategyM = new StrategyManager();
         this.signInS = new SignInSystem(loginM, signInUI);
-        this.signUpS = new SignUpSystem(loginM, signUpUI);
+        this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(loginM);
         this.organizerS = new OrganizerSystem(loginM);
         this.speakerS = new SpeakerSystem(loginM);
@@ -64,30 +70,19 @@ public class AppSystem {
 
     //Helper methods:
     private int chooseMode(){
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
         String userInput;
         int mode = -1;
         boolean valid = false;
         while(!valid){
             userInput = startUI.requestModeSelection();
-            if (!isValidChoice(userInput))
+            if (!strategyM.isValidChoice(userInput, validChoices))
                 startUI.informInvalidInput();
             else {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
         }
         return mode;
-    }
-
-
-    private boolean isValidChoice(String userInput){
-        int num;
-        try{
-            num = Integer.parseInt(userInput);
-        }
-        catch (NumberFormatException nfe){
-            return false;
-        }
-        return num == 1 || num == 2;
     }
 
 

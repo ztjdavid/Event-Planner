@@ -10,10 +10,12 @@ public class SignUpSystem {
     private final ArrayList<Integer> USER_TYPES = new ArrayList<>(Arrays.asList(0,1,2));
     protected LoginManager loginM;
     protected SignUpUI signUpUI;
+    protected StrategyManager strategyM;
 
-    public SignUpSystem(LoginManager loginM, SignUpUI signUpUI) {
+    public SignUpSystem(LoginManager loginM, SignUpUI signUpUI, StrategyManager strategyM) {
         this.loginM = loginM;
         this.signUpUI = signUpUI;
+        this.strategyM = strategyM;
     }
 
 
