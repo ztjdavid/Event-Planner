@@ -27,7 +27,4 @@ public class Message {
      public String getReply(){return this.reply;}
 
 
-
-
-
 }

@@ -1,40 +1,44 @@
 package Controller;
-import Entity.Speaker;
 import UseCase.LoginManager;
-
-import java.util.Scanner;
+import UI.*;
 
 public class AppSystem {
-    protected LoginSystem loginS;
-    protected SignUpSystem signS;
+    protected SignInSystem signInS;
+    protected SignUpSystem signUpS;
     protected OrganizerSystem organizerS;
     protected AttendeeSystem attendeeS;
     protected SpeakerSystem speakerS;
     protected LoginManager loginM;
+    protected StartUI startUI;
+    protected SignInUI signInUI;
+    protected SignUpUI signUpUI;
 
     public AppSystem(){
         this.loginM = new LoginManager();
-        this.loginS = new LoginSystem(loginM);
-        this.signS = new SignUpSystem(loginM);
+        this.startUI = new StartUI();
+        this.signInUI = new SignInUI();
+        this.signUpUI = new SignUpUI();
+        this.signInS = new SignInSystem(loginM, signInUI);
+        this.signUpS = new SignUpSystem(loginM, signUpUI);
         this.attendeeS = new AttendeeSystem(loginM);
         this.organizerS = new OrganizerSystem(loginM);
         this.speakerS = new SpeakerSystem(loginM);
+
     }
 
     public void run(){
-        Scanner scannerApp = new Scanner(System.in);
         int userInput;
-        System.out.println("Hi, user! Would you like to\n1 -> login\n2 -> signup");
-        userInput = chooseMode(scannerApp);
-
         int currAccountType = -1;
+
+        startUI.startup();
+        userInput = chooseMode();
         switch (userInput){
             case 1:
-                currAccountType = loginS.run();
+                currAccountType = signInS.run();
                 break;
             case 2:
-                signS.run();
-                currAccountType = loginS.run();
+                signUpS.run();
+                currAccountType = signInS.run();
                 break;
         }
 
@@ -57,20 +61,23 @@ public class AppSystem {
     }
 
 
-    private int chooseMode(Scanner scannerApp){
+
+    //Helper methods:
+    private int chooseMode(){
         String userInput;
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = scannerApp.nextLine();
+            userInput = startUI.requestModeSelection();
             if (!isValidChoice(userInput))
-                System.out.println("Please select one operation from below:\n1 -> login\n2 -> signup");
+                startUI.informInvalidInput();
             else {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
-            }
-        return mode;
         }
+        return mode;
+    }
+
 
     private boolean isValidChoice(String userInput){
         int num;
@@ -82,5 +89,10 @@ public class AppSystem {
         }
         return num == 1 || num == 2;
     }
+
+
+
+
+
 
 }
