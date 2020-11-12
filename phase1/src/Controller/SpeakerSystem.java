@@ -1,10 +1,53 @@
 package Controller;
+import Entity.Account;
+import Entity.Speaker;
+import Entity.Talk;
 import UseCase.LoginManager;
+import UseCase.TalkManager;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SpeakerSystem {
     protected LoginManager loginM;
+    protected TalkManager talkManager;
+    protected Speaker speaker;
 
-    public SpeakerSystem(LoginManager loginM){
+    public SpeakerSystem(LoginManager loginM, TalkManager TalkM) {
         this.loginM = loginM;
+        this.talkManager = TalkM;
+        Account a = loginM.getCurrAccount();
+        this.speaker = a; //Casting not finished
+
+        }
+
+    public void messageallv1(String a){
+        ArrayList<Integer> att = getallattendeev1(this.speaker);
+
+
+
+    }
+
+    public ArrayList<Integer> getallattendeev1(Speaker speaker) {
+        ArrayList<Integer> allattendeeid = new ArrayList<>();
+        ArrayList<Integer> talklist = speaker.getTalkList();
+        for (int i = 0; i < talklist.size(); i++) {
+            Talk talk = talkManager.getTalk(talklist.get(i));
+            for (int a = 0; a < talk.getAttendeeId().size(); a++) {
+                int b = talk.getAttendeeId().get(a);
+                allattendeeid.add(b);
+            }
+        }
+        return allattendeeid;
+    }
+
+    public HashMap<Integer, ArrayList<Integer>> getallattendeev2(Speaker speaker) {
+        HashMap<Integer, ArrayList<Integer>> allattendeeid = new HashMap<>();
+        ArrayList<Integer> talklist = speaker.getTalkList();
+        for (int i = 0; i < talklist.size(); i++) {
+            Talk talk = talkManager.getTalk(talklist.get(i));
+            allattendeeid.put(talklist.get(i), talk.getAttendeeId());
+        }
+        return allattendeeid;
     }
 }
