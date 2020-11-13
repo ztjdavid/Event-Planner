@@ -1,4 +1,5 @@
 package Controller;
+import Entity.Organizer;
 import UseCase.LoginManager;
 import UI.*;
 import UseCase.MessageManager;
@@ -15,6 +16,7 @@ public class AppSystem {
     protected AttendeeSystem attendeeS;
     protected SpeakerSystem speakerS;
     protected SpeakerUI speakerUI;
+    protected OrganizerUI organizerUI;
     protected StrategyManager strategyM;
     protected LoginManager loginM;
     protected TalkManager TalkM;
@@ -32,7 +34,7 @@ public class AppSystem {
         this.signInS = new SignInSystem(loginM, signInUI);
         this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(loginM);
-        this.organizerS = new OrganizerSystem(loginM, MsgM);
+        this.organizerS = new OrganizerSystem(loginM, MsgM, organizerUI, strategyM);
         this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM);
 
     }
