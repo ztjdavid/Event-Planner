@@ -1,7 +1,9 @@
 package Controller;
 import UseCase.LoginManager;
 import UI.*;
+import UseCase.MessageManager;
 import UseCase.StrategyManager;
+import UseCase.TalkManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +16,8 @@ public class AppSystem {
     protected SpeakerSystem speakerS;
     protected StrategyManager strategyM;
     protected LoginManager loginM;
+    protected TalkManager TalkM;
+    protected MessageManager MsgM;
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
@@ -28,7 +32,7 @@ public class AppSystem {
         this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(loginM);
         this.organizerS = new OrganizerSystem(loginM);
-        this.speakerS = new SpeakerSystem(loginM);
+        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM);
 
     }
 
