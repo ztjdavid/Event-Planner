@@ -35,5 +35,9 @@ public class SpeakerUI {
         return a;
 
     }
+    public String getrequest2(){
+        System.out.println("Please Enter The ID of the Talk. Enter ");
+        return speakerscanner.nextLine();
+    }
 
 }

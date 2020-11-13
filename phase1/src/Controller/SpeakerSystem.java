@@ -57,10 +57,25 @@ public class SpeakerSystem {
                                 messagetoatt(txt, tgetter);
                                 break;
                             case 2:
+                                readalltalkssimp();
+                                String txt1 = speakerUI.enteringtext();
+                                int targettalk = -1;
+                                while (targettalk != 999) {
+                                    targettalk= targettalks();
+                                    messagetotalk(txt1, targettalk);
 
+                                }
+                                break;
+                            case 3:
+                                String txt2 = speakerUI.enteringtext();
+                                messageall(txt2);
+                                break;
+                            default:
+                                break;
 
                         }
                     }
+                    System.out.println("Quit Messaging System");
 
                 default:
                     break;
@@ -114,6 +129,21 @@ public class SpeakerSystem {
         }
         return mode;}
 
+    private int targettalks(){
+        ArrayList<Integer> validChoices = currSpeaker.getTalkList();
+        String userInput;
+        int mode = -1;
+        boolean valid = false;
+        while(!valid){
+            userInput = speakerUI.getrequest2();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                speakerUI.informinvalidchoice();
+            else {
+                valid = true;
+                mode = Integer.parseInt(userInput);}
+        }
+        return mode;}
+
     private void readalltalks(){
         String a = "Talk Information";
         for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
@@ -124,6 +154,16 @@ public class SpeakerSystem {
         a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";}
         System.out.println(a);
     }
+    private void readalltalkssimp(){
+        String a = "Talk Information";
+        for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
+            String talktitle = talk.getTalkTitle();
+            int talkid = talk.getTalkId();
+
+            a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;}
+        System.out.println(a);
+    }
+
 
     private void readallatt(){
         ArrayList<Integer> att = getallattendeev1(currSpeaker);
@@ -164,9 +204,9 @@ public class SpeakerSystem {
         System.out.println("Message Send");
 
     }
-    public void messagetotalks(String a, ArrayList<Integer> talkids) {
-        ArrayList<Integer> att = new ArrayList<>();
-        for(int i = 0; i < talkids.size(); i++) {att.addAll(getallattendeev2(currSpeaker).get(talkids.get(i)));}
+    public void messagetotalk(String a, int b) {
+        if (b == 999) {System.out.println("Stop Messaging");}
+        ArrayList<Integer> att = talkManager.getTalk(b).getAttendeeId();
         if (att.size() == 0) {
             String response = "No Attendees";
             System.out.println(response);
