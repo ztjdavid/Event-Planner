@@ -132,6 +132,7 @@ public class TalkManager {
         } else{
             Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
             this.talkList.put(talkId, newTalk);
+            totalTalkCount += 1;
             return true;
         }
     }
