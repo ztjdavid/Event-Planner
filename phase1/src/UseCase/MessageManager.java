@@ -1,5 +1,6 @@
 package UseCase;
 import Entity.*;
+
 import java.util.ArrayList;
 
 public class MessageManager {
@@ -15,4 +16,7 @@ public class MessageManager {
     public void setreply(Message a, String reply){a.response(reply);}
 
 
-}
+    }
+
+
+
