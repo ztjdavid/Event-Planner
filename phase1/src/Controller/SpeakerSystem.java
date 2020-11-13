@@ -3,11 +3,14 @@ import Entity.Account;
 import Entity.Message;
 import Entity.Speaker;
 import Entity.Talk;
+import UI.SpeakerUI;
 import UseCase.LoginManager;
+import UseCase.StrategyManager;
 import UseCase.TalkManager;
 import UseCase.MessageManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class SpeakerSystem {
@@ -15,14 +18,59 @@ public class SpeakerSystem {
     protected TalkManager talkManager;
     protected Speaker currSpeaker;
     protected MessageManager MsgM;
+    protected SpeakerUI speakerUI;
+    protected StrategyManager strategyM;
 
-    public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM) {
+
+    public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI, StrategyManager StrategyManager) {
         this.loginM = loginM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
-        this.currSpeaker = (Speaker) loginM.getCurrAccount(); //Casting not finished
+        this.currSpeaker = (Speaker) loginM.getCurrAccount();
+        this.speakerUI = SpeakerUI;
+        this.strategyM = StrategyManager;
+
 
     }
+    public void run(){
+        int userinput;
+        speakerUI.startup();
+        userinput = chooseMode();
+        switch (userinput){
+            case 1:
+                readalltalks();
+                break;
+            case 2:
+
+        }
+
+    }
+    private int chooseMode(){
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
+        String userInput;
+        int mode = -1;
+        boolean valid = false;
+        while(!valid){
+            userInput = speakerUI.getrequest();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                speakerUI.informinvalidchoice();
+            else {
+                valid = true;
+                mode = Integer.parseInt(userInput);}
+        }
+        return mode;
+    }
+    private String readalltalks(){
+        String a = "Talk Information";
+        for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
+        String talktitle = talk.getTalkTitle();
+        int talktime = talk.getStartTime();
+        int talkroom = talk.getRoomId();
+        int numatt = talk.getAttendeeId().size();
+        a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";}
+        return a;
+    }
+
 
     public String messageall(String a) {
         ArrayList<Integer> att = getallattendeev1(this.currSpeaker);
@@ -60,7 +108,7 @@ public class SpeakerSystem {
         return response1;
 
     }
-    public ArrayList<Talk> getalltalks() {
+    private ArrayList<Talk> getalltalks() {
         ArrayList<Talk> alltalks = new ArrayList<>();
 
         for(int i = 0; i < currSpeaker.getTalkList().size(); i++){

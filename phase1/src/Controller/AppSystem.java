@@ -14,6 +14,7 @@ public class AppSystem {
     protected OrganizerSystem organizerS;
     protected AttendeeSystem attendeeS;
     protected SpeakerSystem speakerS;
+    protected SpeakerUI speakerUI;
     protected StrategyManager strategyM;
     protected LoginManager loginM;
     protected TalkManager TalkM;
@@ -32,7 +33,7 @@ public class AppSystem {
         this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(loginM);
         this.organizerS = new OrganizerSystem(loginM);
-        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM);
+        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM);
 
     }
 
@@ -63,7 +64,7 @@ public class AppSystem {
                 break;
             case 2:
                 System.out.println("run speaker system");
-                //speakerS.run();
+                speakerS.run();
                 break;
             default:
                 System.out.println("To be implemented. Some necessary classes are not finished.");
