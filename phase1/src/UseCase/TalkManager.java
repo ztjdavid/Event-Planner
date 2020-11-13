@@ -111,7 +111,7 @@ public class TalkManager {
      */
 
     public ArrayList<Talk> getAllTalks(){
-        return (ArrayList<Talk>) talkList.values();
+        return new ArrayList<>(talkList.values());
     }
 
     /**
