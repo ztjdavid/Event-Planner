@@ -11,7 +11,7 @@ public class SpeakerUI {
 
 
     public void startup(){
-        System.out.println("----------------SpeakerSystem-----------------\nHi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message");
+        System.out.println("----------------SpeakerSystem-----------------\nHi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Quit");
     }
 
     public String getrequest(){
@@ -27,6 +27,13 @@ public class SpeakerUI {
         System.out.println("----------------Messaging-----------------\nHi, Speaker! Would you like to\n1 -> Me" +
                 "ssage to one attendee\n2 -> Message to attendees in talks\n3 -> Message all att" +
                 "endees who register your talks");
+    }
+    public String enteringtext(){
+        System.out.println("Please Enter Your Message in One Line");
+        String a = new String();
+        while(speakerscanner.hasNext()) {a += speakerscanner.nextLine();}
+        return a;
+
     }
 
 }
