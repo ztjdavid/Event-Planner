@@ -35,7 +35,8 @@ public class SpeakerSystem {
     public void run(){
         int userinput;
         speakerUI.startup();
-        userinput = chooseMode();
+        userinput = chooseMode1();
+
         switch (userinput){
             case 1:
                 readalltalks();
@@ -46,7 +47,7 @@ public class SpeakerSystem {
         }
 
     }
-    private int chooseMode(){
+    private int chooseMode1(){
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
         String userInput;
         int mode = -1;
@@ -70,6 +71,15 @@ public class SpeakerSystem {
         int numatt = talk.getAttendeeId().size();
         a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";}
         return a;
+    }
+    public String messagetoatt(String a, int getterid) {
+        Account getter = loginM.getAccountWithId(getterid);
+        Message msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
+        this.currSpeaker.addSentMessage(msg.getmessageid());
+        getter.addInbox(msg.getmessageid());
+        return "Message Send";
+
+
     }
 
 
