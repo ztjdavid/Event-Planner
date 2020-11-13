@@ -29,7 +29,10 @@ public class AppSystem {
         this.startUI = new StartUI();
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
+        this.speakerUI = new SpeakerUI();
         this.loginM = new LoginManager();
+        this.MsgM = new MessageManager();
+        this.TalkM = new TalkManager();
         this.strategyM = new StrategyManager();
         this.signInS = new SignInSystem(loginM, signInUI);
         this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
