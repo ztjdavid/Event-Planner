@@ -11,7 +11,7 @@ public class SpeakerUI {
 
 
     public void startup(){
-        System.out.println("----------------SpeakerSystem-----------------\nHi, Speaker! Would you like to\n1 -> Read Your Talks\nn2 -> Message");
+        System.out.println("----------------SpeakerSystem-----------------\nHi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message");
     }
 
     public String getrequest(){
@@ -22,6 +22,11 @@ public class SpeakerUI {
     public void informinvalidchoice(){
         System.out.println("Invalid Choice. Please try again.");
 
+    }
+    public void messaging(){
+        System.out.println("----------------Messaging-----------------\nHi, Speaker! Would you like to\n1 -> Me" +
+                "ssage to one attendee\n2 -> Message to attendees in talks\n3 -> Message all att" +
+                "endees who register your talks");
     }
 
 }

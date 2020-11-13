@@ -41,6 +41,7 @@ public class SpeakerSystem {
                 readalltalks();
                 break;
             case 2:
+                speakerUI.messaging();
 
         }
 
