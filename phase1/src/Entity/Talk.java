@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Talk {
     protected final int talkId;
     protected String talkTitle;
-    protected int startTime; /** 有一点不太确定怎么规定这个时间是在9am-5pm之间的 */
+    protected int startTime;
     protected int roomId;
     protected int speakerId;
     protected ArrayList<Integer> attendeeId;
