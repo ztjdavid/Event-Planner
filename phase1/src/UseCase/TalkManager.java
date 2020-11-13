@@ -54,11 +54,17 @@ public class TalkManager {
 
     /**
      * Change the time of the Talk.
-     * @param time The new time to be updated.
+     * @param time The new time (in 24-hour format) to be updated.
+     * @return true iff the new time is valid (ie. between 9 and 17)
      */
 
-    public void changeTalkTime(int time){
-        this.talkList.get(currentTalkID).setStartTime(time);
+    public boolean changeTalkTime(int time) {
+        if (time > 9 && time <= 17) {
+            this.talkList.get(currentTalkID).setStartTime(time);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -112,7 +118,7 @@ public class TalkManager {
      * Creates a talk and updates the talkList.
      * @param talkId the ID of the talk.
      * @param talkTitle the title of the talk.
-     * @param startTime the time of the talk.
+     * @param startTime the time (between 9 and 17 in 24-hour format) of the talk.
      * @param roomId the roomId of the talk.
      * @param speakerID the ID of the speaker of the talk.
      * @return true iff the talk is successfully created.
@@ -121,7 +127,9 @@ public class TalkManager {
     public boolean createTalk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
         if(this.talkList.containsKey(talkId)){
             return false;
-        }else{
+        }else if(startTime > 9 && startTime <= 17){
+            return false;
+        } else{
             Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
             this.talkList.put(talkId, newTalk);
             return true;
