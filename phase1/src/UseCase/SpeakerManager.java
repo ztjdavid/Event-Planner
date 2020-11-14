@@ -31,8 +31,10 @@ public class SpeakerManager extends AccountManager {
         currSpeaker.setPassword(password);
     }
 
-    public void registerNewTalk(Talk talk){
-        currSpeaker.registerTalk(talk.getTalkId());
+    public void registerNewTalk(int talkID, int speakerID, HashMap<Integer,Object> accList){
+        Speaker speaker = (Speaker) accList.get(speakerID);
+        setCurrSpeaker(speaker);
+        speaker.registerTalk(talkID);
     }
 
     public void removeTalk(Talk talk){
@@ -57,17 +59,6 @@ public class SpeakerManager extends AccountManager {
         return talkList.contains(talkId);
     }
 
-    /**
-     * Create a speaker.
-     * @param username The username of the Speaker.
-     * @param password The password of the Speaker.
-     * @param userID the ID of the user
-     */
-
-    public int createSpeaker(String username, String password, int userID){
-            Speaker newSpeaker = new Speaker(username, password, userID);
-            return newSpeaker.getUserId();
-    }
     public ArrayList<Integer> getalltalk(){return currSpeaker.getTalkList();}
     public ArrayList<Integer> getinbox(){return currSpeaker.getInbox();}
 
@@ -76,13 +67,10 @@ public class SpeakerManager extends AccountManager {
         return speaker.getTalkList().contains(talkID);
     }
 
-    public int getTalkListSize(int speakerID, HashMap<Integer,Object> accList){
+    public ArrayList<Integer> getTalkList(int speakerID, HashMap<Integer,Object> accList){
         Speaker speaker = (Speaker) accList.get(speakerID);
-        return speaker.getTalkList().size();
+        return new ArrayList<>(speaker.getTalkList());
     }
-
-
-
 
 
 }
