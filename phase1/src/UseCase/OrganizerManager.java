@@ -40,6 +40,10 @@ public class OrganizerManager extends AccountManager{
      */
     public void changePassword(Organizer organizer, String password){organizer.setPassword(password);}
 
+    /**
+     * Create a hashmap of all Attendee in the account list.
+     * @return Hashmap of all Attendee with key as user ID and value as username.
+     */
     public HashMap<Integer, String> getAllAttendee(){
         HashMap<Integer, String> allAttendee = new HashMap<>();
         HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
@@ -50,6 +54,10 @@ public class OrganizerManager extends AccountManager{
         }return allAttendee;
     }
 
+    /**
+     * Create a hashmap of all Speaker in the account list.
+     * @return Hashmap of all Speaker with key as user ID and value as username.
+     */
     public HashMap<Integer, String> getAllSpeaker(){
         HashMap<Integer, String> allSpeaker = new HashMap<>();
         HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
@@ -60,6 +68,10 @@ public class OrganizerManager extends AccountManager{
         }return allSpeaker;
     }
 
+    /**
+     * Create a arraylist of all Attendee's user ID in the account list.
+     * @return Arraylist of all Attendee's user ID.
+     */
     public ArrayList<Integer> getValidChoices(){
         ArrayList<Integer> aList = new ArrayList<>();
         HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
@@ -71,6 +83,11 @@ public class OrganizerManager extends AccountManager{
         return aList;
     }
 
+    /**
+     * Return int 1 iff the receiver is message-able. A receiver is message-able iff its user type is Attendee or Speaker. Otherwise return int 3.
+     * @param receiverID The int ID of the receiver.
+     * @return int 1 if the receiver is Attendee or Speaker, int 3 otherwise.
+     */
     public int messageable1(int receiverID){
         Account receiver = getAccountWithId(receiverID);
         if(receiver.getUserType() == 2 || receiver.getUserType() == 1){
@@ -81,14 +98,26 @@ public class OrganizerManager extends AccountManager{
         }
     }
 
+    /**
+     * Set the given organizer as the current organizer.
+     * @param organizer The current organizer.
+     */
     public void setCurrOrganizer(Organizer organizer){
         currOrganizer = organizer;
     }
 
+    /**
+     * Get the current organizer's user ID.
+     * @return int value of the current organizer's user ID.
+     */
     public int getCurrOrganizer(){
         return currOrganizer.getUserId();
     }
 
+    /**
+     * Create a arraylist of all Speaker's user ID in the account list.
+     * @return Arraylist of all Speaker's user ID.
+     */
     public ArrayList<Integer> getSpeakerList(){
         ArrayList<Integer> lst = new ArrayList<>();
         HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
@@ -100,6 +129,10 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
+    /**
+     * Create a arraylist of all Attendee's user ID in the account list.
+     * @return Arraylist of all Attendee's user ID.
+     */
     public ArrayList<Integer> getAttendeeList(){
         ArrayList<Integer> lst = new ArrayList<>();
         HashMap<Integer, Account> accList = new HashMap<>(getAccountList());

@@ -20,7 +20,9 @@ public class TalkManager {
 
     /**
      *Set the currentTalkID.
+     * @param talkID The current talk Id.
      */
+
     public void setCurrentTalkID(int talkID){
         currentTalkID = talkID;
     }
@@ -137,6 +139,12 @@ public class TalkManager {
         }
     }
 
+    /**
+     * Return a string information of the Talk given the talk ID.
+     * @param talkid The ID of the Talk.
+     * @return the string information of the Talk with the given talk ID.(Including talk title, start time, room ID, and number of Attendee.)
+     */
+
     public String gettalkinfo(int talkid){
         String a = new String();
         Talk talk = getTalk(talkid);
@@ -148,6 +156,12 @@ public class TalkManager {
         return a;
     }
 
+    /**
+     * Return a simplified string information of the Talk given the talk ID.
+     * @param talkid The ID of the Talk.
+     * @return the simplified string information of the Talk with the given talk ID.(Including talk title and talk ID.)
+     */
+
     public String gettalkinfosimp(int talkid){
         String a = new String();
         Talk talk = getTalk(talkid);
@@ -155,6 +169,12 @@ public class TalkManager {
         a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;
         return a;
     }
+
+    /**
+     * Return an arraylist of all the Attendee of the Talks in the given talk list.
+     * @param talklist Arraylist of all ID of the Talk.
+     * @return Arraylist of all Attendee of all the Talks in the talk list.
+     */
 
     public ArrayList<Integer> getallattendee(ArrayList<Integer> talklist){
         ArrayList<Integer> att = new ArrayList<>();
@@ -164,19 +184,41 @@ public class TalkManager {
 
     }
 
+    /**
+     * Return the total number of Talks
+     * @return the int value of the total number of Talks.
+     */
+
     public static int getTotalTalkCount(){
         return totalTalkCount;
     }
+
+    /**
+     * Return the start time of the Talk given the talk ID.
+     * @param talkID The ID of the Talk.
+     * @return the start time of the Talk with the given talk ID.
+     */
 
     public int getStartTime(int talkID){
         Talk talk = getTalk(talkID);
         return talk.getStartTime();
     }
 
+    /**
+     * Set the Talk with the given talk ID with the Speaker with the given speaker ID.
+     * @param speakerID The ID of the Speaker
+     * @param talkID The ID of the Talk.
+     */
+
     public void setSpeakerTo(int speakerID, int talkID){
         Talk talk = getTalk(talkID);
         talk.setSpeaker(speakerID);
     }
+
+    /**
+     * Remove the Talk given the talkID
+     * @param talkID The ID of the talk.
+     */
 
     public void removeTalk(int talkID){
         Talk talk = getTalk(talkID);
