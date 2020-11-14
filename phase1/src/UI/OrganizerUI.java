@@ -126,12 +126,8 @@ public class OrganizerUI {
                 System.out.println("Quit Messaging System.");
             case 5:
                 System.out.println("Quit.");
-            case 6:
-
             case 7:
                 System.out.println("Passwords Do Not Match! Please try again!");
-            case 8:
-
             case 9:
                 System.out.println("Speaker Account Successfully Created!");
             case 10:
