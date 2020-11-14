@@ -3,11 +3,11 @@ import UI.SignInUI;
 import UseCase.*;
 
 public class SignInSystem {
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected SignInUI signInUI;
 
-    public SignInSystem(LoginManager loginM, SignInUI signInUI){
-        this.loginM = loginM;
+    public SignInSystem(AccountManager accM, SignInUI signInUI){
+        this.accM = accM;
         this.signInUI = signInUI;
     }
     public int run(){
@@ -19,10 +19,10 @@ public class SignInSystem {
         while(!isValid){
             username = confirmUsername();
             password = signInUI.requestPassword();
-            if (loginM.loginAccount(username, password)) isValid = true;
+            if (accM.loginAccount(username, password)) isValid = true;
             else signInUI.informLoginFailed();
         }
-        return loginM.getCurrAccount().getUserType();
+        return accM.getCurrAccount().getUserType();
     }
 
 
@@ -33,7 +33,7 @@ public class SignInSystem {
         String username;
         do{
             username = signInUI.requestUsername();
-            if (loginM.existsUsername(username)) valid = true;
+            if (accM.existsUsername(username)) valid = true;
             else signInUI.informAccountNotExist();
         }while (!valid);
         return username;
