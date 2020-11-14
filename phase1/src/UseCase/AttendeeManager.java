@@ -1,6 +1,8 @@
 package UseCase;
 import Entity.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -20,6 +22,17 @@ public class AttendeeManager extends AccountManager{
         return other.getUserType() != 0;
     }
 
+    //TODO:为了跑程序暂时乱写的，需要改.
+    public ArrayList<Integer> getAllMyTalks(){ return new ArrayList<>(Arrays.asList(0, 1));}
+
+    //TODO:为了跑程序暂时乱写的，需要改.
+    public void enrol(int a){}
+
+    //TODO:为了跑程序暂时乱写的，需要改.
+    public void drop(int a){}
+
+    //TODO:为了跑程序暂时乱写的，需要改.
+    public ArrayList<Integer> getAllAvailableTalks(){return new ArrayList<>(Arrays.asList(0, 1));}
 
 
 

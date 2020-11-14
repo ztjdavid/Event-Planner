@@ -1,26 +1,22 @@
 package Controller;
 import UI.AttendeeUI;
-import UseCase.LoginManager;
-import UseCase.StrategyManager;
-import UseCase.TalkManager;
-import UseCase.MessageManager;
-import UseCase.AttendeeManager;
+import UseCase.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
 public class AttendeeSystem {
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected TalkManager talkManager;
     protected MessageManager MsgM;
     protected AttendeeUI attendeeUI;
     protected StrategyManager strategyM;
     protected AttendeeManager attendeeM;
 
-    public AttendeeSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
+    public AttendeeSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
                          StrategyManager StrategyManager, AttendeeManager AttendeeM) {
-        this.loginM = loginM;
+        this.accM = accM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.attendeeUI = attendeeUI;
