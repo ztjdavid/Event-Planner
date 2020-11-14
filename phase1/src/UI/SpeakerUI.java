@@ -15,8 +15,15 @@ public class SpeakerUI {
                 "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Quit");
     }
 
-    public String getrequest(){
-        System.out.println("Please Enter Your Response(Enter -1 to go back.)");
+    public String getrequest(int s){
+        switch (s){
+            case 1:
+                System.out.println("Please Enter Your Response.");
+                break;
+            case 2:
+                System.out.println("Please Enter Your Response(Enter -1 to go back.)");
+                break;
+        }
         return speakerscanner.nextLine();
     }
 

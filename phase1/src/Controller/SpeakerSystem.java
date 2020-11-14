@@ -137,7 +137,7 @@ public class SpeakerSystem {
         String userInput;
         boolean valid = false;
         do{
-            userInput = speakerUI.getrequest();
+            userInput = speakerUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
             else { valid = true; }
@@ -150,7 +150,7 @@ public class SpeakerSystem {
         String userInput;
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
         do{
-            userInput = speakerUI.getrequest();
+            userInput = speakerUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
             else { valid = true; }
@@ -191,7 +191,7 @@ public class SpeakerSystem {
         String userInput;
         boolean valid = false;
         do{
-            userInput = speakerUI.getrequest();
+            userInput = speakerUI.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
             else { valid = true; }
