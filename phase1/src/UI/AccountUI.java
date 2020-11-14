@@ -20,7 +20,11 @@ public class AccountUI {
 
     public void setupDataBase(){
         System.out.println("----------------Initializing the database-----------------");
-        // create the json file
+    }
+
+    public String requestFilePath(){
+        System.out.println("Please provide the file path to the account data file you want to create:");
+        return input.nextLine();
     }
 
     public void reportDataBase(){
@@ -29,21 +33,22 @@ public class AccountUI {
     }
 
     public void displayAllAccounts(ArrayList<Account> lst){
-        StringBuilder a;
-        a = new StringBuilder("These are the all the accounts in the system. ");
+        StringBuilder accountData;
+        accountData = new StringBuilder("These are the all the accounts in the system. ");
         for(Account acc : lst) {
             int accountID = acc.getUserId();
         }
-        System.out.println(a);
+        System.out.println(accountData);
     }
 
-    public void changepassword(){
-        System.out.println("----------------Accessing the database-----------------\nPlease enter the id of the account you want to change");
-    }
+//    public void changepassword(){
+//        System.out.println("----------------Accessing the database-----------------\nPlease enter the id of the account you want to change");
+//    }
 
-    public void informinvalidchoice(){
-        System.out.println("Invalid Choice. Please try again.");
-    }
+//    public void informinvalidchoice(){
+//        System.out.println("Invalid Choice. Please try again.");
+//    }
 
 
 }
+

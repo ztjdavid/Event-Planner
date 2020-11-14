@@ -1,22 +1,19 @@
 package Controller;
 import Entity.*;
-import UI.AttendeeUI;
-import UI.OrganizerUI;
 import UseCase.*;
+import UI.AccountUI;
 
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class AccountSystem {
     protected AccountManager accountM;
     protected LoginManager loginM;
+    protected AccountUI accountUI;
     protected MessageManager MsgM;
     protected Organizer currOrganizer;
     protected Attendee currAttendee;
-    protected AttendeeUI attendeeUI;
-    protected OrganizerManager ognM;
-    protected SpeakerManager spkM;
-    protected TalkManager tlkM;
-    protected RoomManager roomM;
 
 
     public AccountSystem(AccountManager accountM, LoginManager loginM) {
@@ -28,5 +25,23 @@ public class AccountSystem {
 
     }
 
-    public void readFile(){}
+    public void readFromFile() throws FileNotFoundException {
+
+        String filePath = accountUI.requestFilePath();
+
+        Scanner scanner = new Scanner(new FileInputStream(filePath));
+        String[] accountData;
+
+        while (scanner.hasNextLine()){
+            accountData = scanner.nextLine().split(",");
+            String username = accountData[0];
+            String password = accountData[1];
+            int userType = Integer.parseInt(accountData[2]);
+            loginM.createAccount(username, password, userType);
+        }
+
+        scanner.close();
+    }
+
+    // Other functionality for this system uncleared. Placed in sub-branch for now.
 }
