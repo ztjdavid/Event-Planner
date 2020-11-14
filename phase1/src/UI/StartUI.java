@@ -10,7 +10,7 @@ public class StartUI {
 
 
     public void startup(){
-        System.out.println("Hi, user! Would you like to\n1 -> login\n2 -> signup");
+        System.out.println("Hi, user! Would you like to\n1 -> Signin\n2 -> Signup");
     }
 
     public void informInvalidInput(){
