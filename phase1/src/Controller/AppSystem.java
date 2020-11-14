@@ -26,10 +26,14 @@ public class AppSystem {
     protected SpeakerManager spkM;
 
     public AppSystem(){
+        this.spkM = new SpeakerManager();
+        this.ognM = new OrganizerManager();
+        this.roomM = new RoomManager();
         this.startUI = new StartUI();
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
         this.speakerUI = new SpeakerUI();
+        this.organizerUI = new OrganizerUI();
         this.loginM = new LoginManager();
         this.MsgM = new MessageManager();
         this.TalkM = new TalkManager();

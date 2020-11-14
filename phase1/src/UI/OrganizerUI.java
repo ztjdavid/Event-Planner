@@ -15,8 +15,8 @@ public class OrganizerUI {
 
     public void startup(){
         System.out.println("----------------OrganizerSystem-----------------\nHi, " +
-                "Organizer! Would you like to\n1 -> Message\n2 -> Schedule a Talk\n3 -> Create Speaker Account\n4 -> Change Your" +
-                " Password\n5 -> Change your UserName\n6Quit");
+                "Organizer! Would you like to\n1 -> Message\n2 -> Schedule a Talk\n3 -> Create a Speaker Account\n4 -> Change Your" +
+                " Password\n5 -> Change your UserName\n6 -> Quit");
     }
 
     public String addTalkPrompt(){

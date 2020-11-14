@@ -189,20 +189,13 @@ public class OrganizerSystem {
     }
 
     private void changeCurrPwd(){
-        String currPwd = organizerUI.currPwd();
-        if (loginM.loginAccount(currOrganizer.getUsername(), currPwd)){
-            String pwd1 = organizerUI.getNewPwd();
-            String pwd2 = organizerUI.getNewPwd2();
-            if(pwd1.equals(pwd2)){
-                ognM.changePassword(currOrganizer, pwd1);
-                organizerUI.messageToDisplay(6);
-            }else{
-                organizerUI.messageToDisplay(7);
-                changeCurrPwd();
-
-            }
+        String pwd1 = organizerUI.getNewPwd();
+        String pwd2 = organizerUI.getNewPwd2();
+        if(pwd1.equals(pwd2)){
+            ognM.changePassword(currOrganizer, pwd1);
+            organizerUI.messageToDisplay(6);
         }else{
-            organizerUI.messageToDisplay(8);
+            organizerUI.messageToDisplay(7);
             changeCurrPwd();
         }
     }
