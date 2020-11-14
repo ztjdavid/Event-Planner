@@ -42,22 +42,30 @@ public class AppSystem {
 
     }
 
-    public void run(){
-        int userInput;
-        int currAccountType = -1;
 
+    public void run(){
         startUI.startup();
-        userInput = chooseMode();
+        int userInput = chooseMode();
+        int currAccountType = enterBranch(userInput);
+        enterSystems(currAccountType);
+    }
+
+
+
+    //Helper methods:
+    private int enterBranch(int userInput){
         switch (userInput){
             case 1:
-                currAccountType = signInS.run();
-                break;
+                return signInS.run();
             case 2:
                 signUpS.run();
-                currAccountType = signInS.run();
-                break;
+                return signInS.run();
+            default:
+                return -1;
         }
+    }
 
+    private void enterSystems(int currAccountType){
         switch (currAccountType){
             case 0:
                 System.out.println("run organizer system");
@@ -76,9 +84,6 @@ public class AppSystem {
         }
     }
 
-
-
-    //Helper methods:
     private int chooseMode(){
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
         String userInput;
@@ -94,9 +99,6 @@ public class AppSystem {
         }
         return mode;
     }
-
-
-
 
 
 
