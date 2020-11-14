@@ -6,13 +6,10 @@ import java.util.HashMap;
 /**
  * The AccountManager class is a class with basic functionalities implemented.
  */
-public abstract class AccountManager {
-    protected static int currAccountId = -1; // Track which account this program is working on now.
-//    private ArrayList<Account> accounts;
-//    private Account currAccount;
-
-    protected LoginManager LoginM = new LoginManager();
-    protected Account currAccount = LoginM.getCurrAccount();
+public class AccountManager {
+    protected static int TotalNumOfAccount = 0;
+    protected static HashMap<Integer, Account> accountList = new HashMap<>();
+    protected static int currAccountId = -1;
 
     public AccountManager(){}
 
@@ -21,42 +18,85 @@ public abstract class AccountManager {
      * @param other Another account that the current login account is going to message.
      * @return True iff the current login account can message the given account.
      */
-    public abstract boolean messageable(Account other);
+    public boolean messageable(Account other){return false;};
 
-
-    /**
-     * Show all messages that the current login account has received.
-     */
-    public void showAllReceivedMsg(){
-        //TODO: print all Messages of this Account.(through presenter use case?)
-
-        System.out.println(currAccount.getInbox());
-    }
-
-    /**
-     * Show messages between the current login account and a given account.
-     * @param otherId ID of another account.
-     */
-    public void showMsgWith(int otherId){
-        //TODO: print all Messages between this account and <other>.
-        // (through presenter use case?)
-        ArrayList<Message> result = new ArrayList();
-        ArrayList sentMessages = currAccount.getSentMessage();
-        ArrayList getMessages = currAccount.getInbox();
-        for (int i = 0; i < sentMessages.size(); i++){
-            Message message = (Message) sentMessages.get(i);
-            if (message.getGetterid() == otherId){result.add(message);}
+    public void createAccount(String username, String password, int userType){
+        switch (userType){
+            case 0:
+                accountList.put(TotalNumOfAccount,
+                        new Organizer(username, password, TotalNumOfAccount));
+                break;
+            case 2:
+                accountList.put(TotalNumOfAccount,
+                        new Speaker(username, password, TotalNumOfAccount));
+                break;
+            default:
+                accountList.put(TotalNumOfAccount,
+                        new Attendee(username, password, TotalNumOfAccount));
+                break;
         }
-        for (int j = 0; j < getMessages.size(); j++){
-            Message message = (Message) sentMessages.get(j);
-            if (message.getSenderid() == otherId){result.add(message);}
-    }
-        if(result.size() == 0){return;}
-        else{System.out.println(result); }
+        TotalNumOfAccount += 1;
     }
 
+    /**
+     * Get the id of current login account.
+     * @return An integer representing id.
+     */
+    public int getCurrAccountId(){ return currAccountId;}
 
+    /**
+     * Get the current login account.
+     * @return An account which id is currAccountId.
+     */
+    public Account getCurrAccount(){
+        return accountList.get(currAccountId);
+    }
 
+    /**
+     * Get the total number of accounts in the system.
+     * @return An integer representing the total number of accounts.
+     */
+    public int getTotalNumOfAccount(){ return TotalNumOfAccount;}
+
+    /**
+     * Get the account with a given account id.
+     * @param accountId The account id.
+     * @return An account with the given id.
+     */
+    public Account getAccountWithId(int accountId){ return accountList.get(accountId);}
+
+    public boolean existsUsername(String username){
+        if (accountList.size() == 0) return false;
+        for (Account x: accountList.values()){
+            if(x.getUsername().equals(username)) return true;
+        }
+        return false;
+    }
+
+    public boolean loginAccount(String username, String password){
+        for (Account x: accountList.values()){
+            if (x.getUsername().equals(username) &&
+                    x.getPassword().equals(password)){
+                currAccountId = x.getUserId();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public HashMap<Integer, Account> getAccountList(){ return new HashMap<>(accountList);}
+
+    public String getinfoacc(int id){
+        Account target = getAccountWithId(id);
+        String targetname = target.getUsername();
+        String a = targetname + "id:" + id + "\n";
+        return a;
+    }
+
+    public void addinbox(int getterid, int msgid){getAccountWithId(getterid).addInbox(msgid);}
+
+    public void addsend(int senderid, int msgid){getAccountWithId(senderid).addSentMessage(msgid);}
 
 
 }
+

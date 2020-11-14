@@ -1,6 +1,8 @@
 package UseCase;
 import Entity.*;
 
+import java.util.HashMap;
+
 /**
  * The AttendeeManager class implements all functionalities of an attendee.
  */
@@ -17,6 +19,7 @@ public class AttendeeManager extends AccountManager{
     public boolean messageable(Account other){
         return other.getUserType() != 0;
     }
+
 
 
 

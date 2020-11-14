@@ -31,5 +31,10 @@ public class RoomManager {
         return room.getTimetable().containsKey(startTime);
     }
 
+    public void scheduleTalk(int roomID, int talkID, int startTime){
+        Room room = getRoomWithID(roomID);
+        room.scheduleTalk(talkID, startTime);
+    }
+
 
 }

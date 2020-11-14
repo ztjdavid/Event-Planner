@@ -30,7 +30,8 @@ public class SpeakerUI {
         System.out.println("1 -> Message to an attendee.\n" +
                             "2 -> Message to attendees in talks\n" +
                             "3 -> Message all attendees who register your talks\n" +
-                            "4 -> Go back.");
+                            "4 -> See your reply\n" +
+                            "5 -> Go back.");
     }
     //TODO
     public String enteringtext(){
@@ -58,5 +59,8 @@ public class SpeakerUI {
 
     }
     public void show(String a){System.out.println(a);}
+
+    public void announcereply(){System.out.println("If you want to reply, please reme" +
+            "mber the id of the attendee you want to send and enter 1");}
 
 }

@@ -137,23 +137,6 @@ public class TalkManager {
         }
     }
 
-    /**
-     * Remove a specific Talk from the Talk list.
-     * @param talk The Talk that want to be removed.
-     * @return true iff the Talk has been removed.
-     */
-    public boolean removeTalk(Talk talk){
-        if (this.talkList.containsKey(talk.getTalkId())){
-            this.talkList.remove(talk.getTalkId(), talk);
-            totalTalkCount -= 1;
-            System.out.println("The Talk has been successfully removed.");
-            return true;
-        }else{
-            System.out.println("No such Talk has been found.");
-            return false;
-        }
-    }
-
     public String gettalkinfo(int talkid){
         String a = new String();
         Talk talk = getTalk(talkid);
@@ -188,6 +171,16 @@ public class TalkManager {
     public int getStartTime(int talkID){
         Talk talk = getTalk(talkID);
         return talk.getStartTime();
+    }
+
+    public void setSpeakerTo(int speakerID, int talkID){
+        Talk talk = getTalk(talkID);
+        talk.setSpeaker(speakerID);
+    }
+
+    public void removeTalk(int talkID){
+        Talk talk = getTalk(talkID);
+        this.talkList.remove(talkID);
     }
 
 

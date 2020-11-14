@@ -1,19 +1,14 @@
 package Controller;
-import Entity.*;
 import UI.OrganizerUI;
 import UseCase.*;
-import UseCase.LoginManager;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class OrganizerSystem {
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected MessageManager MsgM;
-    protected Organizer currOrganizer;
     protected StrategyManager strategyM;
     protected OrganizerUI organizerUI;
     protected OrganizerManager ognM;
@@ -21,11 +16,10 @@ public class OrganizerSystem {
     protected TalkManager tlkM;
     protected RoomManager roomM;
 
-    public OrganizerSystem(LoginManager loginM, MessageManager MsgM, OrganizerUI organizerUI, StrategyManager strategyM,
+    public OrganizerSystem(AccountManager accM, MessageManager MsgM, OrganizerUI organizerUI, StrategyManager strategyM,
                            OrganizerManager ognM, SpeakerManager spkM, TalkManager tlkM, RoomManager roomM) {
-        this.loginM = loginM;
+        this.accM = accM;
         this.MsgM = MsgM;
-        this.currOrganizer = (Organizer) loginM.getCurrAccount();
         this.strategyM = strategyM;
         this.organizerUI = organizerUI;
         this.ognM = ognM;
@@ -80,42 +74,33 @@ public class OrganizerSystem {
                                 int roomID = organizerUI.getRoomID();
                                 int speakerID = organizerUI.getSpeakerID();
                                 int talkID = organizerUI.getTalkID();
-                                Talk talk = tlkM.getTalk(talkID);
-                                Speaker speaker = (Speaker) loginM.getAccountWithId(speakerID);
-                                Room room = roomM.getRoomWithID(roomID);
-                                scheduleRoom(room, speaker, talk);
+                                scheduleRoom(roomID, speakerID, talkID);
                                 break;
                             case 2:
                                 int roomID2 = organizerUI.getRoomID();
                                 int speaker2ID = organizerUI.getSpeakerID();
                                 int oldTalkID = organizerUI.getOldTalkID();
                                 int newTalkID = organizerUI.getNewTalkID();
-                                Talk oldTalk = tlkM.getTalk(oldTalkID);
-                                Talk newTalk = tlkM.getTalk(newTalkID);
-                                Speaker newSpeaker = (Speaker) loginM.getAccountWithId(speaker2ID);
-                                Room newRoom = roomM.getRoomWithID(roomID2);
-                                rescheduleSpeaker(newSpeaker , newTalk, oldTalk, newRoom);
+                                rescheduleSpeaker(speaker2ID , oldTalkID, newTalkID, roomID2);
                                 break;
                         }
                     }
                 case 3:
                     String username = organizerUI.getSpeakerUsername();
-                    int newSpeakerID = createSpeaker(username);
+                    int speakerID = createSpeaker(username);
                     int userInput3 = -1;
                     while (userInput3 != 3) {
                         userInput3 = chooseMode3();
                         switch (userInput3) {
                             case 1:
-                                Speaker acc = (Speaker) loginM.getAccountWithId(newSpeakerID);
                                 String talkTitle = organizerUI.getTalkTitle();
                                 int talkTime = organizerUI.getTalkStartTime();
                                 int talkRoomID = organizerUI.getTalkRoomID();
-                                int talkID = tlkM.createTalk(TalkManager.getTotalTalkCount() + 1, talkTitle, talkTime, talkRoomID, acc.getUserId());
-                                spkM.setCurrSpeaker(acc);
+                                int talkID = tlkM.createTalk(TalkManager.getTotalTalkCount() + 1, talkTitle, talkTime, talkRoomID, speakerID);
                                 if(talkID == -1){
                                     organizerUI.messageToDisplay(10);
                                 }else {
-                                    spkM.registerNewTalk(tlkM.getTalk(talkID));
+                                    spkM.registerNewTalk(talkID, speakerID);
                                     organizerUI.messageToDisplay(11);
                                 }
                                 break;
@@ -130,27 +115,25 @@ public class OrganizerSystem {
         organizerUI.messageToDisplay(5);
     }
 
-    public void rescheduleSpeaker(Speaker speaker, Talk currentTalk, Talk rescheduleTalk, Room rescheduleRoom){
-        for(int item:speaker.getTalkList()){
-            if(speaker.getTalkList().get(item) == currentTalk.getRoomId()){
-                speaker.removeTalk(item);
+    public void rescheduleSpeaker(int speakerID, int currentTalkID, int rescheduledTalkID, int rescheduleRoomID){
+        for(int num:spkM.getTalkList(speakerID)){
+            if(num == currentTalkID){
+                tlkM.removeTalk(num);
             }
         }
-        scheduleRoom(rescheduleRoom, speaker, rescheduleTalk);
+        scheduleRoom(rescheduleRoomID, speakerID, rescheduledTalkID);
     }
 
-
     private void scheduleRoom(int roomID, int speakerID, int talkID){
-        HashMap<Integer, Object> accList = new HashMap<>(loginM.getAccountList());
-        if(!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID)) && !spkM.checkTalk(speakerID, talkID, accList){
-            for(int i = 0; i < spkM.getTalkListSize(); i++){
-                if(tlkM.getTalk(speaker.getTalkList().get(i)).getStartTime() == talk.getStartTime()){
+        if(!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID)) && !spkM.checkTalk(speakerID, talkID)) {
+            for (int item : spkM.getTalkList(speakerID)) {
+                if (item == tlkM.getStartTime(talkID)) {
                     organizerUI.messageToDisplay(12);
                     break;
                 }/*查看Speaker现有talk的时间和当前talk是否会重合*/
             }
-            talk.setSpeaker(speaker.getUserId());
-            room.scheduleTalk(talk.getTalkId(), talk.getStartTime());
+            tlkM.setSpeakerTo(speakerID, talkID);
+            roomM.scheduleTalk(roomID, talkID, tlkM.getStartTime(talkID));
             organizerUI.messageToDisplay(13);
         }else{
             organizerUI.messageToDisplay(14);
@@ -161,15 +144,14 @@ public class OrganizerSystem {
         String password1 = organizerUI.getSpeakerpwd1();
         String password2 = organizerUI.getSpeakerpwd2();
         if(password1.equals(password2)){
-            int id = loginM.getTotalNumOfAccount() + 1;
-            int speakerID = spkM.createSpeaker(username, password1, id);//需要把speakerID加到login manager里
+            accM.createAccount(username, password1, 2);
             organizerUI.messageToDisplay(9);
-            return id;
+            return accM.getTotalNumOfAccount();
         }else{
             organizerUI.messageToDisplay(7);
             createSpeaker(username);
         }
-        return 0;
+        return -1;
     }
 
     private int chooseMode1() {
@@ -220,41 +202,18 @@ public class OrganizerSystem {
         return mode;
     }
 
-    public ArrayList<Account> speakerList() {
-        ArrayList<Account> allSpeaker = new ArrayList<>();
-        for(Account acc:loginM.getAccountList().values()){
-            if(acc.getUserType() == 2) {
-                allSpeaker.add(acc);
-            }
-        }
-        return allSpeaker;
-    }
-
-    public ArrayList<Account> attendeeList() {
-        ArrayList<Account> attendeeList = new ArrayList<>();
-        for(Account acc:loginM.getAccountList().values()){
-            if(acc.getUserType() == 1) {
-                attendeeList.add(acc);
-            }
-        }
-        return attendeeList;
-    }
-
     private void readAllAtt() {
-        ArrayList<Account> attendees = attendeeList();
+        HashMap<Integer, String> attendees = ognM.getAllAttendee();
         organizerUI.displayAllAttendees(attendees);
     }
 
     private void readAllSpk() {
-        ArrayList<Account> speakers = speakerList();
+        HashMap<Integer, String> speakers = ognM.getAllSpeaker();
         organizerUI.displayAllSpeakers(speakers);
     }
 
     private int getResponse(){
-        ArrayList<Integer> validChoices = new ArrayList<>();
-        for(Account acc:attendeeList()){
-            validChoices.add(acc.getUserId());
-        }
+        ArrayList<Integer> validChoices = new ArrayList<>(ognM.getValidChoices());
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -269,31 +228,29 @@ public class OrganizerSystem {
         return mode;}
 
     public void messageToIndividual(String str, int receiverID) {
-        Account receiver = loginM.getAccountWithId(receiverID);
-        if(receiver.getUserType() == 2 || receiver.getUserType() == 1){
-            Message msg = MsgM.createmessage(currOrganizer.getUserId(), receiverID, str);
-            this.currOrganizer.addSentMessage(msg.getmessageid());
-            receiver.addInbox(msg.getmessageid());
-            organizerUI.messageToDisplay(1);
-        }else{
-            organizerUI.messageToDisplay(3);
+        int check = ognM.messageable1(receiverID);
+        if(check == 1){
+            int msg = MsgM.createmessage(ognM.getCurrOrganizer(), receiverID, str);
+            accM.addinbox(receiverID, msg);
+            accM.addsend(ognM.getCurrOrganizer(), msg);
         }
+        organizerUI.messageToDisplay(check);
     }
 
     public void messageToAllSpeaker(String str) {
-        for(Account speaker:speakerList()){
-                Message msg = MsgM.createmessage(currOrganizer.getUserId(), speaker.getUserId(), str);
-                this.currOrganizer.addSentMessage(msg.getmessageid());
-                speaker.addInbox(msg.getmessageid());
+        for(int speaker:ognM.getSpeakerList()){
+                int msg = MsgM.createmessage(ognM.getCurrOrganizer(), speaker, str);
+                accM.addinbox(speaker, msg);
+                accM.addsend(ognM.getCurrOrganizer(), msg);
         }
         organizerUI.messageToDisplay(2);
     }
 
     public void messageToAllAttendee(String str){
-        for(Account attendee:attendeeList()){
-            Message msg = MsgM.createmessage(currOrganizer.getUserId(), attendee.getUserId(), str);
-            this.currOrganizer.addSentMessage(msg.getmessageid());
-            attendee.addInbox(msg.getmessageid());
+        for(int attendee:ognM.getAttendeeList()){
+            int msg = MsgM.createmessage(ognM.getCurrOrganizer(), attendee, str);
+            accM.addinbox(attendee, msg);
+            accM.addsend(ognM.getCurrOrganizer(), msg);
         }
         organizerUI.messageToDisplay(2);
     }
