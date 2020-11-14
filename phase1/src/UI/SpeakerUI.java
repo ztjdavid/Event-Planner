@@ -11,7 +11,8 @@ public class SpeakerUI {
 
 
     public void startup(){
-        System.out.println("----------------SpeakerSystem-----------------\nHi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Quit");
+        System.out.println("----------------SpeakerSystem-----------------\n" +
+                "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Quit");
     }
 
     public String getrequest(){
@@ -24,9 +25,12 @@ public class SpeakerUI {
 
     }
     public void messaging(){
-        System.out.println("----------------Messaging-----------------\nHi, Speaker! Would you like to\n1 -> Me" +
-                "ssage to one attendee\n2 -> Message to attendees in talks\n3 -> Message all att" +
-                "endees who register your talks");
+        System.out.println("----------------Messaging-----------------");
+        System.out.println("Hi, Speaker! Would you like to:");
+        System.out.println("1 -> Message to an attendee.\n" +
+                            "2 -> Message to attendees in talks\n" +
+                            "3 -> Message all attendees who register your talks\n" +
+                            "4 -> Go back.");
     }
     //TODO
     public String enteringtext(){

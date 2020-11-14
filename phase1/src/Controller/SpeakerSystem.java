@@ -22,7 +22,8 @@ public class SpeakerSystem {
     protected StrategyManager strategyM;
 
 //TODO: 不应该出现在最终程序里会有的print指令，所有必要的print都必须在UI里实现。
-    public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI, StrategyManager StrategyManager) {
+    public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
+                         StrategyManager StrategyManager) {
         this.loginM = loginM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
@@ -33,58 +34,82 @@ public class SpeakerSystem {
 
     }
     public void run(){
-        int userinput = -1;
-        while (userinput != 3){
+        int userChoice;
+        do{
             speakerUI.startup();
+            userChoice = chooseMode1();
+            enterBranch(userChoice);
+        } while (userChoice != 3);
+    }
 
-            userinput = chooseMode1();
 
-            switch (userinput){
-                case 1:
-                    readalltalks();
-                    break;
-                case 2:
-
-                    int userinput2 = -1;
-                    while (userinput2 != 4){
-                        speakerUI.messaging();
-                        userinput2 = chooseMode2();
-                        switch (userinput){
-                            case 1:
-                                readallatt();
-                                int tgetter = targetgetter();
-                                String txt = speakerUI.enteringtext();
-                                messagetoatt(txt, tgetter);
-                                break;
-                            case 2:
-                                readalltalkssimp();
-                                String txt1 = speakerUI.enteringtext();
-                                int targettalk = -1;
-                                while (targettalk != 999) {
-                                    targettalk= targettalks();
-                                    messagetotalk(txt1, targettalk);
-
-                                }
-                                break;
-                            case 3:
-                                String txt2 = speakerUI.enteringtext();
-                                messageall(txt2);
-                                break;
-                            default:
-                                break;
-
-                        }
-                    }
-                    System.out.println("Quit Messaging System");
-
-                default:
-                    break;
-            }
+    //Methods for controlling program process:
+    private void enterBranch(int userChoice){
+        switch (userChoice){
+            case 1:
+                readalltalks();
+                break;
+            case 2:
+                MsgDashboard();
+            case 3:
+                break;
         }
-        System.out.println("Quit");
+    }
+
+    private void MsgDashboard(){
+        int userChoice;
+        do{
+            speakerUI.messaging();
+            userChoice = chooseMode2();
+            msgOp(userChoice);
+        } while (userChoice != 4);
+
 
     }
-    private int chooseMode1(){
+
+    private void msgOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                msgToAttendee();
+                break;
+            case 2:
+                msgToTalk();
+                break;
+            case 3:
+                msgToAllTalks();
+                break;
+            case 4:
+                break;
+        }
+    }
+
+
+    //Methods for doing a specific user operation.
+    private void msgToAttendee(){
+        readallatt();
+        int tgetter = targetgetter();
+        String txt = speakerUI.enteringtext();
+        messagetoatt(txt, tgetter);
+    }
+
+    private void msgToTalk(){
+        readalltalkssimp();
+        String txt1 = speakerUI.enteringtext();
+        int targettalk = -1;
+        while (targettalk != 999) {
+            targettalk= targettalks();
+            messagetotalk(txt1, targettalk);
+        }
+    }
+
+    private void msgToAllTalks(){
+        String txt2 = speakerUI.enteringtext();
+        messageall(txt2);
+    }
+
+
+    //Helper Methods:
+    private int chooseMode1(){    //For Speaker Dashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
         String userInput;
         int mode = -1;
@@ -99,7 +124,8 @@ public class SpeakerSystem {
         }
         return mode;
     }
-    private int chooseMode2(){
+
+    private int chooseMode2(){    // For messaging dashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         String userInput;
         int mode = -1;
@@ -112,7 +138,8 @@ public class SpeakerSystem {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
         }
-        return mode;}
+        return mode;
+    }
 
     private int targetgetter(){
         ArrayList<Integer> validChoices = getallattendeev1(currSpeaker);
@@ -225,7 +252,6 @@ public class SpeakerSystem {
     //TODO 不能直接对entity操作， 要在speakerManager里实现这个功能。
     private ArrayList<Talk> getalltalks() {
         ArrayList<Talk> alltalks = new ArrayList<>();
-
         for(int i = 0; i < currSpeaker.getTalkList().size(); i++){
             alltalks.add(talkManager.getTalk(currSpeaker.getTalkList().get(i)));}
         return alltalks;
