@@ -136,6 +136,47 @@ public class TalkManager {
             return true;
         }
     }
+
+    /**
+     * Remove a specific Talk from the Talk list.
+     * @param talk The Talk that want to be removed.
+     * @return true iff the Talk has been removed.
+     */
+    public boolean removeTalk(Talk talk){
+        if (this.talkList.containsKey(talk.getTalkId())){
+            this.talkList.remove(talk.getTalkId(), talk);
+            totalTalkCount -= 1;
+            System.out.println("The Talk has been successfully removed.");
+            return true;
+        }else{
+            System.out.println("No such Talk has been found.");
+            return false;
+        }
+    }
+
+    /**
+     * Reschedule a specific Talk with checking conflicts.
+     * @param talk The Talk that want to be rescheduled.
+     * @param startTime Start time of the Talk.
+     * @param room  Room of the Talk.
+     * @param speaker Speaker of the Talk.
+     * @return true iff the Talk has been rescheduled.
+     */
+    public boolean rescheduleTalk(Talk talk, int startTime, Room room, Speaker speaker){
+        if(!room.isOccupiedAt(startTime) /**并且speaker在这个时间是空闲的*/){
+            talk.setRoomId(room.getRoomId());
+            talk.setStartTime(startTime);
+            talk.setSpeaker(speaker.getUserId());
+            talk.setTalkTitle(talk.getTalkTitle());
+            System.out.println("The Talk has been successfully rescheduled.");
+            return true;
+        }else{
+            System.out.println("The Talk cannot be rescheduled due to certain conflicts.");
+            return false;
+        }
+    }
+
+
 }
 
 
