@@ -58,7 +58,7 @@ public class AppSystem {
         switch (currAccountType){
             case 0:
                 System.out.println("run organizer system");
-                //organizerS.run();
+                organizerS.run();
                 break;
             case 1:
                 System.out.println("run attendee system");
