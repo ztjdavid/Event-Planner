@@ -7,6 +7,8 @@ import UseCase.LoginManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class OrganizerSystem {
     protected LoginManager loginM;
@@ -34,7 +36,7 @@ public class OrganizerSystem {
 
     public void run(){
         int userInput = -1;
-        while (userInput != 8) {
+        while (userInput != 5) {
             organizerUI.startup();
             userInput = chooseMode1();
             switch (userInput){
@@ -121,13 +123,6 @@ public class OrganizerSystem {
                                 break;
                         }
                     }
-                case 4:
-                    changeCurrPwd();
-                    break;
-                case 5:
-                    organizerUI.displayCurrUsername(currOrganizer.getUsername());
-                    changeCurrUsername();
-                    break;
                 default:
                     break;
             }
@@ -145,9 +140,10 @@ public class OrganizerSystem {
     }
 
 
-    private void scheduleRoom(Room room, Speaker speaker, Talk talk){
-        if(!room.isOccupiedAt(talk.getStartTime()) && !speaker.getTalkList().contains(talk.getTalkId())){
-            for(int i = 0; i < speaker.getTalkList().size(); i++){
+    private void scheduleRoom(int roomID, int speakerID, int talkID){
+        HashMap<Integer, Object> accList = new HashMap<>(loginM.getAccountList());
+        if(!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID)) && !spkM.checkTalk(speakerID, talkID, accList){
+            for(int i = 0; i < spkM.getTalkListSize(); i++){
                 if(tlkM.getTalk(speaker.getTalkList().get(i)).getStartTime() == talk.getStartTime()){
                     organizerUI.messageToDisplay(12);
                     break;
@@ -176,32 +172,8 @@ public class OrganizerSystem {
         return 0;
     }
 
-    private void changeCurrUsername(){
-        String currPwd = organizerUI.currPwd();
-        if (loginM.loginAccount(currOrganizer.getUsername(), currPwd)){
-            String newName = organizerUI.getNewUsername();
-            ognM.changeUsername(currOrganizer, newName);
-            organizerUI.displayNewUsername(newName);
-        }else{
-            organizerUI.messageToDisplay(8);
-            changeCurrUsername();
-        }
-    }
-
-    private void changeCurrPwd(){
-        String pwd1 = organizerUI.getNewPwd();
-        String pwd2 = organizerUI.getNewPwd2();
-        if(pwd1.equals(pwd2)){
-            ognM.changePassword(currOrganizer, pwd1);
-            organizerUI.messageToDisplay(6);
-        }else{
-            organizerUI.messageToDisplay(7);
-            changeCurrPwd();
-        }
-    }
-
     private int chooseMode1() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         int mode = -1;
         boolean valid = false;
         while (!valid) {

@@ -81,4 +81,16 @@ public class LoginManager {
 
     public HashMap<Integer, Account> getAccountList(){ return new HashMap<>(accountList);}
 
+    public String getinfoacc(int id){
+        Account target = getAccountWithId(id);
+        String targetname = target.getUsername();
+        String a = targetname + "id:" + id + "\n";
+        return a;
+    }
+
+    public void addinbox(int getterid, int msgid){getAccountWithId(getterid).addInbox(msgid);}
+
+    public void addsend(int senderid, int msgid){getAccountWithId(senderid).addSentMessage(msgid);}
+
+
 }

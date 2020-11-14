@@ -2,13 +2,13 @@ package UseCase;
 import Entity.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The SpeakerManager class implements all functionalities of a speaker.
  */
 public class SpeakerManager extends AccountManager {
     protected static Speaker currSpeaker;
-    protected ArrayList<Integer> contactList;
 
 
     public SpeakerManager() {
@@ -69,6 +69,21 @@ public class SpeakerManager extends AccountManager {
             return newSpeaker.getUserId();
     }
     public ArrayList<Integer> getalltalk(){return currSpeaker.getTalkList();}
+    public ArrayList<Integer> getinbox(){return currSpeaker.getInbox();}
+
+    public boolean checkTalk(int speakerID, int talkID, HashMap<Integer,Object> accList){
+        Speaker speaker = (Speaker) accList.get(speakerID);
+        return speaker.getTalkList().contains(talkID);
+    }
+
+    public int getTalkListSize(int speakerID, HashMap<Integer,Object> accList){
+        Speaker speaker = (Speaker) accList.get(speakerID);
+        return speaker.getTalkList().size();
+    }
+
+
+
+
 
 }
 
