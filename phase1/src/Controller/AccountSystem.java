@@ -18,6 +18,7 @@ public class AccountSystem {
     protected TalkManager tlkM;
     protected RoomManager roomM;
 
+
     public AccountSystem(AccountManager accountM, LoginManager loginM) {
         this.accountM = accountM;
         this.loginM = loginM;
