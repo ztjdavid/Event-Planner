@@ -1,7 +1,4 @@
 package Controller;
-import Entity.Account;
-import Entity.Speaker;
-
 import UI.SpeakerUI;
 import UseCase.LoginManager;
 import UseCase.StrategyManager;
@@ -16,7 +13,6 @@ import java.util.Arrays;
 public class SpeakerSystem {
     protected LoginManager loginM;
     protected TalkManager talkManager;
-    protected Speaker currSpeaker;
     protected MessageManager MsgM;
     protected SpeakerUI speakerUI;
     protected StrategyManager strategyM;
@@ -28,7 +24,6 @@ public class SpeakerSystem {
         this.loginM = loginM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
-        this.currSpeaker = (Speaker) loginM.getCurrAccount();
         this.speakerUI = SpeakerUI;
         this.strategyM = StrategyManager;
         this.SpeakerM = SpeakerM;
@@ -144,7 +139,7 @@ public class SpeakerSystem {
     }
 
     private int targetgetter(){
-        ArrayList<Integer> validChoices = getallattendeev1(currSpeaker);
+        ArrayList<Integer> validChoices = getallattendeev1();
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -159,7 +154,7 @@ public class SpeakerSystem {
         return mode;}
 
     private int targettalks(){
-        ArrayList<Integer> validChoices = currSpeaker.getTalkList();
+        ArrayList<Integer> validChoices = SpeakerM.getalltalk();
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -188,38 +183,35 @@ public class SpeakerSystem {
 
 
     private void readallatt(){
-        ArrayList<Integer> att = getallattendeev1(currSpeaker);
+        ArrayList<Integer> att = getallattendeev1();
         String a = "There are the attendees who attend your talk. Choose an id to message";
-        for(int i = 0; i < att.size(); i++) {
-            Account attendee = loginM.getAccountWithId(att.get(i));
-            int attendeeid = attendee.getUserId();
-            String attendeename = attendee.getUsername();
-            a = a + "\n" + "\n" + attendeename + "id:" + attendeeid;
+        for(Integer i : att) {
+            a += loginM.getinfoacc(i);
+
         }
         speakerUI.show(a);
     }
 
+    private void readallreply(){
+        String a = MsgM.formatreply(SpeakerM.getinbox());
+        speakerUI.show(a);
+    }
+
     public void messagetoatt(String a, int getterid) {
-        Account getter = loginM.getAccountWithId(getterid);
-        int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-        this.currSpeaker.addSentMessage(msg);
-        getter.addInbox(msg);
+
+        int msg = MsgM.createmessage(SpeakerM.getCurrSpeaker(), getterid, a);
+        loginM.addinbox(getterid, msg);
+        loginM.addsend(SpeakerM.getCurrSpeaker(), msg);
         speakerUI.messagesend();
-
-
     }
 
 
     public void messageall(String a) {
-        ArrayList<Integer> att = getallattendeev1(this.currSpeaker);
+        ArrayList<Integer> att = getallattendeev1();
         if (att.size() == 0) {speakerUI.noattendees();}
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
-            Account getter = loginM.getAccountWithId(getterid);
-            int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-            this.currSpeaker.addSentMessage(msg);
-            getter.addInbox(msg);
-
+            messagetoatt(a, getterid);
         }
         speakerUI.messagesend();
     }
@@ -231,10 +223,7 @@ public class SpeakerSystem {
         }
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
-            Account getter = loginM.getAccountWithId(getterid);
-            int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-            this.currSpeaker.addSentMessage(msg);
-            getter.addInbox(msg);
+            messagetoatt(a, getterid);
 
         }
         speakerUI.messagesend();
@@ -242,8 +231,8 @@ public class SpeakerSystem {
     }
     //TODO 不能直接对entity操作， 要在speakerManager里实现这个功能。
 
-    public ArrayList<Integer> getallattendeev1(Speaker speaker) {
-        ArrayList<Integer> talklist = speaker.getTalkList();
+    public ArrayList<Integer> getallattendeev1() {
+        ArrayList<Integer> talklist = SpeakerM.getalltalk();
         ArrayList<Integer> allattendeeid = talkManager.getallattendee(talklist);
 
         return allattendeeid;

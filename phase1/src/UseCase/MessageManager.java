@@ -2,6 +2,7 @@ package UseCase;
 import Entity.*;
 
 import java.util.ArrayList;
+import Entity.Account;
 
 public class MessageManager {
     static ArrayList<Message> allmessage;
@@ -15,7 +16,19 @@ public class MessageManager {
 
     }
 
-    public void setreply(Message a, String reply){a.response(reply);}
+    public Message getmessage(int messageid){
+        return allmessage.get(messageid);
+    }
+
+    public void setreply(int messageid, String reply){getmessage(messageid).response(reply);}
+
+    public String formatreply(ArrayList<Integer> inbox){
+        String a = "These are the replies";
+        for(Integer i: inbox){
+            a += "This reply is from " + getmessage(i).getGetterid() + "\n" + getmessage(i).getReply();
+        }
+        return a;
+    }
 
 
     }
