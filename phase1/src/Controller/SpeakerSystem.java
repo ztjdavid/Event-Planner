@@ -211,9 +211,9 @@ public class SpeakerSystem {
 
     public void messagetoatt(String a, int getterid) {
 
-        int msg = MsgM.createmessage(SpeakerM.getCurrSpeaker(), getterid, a);
+        int msg = MsgM.createmessage(accM.getCurrAccountId(), getterid, a);
         accM.addinbox(getterid, msg);
-        accM.addsend(SpeakerM.getCurrSpeaker(), msg);
+        accM.addsend(accM.getCurrAccountId(), msg);
         speakerUI.messagesend();
     }
 

@@ -8,36 +8,29 @@ import java.util.HashMap;
  * The SpeakerManager class implements all functionalities of a speaker.
  */
 public class SpeakerManager extends AccountManager {
-    protected static Speaker currSpeaker;
-
     public SpeakerManager() {
         super();
     }
 
-    public void setCurrSpeaker(Speaker speaker){
-        currSpeaker = speaker;
-    }
-
-    public int getCurrSpeaker(){
-        return currSpeaker.getUserId();
+    public Speaker getCurrSpeaker(){
+        return (Speaker)getCurrAccount();
     }
 
     public void changeUsername(String name){
-        currSpeaker.setUsername(name);
+        getCurrSpeaker().setUsername(name);
     }
 
     public void changePassword(String password){
-        currSpeaker.setPassword(password);
+        getCurrSpeaker().setPassword(password);
     }
 
     public void registerNewTalk(int talkID, int speakerID){
-        Speaker speaker = (Speaker) getAccountWithId(speakerID);
-        setCurrSpeaker(speaker);
+        Speaker speaker = (Speaker) accountList.get(speakerID);
         speaker.registerTalk(talkID);
     }
 
     public void removeTalk(Talk talk){
-        currSpeaker.removeTalk(talk.getTalkId());
+        getCurrSpeaker().removeTalk(talk.getTalkId());
     }
 
 
@@ -54,12 +47,12 @@ public class SpeakerManager extends AccountManager {
     }
 
     public boolean responsibleForTalk(int talkId) {
-        ArrayList<Integer> talkList = currSpeaker.getTalkList();
+        ArrayList<Integer> talkList = getCurrSpeaker().getTalkList();
         return talkList.contains(talkId);
     }
 
-    public ArrayList<Integer> getalltalk(){return currSpeaker.getTalkList();}
-    public ArrayList<Integer> getinbox(){return currSpeaker.getInbox();}
+    public ArrayList<Integer> getalltalk(){return getCurrSpeaker().getTalkList();}
+    public ArrayList<Integer> getinbox(){return getCurrSpeaker().getInbox();}
 
     public boolean checkTalk(int speakerID, int talkID){
         Speaker speaker = (Speaker) getAccountWithId(speakerID);
@@ -67,7 +60,7 @@ public class SpeakerManager extends AccountManager {
     }
 
     public ArrayList<Integer> getTalkList(int speakerID){
-        Speaker speaker = (Speaker) getAccountWithId(speakerID);
+        Speaker speaker = (Speaker) accountList.get(speakerID);
         return new ArrayList<>(speaker.getTalkList());
     }
 
