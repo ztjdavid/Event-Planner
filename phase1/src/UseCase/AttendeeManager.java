@@ -20,15 +20,6 @@ public class AttendeeManager extends AccountManager{
         return other.getUserType() != 0;
     }
 
-    public HashMap<Integer, String> getAllAttendee(){
-        HashMap<Integer, String> allAttendee = new HashMap<>();
-        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
-        for(Account acc : accList.values()){
-            if(acc.getUserType() == 1){
-                allAttendee.put(acc.getUserId(), acc.getUsername());
-            }
-        }return allAttendee;
-    }
 
 
 

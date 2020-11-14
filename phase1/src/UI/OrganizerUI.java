@@ -1,8 +1,5 @@
 package UI;
 
-import Entity.Account;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -159,12 +156,10 @@ public class OrganizerUI {
         System.out.println(a);
     }
 
-    public void displayAllAttendees(ArrayList<Account> lst){
+    public void displayAllAttendees(HashMap<Integer, String> lst){
         StringBuilder a = new StringBuilder("These are the all the attendees in the system. Choose an id to message");
-        for(Account acc : lst) {
-            int attendeeID = acc.getUserId();
-            String attendeeName = acc.getUsername();
-            a.append("\n").append("\n").append(attendeeName).append("id:").append(attendeeID);
+        for(Integer acc : lst.keySet()) {
+            a.append("\n").append("\n").append(lst.get(acc)).append("id:").append(acc);
         }
         System.out.println(a);
     }

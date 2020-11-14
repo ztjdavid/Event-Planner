@@ -1,5 +1,4 @@
 package Controller;
-import Entity.Organizer;
 import UI.OrganizerUI;
 import UseCase.*;
 
@@ -10,7 +9,6 @@ import java.util.HashMap;
 public class OrganizerSystem {
     protected AccountManager accM;
     protected MessageManager MsgM;
-    protected Organizer currOrganizer;
     protected StrategyManager strategyM;
     protected OrganizerUI organizerUI;
     protected OrganizerManager ognM;
@@ -22,7 +20,6 @@ public class OrganizerSystem {
                            OrganizerManager ognM, SpeakerManager spkM, TalkManager tlkM, RoomManager roomM) {
         this.accM = accM;
         this.MsgM = MsgM;
-        this.currOrganizer = (Organizer) accM.getCurrAccount();
         this.strategyM = strategyM;
         this.organizerUI = organizerUI;
         this.ognM = ognM;
@@ -208,31 +205,18 @@ public class OrganizerSystem {
         return mode;
     }
 
-    public ArrayList<Account> attendeeList() {
-        ArrayList<Account> attendeeList = new ArrayList<>();
-        for(Account acc:loginM.getAccountList().values()){
-            if(acc.getUserType() == 1) {
-                attendeeList.add(acc);
-            }
-        }
-        return attendeeList;
-    }
-
     private void readAllAtt() {
-        ArrayList<Account> attendees = attendeeList();
+        HashMap<Integer, String> attendees = ognM.getAllAttendee();
         organizerUI.displayAllAttendees(attendees);
     }
 
     private void readAllSpk() {
-        HashMap<Integer, String> speakers = spkM.getAllSpeaker();
+        HashMap<Integer, String> speakers = ognM.getAllSpeaker();
         organizerUI.displayAllSpeakers(speakers);
     }
 
     private int getResponse(){
-        ArrayList<Integer> validChoices = new ArrayList<>();
-        for(Account acc:attendeeList()){
-            validChoices.add(acc.getUserId());
-        }
+        ArrayList<Integer> validChoices = new ArrayList<>(ognM.getValidChoices());
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -247,31 +231,29 @@ public class OrganizerSystem {
         return mode;}
 
     public void messageToIndividual(String str, int receiverID) {
-        Account receiver = loginM.getAccountWithId(receiverID);
-        if(receiver.getUserType() == 2 || receiver.getUserType() == 1){
-            Message msg = MsgM.createmessage(currOrganizer.getUserId(), receiverID, str);
-            this.currOrganizer.addSentMessage(msg.getmessageid());
-            receiver.addInbox(msg.getmessageid());
-            organizerUI.messageToDisplay(1);
-        }else{
-            organizerUI.messageToDisplay(3);
+        int check = ognM.messageable1(receiverID);
+        if(check == 1){
+            int msg = MsgM.createmessage(ognM.getCurrOrganizer(), receiverID, str);
+            accM.addinbox(receiverID, msg);
+            accM.addsend(ognM.getCurrOrganizer(), msg);
         }
+        organizerUI.messageToDisplay(check);
     }
 
     public void messageToAllSpeaker(String str) {
-        for(Account speaker:speakerList()){
-                Message msg = MsgM.createmessage(currOrganizer.getUserId(), speaker.getUserId(), str);
-                this.currOrganizer.addSentMessage(msg.getmessageid());
-                speaker.addInbox(msg.getmessageid());
+        for(int speaker:ognM.getSpeakerList()){
+                int msg = MsgM.createmessage(ognM.getCurrOrganizer(), speaker, str);
+                accM.addinbox(speaker, msg);
+                accM.addsend(ognM.getCurrOrganizer(), msg);
         }
         organizerUI.messageToDisplay(2);
     }
 
     public void messageToAllAttendee(String str){
-        for(Account attendee:attendeeList()){
-            Message msg = MsgM.createmessage(currOrganizer.getUserId(), attendee.getUserId(), str);
-            this.currOrganizer.addSentMessage(msg.getmessageid());
-            attendee.addInbox(msg.getmessageid());
+        for(int attendee:ognM.getAttendeeList()){
+            int msg = MsgM.createmessage(ognM.getCurrOrganizer(), attendee, str);
+            accM.addinbox(attendee, msg);
+            accM.addsend(ognM.getCurrOrganizer(), msg);
         }
         organizerUI.messageToDisplay(2);
     }

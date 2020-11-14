@@ -1,7 +1,7 @@
 package Controller;
 import Entity.*;
 import UI.AttendeeUI;
-import UseCase.LoginManager;
+import UseCase.AccountManager;
 import UseCase.StrategyManager;
 import UseCase.TalkManager;
 import UseCase.MessageManager;
@@ -13,15 +13,15 @@ import java.util.HashMap;
 //Completeness:25%
 
 public class AttendeeSystem {
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected TalkManager talkManager;
     protected Attendee currAttendee;
     protected MessageManager MsgM;
     protected AttendeeUI attendeeUI;
     protected StrategyManager strategyM;
 
-    public AttendeeSystem(LoginManager loginM){
-        this.loginM = loginM;
+    public AttendeeSystem(AccountManager accM){
+        this.accM = accM;
     }
 
     public void run() {
