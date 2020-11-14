@@ -97,9 +97,9 @@ public class SpeakerSystem {
             if (tAttendeeId != -1){
                 String txt = enterTxt();
                 messagetoatt(txt, tAttendeeId);
+                speakerUI.askForBack();
             }
         }while(tAttendeeId != -1);
-        speakerUI.askForBack();
     }
 
     private void msgToTalk(){
@@ -110,9 +110,9 @@ public class SpeakerSystem {
             if (targettalk != -1){
                 String txt = enterTxt();
                 messagetotalk(txt, targettalk);
+                speakerUI.askForBack();
             }
         } while (targettalk != -1);
-        speakerUI.askForBack();
     }
 
     private void msgToAllTalks(){
@@ -120,8 +120,8 @@ public class SpeakerSystem {
         if (userChoice == 1){
             String txt = enterTxt();
             messageall(txt);
+            speakerUI.askForBack();
         }
-        speakerUI.askForBack();
     }
 
     private void readrepandmsg(){
@@ -214,14 +214,14 @@ public class SpeakerSystem {
     }
 
     private void readalltalks(){
-        StringBuilder a = new StringBuilder("Talk Information");
+        StringBuilder a = new StringBuilder("Talk Information:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
             a.append(talkManager.gettalkinfo(t));}
         speakerUI.show(a.toString());
     }
     private void readalltalkssimp(){
-        StringBuilder a = new StringBuilder("Talk Information with id");
+        StringBuilder a = new StringBuilder("Talk Information with id:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
             a.append(talkManager.gettalkinfosimp(t));}
@@ -231,7 +231,7 @@ public class SpeakerSystem {
 
     private void readallatt(){
         ArrayList<Integer> att = getallattendeev1();
-        StringBuilder a = new StringBuilder("There are the attendees who attend your talk. Choose an id to message");
+        StringBuilder a = new StringBuilder("These are the attendees who attend your talk. Choose an id to message:");
         for(Integer i : att) {
             a.append(accM.getinfoacc(i));
 

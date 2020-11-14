@@ -36,7 +36,7 @@ public class SpeakerUI {
 
     public void informEnteringText(){
         System.out.println("Please Enter Your Message.\n " +
-                "(End editing by typing a single \"end\" in a new line.");
+                "(End editing by typing a single \"end\" in a new line.)");
     }
 
     public String getLineTxt(){
@@ -60,7 +60,7 @@ public class SpeakerUI {
         System.out.println("Stop Messaging");
 
     }
-    public void show(String a){System.out.println(a);}
+    public void show(String a){System.out.println(a + "\n");}
 
     public void announcereply(){System.out.println("Please remember the id of the account " +
             "if you want to send msg to.");
