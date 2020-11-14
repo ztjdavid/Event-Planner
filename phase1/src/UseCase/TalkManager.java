@@ -154,10 +154,6 @@ public class TalkManager {
         }
     }
 
-    public static int getTotalTalkCount(){
-        return totalTalkCount;
-    }
-
     public String gettalkinfo(int talkid){
         String a = new String();
         Talk talk = getTalk(talkid);
@@ -183,6 +179,15 @@ public class TalkManager {
             att.addAll(talk.getAttendeeId());}
         return att;
 
+    }
+
+    public static int getTotalTalkCount(){
+        return totalTalkCount;
+    }
+
+    public int getStartTime(int talkID){
+        Talk talk = getTalk(talkID);
+        return talk.getStartTime();
     }
 
 

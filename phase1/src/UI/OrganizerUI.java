@@ -15,8 +15,7 @@ public class OrganizerUI {
 
     public void startup(){
         System.out.println("----------------OrganizerSystem-----------------\nHi, " +
-                "Organizer! Would you like to\n1 -> Message\n2 -> Schedule a Talk\n3 -> Create a Speaker Account\n4 -> Change Your" +
-                " Password\n5 -> Change your UserName\n6 -> Quit");
+                "Organizer! Would you like to\n1 -> Message\n2 -> Schedule a Talk\n3 -> Create a Speaker Account\n4 -> Quit");
     }
 
     public String addTalkPrompt(){
@@ -79,16 +78,6 @@ public class OrganizerUI {
         return input.nextLine();
     }
 
-    public String getNewPwd(){
-        System.out.println("Password Correct! Please Enter Your New Password:");
-        return input.nextLine();
-    }
-
-    public String getNewPwd2(){
-        System.out.println("Great! Please Enter Your New Password again:");
-        return input.nextLine();
-    }
-
     public String getNewUsername(){
         System.out.println("Password Correct! Please Enter Your New Username!");
         return input.nextLine();
@@ -127,14 +116,6 @@ public class OrganizerUI {
         return a.toString();
     }
 
-    public void displayCurrUsername(String str){
-        System.out.println("Your Current User Name is:" + str);
-    }
-
-    public void displayNewUsername(String str){
-        System.out.println("Username Changed Successfully! Your New Username is:" + str);
-    }
-
     public void messageToDisplay(int i){
         switch (i){
             case 1:
@@ -148,11 +129,11 @@ public class OrganizerUI {
             case 5:
                 System.out.println("Quit.");
             case 6:
-                System.out.println("Password Changed Successfully!");
+
             case 7:
                 System.out.println("Passwords Do Not Match! Please try again!");
             case 8:
-                System.out.println("Incorrect Password! Please try again!");
+
             case 9:
                 System.out.println("Speaker Account Successfully Created!");
             case 10:

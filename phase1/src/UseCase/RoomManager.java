@@ -26,5 +26,10 @@ public class RoomManager {
         return allRooms.get(roomID);
     }
 
+    public boolean isOccupiedAt(int roomID, int startTime){
+        Room room = getRoomWithID(roomID);
+        return room.getTimetable().containsKey(startTime);
+    }
+
 
 }
