@@ -115,11 +115,10 @@ public class SpeakerSystem {
     //Helper Methods:
     private int chooseMode1(){    //For Speaker Dashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        String userInput;
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = speakerUI.getrequest();
+            String userInput = speakerUI.getrequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
             else {
@@ -131,11 +130,10 @@ public class SpeakerSystem {
 
     private int chooseMode2(){    // For messaging dashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-        String userInput;
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = speakerUI.getrequest();
+            String userInput = speakerUI.getrequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
             else {
@@ -147,11 +145,10 @@ public class SpeakerSystem {
 
     private int targetgetter(){
         ArrayList<Integer> validChoices = getallattendeev1();
-        String userInput;
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = speakerUI.getrequest();
+            String userInput = speakerUI.getrequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
             else {
@@ -162,11 +159,10 @@ public class SpeakerSystem {
 
     private int targettalks(){
         ArrayList<Integer> validChoices = SpeakerM.getalltalk();
-        String userInput;
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = speakerUI.getrequest2();
+            String userInput = speakerUI.getrequest2();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
             else {
@@ -176,27 +172,29 @@ public class SpeakerSystem {
         return mode;}
     //TODO： 与Entity直接联系了，生成每个talk的介绍应该在talkManager里实现，然后用这个method整合。
     private void readalltalks(){
-        String a = "Talk Information";
+        StringBuilder a = new StringBuilder("Talk Information");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
-        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfo(alltalks.get(i));};
-        speakerUI.show(a);
+        for(int i = 0; i < alltalks.size(); i++){
+            a.append(talkManager.gettalkinfo(alltalks.get(i)));};
+        speakerUI.show(a.toString());
     }
     private void readalltalkssimp(){
-        String a = "Talk Information with id";
+        StringBuilder a = new StringBuilder("Talk Information with id");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
-        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfosimp(alltalks.get(i));};
-        speakerUI.show(a);
+        for(int i = 0; i < alltalks.size(); i++){
+            a.append(talkManager.gettalkinfosimp(alltalks.get(i)));};
+        speakerUI.show(a.toString());
     }
 
 
     private void readallatt(){
         ArrayList<Integer> att = getallattendeev1();
-        String a = "There are the attendees who attend your talk. Choose an id to message";
+        StringBuilder a = new StringBuilder("There are the attendees who attend your talk. Choose an id to message");
         for(Integer i : att) {
-            a += accM.getinfoacc(i);
+            a.append(accM.getinfoacc(i));
 
         }
-        speakerUI.show(a);
+        speakerUI.show(a.toString());
     }
 
     private void readallreply(){

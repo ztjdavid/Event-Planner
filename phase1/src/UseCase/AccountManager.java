@@ -7,9 +7,9 @@ import java.util.HashMap;
  * The AccountManager class is a class with basic functionalities implemented.
  */
 public class AccountManager {
-    protected int TotalNumOfAccount = 0;
-    protected HashMap<Integer, Account> accountList = new HashMap<>();
-    protected int currAccountId = -1;
+    protected static int TotalNumOfAccount = 0;
+    protected static HashMap<Integer, Account> accountList = new HashMap<>();
+    protected static int currAccountId = -1;
 
     public AccountManager(){}
 
