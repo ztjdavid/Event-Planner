@@ -76,6 +76,8 @@ public class SpeakerSystem {
                 msgToAllTalks();
                 break;
             case 4:
+                readrepandmsg();
+            case 5:
                 break;
         }
     }
@@ -104,6 +106,11 @@ public class SpeakerSystem {
         messageall(txt2);
     }
 
+    private void readrepandmsg(){
+        readallreply();
+        speakerUI.announcereply();
+    }
+
 
     //Helper Methods:
     private int chooseMode1(){    //For Speaker Dashboard.
@@ -123,7 +130,7 @@ public class SpeakerSystem {
     }
 
     private int chooseMode2(){    // For messaging dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
         String userInput;
         int mode = -1;
         boolean valid = false;
