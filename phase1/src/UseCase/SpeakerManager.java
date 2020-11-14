@@ -68,7 +68,7 @@ public class SpeakerManager extends AccountManager {
             Speaker newSpeaker = new Speaker(username, password, userID);
             return newSpeaker.getUserId();
     }
-    public Array
+    public ArrayList<Integer> getalltalk(){return currSpeaker.getTalkList();}
 
 }
 

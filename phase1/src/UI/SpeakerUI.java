@@ -45,4 +45,18 @@ public class SpeakerUI {
         return speakerscanner.nextLine();
     }
 
+    public void messagesend(){
+        System.out.println("Message Send");
+
+    }
+    public void noattendees(){
+        System.out.println("No Attendees");
+
+    }
+    public void stopmessaging(){
+        System.out.println("Stop Messaging");
+
+    }
+    public void show(String a){System.out.println(a);}
+
 }

@@ -1,16 +1,17 @@
 package Controller;
 import Entity.Account;
 import Entity.Speaker;
-import Entity.Talk;
+
 import UI.SpeakerUI;
 import UseCase.LoginManager;
 import UseCase.StrategyManager;
 import UseCase.TalkManager;
 import UseCase.MessageManager;
+import UseCase.SpeakerManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+
 
 public class SpeakerSystem {
     protected LoginManager loginM;
@@ -19,16 +20,18 @@ public class SpeakerSystem {
     protected MessageManager MsgM;
     protected SpeakerUI speakerUI;
     protected StrategyManager strategyM;
+    protected SpeakerManager SpeakerM;
 
 //TODO: 不应该出现在最终程序里会有的print指令，所有必要的print都必须在UI里实现。
     public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
-                         StrategyManager StrategyManager) {
+                         StrategyManager StrategyManager, SpeakerManager SpeakerM) {
         this.loginM = loginM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.currSpeaker = (Speaker) loginM.getCurrAccount();
         this.speakerUI = SpeakerUI;
         this.strategyM = StrategyManager;
+        this.SpeakerM = SpeakerM;
 
 
     }
@@ -172,22 +175,15 @@ public class SpeakerSystem {
     //TODO： 与Entity直接联系了，生成每个talk的介绍应该在talkManager里实现，然后用这个method整合。
     private void readalltalks(){
         String a = "Talk Information";
-        for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
-        String talktitle = talk.getTalkTitle();
-        int talktime = talk.getStartTime();
-        int talkroom = talk.getRoomId();
-        int numatt = talk.getAttendeeId().size();
-        a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";}
-        System.out.println(a);
+        ArrayList<Integer> alltalks = SpeakerM.getalltalk();
+        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfo(alltalks.get(i));};
+        speakerUI.show(a);
     }
     private void readalltalkssimp(){
-        String a = "Talk Information";
-        for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
-            String talktitle = talk.getTalkTitle();
-            int talkid = talk.getTalkId();
-
-            a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;}
-        System.out.println(a);
+        String a = "Talk Information with id";
+        ArrayList<Integer> alltalks = SpeakerM.getalltalk();
+        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfosimp(alltalks.get(i));};
+        speakerUI.show(a);
     }
 
 
@@ -200,7 +196,7 @@ public class SpeakerSystem {
             String attendeename = attendee.getUsername();
             a = a + "\n" + "\n" + attendeename + "id:" + attendeeid;
         }
-        System.out.println(a);
+        speakerUI.show(a);
     }
 
     public void messagetoatt(String a, int getterid) {
@@ -208,7 +204,7 @@ public class SpeakerSystem {
         int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
         this.currSpeaker.addSentMessage(msg);
         getter.addInbox(msg);
-        System.out.println("Message Send");
+        speakerUI.messagesend();
 
 
     }
@@ -216,9 +212,7 @@ public class SpeakerSystem {
 
     public void messageall(String a) {
         ArrayList<Integer> att = getallattendeev1(this.currSpeaker);
-        if (att.size() == 0) {
-            String response = "No Attendees";
-            System.out.println(response);      }
+        if (att.size() == 0) {speakerUI.noattendees();}
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
             Account getter = loginM.getAccountWithId(getterid);
@@ -227,15 +221,13 @@ public class SpeakerSystem {
             getter.addInbox(msg);
 
         }
-        System.out.println("Message Send");
-
+        speakerUI.messagesend();
     }
     public void messagetotalk(String a, int b) {
-        if (b == 999) {System.out.println("Stop Messaging");}
+        if (b == 999) {speakerUI.stopmessaging();}
         ArrayList<Integer> att = talkManager.getTalk(b).getAttendeeId();
         if (att.size() == 0) {
-            String response = "No Attendees";
-            System.out.println(response);
+            speakerUI.noattendees();
         }
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
@@ -245,37 +237,17 @@ public class SpeakerSystem {
             getter.addInbox(msg);
 
         }
-        System.out.println("Message Send");
+        speakerUI.messagesend();
 
     }
     //TODO 不能直接对entity操作， 要在speakerManager里实现这个功能。
-    private ArrayList<Talk> getalltalks() {
-        ArrayList<Talk> alltalks = new ArrayList<>();
-        for(int i = 0; i < currSpeaker.getTalkList().size(); i++){
-            alltalks.add(talkManager.getTalk(currSpeaker.getTalkList().get(i)));}
-        return alltalks;
-    }
 
     public ArrayList<Integer> getallattendeev1(Speaker speaker) {
-        ArrayList<Integer> allattendeeid = new ArrayList<>();
         ArrayList<Integer> talklist = speaker.getTalkList();
-        for (int i = 0; i < talklist.size(); i++) {
-            Talk talk = talkManager.getTalk(talklist.get(i));
-            for (int a = 0; a < talk.getAttendeeId().size(); a++) {
-                int b = talk.getAttendeeId().get(a);
-                allattendeeid.add(b);
-            }
-        }
+        ArrayList<Integer> allattendeeid = talkManager.getallattendee(talklist);
+
         return allattendeeid;
     }
 
-    public HashMap<Integer, ArrayList<Integer>> getallattendeev2(Speaker speaker) {
-        HashMap<Integer, ArrayList<Integer>> allattendeeid = new HashMap<>();
-        ArrayList<Integer> talklist = speaker.getTalkList();
-        for (int i = 0; i < talklist.size(); i++) {
-            Talk talk = talkManager.getTalk(talklist.get(i));
-            allattendeeid.put(talklist.get(i), talk.getAttendeeId());
-        }
-        return allattendeeid;
-    }
+
 }

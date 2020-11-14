@@ -158,6 +158,34 @@ public class TalkManager {
         return totalTalkCount;
     }
 
+    public String gettalkinfo(int talkid){
+        String a = new String();
+        Talk talk = getTalk(talkid);
+        String talktitle = talk.getTalkTitle();
+        int talktime = talk.getStartTime();
+        int talkroom = talk.getRoomId();
+        int numatt = talk.getAttendeeId().size();
+        a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";
+        return a;
+    }
+
+    public String gettalkinfosimp(int talkid){
+        String a = new String();
+        Talk talk = getTalk(talkid);
+        String talktitle = talk.getTalkTitle();
+        a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;
+        return a;
+    }
+
+    public ArrayList<Integer> getallattendee(ArrayList<Integer> talklist){
+        ArrayList<Integer> att = new ArrayList<>();
+        for(int i = 0; i < talklist.size(); i++){Talk talk = getTalk(talklist.get(i));
+            att.addAll(talk.getAttendeeId());}
+        return att;
+
+    }
+
+
 }
 
 

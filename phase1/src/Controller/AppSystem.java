@@ -42,7 +42,7 @@ public class AppSystem {
         this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(loginM);
         this.organizerS = new OrganizerSystem(loginM, MsgM, organizerUI, strategyM, ognM, spkM, TalkM, roomM);
-        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM);
+        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM, spkM);
 
     }
 
