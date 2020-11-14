@@ -44,14 +44,16 @@ public class OrganizerManager extends AccountManager{
      * @param other Another account that the organizer is going to message(Attendee or Speaker).
      * @param message The Message the organizer is going to send.
      */
-    public void sendMessage(Organizer organizer, Account other, Message message){
+    public boolean sendMessage(Organizer organizer, Account other, Message message){
         if (this.messageable(other)){
             organizer.addSentMessage(message.getmessageid());
             other.addInbox(message.getmessageid());
             System.out.println("Your message has been sent successfully.");
+            return true;
 
         }else{
             System.out.println("Your message cannot be sent.");
+            return false;
         }
     }
 
@@ -62,7 +64,7 @@ public class OrganizerManager extends AccountManager{
      * @param talk The selected talk.
      * @param message The Message the organizer is going to send.
      */
-    public void messageAllAttendee(Organizer organizer, HashMap<Integer, Account> accountList, Talk talk, Message message){
+    public boolean messageAllAttendee(Organizer organizer, HashMap<Integer, Account> accountList, Talk talk, Message message){
         ArrayList<Integer> Attendance = talk.getAttendeeId();
         int numberAttendee = 0;
         for (Account value : accountList.values()){
@@ -72,8 +74,13 @@ public class OrganizerManager extends AccountManager{
                 numberAttendee ++;
             }
         }
-        if (numberAttendee == 0){System.out.println("No Attendee is attending the selected talk.");}
-        else if (numberAttendee > 0){System.out.println("Message has been sent to all Attendee of the selected talk.");}
+        if (numberAttendee == 0){
+            System.out.println("No Attendee is attending the selected talk.");
+            return false;
+        }else{
+            System.out.println("Message has been sent to all Attendee of the selected talk.");
+            return true;
+        }
     }
 
     /**
@@ -82,7 +89,7 @@ public class OrganizerManager extends AccountManager{
      * @param accountList Hash Map of all accounts.
      * @param message The Message the organizer is going to send.
      */
-    public void messageAllSpeaker(Organizer organizer, HashMap<Integer, Account> accountList, Message message){
+    public boolean messageAllSpeaker(Organizer organizer, HashMap<Integer, Account> accountList, Message message){
         int numberSpeaker = 0;
         for (Account value : accountList.values()) {
             if (value.getUserType() == 2) {
@@ -91,8 +98,13 @@ public class OrganizerManager extends AccountManager{
                 numberSpeaker++;
             }
         }
-        if (numberSpeaker == 0){System.out.println("There is no Speaker.");}
-        else if (numberSpeaker > 0){System.out.println("Message has been sent to all Speakers.");}
+        if (numberSpeaker == 0){
+            System.out.println("There is no Speaker.");
+            return false;
+        }else{
+            System.out.println("Message has been sent to all Speakers.");
+            return true;
+        }
     }
 
 }
