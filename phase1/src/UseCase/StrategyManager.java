@@ -16,7 +16,7 @@ public class StrategyManager {
     }
 
 
-
-
-
+    public boolean isEmptyList(ArrayList<Integer> a) {
+        return a.isEmpty();
+    }
 }

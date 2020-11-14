@@ -1,6 +1,6 @@
 package Controller;
 import UI.SpeakerUI;
-import UseCase.LoginManager;
+import UseCase.AccountManager;
 import UseCase.StrategyManager;
 import UseCase.TalkManager;
 import UseCase.MessageManager;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 
 public class SpeakerSystem {
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected TalkManager talkManager;
     protected MessageManager MsgM;
     protected SpeakerUI speakerUI;
@@ -19,9 +19,9 @@ public class SpeakerSystem {
     protected SpeakerManager SpeakerM;
 
 //TODO: 不应该出现在最终程序里会有的print指令，所有必要的print都必须在UI里实现。
-    public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
+    public SpeakerSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
                          StrategyManager StrategyManager, SpeakerManager SpeakerM) {
-        this.loginM = loginM;
+        this.accM = accM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.speakerUI = SpeakerUI;
@@ -193,7 +193,7 @@ public class SpeakerSystem {
         ArrayList<Integer> att = getallattendeev1();
         String a = "There are the attendees who attend your talk. Choose an id to message";
         for(Integer i : att) {
-            a += loginM.getinfoacc(i);
+            a += accM.getinfoacc(i);
 
         }
         speakerUI.show(a);
@@ -207,8 +207,8 @@ public class SpeakerSystem {
     public void messagetoatt(String a, int getterid) {
 
         int msg = MsgM.createmessage(SpeakerM.getCurrSpeaker(), getterid, a);
-        loginM.addinbox(getterid, msg);
-        loginM.addsend(SpeakerM.getCurrSpeaker(), msg);
+        accM.addinbox(getterid, msg);
+        accM.addsend(SpeakerM.getCurrSpeaker(), msg);
         speakerUI.messagesend();
     }
 
