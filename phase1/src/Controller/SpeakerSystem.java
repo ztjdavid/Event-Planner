@@ -48,6 +48,7 @@ public class SpeakerSystem {
                 break;
             case 2:
                 MsgDashboard();
+                break;
             case 3:
                 break;
         }
@@ -82,6 +83,7 @@ public class SpeakerSystem {
                 break;
             case 4:
                 readrepandmsg();
+                break;
             case 5:
                 break;
         }
@@ -172,7 +174,7 @@ public class SpeakerSystem {
     }
 
     private String enterTxt(){
-        StringBuilder a = new StringBuilder("");
+        StringBuilder a = new StringBuilder();
         boolean exit = false;
         speakerUI.informEnteringText();
         do{
