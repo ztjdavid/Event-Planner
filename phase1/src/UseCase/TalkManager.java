@@ -121,19 +121,19 @@ public class TalkManager {
      * @param startTime the time (between 9 and 17 in 24-hour format) of the talk.
      * @param roomId the roomId of the talk.
      * @param speakerID the ID of the speaker of the talk.
-     * @return true iff the talk is successfully created.
+     * @return the ID of the talk iff the talk is successfully created.
      */
 
-    public boolean createTalk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
+    public int createTalk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
         if(this.talkList.containsKey(talkId)){
-            return false;
+            return -1;
         }else if(startTime > 9 && startTime <= 17){
-            return false;
+            return -1;
         } else{
             Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
             this.talkList.put(talkId, newTalk);
             totalTalkCount += 1;
-            return true;
+            return newTalk.getTalkId();
         }
     }
 
@@ -154,28 +154,9 @@ public class TalkManager {
         }
     }
 
-    /**
-     * Reschedule a specific Talk with checking conflicts.
-     * @param talk The Talk that want to be rescheduled.
-     * @param startTime Start time of the Talk.
-     * @param room  Room of the Talk.
-     * @param speaker Speaker of the Talk.
-     * @return true iff the Talk has been rescheduled.
-     */
-    public boolean rescheduleTalk(Talk talk, int startTime, Room room, Speaker speaker){
-        if(!room.isOccupiedAt(startTime) /**并且speaker在这个时间是空闲的*/){
-            talk.setRoomId(room.getRoomId());
-            talk.setStartTime(startTime);
-            talk.setSpeaker(speaker.getUserId());
-            talk.setTalkTitle(talk.getTalkTitle());
-            System.out.println("The Talk has been successfully rescheduled.");
-            return true;
-        }else{
-            System.out.println("The Talk cannot be rescheduled due to certain conflicts.");
-            return false;
-        }
+    public static int getTotalTalkCount(){
+        return totalTalkCount;
     }
-
 
 }
 
