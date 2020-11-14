@@ -1,10 +1,7 @@
 package Controller;
 import Entity.Organizer;
-import UseCase.LoginManager;
+import UseCase.*;
 import UI.*;
-import UseCase.MessageManager;
-import UseCase.StrategyManager;
-import UseCase.TalkManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +21,7 @@ public class AppSystem {
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
+    protected OrganizerManager ognM;
 
     public AppSystem(){
         this.startUI = new StartUI();
@@ -37,7 +35,7 @@ public class AppSystem {
         this.signInS = new SignInSystem(loginM, signInUI);
         this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(loginM);
-        this.organizerS = new OrganizerSystem(loginM, MsgM, organizerUI, strategyM);
+        this.organizerS = new OrganizerSystem(loginM, MsgM, organizerUI, strategyM, ognM);
         this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM);
 
     }

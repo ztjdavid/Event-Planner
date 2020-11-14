@@ -14,18 +14,20 @@ public class OrganizerSystem {
     protected Organizer currOrganizer;
     protected StrategyManager strategyM;
     protected OrganizerUI organizerUI;
+    protected OrganizerManager ognM;
 
-    public OrganizerSystem(LoginManager loginM, MessageManager MsgM, OrganizerUI organizerUI, StrategyManager strategyM) {
+    public OrganizerSystem(LoginManager loginM, MessageManager MsgM, OrganizerUI organizerUI, StrategyManager strategyM, OrganizerManager ognM) {
         this.loginM = loginM;
         this.MsgM = MsgM;
         this.currOrganizer = (Organizer) loginM.getCurrAccount();
         this.strategyM = strategyM;
         this.organizerUI = organizerUI;
+        this.ognM = ognM;
     }
 
     public void run(){
         int userInput = -1;
-        while (userInput != 5) {
+        while (userInput != 8) {
             organizerUI.startup();
             userInput = chooseMode1();
             switch (userInput){
@@ -59,24 +61,36 @@ public class OrganizerSystem {
                                 break;
                         }
                     }
-                    System.out.println("Quit Messaging System");
+                    organizerUI.messageToDisplay(4);
                 case 2:
+                case 3:
+                case 4:
+                    String currPwd = organizerUI.currPwd();
+                    if (loginM.loginAccount(currOrganizer.getUsername(), currPwd)){
+                        String pwd1 = organizerUI.getNewPwd();
+                        String pwd2 = organizerUI.getNewPwd2();
+                        if(pwd1.equals(pwd2)){
+                            ognM.changePassword(currOrganizer, pwd1);
+                            organizerUI.messageToDisplay(6);
+                            break;
+                        }
+                    }
+
 
                 default:
                     break;
             }
 
         }
-        System.out.println("Quit");
+        organizerUI.messageToDisplay(5);
     }
 
     private int chooseMode1() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        String userInput;
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         int mode = -1;
         boolean valid = false;
         while (!valid) {
-            userInput = organizerUI.getRequest();
+            String userInput = organizerUI.getRequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 organizerUI.informinvalidchoice();
             else {
@@ -108,26 +122,14 @@ public class OrganizerSystem {
         return attendeeList;
     }
 
-    private void readAllAtt(){
+    private void readAllAtt() {
         ArrayList<Account> attendees = attendeeList();
-        StringBuilder a = new StringBuilder("These are the all the attendees in the system. Choose an id to message");
-        for(Account acc : attendees) {
-            int attendeeID = acc.getUserId();
-            String attendeeName = acc.getUsername();
-            a.append("\n").append("\n").append(attendeeName).append("id:").append(attendeeID);
-        }
-        System.out.println(a);
+        organizerUI.displayAllAttendees(attendees);
     }
 
-    private void readAllSpk(){
+    private void readAllSpk() {
         ArrayList<Account> speakers = speakerList();
-        StringBuilder a = new StringBuilder("These are the all the speakers in the system. Choose an id to message");
-        for(Account acc : speakers) {
-            int speakerID = acc.getUserId();
-            String speakerName = acc.getUsername();
-            a.append("\n").append("\n").append(speakerName).append("id:").append(speakerID);
-        }
-        System.out.println(a);
+        organizerUI.displayAllSpeakers(speakers);
     }
 
     private int getResponse(){
@@ -154,9 +156,9 @@ public class OrganizerSystem {
             Message msg = MsgM.createmessage(currOrganizer.getUserId(), receiverID, str);
             this.currOrganizer.addSentMessage(msg.getmessageid());
             receiver.addInbox(msg.getmessageid());
-            System.out.println("Message sent!");
+            organizerUI.messageToDisplay(1);
         }else{
-            System.out.println("Failed to send!");
+            organizerUI.messageToDisplay(3);
         }
     }
 
@@ -166,7 +168,7 @@ public class OrganizerSystem {
                 this.currOrganizer.addSentMessage(msg.getmessageid());
                 speaker.addInbox(msg.getmessageid());
         }
-        System.out.println("Messages sent!");
+        organizerUI.messageToDisplay(2);
     }
 
     public void messageToAllAttendee(String str){
@@ -175,7 +177,7 @@ public class OrganizerSystem {
             this.currOrganizer.addSentMessage(msg.getmessageid());
             attendee.addInbox(msg.getmessageid());
         }
-        System.out.println("Message sent!");
+        organizerUI.messageToDisplay(2);
     }
 
 
