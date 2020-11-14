@@ -18,7 +18,7 @@ public class SpeakerSystem {
     protected StrategyManager strategyM;
     protected SpeakerManager SpeakerM;
 
-//TODO: 不应该出现在最终程序里会有的print指令，所有必要的print都必须在UI里实现。
+
     public SpeakerSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
                          StrategyManager StrategyManager, SpeakerManager SpeakerM) {
         this.accM = accM;
@@ -113,49 +113,45 @@ public class SpeakerSystem {
 
 
     //Helper Methods:
+
     private int chooseMode1(){    //For Speaker Dashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        int mode = -1;
+        String userInput;
         boolean valid = false;
-        while(!valid){
-            String userInput = speakerUI.getrequest();
+        do{
+            userInput = speakerUI.getrequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
     }
 
     private int chooseMode2(){    // For messaging dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-        int mode = -1;
         boolean valid = false;
-        while(!valid){
-            String userInput = speakerUI.getrequest();
+        String userInput;
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        do{
+            userInput = speakerUI.getrequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
     }
 
     private int targetgetter(){
         ArrayList<Integer> validChoices = getallattendeev1();
-        int mode = -1;
+        String userInput;
         boolean valid = false;
-        while(!valid){
-            String userInput = speakerUI.getrequest();
+        do{
+            userInput = speakerUI.getrequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 speakerUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;}
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
 
     private int targettalks(){
         ArrayList<Integer> validChoices = SpeakerM.getalltalk();
@@ -169,20 +165,21 @@ public class SpeakerSystem {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
         }
-        return mode;}
-    //TODO： 与Entity直接联系了，生成每个talk的介绍应该在talkManager里实现，然后用这个method整合。
+        return mode;
+    }
+
     private void readalltalks(){
         StringBuilder a = new StringBuilder("Talk Information");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
-        for(int i = 0; i < alltalks.size(); i++){
-            a.append(talkManager.gettalkinfo(alltalks.get(i)));};
+        for(Integer t:alltalks){
+            a.append(talkManager.gettalkinfo(t));}
         speakerUI.show(a.toString());
     }
     private void readalltalkssimp(){
         StringBuilder a = new StringBuilder("Talk Information with id");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
-        for(int i = 0; i < alltalks.size(); i++){
-            a.append(talkManager.gettalkinfosimp(alltalks.get(i)));};
+        for(Integer t:alltalks){
+            a.append(talkManager.gettalkinfosimp(t));}
         speakerUI.show(a.toString());
     }
 
@@ -202,6 +199,16 @@ public class SpeakerSystem {
         speakerUI.show(a);
     }
 
+    private void msgToList(String a, ArrayList<Integer> att){
+        if (att.isEmpty()) speakerUI.noattendees();
+        else{
+            for (int getterid : att) {
+                messagetoatt(a, getterid);
+            }
+            speakerUI.messagesend();
+        }
+    }
+
     public void messagetoatt(String a, int getterid) {
 
         int msg = MsgM.createmessage(SpeakerM.getCurrSpeaker(), getterid, a);
@@ -213,34 +220,18 @@ public class SpeakerSystem {
 
     public void messageall(String a) {
         ArrayList<Integer> att = getallattendeev1();
-        if (att.size() == 0) {speakerUI.noattendees();}
-        for (int i = 0; i < att.size(); i++) {
-            int getterid = att.get(i);
-            messagetoatt(a, getterid);
-        }
-        speakerUI.messagesend();
+        msgToList(a, att);
     }
     public void messagetotalk(String a, int b) {
         if (b == 999) {speakerUI.stopmessaging();}
         ArrayList<Integer> att = talkManager.getTalk(b).getAttendeeId();
-        if (att.size() == 0) {
-            speakerUI.noattendees();
-        }
-        for (int i = 0; i < att.size(); i++) {
-            int getterid = att.get(i);
-            messagetoatt(a, getterid);
-
-        }
-        speakerUI.messagesend();
-
+        msgToList(a, att);
     }
-    //TODO 不能直接对entity操作， 要在speakerManager里实现这个功能。
+
 
     public ArrayList<Integer> getallattendeev1() {
         ArrayList<Integer> talklist = SpeakerM.getalltalk();
-        ArrayList<Integer> allattendeeid = talkManager.getallattendee(talklist);
-
-        return allattendeeid;
+        return talkManager.getallattendee(talklist);
     }
 
 
