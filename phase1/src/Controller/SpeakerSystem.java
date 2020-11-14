@@ -21,7 +21,7 @@ public class SpeakerSystem {
     protected SpeakerUI speakerUI;
     protected StrategyManager strategyM;
 
-
+//TODO: 不应该出现在最终程序里会有的print指令，所有必要的print都必须在UI里实现。
     public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI, StrategyManager StrategyManager) {
         this.loginM = loginM;
         this.talkManager = TalkM;
@@ -143,7 +143,7 @@ public class SpeakerSystem {
                 mode = Integer.parseInt(userInput);}
         }
         return mode;}
-
+    //TODO： 与Entity直接联系了，生成每个talk的介绍应该在talkManager里实现，然后用这个method整合。
     private void readalltalks(){
         String a = "Talk Information";
         for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
@@ -222,6 +222,7 @@ public class SpeakerSystem {
         System.out.println("Message Send");
 
     }
+    //TODO 不能直接对entity操作， 要在speakerManager里实现这个功能。
     private ArrayList<Talk> getalltalks() {
         ArrayList<Talk> alltalks = new ArrayList<>();
 

@@ -28,6 +28,7 @@ public class SpeakerUI {
                 "ssage to one attendee\n2 -> Message to attendees in talks\n3 -> Message all att" +
                 "endees who register your talks");
     }
+    //TODO
     public String enteringtext(){
         System.out.println("Please Enter Your Message in One Line");
         String a = new String();
