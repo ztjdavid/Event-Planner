@@ -19,13 +19,16 @@ public class AppSystem {
     protected AccountManager accM;
     protected TalkManager TalkM;
     protected MessageManager MsgM;
+    protected AttendeeManager attM;
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
+    protected AttendeeUI attUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
 
     public AppSystem(){
+        this.attM = new AttendeeManager();
         this.spkM = new SpeakerManager();
         this.ognM = new OrganizerManager();
         this.roomM = new RoomManager();
@@ -33,6 +36,7 @@ public class AppSystem {
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
         this.speakerUI = new SpeakerUI();
+        this.attUI = new AttendeeUI();
         this.organizerUI = new OrganizerUI();
         this.accM = new AccountManager();
         this.MsgM = new MessageManager();
@@ -40,7 +44,7 @@ public class AppSystem {
         this.strategyM = new StrategyManager();
         this.signInS = new SignInSystem(accM, signInUI);
         this.signUpS = new SignUpSystem(accM, signUpUI, strategyM);
-        this.attendeeS = new AttendeeSystem(accM);
+        this.attendeeS = new AttendeeSystem(accM, TalkM, MsgM, attUI, strategyM, attM);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerUI, strategyM, ognM, spkM, TalkM, roomM);
         this.speakerS = new SpeakerSystem(accM, TalkM, MsgM, speakerUI, strategyM, spkM);
 
