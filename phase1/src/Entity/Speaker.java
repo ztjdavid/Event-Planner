@@ -31,4 +31,12 @@ public class Speaker extends Account{
     public ArrayList<Integer> getTalkList() {
         return new ArrayList<>(this.talksList);
     }
+
+    public void registerTalk(int talkID){
+        this.talksList.add(talkID);
+    }
+
+    public void removeTalk(int talkID){
+        this.talksList.remove(talkID);
+    }
 }

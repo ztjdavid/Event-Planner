@@ -1,17 +1,17 @@
 package Controller;
 import Entity.Account;
-import Entity.Message;
 import Entity.Speaker;
-import Entity.Talk;
+
 import UI.SpeakerUI;
 import UseCase.LoginManager;
 import UseCase.StrategyManager;
 import UseCase.TalkManager;
 import UseCase.MessageManager;
+import UseCase.SpeakerManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+
 
 public class SpeakerSystem {
     protected LoginManager loginM;
@@ -20,71 +20,98 @@ public class SpeakerSystem {
     protected MessageManager MsgM;
     protected SpeakerUI speakerUI;
     protected StrategyManager strategyM;
+    protected SpeakerManager SpeakerM;
 
 //TODO: 不应该出现在最终程序里会有的print指令，所有必要的print都必须在UI里实现。
-    public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI, StrategyManager StrategyManager) {
+    public SpeakerSystem(LoginManager loginM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
+                         StrategyManager StrategyManager, SpeakerManager SpeakerM) {
         this.loginM = loginM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.currSpeaker = (Speaker) loginM.getCurrAccount();
         this.speakerUI = SpeakerUI;
         this.strategyM = StrategyManager;
+        this.SpeakerM = SpeakerM;
 
 
     }
     public void run(){
-        int userinput = -1;
-        while (userinput != 3){
+        int userChoice;
+        do{
             speakerUI.startup();
+            userChoice = chooseMode1();
+            enterBranch(userChoice);
+        } while (userChoice != 3);
+    }
 
-            userinput = chooseMode1();
 
-            switch (userinput){
-                case 1:
-                    readalltalks();
-                    break;
-                case 2:
-
-                    int userinput2 = -1;
-                    while (userinput2 != 4){
-                        speakerUI.messaging();
-                        userinput2 = chooseMode2();
-                        switch (userinput){
-                            case 1:
-                                readallatt();
-                                int tgetter = targetgetter();
-                                String txt = speakerUI.enteringtext();
-                                messagetoatt(txt, tgetter);
-                                break;
-                            case 2:
-                                readalltalkssimp();
-                                String txt1 = speakerUI.enteringtext();
-                                int targettalk = -1;
-                                while (targettalk != 999) {
-                                    targettalk= targettalks();
-                                    messagetotalk(txt1, targettalk);
-
-                                }
-                                break;
-                            case 3:
-                                String txt2 = speakerUI.enteringtext();
-                                messageall(txt2);
-                                break;
-                            default:
-                                break;
-
-                        }
-                    }
-                    System.out.println("Quit Messaging System");
-
-                default:
-                    break;
-            }
+    //Methods for controlling program process:
+    private void enterBranch(int userChoice){
+        switch (userChoice){
+            case 1:
+                readalltalks();
+                break;
+            case 2:
+                MsgDashboard();
+            case 3:
+                break;
         }
-        System.out.println("Quit");
+    }
+
+    private void MsgDashboard(){
+        int userChoice;
+        do{
+            speakerUI.messaging();
+            userChoice = chooseMode2();
+            msgOp(userChoice);
+        } while (userChoice != 4);
+
 
     }
-    private int chooseMode1(){
+
+    private void msgOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                msgToAttendee();
+                break;
+            case 2:
+                msgToTalk();
+                break;
+            case 3:
+                msgToAllTalks();
+                break;
+            case 4:
+                break;
+        }
+    }
+
+
+    //Methods for doing a specific user operation.
+    private void msgToAttendee(){
+        readallatt();
+        int tgetter = targetgetter();
+        String txt = speakerUI.enteringtext();
+        messagetoatt(txt, tgetter);
+    }
+
+    private void msgToTalk(){
+        readalltalkssimp();
+        String txt1 = speakerUI.enteringtext();
+        int targettalk = -1;
+        while (targettalk != 999) {
+            targettalk= targettalks();
+            messagetotalk(txt1, targettalk);
+        }
+    }
+
+    private void msgToAllTalks(){
+        String txt2 = speakerUI.enteringtext();
+        messageall(txt2);
+    }
+
+
+    //Helper Methods:
+    private int chooseMode1(){    //For Speaker Dashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
         String userInput;
         int mode = -1;
@@ -99,7 +126,8 @@ public class SpeakerSystem {
         }
         return mode;
     }
-    private int chooseMode2(){
+
+    private int chooseMode2(){    // For messaging dashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         String userInput;
         int mode = -1;
@@ -112,7 +140,8 @@ public class SpeakerSystem {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
         }
-        return mode;}
+        return mode;
+    }
 
     private int targetgetter(){
         ArrayList<Integer> validChoices = getallattendeev1(currSpeaker);
@@ -146,22 +175,15 @@ public class SpeakerSystem {
     //TODO： 与Entity直接联系了，生成每个talk的介绍应该在talkManager里实现，然后用这个method整合。
     private void readalltalks(){
         String a = "Talk Information";
-        for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
-        String talktitle = talk.getTalkTitle();
-        int talktime = talk.getStartTime();
-        int talkroom = talk.getRoomId();
-        int numatt = talk.getAttendeeId().size();
-        a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";}
-        System.out.println(a);
+        ArrayList<Integer> alltalks = SpeakerM.getalltalk();
+        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfo(alltalks.get(i));};
+        speakerUI.show(a);
     }
     private void readalltalkssimp(){
-        String a = "Talk Information";
-        for(int i = 0; i < getalltalks().size(); i++){Talk talk = getalltalks().get(i);
-            String talktitle = talk.getTalkTitle();
-            int talkid = talk.getTalkId();
-
-            a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;}
-        System.out.println(a);
+        String a = "Talk Information with id";
+        ArrayList<Integer> alltalks = SpeakerM.getalltalk();
+        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfosimp(alltalks.get(i));};
+        speakerUI.show(a);
     }
 
 
@@ -174,15 +196,15 @@ public class SpeakerSystem {
             String attendeename = attendee.getUsername();
             a = a + "\n" + "\n" + attendeename + "id:" + attendeeid;
         }
-        System.out.println(a);
+        speakerUI.show(a);
     }
 
     public void messagetoatt(String a, int getterid) {
         Account getter = loginM.getAccountWithId(getterid);
-        Message msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-        this.currSpeaker.addSentMessage(msg.getmessageid());
-        getter.addInbox(msg.getmessageid());
-        System.out.println("Message Send");
+        int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
+        this.currSpeaker.addSentMessage(msg);
+        getter.addInbox(msg);
+        speakerUI.messagesend();
 
 
     }
@@ -190,67 +212,42 @@ public class SpeakerSystem {
 
     public void messageall(String a) {
         ArrayList<Integer> att = getallattendeev1(this.currSpeaker);
-        if (att.size() == 0) {
-            String response = "No Attendees";
-            System.out.println(response);      }
+        if (att.size() == 0) {speakerUI.noattendees();}
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
             Account getter = loginM.getAccountWithId(getterid);
-            Message msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-            this.currSpeaker.addSentMessage(msg.getmessageid());
-            getter.addInbox(msg.getmessageid());
+            int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
+            this.currSpeaker.addSentMessage(msg);
+            getter.addInbox(msg);
 
         }
-        System.out.println("Message Send");
-
+        speakerUI.messagesend();
     }
     public void messagetotalk(String a, int b) {
-        if (b == 999) {System.out.println("Stop Messaging");}
+        if (b == 999) {speakerUI.stopmessaging();}
         ArrayList<Integer> att = talkManager.getTalk(b).getAttendeeId();
         if (att.size() == 0) {
-            String response = "No Attendees";
-            System.out.println(response);
+            speakerUI.noattendees();
         }
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
             Account getter = loginM.getAccountWithId(getterid);
-            Message msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-            this.currSpeaker.addSentMessage(msg.getmessageid());
-            getter.addInbox(msg.getmessageid());
+            int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
+            this.currSpeaker.addSentMessage(msg);
+            getter.addInbox(msg);
 
         }
-        System.out.println("Message Send");
+        speakerUI.messagesend();
 
     }
     //TODO 不能直接对entity操作， 要在speakerManager里实现这个功能。
-    private ArrayList<Talk> getalltalks() {
-        ArrayList<Talk> alltalks = new ArrayList<>();
-
-        for(int i = 0; i < currSpeaker.getTalkList().size(); i++){
-            alltalks.add(talkManager.getTalk(currSpeaker.getTalkList().get(i)));}
-        return alltalks;
-    }
 
     public ArrayList<Integer> getallattendeev1(Speaker speaker) {
-        ArrayList<Integer> allattendeeid = new ArrayList<>();
         ArrayList<Integer> talklist = speaker.getTalkList();
-        for (int i = 0; i < talklist.size(); i++) {
-            Talk talk = talkManager.getTalk(talklist.get(i));
-            for (int a = 0; a < talk.getAttendeeId().size(); a++) {
-                int b = talk.getAttendeeId().get(a);
-                allattendeeid.add(b);
-            }
-        }
+        ArrayList<Integer> allattendeeid = talkManager.getallattendee(talklist);
+
         return allattendeeid;
     }
 
-    public HashMap<Integer, ArrayList<Integer>> getallattendeev2(Speaker speaker) {
-        HashMap<Integer, ArrayList<Integer>> allattendeeid = new HashMap<>();
-        ArrayList<Integer> talklist = speaker.getTalkList();
-        for (int i = 0; i < talklist.size(); i++) {
-            Talk talk = talkManager.getTalk(talklist.get(i));
-            allattendeeid.put(talklist.get(i), talk.getAttendeeId());
-        }
-        return allattendeeid;
-    }
+
 }

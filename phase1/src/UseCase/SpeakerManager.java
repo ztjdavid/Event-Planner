@@ -32,7 +32,11 @@ public class SpeakerManager extends AccountManager {
     }
 
     public void registerNewTalk(Talk talk){
-        currSpeaker.getTalkList().add(talk.getTalkId());
+        currSpeaker.registerTalk(talk.getTalkId());
+    }
+
+    public void removeTalk(Talk talk){
+        currSpeaker.removeTalk(talk.getTalkId());
     }
 
 
@@ -52,5 +56,19 @@ public class SpeakerManager extends AccountManager {
         ArrayList<Integer> talkList = currSpeaker.getTalkList();
         return talkList.contains(talkId);
     }
+
+    /**
+     * Create a speaker.
+     * @param username The username of the Speaker.
+     * @param password The password of the Speaker.
+     * @param userID the ID of the user
+     */
+
+    public int createSpeaker(String username, String password, int userID){
+            Speaker newSpeaker = new Speaker(username, password, userID);
+            return newSpeaker.getUserId();
+    }
+    public ArrayList<Integer> getalltalk(){return currSpeaker.getTalkList();}
+
 }
 

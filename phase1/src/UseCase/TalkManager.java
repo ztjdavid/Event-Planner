@@ -121,21 +121,71 @@ public class TalkManager {
      * @param startTime the time (between 9 and 17 in 24-hour format) of the talk.
      * @param roomId the roomId of the talk.
      * @param speakerID the ID of the speaker of the talk.
-     * @return true iff the talk is successfully created.
+     * @return the ID of the talk iff the talk is successfully created.
      */
 
-    public boolean createTalk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
+    public int createTalk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
         if(this.talkList.containsKey(talkId)){
-            return false;
+            return -1;
         }else if(startTime > 9 && startTime <= 17){
-            return false;
+            return -1;
         } else{
             Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
             this.talkList.put(talkId, newTalk);
             totalTalkCount += 1;
-            return true;
+            return newTalk.getTalkId();
         }
     }
+
+    /**
+     * Remove a specific Talk from the Talk list.
+     * @param talk The Talk that want to be removed.
+     * @return true iff the Talk has been removed.
+     */
+    public boolean removeTalk(Talk talk){
+        if (this.talkList.containsKey(talk.getTalkId())){
+            this.talkList.remove(talk.getTalkId(), talk);
+            totalTalkCount -= 1;
+            System.out.println("The Talk has been successfully removed.");
+            return true;
+        }else{
+            System.out.println("No such Talk has been found.");
+            return false;
+        }
+    }
+
+    public static int getTotalTalkCount(){
+        return totalTalkCount;
+    }
+
+    public String gettalkinfo(int talkid){
+        String a = new String();
+        Talk talk = getTalk(talkid);
+        String talktitle = talk.getTalkTitle();
+        int talktime = talk.getStartTime();
+        int talkroom = talk.getRoomId();
+        int numatt = talk.getAttendeeId().size();
+        a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";
+        return a;
+    }
+
+    public String gettalkinfosimp(int talkid){
+        String a = new String();
+        Talk talk = getTalk(talkid);
+        String talktitle = talk.getTalkTitle();
+        a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;
+        return a;
+    }
+
+    public ArrayList<Integer> getallattendee(ArrayList<Integer> talklist){
+        ArrayList<Integer> att = new ArrayList<>();
+        for(int i = 0; i < talklist.size(); i++){Talk talk = getTalk(talklist.get(i));
+            att.addAll(talk.getAttendeeId());}
+        return att;
+
+    }
+
+
 }
 
 

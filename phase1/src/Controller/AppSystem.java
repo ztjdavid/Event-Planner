@@ -1,10 +1,7 @@
 package Controller;
 import Entity.Organizer;
-import UseCase.LoginManager;
+import UseCase.*;
 import UI.*;
-import UseCase.MessageManager;
-import UseCase.StrategyManager;
-import UseCase.TalkManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +13,7 @@ public class AppSystem {
     protected AttendeeSystem attendeeS;
     protected SpeakerSystem speakerS;
     protected SpeakerUI speakerUI;
+    protected RoomManager roomM;
     protected OrganizerUI organizerUI;
     protected StrategyManager strategyM;
     protected LoginManager loginM;
@@ -24,12 +22,18 @@ public class AppSystem {
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
+    protected OrganizerManager ognM;
+    protected SpeakerManager spkM;
 
     public AppSystem(){
+        this.spkM = new SpeakerManager();
+        this.ognM = new OrganizerManager();
+        this.roomM = new RoomManager();
         this.startUI = new StartUI();
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
         this.speakerUI = new SpeakerUI();
+        this.organizerUI = new OrganizerUI();
         this.loginM = new LoginManager();
         this.MsgM = new MessageManager();
         this.TalkM = new TalkManager();
@@ -37,31 +41,39 @@ public class AppSystem {
         this.signInS = new SignInSystem(loginM, signInUI);
         this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(loginM);
-        this.organizerS = new OrganizerSystem(loginM, MsgM, organizerUI, strategyM);
-        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM);
+        this.organizerS = new OrganizerSystem(loginM, MsgM, organizerUI, strategyM, ognM, spkM, TalkM, roomM);
+        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM, spkM);
 
     }
 
-    public void run(){
-        int userInput;
-        int currAccountType = -1;
 
+    public void run(){
         startUI.startup();
-        userInput = chooseMode();
+        int userInput = chooseMode();
+        int currAccountType = enterBranch(userInput);
+        enterSystems(currAccountType);
+    }
+
+
+
+    //Helper methods:
+    private int enterBranch(int userInput){
         switch (userInput){
             case 1:
-                currAccountType = signInS.run();
-                break;
+                return signInS.run();
             case 2:
                 signUpS.run();
-                currAccountType = signInS.run();
-                break;
+                return signInS.run();
+            default:
+                return -1;
         }
+    }
 
+    private void enterSystems(int currAccountType){
         switch (currAccountType){
             case 0:
                 System.out.println("run organizer system");
-                //organizerS.run();
+                organizerS.run();
                 break;
             case 1:
                 System.out.println("run attendee system");
@@ -76,9 +88,6 @@ public class AppSystem {
         }
     }
 
-
-
-    //Helper methods:
     private int chooseMode(){
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
         String userInput;
@@ -94,9 +103,6 @@ public class AppSystem {
         }
         return mode;
     }
-
-
-
 
 
 
