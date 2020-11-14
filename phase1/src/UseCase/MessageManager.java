@@ -6,10 +6,12 @@ import java.util.ArrayList;
 public class MessageManager {
     static ArrayList<Message> allmessage;
 
-    public Message createmessage(int senderid, int getterid, String txt) {
-        int a = allmessage.size();
+    public int createmessage(int senderid, int getterid, String txt) {
+        int a = allmessage.size() + 1;
+        Message b = new Message(a, senderid, getterid, txt);
+        allmessage.add(b);
 
-        return new Message(a, senderid, getterid, txt);
+        return a;
 
     }
 

@@ -1,6 +1,5 @@
 package Controller;
 import Entity.Account;
-import Entity.Message;
 import Entity.Speaker;
 import Entity.Talk;
 import UI.SpeakerUI;
@@ -206,9 +205,9 @@ public class SpeakerSystem {
 
     public void messagetoatt(String a, int getterid) {
         Account getter = loginM.getAccountWithId(getterid);
-        Message msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-        this.currSpeaker.addSentMessage(msg.getmessageid());
-        getter.addInbox(msg.getmessageid());
+        int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
+        this.currSpeaker.addSentMessage(msg);
+        getter.addInbox(msg);
         System.out.println("Message Send");
 
 
@@ -223,9 +222,9 @@ public class SpeakerSystem {
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
             Account getter = loginM.getAccountWithId(getterid);
-            Message msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-            this.currSpeaker.addSentMessage(msg.getmessageid());
-            getter.addInbox(msg.getmessageid());
+            int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
+            this.currSpeaker.addSentMessage(msg);
+            getter.addInbox(msg);
 
         }
         System.out.println("Message Send");
@@ -241,9 +240,9 @@ public class SpeakerSystem {
         for (int i = 0; i < att.size(); i++) {
             int getterid = att.get(i);
             Account getter = loginM.getAccountWithId(getterid);
-            Message msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
-            this.currSpeaker.addSentMessage(msg.getmessageid());
-            getter.addInbox(msg.getmessageid());
+            int msg = MsgM.createmessage(currSpeaker.getUserId(), getterid, a);
+            this.currSpeaker.addSentMessage(msg);
+            getter.addInbox(msg);
 
         }
         System.out.println("Message Send");
