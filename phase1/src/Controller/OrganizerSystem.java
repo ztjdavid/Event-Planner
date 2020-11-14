@@ -93,7 +93,6 @@ public class OrganizerSystem {
                         userInput3 = chooseMode3();
                         switch (userInput3) {
                             case 1:
-                                HashMap<Integer, Object> accList = new HashMap<>(accM.getAccountList());
                                 String talkTitle = organizerUI.getTalkTitle();
                                 int talkTime = organizerUI.getTalkStartTime();
                                 int talkRoomID = organizerUI.getTalkRoomID();
@@ -101,7 +100,7 @@ public class OrganizerSystem {
                                 if(talkID == -1){
                                     organizerUI.messageToDisplay(10);
                                 }else {
-                                    spkM.registerNewTalk(talkID, speakerID, accList);
+                                    spkM.registerNewTalk(talkID, speakerID);
                                     organizerUI.messageToDisplay(11);
                                 }
                                 break;
@@ -117,19 +116,17 @@ public class OrganizerSystem {
     }
 
     public void rescheduleSpeaker(int speakerID, int currentTalkID, int rescheduledTalkID, int rescheduleRoomID){
-        HashMap<Integer, Object> accList = new HashMap<>(accM.getAccountList());
-        for(int item:spkM.getTalkList(speakerID, accList)){
-            if(item == currentTalkID){
-                tlkM.removeTalk(item);
+        for(int num:spkM.getTalkList(speakerID)){
+            if(num == currentTalkID){
+                tlkM.removeTalk(num);
             }
         }
         scheduleRoom(rescheduleRoomID, speakerID, rescheduledTalkID);
     }
 
     private void scheduleRoom(int roomID, int speakerID, int talkID){
-        HashMap<Integer, Object> accList = new HashMap<>(accM.getAccountList());
-        if(!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID)) && !spkM.checkTalk(speakerID, talkID, accList)) {
-            for (int item : spkM.getTalkList(speakerID, accList)) {
+        if(!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID)) && !spkM.checkTalk(speakerID, talkID)) {
+            for (int item : spkM.getTalkList(speakerID)) {
                 if (item == tlkM.getStartTime(talkID)) {
                     organizerUI.messageToDisplay(12);
                     break;
