@@ -3,6 +3,7 @@ package UI;
 import Entity.Account;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -150,12 +151,10 @@ public class OrganizerUI {
         }
     }
 
-    public void displayAllSpeakers(ArrayList<Account> lst){
+    public void displayAllSpeakers(HashMap<Integer, String> lst){
         StringBuilder a = new StringBuilder("These are the all the speakers in the system. Choose an id to message");
-        for(Account acc : lst) {
-            int speakerID = acc.getUserId();
-            String speakerName = acc.getUsername();
-            a.append("\n").append("\n").append(speakerName).append("id:").append(speakerID);
+        for(Integer acc : lst.keySet()) {
+            a.append("\n").append("\n").append(lst.get(acc)).append("id:").append(acc);
         }
         System.out.println(a);
     }

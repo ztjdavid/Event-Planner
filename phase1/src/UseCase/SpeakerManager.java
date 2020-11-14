@@ -10,7 +10,6 @@ import java.util.HashMap;
 public class SpeakerManager extends AccountManager {
     protected static Speaker currSpeaker;
 
-
     public SpeakerManager() {
         super();
     }
@@ -70,6 +69,16 @@ public class SpeakerManager extends AccountManager {
     public ArrayList<Integer> getTalkList(int speakerID, HashMap<Integer,Object> accList){
         Speaker speaker = (Speaker) accList.get(speakerID);
         return new ArrayList<>(speaker.getTalkList());
+    }
+
+    public HashMap<Integer, String> getAllSpeaker(){
+        HashMap<Integer, String> allSpeaker = new HashMap<>();
+        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
+        for(Account acc : accList.values()){
+            if(acc.getUserType() == 2){
+                allSpeaker.put(acc.getUserId(), acc.getUsername());
+            }
+        }return allSpeaker;
     }
 
 

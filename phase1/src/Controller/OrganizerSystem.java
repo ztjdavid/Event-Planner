@@ -2,15 +2,13 @@ package Controller;
 import Entity.Organizer;
 import UI.OrganizerUI;
 import UseCase.*;
-import UseCase.LoginManager;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 public class OrganizerSystem {
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected MessageManager MsgM;
     protected Organizer currOrganizer;
     protected StrategyManager strategyM;
@@ -20,11 +18,11 @@ public class OrganizerSystem {
     protected TalkManager tlkM;
     protected RoomManager roomM;
 
-    public OrganizerSystem(LoginManager loginM, MessageManager MsgM, OrganizerUI organizerUI, StrategyManager strategyM,
+    public OrganizerSystem(AccountManager accM, MessageManager MsgM, OrganizerUI organizerUI, StrategyManager strategyM,
                            OrganizerManager ognM, SpeakerManager spkM, TalkManager tlkM, RoomManager roomM) {
-        this.loginM = loginM;
+        this.accM = accM;
         this.MsgM = MsgM;
-        this.currOrganizer = (Organizer) loginM.getCurrAccount();
+        this.currOrganizer = (Organizer) accM.getCurrAccount();
         this.strategyM = strategyM;
         this.organizerUI = organizerUI;
         this.ognM = ognM;
@@ -98,7 +96,7 @@ public class OrganizerSystem {
                         userInput3 = chooseMode3();
                         switch (userInput3) {
                             case 1:
-                                HashMap<Integer, Object> accList = new HashMap<>(loginM.getAccountList());
+                                HashMap<Integer, Object> accList = new HashMap<>(accM.getAccountList());
                                 String talkTitle = organizerUI.getTalkTitle();
                                 int talkTime = organizerUI.getTalkStartTime();
                                 int talkRoomID = organizerUI.getTalkRoomID();
@@ -122,7 +120,7 @@ public class OrganizerSystem {
     }
 
     public void rescheduleSpeaker(int speakerID, int currentTalkID, int rescheduledTalkID, int rescheduleRoomID){
-        HashMap<Integer, Object> accList = new HashMap<>(loginM.getAccountList());
+        HashMap<Integer, Object> accList = new HashMap<>(accM.getAccountList());
         for(int item:spkM.getTalkList(speakerID, accList)){
             if(item == currentTalkID){
                 tlkM.removeTalk(item);
@@ -132,7 +130,7 @@ public class OrganizerSystem {
     }
 
     private void scheduleRoom(int roomID, int speakerID, int talkID){
-        HashMap<Integer, Object> accList = new HashMap<>(loginM.getAccountList());
+        HashMap<Integer, Object> accList = new HashMap<>(accM.getAccountList());
         if(!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID)) && !spkM.checkTalk(speakerID, talkID, accList)) {
             for (int item : spkM.getTalkList(speakerID, accList)) {
                 if (item == tlkM.getStartTime(talkID)) {
@@ -152,9 +150,9 @@ public class OrganizerSystem {
         String password1 = organizerUI.getSpeakerpwd1();
         String password2 = organizerUI.getSpeakerpwd2();
         if(password1.equals(password2)){
-            loginM.createAccount(username, password1, 2);
+            accM.createAccount(username, password1, 2);
             organizerUI.messageToDisplay(9);
-            return loginM.getTotalNumOfAccount();
+            return accM.getTotalNumOfAccount();
         }else{
             organizerUI.messageToDisplay(7);
             createSpeaker(username);
@@ -210,16 +208,6 @@ public class OrganizerSystem {
         return mode;
     }
 
-    public ArrayList<Integer> speakerList() {
-        ArrayList<Integer> allSpeaker = new ArrayList<>();
-        for(() item : loginM.getAccountList().values()){
-            if(item.getUserType() == 2) {
-                allSpeaker.add(acc);
-            }
-        }
-        return allSpeaker;
-    }
-
     public ArrayList<Account> attendeeList() {
         ArrayList<Account> attendeeList = new ArrayList<>();
         for(Account acc:loginM.getAccountList().values()){
@@ -236,7 +224,7 @@ public class OrganizerSystem {
     }
 
     private void readAllSpk() {
-        ArrayList<Account> speakers = speakerList();
+        HashMap<Integer, String> speakers = spkM.getAllSpeaker();
         organizerUI.displayAllSpeakers(speakers);
     }
 
