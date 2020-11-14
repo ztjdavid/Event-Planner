@@ -11,9 +11,9 @@ public class AccountSystem {
     protected AccountManager accountM;
     protected LoginManager loginM;
     protected AccountUI accountUI;
-    protected MessageManager MsgM;
-    protected Organizer currOrganizer;
-    protected Attendee currAttendee;
+//    protected MessageManager MsgM;
+//    protected Organizer currOrganizer;
+//    protected Attendee currAttendee;
 
 
     public AccountSystem(AccountManager accountM, LoginManager loginM) {
@@ -21,13 +21,14 @@ public class AccountSystem {
         this.loginM = loginM;
     }
 
-    public void run(){
-
+    public void run() throws FileNotFoundException {
+        accountUI.startup();
+        String filePath = accountUI.requestFilePath();
+        readFromFile(filePath);
+        accountUI.finishSetUp();
     }
 
-    public void readFromFile() throws FileNotFoundException {
-
-        String filePath = accountUI.requestFilePath();
+    public void readFromFile(String filePath) throws FileNotFoundException {
 
         Scanner scanner = new Scanner(new FileInputStream(filePath));
         String[] accountData;

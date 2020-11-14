@@ -14,8 +14,7 @@ public class AccountUI {
 
     public void startup(){
         System.out.println("----------------AccountSystem-----------------\nHi, " +
-                "Administrator, Would you like to\n1 -> SetupDatabase\n2 -> UpdateDatabase\n3 -> ViewDatabase\n4 -> Change User" +
-                " Password\n5 -> Change User UserName\n6 -> Quit");
+                "Initializing database.");
     }
 
     public void setupDataBase(){
@@ -27,9 +26,13 @@ public class AccountUI {
         return input.nextLine();
     }
 
-    public void reportDataBase(){
-        System.out.println("----------------Accessing the database-----------------");
-        // write data to json then convert to csv?
+//    public void reportDataBase(){
+//        System.out.println("----------------Accessing the database-----------------");
+//        // write data to json then convert to csv?
+//    }
+
+    public void finishSetUp(){
+        System.out.println("Accounts successfully created from file.");
     }
 
     public void displayAllAccounts(ArrayList<Account> lst){
