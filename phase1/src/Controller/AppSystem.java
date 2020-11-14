@@ -46,7 +46,9 @@ public class AppSystem {
 
     }
 
-
+    /**
+     * Start the whole program.
+     */
     public void run(){
         startUI.startup();
         int userInput = chooseMode();
