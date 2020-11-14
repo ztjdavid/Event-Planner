@@ -39,6 +39,11 @@ public class OrganizerUI {
         return input.nextLine();
     }
 
+    public String getNewUsername(){
+        System.out.println("Password Correct! Please Enter Your New Username!");
+        return input.nextLine();
+    }
+
     public void informinvalidchoice(){
         System.out.println("Invalid Choice. Please try again.");
     }
@@ -57,6 +62,14 @@ public class OrganizerUI {
         return a.toString();
     }
 
+    public void displayCurrUsername(String str){
+        System.out.println("Your Current User Name is:" + str);
+    }
+
+    public void displayNewUsername(String str){
+        System.out.println("Username Changed Successfully! Your New Username is:" + str);
+    }
+
     public void messageToDisplay(int i){
         switch (i){
             case 1:
@@ -71,6 +84,11 @@ public class OrganizerUI {
                 System.out.println("Quit.");
             case 6:
                 System.out.println("Password Changed Successfully!");
+            case 7:
+                System.out.println("Passwords Do Not Match!");
+            case 8:
+                System.out.println("Incorrect Password! Please try again!");
+            case 9:
         }
     }
 

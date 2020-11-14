@@ -65,24 +65,47 @@ public class OrganizerSystem {
                 case 2:
                 case 3:
                 case 4:
-                    String currPwd = organizerUI.currPwd();
-                    if (loginM.loginAccount(currOrganizer.getUsername(), currPwd)){
-                        String pwd1 = organizerUI.getNewPwd();
-                        String pwd2 = organizerUI.getNewPwd2();
-                        if(pwd1.equals(pwd2)){
-                            ognM.changePassword(currOrganizer, pwd1);
-                            organizerUI.messageToDisplay(6);
-                            break;
-                        }
-                    }
-
-
+                    changeCurrPwd();
+                    break;
+                case 5:
+                    organizerUI.displayCurrUsername(currOrganizer.getUsername());
+                    changeCurrUsername();
+                    break;
                 default:
                     break;
             }
 
         }
         organizerUI.messageToDisplay(5);
+    }
+
+    private void changeCurrUsername(){
+        String currPwd = organizerUI.currPwd();
+        if (loginM.loginAccount(currOrganizer.getUsername(), currPwd)){
+            String newName = organizerUI.getNewUsername();
+            ognM.changeUsername(currOrganizer, newName);
+            organizerUI.displayNewUsername(newName);
+        }else{
+            organizerUI.messageToDisplay(8);
+            changeCurrUsername();
+        }
+    }
+
+    private void changeCurrPwd(){
+        String currPwd = organizerUI.currPwd();
+        if (loginM.loginAccount(currOrganizer.getUsername(), currPwd)){
+            String pwd1 = organizerUI.getNewPwd();
+            String pwd2 = organizerUI.getNewPwd2();
+            if(pwd1.equals(pwd2)){
+                ognM.changePassword(currOrganizer, pwd1);
+                organizerUI.messageToDisplay(6);
+            }else{
+                organizerUI.messageToDisplay(7);
+            }
+        }else{
+            organizerUI.messageToDisplay(8);
+            changeCurrPwd();
+        }
     }
 
     private int chooseMode1() {
