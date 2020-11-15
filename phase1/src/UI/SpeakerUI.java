@@ -70,11 +70,11 @@ public class SpeakerUI {
     }
     public void show(String a){System.out.println(a + "\n");}
 
-    public void announcereply(){System.out.println("Please remember the id of the message " +
+    public void announcereply(){System.out.println("Please enter the id of the message " +
             "if you want to reply to.");
     }
 
-    public void announcemsg(){System.out.println("Please remember the id of the replier " +
+    public void announcemsg(){System.out.println("Please enter the id of the replier " +
             "if you want to message to.");
     }
 
