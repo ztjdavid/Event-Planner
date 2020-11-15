@@ -91,4 +91,6 @@ public class Talk {
      */
     public int getRemainingSeat(){return this.remainingSeat;}
 
+
+
 }

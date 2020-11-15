@@ -4,6 +4,7 @@ import UseCase.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class OrganizerSystem {
     protected AccountManager accM;
@@ -31,9 +32,9 @@ public class OrganizerSystem {
         int userChoice;
         do {
             organizerUI.startup();
-            userChoice = chooseMode1();
+            userChoice = chooseMode2();
             enterBranch(userChoice);
-        } while (userChoice != 4);
+        } while (userChoice != 6);
     }
 
     private void enterBranch(int userChoice) {
@@ -42,42 +43,128 @@ public class OrganizerSystem {
                 msgDashboard();
                 break;
             case 2:
-                schdlDashboard();
+                schDashboard();
                 break;
             case 3:
-                spkrDashboard();
+                speakerDashboard();
                 break;
             case 4:
+                talkDashBoard();
+            case 5:
+                roomDashBoard();
+            case 6:
                 break;
         }
     }
 
-    private void spkrDashboard() {
+    private void roomDashBoard(){
+        int userInput;
+        do{
+            organizerUI.messaging4();
+            userInput = chooseMode3();
+            roomOp(userInput);
+        }while(userInput != 3);
+    }
+
+    private void roomOp(int userInput){
+        switch (userInput){
+            case 1:
+                doCreateRoom();
+                break;
+            case 2:
+                readAllRooms();
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    private void doCreateRoom(){
+        String roomName = organizerUI.getRoomName();
+        int roomID = roomM.createRoom(roomName);
+        organizerUI.message13(roomID);
+        organizerUI.askForBack();
+    }
+
+    public void readAllRooms(){
+        ArrayList<Integer> allRooms = roomM.getAllRooms();
+        for(int item : allRooms){
+            String name = roomM.getRoomName(item);
+            HashMap<Integer, Integer> timeTable = new HashMap<>(roomM.getTimeTable(item));
+            organizerUI.readAllRooms(item, name, timeTable);
+            organizerUI.askForBack();
+        }
+    }
+
+    private void talkDashBoard(){
+        int userInput;
+        do{
+            organizerUI.messaging3();
+            userInput = chooseMode3();
+            tlkOp(userInput);
+        }while(userInput != 3);
+    }
+
+    private void tlkOp(int userInput){
+        switch (userInput){
+            case 1:
+                doCreateTalk();
+                break;
+            case 2:
+                displayAllTalks();
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    private void displayAllTalks(){
+        ArrayList<Integer> talkLst = tlkM.getAllTalksID();
+        for(int item:talkLst){
+            String title = tlkM.getTitle(item);
+            int startTime = tlkM.getStartTime(item);
+            int roomID = tlkM.getRoom(item);
+            organizerUI.readTalks(title, item, startTime, roomID);
+            organizerUI.askForBack();
+        }
+    }
+
+    private void doCreateTalk(){
+        String talkTitle = organizerUI.getTalkTitle();
+        int startTime = organizerUI.getTalkStartTime();
+        int roomID = organizerUI.getRoomID();
+        int speakerID = organizerUI.getSpeakerID();
+        int talkID = tlkM.createTalk(talkTitle,startTime, roomID, speakerID);
+        organizerUI.message12(talkID);
+        organizerUI.askForBack();
+    }
+
+    private void speakerDashboard() {
         int userInput;
         do {
             organizerUI.messaging2();
-            userInput = chooseMode3();
-            spkrOp(userInput);
+            userInput = chooseMode5();
+            sprOp(userInput);
         } while (userInput != 1);
     }
 
-    private void spkrOp(int userInput) {
+    private void sprOp(int userInput) {
         switch (userInput) {
             case 0:
-                doCreateSpkr();
+                doCreateSpeaker();
                 break;
             case 1:
                 break;
         }
     }
 
-    private void doCreateSpkr() {
+    private void doCreateSpeaker() {
         String username = organizerUI.getSpeakerUsername();
         int speakerID = createSpeaker(username);
         int userInput;
         do {
             organizerUI.message3();
-            userInput = chooseMode3();
+            userInput = chooseMode5();
             addTalk(userInput, speakerID);
         } while (userInput != 1);
     }
@@ -89,7 +176,7 @@ public class OrganizerSystem {
                 String talkTitle = organizerUI.getTalkTitle();
                 int talkTime = organizerUI.getTalkStartTime();
                 int talkRoomID = organizerUI.getTalkRoomID();
-                int talkID = tlkM.createTalk(TalkManager.getTotalTalkCount() + 1, talkTitle, talkTime, talkRoomID, speakerID);
+                int talkID = tlkM.createTalk(talkTitle, talkTime, talkRoomID, speakerID);
                 if (talkID == -1) {
                     organizerUI.message7();
                 } else {
@@ -111,16 +198,16 @@ public class OrganizerSystem {
         } while (userInput != 8);
     }
 
-    private void schdlDashboard() {
+    private void schDashboard() {
         int userInput;
         do {
             organizerUI.messaging1();
             userInput = chooseMode3();
-            schdlOp(userInput);
+            schOp(userInput);
         } while (userInput != 3);
     }
 
-    private void schdlOp(int userInput) {
+    private void schOp(int userInput) {
         switch (userInput) {
             case 1:
                 doSchedule();
@@ -169,33 +256,32 @@ public class OrganizerSystem {
                 readAllMsg();
                 break;
             case 7:
-                msgtoreply();
+                msgToReply();
                 break;
             case 8:
                 break;
-
         }
     }
 
-    private void msgtoreply() {
-        int tmsgid;
+    private void msgToReply() {
+        int getID;
         do {
-            readmsgandrep();
-            tmsgid = targetGetter(1);
-            if (tmsgid != -1) {
+            readMsgAndPrep();
+            getID = targetGetter(1);
+            if (getID != -1) {
                 String txt = enterTxt();
-                MsgM.setreply(tmsgid, txt);
+                MsgM.setreply(getID, txt);
                 organizerUI.askForBack();
             }
-        } while (tmsgid != -1);
+        } while (getID != -1);
     }
 
-    private void readmsgandrep() {
-        readallmsg();
-        organizerUI.announcereply();
+    private void readMsgAndPrep() {
+        readAllOfMsg();
+        organizerUI.announceReply();
     }
 
-    private void readallmsg() {
+    private void readAllOfMsg() {
         String a = MsgM.formatmsgget(ognM.getinbox());
         organizerUI.show(a);
     }
@@ -321,8 +407,8 @@ public class OrganizerSystem {
     }
 
     private int createSpeaker(String username) {
-        String password1 = organizerUI.getSpeakerpwd1();
-        String password2 = organizerUI.getSpeakerpwd2();
+        String password1 = organizerUI.getSpeakerPwd1();
+        String password2 = organizerUI.getSpeakerPwd2();
         if (password1.equals(password2)) {
             accM.createAccount(username, password1, 2);
             organizerUI.message9();
@@ -336,28 +422,31 @@ public class OrganizerSystem {
 
     private int chooseMode1() {
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
+        return chooseMode(validChoices);
+    }
+
+    private int chooseMode2() {
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+        return chooseMode(validChoices);
+    }
+
+    private int chooseMode3() {
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
+        return chooseMode(validChoices);
+    }
+
+    private int chooseMode5() {
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(0, 1));
+        return chooseMode(validChoices);
+    }
+
+    private int chooseMode(ArrayList<Integer> validChoices) {
         int mode = -1;
         boolean valid = false;
         while (!valid) {
             String userInput = organizerUI.getRequest1();
             if (!strategyM.isValidChoice(userInput, validChoices))
-                organizerUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);
-            }
-        }
-        return mode;
-    }
-
-    private int chooseMode3() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        int mode = -1;
-        boolean valid = false;
-        while (!valid) {
-            String userInput = organizerUI.intChooseMode3();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                organizerUI.informinvalidchoice();
+                organizerUI.informInvalidChoice();
             else {
                 valid = true;
                 mode = Integer.parseInt(userInput);
@@ -373,7 +462,7 @@ public class OrganizerSystem {
         do {
             userInput = organizerUI.confirmMsgAll();
             if (strategyM.isValidChoice(userInput, validChoices))
-                organizerUI.informinvalidchoice();
+                organizerUI.informInvalidChoice();
             else {
                 valid = true;
             }
@@ -416,7 +505,7 @@ public class OrganizerSystem {
         do {
             userInput = organizerUI.getRequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
-                organizerUI.informinvalidchoice();
+                organizerUI.informInvalidChoice();
             else {
                 valid = true;
             }

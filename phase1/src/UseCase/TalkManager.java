@@ -118,7 +118,6 @@ public class TalkManager {
 
     /**
      * Creates a talk and updates the talkList.
-     * @param talkId the ID of the talk.
      * @param talkTitle the title of the talk.
      * @param startTime the time (between 9 and 17 in 24-hour format) of the talk.
      * @param roomId the roomId of the talk.
@@ -126,7 +125,8 @@ public class TalkManager {
      * @return the ID of the talk iff the talk is successfully created.
      */
 
-    public int createTalk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
+    public int createTalk(String talkTitle, int startTime, int roomId, int speakerID){
+        int talkId = totalTalkCount;
         if(this.talkList.containsKey(talkId)){
             return -1;
         }else if(startTime > 9 && startTime <= 17){
@@ -146,7 +146,7 @@ public class TalkManager {
      */
 
     public String gettalkinfo(int talkid){
-        String a = new String();
+        String a = "";
         Talk talk = getTalkWithId(talkid);
         String talktitle = talk.getTalkTitle();
         int talktime = talk.getStartTime();
@@ -163,7 +163,7 @@ public class TalkManager {
      */
 
     public String gettalkinfosimp(int talkid){
-        String a = new String();
+        String a = "";
         Talk talk = getTalkWithId(talkid);
         String talktitle = talk.getTalkTitle();
         a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;
@@ -241,6 +241,16 @@ public class TalkManager {
 
     public void removeTalk(int talkID){
         this.talkList.remove(talkID);
+    }
+
+    public String getTitle(int talkID){
+        Talk talk = this.talkList.get(talkID);
+        return talk.getTalkTitle();
+    }
+
+    public int getRoom(int talkID){
+        Talk talk = this.talkList.get(talkID);
+        return talk.getRoomId();
     }
 
 

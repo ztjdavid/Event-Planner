@@ -1,7 +1,9 @@
 package UI;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 
 public class OrganizerUI {
@@ -17,11 +19,9 @@ public class OrganizerUI {
                 "\n1 -> Message" +
                 "\n2 -> Schedule a Talk" +
                 "\n3 -> Create a Speaker Account" +
-                "\n4 -> Logout");
-    }
-
-    public String intChooseMode3(){
-        return input.nextLine();
+                "\n4 -> Create a Talk" +
+                "\n5 -> Create a Room" +
+                "\n6 -> Logout");
     }
 
     public int getRoomID(){
@@ -64,12 +64,12 @@ public class OrganizerUI {
         return input.nextLine();
     }
 
-    public String getSpeakerpwd1(){
+    public String getSpeakerPwd1(){
         System.out.println("Please Enter The Password of The Speaker:");
         return input.nextLine();
     }
 
-    public String getSpeakerpwd2(){
+    public String getSpeakerPwd2(){
         System.out.println("Great! Please Enter The Password of The Speaker Again:");
         return input.nextLine();
     }
@@ -89,7 +89,7 @@ public class OrganizerUI {
         return input.nextInt();
     }
 
-    public void informinvalidchoice(){
+    public void informInvalidChoice(){
         System.out.println("Invalid Choice. Please try again.");
     }
 
@@ -121,9 +121,31 @@ public class OrganizerUI {
                 "\n1 -> Go back");
     }
 
+    public void messaging3(){
+        System.out.println("----------------Creating Talk-----------------" +
+                "\nHi, Organizer! Would you like to:" +
+                "\n1 -> Create a Talk" +
+                "\n2 -> Read all Talks" +
+                "\n3 -> Go back");
+    }
+
+    public void messaging4(){
+        System.out.println("----------------Creating Room-----------------" +
+                "\nHi, Organizer! Would you like to:" +
+                "\n1 -> Create a Room" +
+                "\n2 -> Read all Rooms" +
+                "\n3 -> Go back");
+    }
+
+
     public void infoEnteringText(){
         System.out.println("Please Enter Your Message." +
                 "\n(End editing by typing a single \"end\" in a new line.)");
+    }
+
+    public void readTalks(String title, int ID, int startTime, int roomID){
+        System.out.println("Talk Title:" + title + " Talk ID:" + ID + " Start time:" + startTime + " Room ID:" +
+                roomID + "\n");
     }
 
     public String getLineTxt(){
@@ -135,7 +157,7 @@ public class OrganizerUI {
         input.nextLine();
     }
 
-    public void announcereply(){System.out.println("Please remember the id of the message " +
+    public void announceReply(){System.out.println("Please remember the id of the message " +
             "if you want to reply to.");
     }
 
@@ -200,8 +222,35 @@ public class OrganizerUI {
         System.out.println("There is No Message in Your Inbox.");
     }
 
+    public void message12(int id){
+        System.out.println("Talk Created Successfully with id:" + id);
+    }
+
     public void announceMsg(){System.out.println("Please remember the id of the replier " +
             "if you want to message to.");
+    }
+
+    public String getRoomName(){
+        System.out.println("Please Enter the Name of the New Room:");
+        return input.nextLine();
+    }
+
+    public void message13(int id){
+        System.out.println("Room Created Successfully with id:" + id);
+    }
+
+    public void readAllRooms(int id, String roomName, HashMap<Integer, Integer> timeTable){
+        System.out.println("Room ID:" + id + " Room Name:" + roomName);
+        printHashMap(timeTable);
+    }
+
+    private void printHashMap(HashMap<Integer, Integer> timeTable){
+        System.out.println("\n---------Time Table---------");
+        Set<Map.Entry<Integer, Integer>> tool = timeTable.entrySet();
+        for(Map.Entry<Integer, Integer> entry: tool){
+            System.out.print(entry.getKey() + "=" + entry.getValue());
+        }
+        System.out.println("\n---------Time Table---------");
     }
 
 

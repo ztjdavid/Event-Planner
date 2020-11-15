@@ -15,12 +15,13 @@ public class RoomManager {
     /**
      * Create a new Room with given room name and given room ID.
      * @param roomName String representation of room name.
-     * @param roomID int representation of room ID.
      */
-    public void createRoom(String roomName, int roomID){
-        Room room = new Room(roomName, roomID);
-        allRooms.put(roomID, room);
+    public int createRoom(String roomName){
+        int ID = totalRoomCount;
+        Room room = new Room(roomName, ID);
+        allRooms.put(ID, room);
         totalRoomCount += 1;
+        return ID;
     }
 
     /**
@@ -60,6 +61,20 @@ public class RoomManager {
     public void scheduleTalk(int roomID, int talkID, int startTime){
         Room room = getRoomWithID(roomID);
         room.scheduleTalk(talkID, startTime);
+    }
+
+    public ArrayList<Integer> getAllRooms(){
+        return new ArrayList<>(this.allRooms.keySet());
+    }
+
+    public String getRoomName(int roomID){
+        Room room = this.allRooms.get(roomID);
+        return room.getRoomName();
+    }
+
+    public HashMap<Integer, Integer> getTimeTable(int roomID){
+        Room room = this.allRooms.get(roomID);
+        return room.getTimetable();
     }
 
 
