@@ -20,13 +20,6 @@ public class OrganizerUI {
                 "\n4 -> Logout");
     }
 
-    public String addTalkPrompt(){
-        System.out.println("Would you like to" +
-                "\n1 -> Add a Talk" +
-                "\n2 -> Go Back");
-        return input.nextLine();
-    }
-
     public String intChooseMode3(){
         return input.nextLine();
     }
