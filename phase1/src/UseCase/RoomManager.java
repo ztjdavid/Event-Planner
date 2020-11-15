@@ -77,5 +77,10 @@ public class RoomManager {
         return room.getTimetable();
     }
 
+    public void addNewTalkToRoom(int talkID, int startTime, int roomID){
+        Room room = this.allRooms.get(roomID);
+        room.scheduleTalk(talkID, startTime);
+    }
+
 
 }

@@ -18,7 +18,7 @@ public class AccountManager {
      * @param other Another account that the current login account is going to message.
      * @return True iff the current login account can message the given account.
      */
-    public boolean messageable(Account other){return false;};
+    public boolean messageable(Account other){return false;}
 
     public void createAccount(String username, String password, int userType){
         switch (userType){
@@ -89,14 +89,17 @@ public class AccountManager {
     public String getinfoacc(int id){
         Account target = getAccountWithId(id);
         String targetname = target.getUsername();
-        String a = targetname + "id:" + id + "\n";
-        return a;
+        return targetname + "id:" + id + "\n";
     }
 
     public void addinbox(int getterid, int msgid){getAccountWithId(getterid).addInbox(msgid);}
 
     public void addsend(int senderid, int msgid){getAccountWithId(senderid).addSentMessage(msgid);}
 
+    public String getUserName(int accID){
+        Account account = getAccountWithId(accID);
+        return account.getUsername();
+    }
 
 }
 

@@ -1,9 +1,6 @@
 package UI;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 
 public class OrganizerUI {
@@ -17,11 +14,10 @@ public class OrganizerUI {
         System.out.println("----------------OrganizerSystem-----------------" +
                 "\nHi, Organizer! Would you like to" +
                 "\n1 -> Message" +
-                "\n2 -> Schedule a Talk" +
-                "\n3 -> Create a Speaker Account" +
-                "\n4 -> Create a Talk" +
-                "\n5 -> Create a Room" +
-                "\n6 -> Logout");
+                "\n2 -> Create a Speaker Account" +
+                "\n3 -> Schedule a Talk" +
+                "\n4 -> Create a Room" +
+                "\n5 -> Logout");
     }
 
     public int getRoomID(){
@@ -34,18 +30,13 @@ public class OrganizerUI {
         return input.nextInt();
     }
 
-    public int getTalkID(){
-        System.out.println("Please Enter the TalkID of the Talk:");
+    public int getNewTime(){
+        System.out.println("Please Enter the New Start Time of the Talk you would like to change:");
         return input.nextInt();
     }
 
-    public int getOldTalkID(){
+    public int getReTalkID(){
         System.out.println("Please Enter the ID of the Talk you would like to change:");
-        return input.nextInt();
-    }
-
-    public int getNewTalkID(){
-        System.out.println("Please Enter the New ID of the new Talk you would like to schedule");
         return input.nextInt();
     }
 
@@ -80,12 +71,7 @@ public class OrganizerUI {
     }
 
     public int getTalkStartTime(){
-        System.out.println("Please Enter the Start Time of the Talk:");
-        return input.nextInt();
-    }
-
-    public int getTalkRoomID(){
-        System.out.println("Please Enter the Room ID of the Talk:");
+        System.out.println("Please Enter the Start Time of the Talk (the Start Time Must be Between 9 - 17 in 24-hour format):");
         return input.nextInt();
     }
 
@@ -106,19 +92,12 @@ public class OrganizerUI {
                 "\n8 -> Go Back");
     }
 
-    public void messaging1(){
-        System.out.println("----------------Scheduling-----------------" +
-                "\nHi, Organizer! Would you like to:" +
-                "\n1 -> Schedule a talk for a speaker" +
-                "\n2 -> Reschedule an existing talk with a new talk" +
-                "\n3 -> Go back");
-    }
-
     public void messaging2(){
         System.out.println("----------------Creating Speaker Account-----------------" +
                 "\nHi, Organizer! Would you like to:" +
-                "\n0 -> Create a speaker" +
-                "\n1 -> Go back");
+                "\n1 -> Create a speaker" +
+                "\n2 -> Read All Speaker" +
+                "\n3 -> Go back");
     }
 
     public void messaging3(){
@@ -193,14 +172,6 @@ public class OrganizerUI {
         System.out.println("Speaker Account Successfully Created!");
     }
 
-    public void message6(){
-        System.out.println("Successfully Added Talk!");
-    }
-
-    public void message7(){
-        System.out.println("Fail to Add!");
-    }
-
     public void message4(){
         System.out.println("The Speaker Has Been Successfully Scheduled.");
     }
@@ -212,10 +183,16 @@ public class OrganizerUI {
     public void message2(){
         System.out.println("There is a Time Conflict with the Existing Talks"); }
 
-    public void message3(){
-        System.out.println("Would You Like To Add a Talk to the New Speaker?:" +
-                "\n0 -> Yes, I would Like to Add a Talk" +
-                "\n1 -> No, Go Back");
+    public void message3(int ID){
+        System.out.println("Speaker Created Successfully with ID:" + ID);
+    }
+
+    public void message6(){
+        System.out.println("These are All of the Rooms:");
+    }
+
+    public void message7(){
+        System.out.println("These are ALl of the Talks");
     }
 
     public void message11(){
@@ -251,6 +228,38 @@ public class OrganizerUI {
             System.out.print(entry.getKey() + "=" + entry.getValue());
         }
         System.out.println("\n---------Time Table---------");
+    }
+
+    public void message14(){
+        System.out.println("Talk Creation Failed! Reason: StartTime Conflict in the Given Room.");
+    }
+
+    public void message15(){
+        System.out.println("Talk Creation Failed! Reason: StartTime Conflict with the Given Speaker.");
+    }
+
+    public void message16(){
+        System.out.println("These are All of the Speakers");
+    }
+
+    public void message17(){
+        System.out.println("Creation Failed! The username Already Exists!");
+    }
+
+    public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
+        System.out.println("Speaker Account ID:" + accountID + " Username:" + userName);
+        readTalks(talks);
+    }
+    public void errorMessage(){
+        System.out.println("Scheduling Failed! The StartTime of Talk Must be Between 9 - 17! Please Try again!");
+    }
+
+    private void readTalks(ArrayList<Integer> talks){
+        System.out.println("\n---------IDs of the Speaker's Talks---------");
+        for(int item : talks){
+            System.out.println(item + "\n");
+        }
+        System.out.println("\n---------IDs of the Speaker's Talks---------");
     }
 
 

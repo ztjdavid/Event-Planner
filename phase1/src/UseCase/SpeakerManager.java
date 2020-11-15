@@ -49,6 +49,11 @@ public class SpeakerManager extends AccountManager {
      */
     public ArrayList<Integer> getalltalk(){return getCurrSpeaker().getTalkList();}
 
+    public ArrayList<Integer> getTalks(int speakerID){
+        Speaker speaker = (Speaker) accountList.get(speakerID);
+        return speaker.getTalkList();
+    }
+
     /**
      * Get the current Speaker's inbox.
      * @return An arraylist of current Speaker's inbox.
@@ -57,9 +62,8 @@ public class SpeakerManager extends AccountManager {
 
     /**
      * Get the messages that the speaker got.
-     * @returnA list of message ids
+     * @return A list of message ids
      */
-
     public ArrayList<Integer> getmsgsend(){return getCurrSpeaker().getSentMessage();}
 
 
