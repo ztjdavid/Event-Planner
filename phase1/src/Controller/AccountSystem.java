@@ -9,16 +9,15 @@ import java.util.Scanner;
 
 public class AccountSystem {
     protected AccountManager accountM;
-    protected LoginManager loginM;
+//    protected LoginManager loginM;
     protected AccountUI accountUI;
 //    protected MessageManager MsgM;
 //    protected Organizer currOrganizer;
 //    protected Attendee currAttendee;
 
 
-    public AccountSystem(AccountManager accountM, LoginManager loginM) {
+    public AccountSystem(AccountManager accountM) {
         this.accountM = accountM;
-        this.loginM = loginM;
     }
 
     public void run() throws FileNotFoundException {
@@ -38,7 +37,7 @@ public class AccountSystem {
             String username = accountData[0];
             String password = accountData[1];
             int userType = Integer.parseInt(accountData[2]);
-            loginM.createAccount(username, password, userType);
+            accountM.createAccount(username, password, userType);
         }
 
         scanner.close();
