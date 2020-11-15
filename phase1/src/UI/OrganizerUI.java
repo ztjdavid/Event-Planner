@@ -239,11 +239,15 @@ public class OrganizerUI {
     }
 
     public void message16(){
-        System.out.println("These are All of the Speakers");
+        System.out.println("These are All of the Speakers:");
     }
 
     public void message17(){
         System.out.println("Creation Failed! The username Already Exists!");
+    }
+
+    public void message18() {
+        System.out.println("Talk Creation Failed! Given room id is invalid.");
     }
 
     public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
@@ -255,11 +259,11 @@ public class OrganizerUI {
     }
 
     private void readTalks1(ArrayList<Integer> talks){
-        System.out.println("\n---------IDs of the Speaker's Talks---------");
+        System.out.println("---------IDs of the Speaker's Talks---------");
         for(int item : talks){
-            System.out.println(item + "\n");
+            System.out.println(item);
         }
-        System.out.println("\n---------IDs of the Speaker's Talks---------");
+        System.out.println("---------IDs of the Speaker's Talks---------");
     }
 
 

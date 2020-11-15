@@ -82,5 +82,12 @@ public class RoomManager {
         room.scheduleTalk(talkID, startTime);
     }
 
+    /**
+     * Check if the given room id is valid.
+     * @param roomId The room id to be checked.
+     * @return True iff the given room exists.
+     */
+    public boolean isValidRoomId(int roomId){ return allRooms.containsKey(roomId);}
+
 
 }

@@ -47,8 +47,10 @@ public class OrganizerSystem {
                 break;
             case 3:
                 talkDashBoard();
+                break;
             case 4:
                 roomDashBoard();
+                break;
             case 5:
                 break;
         }
@@ -144,6 +146,8 @@ public class OrganizerSystem {
                 organizerUI.message12(talkID);
             } else if (result == 0) {
                 organizerUI.message14();
+            } else if (result == 1){
+                organizerUI.message18();
             } else if (result == 2) {
                 organizerUI.message15();
             }
@@ -153,6 +157,7 @@ public class OrganizerSystem {
 
     private int checkTalkValidity(int roomID,int startTime, int speakerID){
         int flag = -1;
+        if (!roomM.isValidRoomId(roomID)) return 1;
         if(roomM.getTimeTable(roomID).containsValue(startTime)){
             flag = 0;
         }

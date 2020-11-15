@@ -10,11 +10,11 @@ public class StartUI {
 
 
     public void startup(){
-        System.out.println("Hi, user! Would you like to\n1 -> Signin\n2 -> Signup\n3 -> Quit Program");
+        System.out.println("Hi, user! Would you like to\n1 -> Signin\n2 -> Signup\n3 -> End Program");
     }
 
     public void informInvalidInput(){
-        System.out.println("Please select one operation from below:\n1 -> login\n2 -> signup\n3 -> Quit Program");
+        System.out.println("Please select one operation from below:\n1 -> login\n2 -> signup\n3 -> End Program");
     }
 
     public void informQuiting(){
