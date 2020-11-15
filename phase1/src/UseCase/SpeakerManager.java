@@ -45,10 +45,15 @@ public class SpeakerManager extends AccountManager {
 
     /**
      * Get the current Speaker's talk list.
-     * @return An arraylist of current Speaker's talk list.
+     * @return An arraylist of current Speaker's talk list with talk ID represented by int.
      */
     public ArrayList<Integer> getalltalk(){return getCurrSpeaker().getTalkList();}
 
+    /**
+     * Get the Speaker's talk list with the given speaker ID.
+     * @param speakerID The ID of the speaker as int.
+     * @return An arraylist of the given Speaker's talk list with talk ID represented by int.
+     */
     public ArrayList<Integer> getTalks(int speakerID){
         Speaker speaker = (Speaker) accountList.get(speakerID);
         return speaker.getTalkList();
@@ -61,8 +66,8 @@ public class SpeakerManager extends AccountManager {
     public ArrayList<Integer> getinbox(){return getCurrSpeaker().getInbox();}
 
     /**
-     * Get the messages that the speaker got.
-     * @return A list of message ids
+     * Get the messages that the current speaker got.
+     * @return A list of message ids.
      */
     public ArrayList<Integer> getmsgsend(){return getCurrSpeaker().getSentMessage();}
 
@@ -72,7 +77,7 @@ public class SpeakerManager extends AccountManager {
      * Check if the Speaker given the speaker ID is responsible for the Talk given the talk ID.
      * @param speakerID The ID of the Speaker.
      * @param talkID The ID of the Talk.
-     * @return True iff the Speaker responsible for the Talk.
+     * @return True iff the Speaker's talk list contains the Talk.
      */
     public boolean checkTalk(int speakerID, int talkID){
         Speaker speaker = (Speaker) getAccountWithId(speakerID);
@@ -81,8 +86,8 @@ public class SpeakerManager extends AccountManager {
 
     /**
      * Get the Speaker's talk list given the speaker ID.
-     * @param speakerID The ID of the Speaker
-     * @return The arraylist of the Speaker's talk list.
+     * @param speakerID The ID of the Speaker.
+     * @return The copy of the arraylist of the Speaker's talk list represented by talk ID.
      */
     public ArrayList<Integer> getTalkList(int speakerID){
         Speaker speaker = (Speaker) accountList.get(speakerID);

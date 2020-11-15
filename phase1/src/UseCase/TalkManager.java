@@ -237,10 +237,22 @@ public class TalkManager {
         this.talkList.remove(talkID);
     }
 
+    /**
+     * Get the title of the Talk given the talk ID.
+     * @param talkID The ID of the talk.
+     * @return a String representation of the Talk title.
+     */
+
     public String getTitle(int talkID){
         Talk talk = this.talkList.get(talkID);
         return talk.getTalkTitle();
     }
+
+    /**
+     * Get the room ID of the Talk given the talk ID.
+     * @param talkID The ID of the talk.
+     * @return an int representation of the room ID
+     */
 
     public int getRoom(int talkID){
         Talk talk = this.talkList.get(talkID);
