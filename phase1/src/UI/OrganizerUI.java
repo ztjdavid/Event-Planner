@@ -12,17 +12,22 @@ public class OrganizerUI {
     }
 
     public void startup(){
-        System.out.println("----------------OrganizerSystem-----------------\nHi, " +
-                "Organizer! Would you like to\n1 -> Message\n2 -> Schedule a Talk\n3 -> Create a Speaker Account\n4 -> Quit");
+        System.out.println("----------------OrganizerSystem-----------------" +
+                "\nHi, Organizer! Would you like to" +
+                "\n1 -> Message" +
+                "\n2 -> Schedule a Talk" +
+                "\n3 -> Create a Speaker Account" +
+                "\n4 -> Logout");
     }
 
     public String addTalkPrompt(){
-        System.out.println("Would you like to\n1 -> Add a Talk\n2 -> Quit");
+        System.out.println("Would you like to" +
+                "\n1 -> Add a Talk" +
+                "\n2 -> Go Back");
         return input.nextLine();
     }
 
-    public String scheduleMode(){
-        System.out.println("Would you like to\n1 -> Schedule a Talk\n2 -> Reschedule a Talk\n3 -> Quit");
+    public String intChooseMode3(){
         return input.nextLine();
     }
 
@@ -52,6 +57,11 @@ public class OrganizerUI {
     }
 
     public String getRequest(){
+        System.out.println("Please Enter Your Response (Enter -1 to go back.):");
+        return input.nextLine();
+    }
+
+    public String getRequest1(){
         System.out.println("Please Enter Your Response:");
         return input.nextLine();
     }
@@ -68,16 +78,6 @@ public class OrganizerUI {
 
     public String getSpeakerpwd2(){
         System.out.println("Great! Please Enter The Password of The Speaker Again:");
-        return input.nextLine();
-    }
-
-    public String currPwd(){
-        System.out.println("Please Enter Your Current Password:");
-        return input.nextLine();
-    }
-
-    public String getNewUsername(){
-        System.out.println("Password Correct! Please Enter Your New Username!");
         return input.nextLine();
     }
 
@@ -101,63 +101,114 @@ public class OrganizerUI {
     }
 
     public void messaging(){
-        System.out.println("----------------Messaging-----------------\nHi, Speaker! Would you like to\n1 -> Me" +
-                "ssage to one attendee\n2 -> Message to one speaker\n3 -> Message to all of the attendees\n4 -> Message to all speakers");
+        System.out.println("----------------Messaging-----------------" +
+                "\nHi, Organizer! Would you like to:" +
+                "\n1 -> Message to one attendee" +
+                "\n2 -> Message to one speaker" +
+                "\n3 -> Message to all of the attendees" +
+                "\n4 -> Message to all speakers" +
+                "\n5 -> Read your replies and send message to repliers" +
+                "\n6 -> Read all Messages in Inbox" +
+                "\n7 -> Read your messages and reply to senders" +
+                "\n8 -> Go Back");
     }
 
-    public String enteringText() {
-        System.out.println("Please Enter Your Message in One Line");
-        StringBuilder a = new StringBuilder();
-        while (input.hasNext()) {
-            a.append(input.nextLine());
-        }
-        return a.toString();
+    public void messaging1(){
+        System.out.println("----------------Scheduling-----------------" +
+                "\nHi, Organizer! Would you like to:" +
+                "\n1 -> Schedule a talk for a speaker" +
+                "\n2 -> Reschedule an existing talk with a new talk" +
+                "\n3 -> Go back");
     }
 
-    public void messageToDisplay(int i){
-        switch (i){
-            case 1:
-                System.out.println("Message sent!");
-            case 2:
-                System.out.println("Messages sent!");
-            case 3:
-                System.out.println("Failed to send!");
-            case 4:
-                System.out.println("Quit Messaging System.");
-            case 5:
-                System.out.println("Quit.");
-            case 7:
-                System.out.println("Passwords Do Not Match! Please try again!");
-            case 9:
-                System.out.println("Speaker Account Successfully Created!");
-            case 10:
-                System.out.println("Fail to Add! The Talk Already Exists!");
-            case 11:
-                System.out.println("Successfully Added Talk!");
-            case 12:
-                System.out.println("There is a Time Conflict with the Existing Talks");
-            case 13:
-                System.out.println("The Speaker Has Been Successfully Scheduled.");
-            case 14:
-                System.out.println("The Speaker cannot be scheduled due to conflicts.");
-
-        }
+    public void messaging2(){
+        System.out.println("----------------Creating Speaker Account-----------------" +
+                "\nHi, Organizer! Would you like to:" +
+                "\n0 -> Create a speaker" +
+                "\n1 -> Go back");
     }
 
-    public void displayAllSpeakers(HashMap<Integer, String> lst){
-        StringBuilder a = new StringBuilder("These are the all the speakers in the system. Choose an id to message");
-        for(Integer acc : lst.keySet()) {
-            a.append("\n").append("\n").append(lst.get(acc)).append("id:").append(acc);
-        }
-        System.out.println(a);
+    public void infoEnteringText(){
+        System.out.println("Please Enter Your Message." +
+                "\n(End editing by typing a single \"end\" in a new line.)");
     }
 
-    public void displayAllAttendees(HashMap<Integer, String> lst){
-        StringBuilder a = new StringBuilder("These are the all the attendees in the system. Choose an id to message");
-        for(Integer acc : lst.keySet()) {
-            a.append("\n").append("\n").append(lst.get(acc)).append("id:").append(acc);
-        }
-        System.out.println(a);
+    public String getLineTxt(){
+        return input.nextLine();
+    }
+
+    public void askForBack(){
+        System.out.println("\nPress enter to go back.");
+        input.nextLine();
+    }
+
+    public void announcereply(){System.out.println("Please remember the id of the message " +
+            "if you want to reply to.");
+    }
+
+    public void display(String str){
+        System.out.println(str);
+    }
+
+    public String confirmMsgAll(){
+        System.out.println("Are you sure to message all attendees in this system?" +
+                "\nEnter 1 to confirm, 0 to cancel and go back.(Irreversible once confirmed.)");
+        return input.nextLine();
+    }
+
+    public void show(String a){System.out.println(a + "\n");}
+
+    public void message10(){
+        System.out.println("Messages sent!");
+    }
+
+    public void message0(){
+        System.out.println("Failed to send!");
+    }
+
+    public void message8(){
+        System.out.println("Message sent!");
+    }
+
+    public void message1(){
+        System.out.println("Passwords Do Not Match! Please try again!");
+    }
+
+    public void message9(){
+        System.out.println("Speaker Account Successfully Created!");
+    }
+
+    public void message6(){
+        System.out.println("Successfully Added Talk!");
+    }
+
+    public void message7(){
+        System.out.println("Fail to Add!");
+    }
+
+    public void message4(){
+        System.out.println("The Speaker Has Been Successfully Scheduled.");
+    }
+
+    public void message5(){
+        System.out.println("The Speaker cannot be scheduled due to conflicts.");
+    }
+
+    public void message2(){
+        System.out.println("There is a Time Conflict with the Existing Talks"); }
+
+    public void message3(){
+        System.out.println("Would You Like To Add a Talk to the New Speaker?:" +
+                "\n0 -> Yes, I would Like to Add a Talk" +
+                "\n1 -> No, Go Back");
+    }
+
+    public void message11(){
+        System.out.println("There is No Message in Your Inbox.");
+    }
+
+    public void announceMsg(){System.out.println("Please remember the id of the replier " +
+            "if you want to message to.");
     }
 
 

@@ -3,14 +3,11 @@ import Entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.SplittableRandom;
 
 /**
  * The OrganizerManager class implements all functionalities of an organizer.
  */
 public class OrganizerManager extends AccountManager{
-
-    protected Organizer currOrganizer;
 
     public OrganizerManager(){
         super();
@@ -54,19 +51,6 @@ public class OrganizerManager extends AccountManager{
         }return allAttendee;
     }
 
-    /**
-     * Create a hashmap of all Speaker in the account list.
-     * @return Hashmap of all Speaker with key as user ID and value as username.
-     */
-    public HashMap<Integer, String> getAllSpeaker(){
-        HashMap<Integer, String> allSpeaker = new HashMap<>();
-        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
-        for(Account acc : accList.values()){
-            if(acc.getUserType() == 2){
-                allSpeaker.put(acc.getUserId(), acc.getUsername());
-            }
-        }return allSpeaker;
-    }
 
     /**
      * Create a arraylist of all Attendee's user ID in the account list.
@@ -83,6 +67,7 @@ public class OrganizerManager extends AccountManager{
         return aList;
     }
 
+
     /**
      * Return int 1 iff the receiver is message-able. A receiver is message-able iff its user type is Attendee or Speaker. Otherwise return int 3.
      * @param receiverID The int ID of the receiver.
@@ -98,21 +83,10 @@ public class OrganizerManager extends AccountManager{
         }
     }
 
-    /**
-     * Set the given organizer as the current organizer.
-     * @param organizer The current organizer.
-     */
-    public void setCurrOrganizer(Organizer organizer){
-        currOrganizer = organizer;
+    public Organizer getCurrOrganizer(){
+        return (Organizer) getCurrAccount();
     }
 
-    /**
-     * Get the current organizer's user ID.
-     * @return int value of the current organizer's user ID.
-     */
-    public int getCurrOrganizer(){
-        return currOrganizer.getUserId();
-    }
 
     /**
      * Create a arraylist of all Speaker's user ID in the account list.
@@ -129,6 +103,8 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
+    public ArrayList<Integer> getinbox(){return getCurrOrganizer().getInbox();}
+
     /**
      * Create a arraylist of all Attendee's user ID in the account list.
      * @return Arraylist of all Attendee's user ID.
@@ -144,5 +120,10 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
+    public ArrayList<Integer> getMsgSend(){return getCurrOrganizer().getSentMessage();}
+
+    public ArrayList<Integer> getInbox(){
+        return new ArrayList<>(getCurrOrganizer().getInbox());
+    }
 
 }

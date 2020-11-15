@@ -4,7 +4,6 @@ import UseCase.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class OrganizerSystem {
     protected AccountManager accM;
@@ -28,138 +27,319 @@ public class OrganizerSystem {
         this.roomM = roomM;
     }
 
-    public void run(){
-        int userInput = -1;
-        while (userInput != 5) {
+    public void run() {
+        int userChoice;
+        do {
             organizerUI.startup();
-            userInput = chooseMode1();
-            switch (userInput){
-                case 1:
-                    int userInput2 = -1;
-                    while (userInput2 != 5){
-                        organizerUI.messaging();
-                        userInput2 = chooseMode1();
-                        switch (userInput2){
-                            case 1:
-                                readAllAtt();
-                                int response1 = getResponse();
-                                String txt1 = organizerUI.enteringText();
-                                messageToIndividual(txt1, response1);
-                                break;
-                            case 2:
-                                readAllSpk();
-                                int response2 = getResponse();
-                                String txt2 = organizerUI.enteringText();
-                                messageToIndividual(txt2, response2);
-                                break;
-                            case 3:
-                                String txt3 = organizerUI.enteringText();
-                                messageToAllAttendee(txt3);
-                                break;
-                            case 4:
-                                String txt4 = organizerUI.enteringText();
-                                messageToAllSpeaker(txt4);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    organizerUI.messageToDisplay(4);
-                case 2:
-                    int userInput4 = -1;
-                    while(userInput4 != 4){
-                        userInput4 = chooseMode4();
-                        switch (userInput4){
-                            case 1:
-                                int roomID = organizerUI.getRoomID();
-                                int speakerID = organizerUI.getSpeakerID();
-                                int talkID = organizerUI.getTalkID();
-                                scheduleRoom(roomID, speakerID, talkID);
-                                break;
-                            case 2:
-                                int roomID2 = organizerUI.getRoomID();
-                                int speaker2ID = organizerUI.getSpeakerID();
-                                int oldTalkID = organizerUI.getOldTalkID();
-                                int newTalkID = organizerUI.getNewTalkID();
-                                rescheduleSpeaker(speaker2ID , oldTalkID, newTalkID, roomID2);
-                                break;
-                        }
-                    }
-                case 3:
-                    String username = organizerUI.getSpeakerUsername();
-                    int speakerID = createSpeaker(username);
-                    int userInput3 = -1;
-                    while (userInput3 != 3) {
-                        userInput3 = chooseMode3();
-                        switch (userInput3) {
-                            case 1:
-                                String talkTitle = organizerUI.getTalkTitle();
-                                int talkTime = organizerUI.getTalkStartTime();
-                                int talkRoomID = organizerUI.getTalkRoomID();
-                                int talkID = tlkM.createTalk(TalkManager.getTotalTalkCount() + 1, talkTitle, talkTime, talkRoomID, speakerID);
-                                if(talkID == -1){
-                                    organizerUI.messageToDisplay(10);
-                                }else {
-                                    spkM.registerNewTalk(talkID, speakerID);
-                                    organizerUI.messageToDisplay(11);
-                                }
-                                break;
-                            case 2:
-                                break;
-                        }
-                    }
-                default:
-                    break;
-            }
-        }
-        organizerUI.messageToDisplay(5);
+            userChoice = chooseMode1();
+            enterBranch(userChoice);
+        } while (userChoice != 4);
     }
 
-    public void rescheduleSpeaker(int speakerID, int currentTalkID, int rescheduledTalkID, int rescheduleRoomID){
-        for(int num:spkM.getTalkList(speakerID)){
-            if(num == currentTalkID){
+    private void enterBranch(int userChoice) {
+        switch (userChoice) {
+            case 1:
+                msgDashboard();
+                break;
+            case 2:
+                schdlDashboard();
+                break;
+            case 3:
+                spkrDashboard();
+                break;
+            case 4:
+                break;
+        }
+    }
+
+    private void spkrDashboard() {
+        int userInput;
+        do {
+            organizerUI.messaging2();
+            userInput = chooseMode3();
+            spkrOp(userInput);
+        } while (userInput != 1);
+    }
+
+    private void spkrOp(int userInput) {
+        switch (userInput) {
+            case 0:
+                doCreateSpkr();
+                break;
+            case 1:
+                break;
+        }
+    }
+
+    private void doCreateSpkr() {
+        String username = organizerUI.getSpeakerUsername();
+        int speakerID = createSpeaker(username);
+        int userInput;
+        do {
+            organizerUI.message3();
+            userInput = chooseMode3();
+            addTalk(userInput, speakerID);
+        } while (userInput != 1);
+    }
+
+
+    private void addTalk(int userInput, int speakerID) {
+        switch (userInput) {
+            case 0:
+                String talkTitle = organizerUI.getTalkTitle();
+                int talkTime = organizerUI.getTalkStartTime();
+                int talkRoomID = organizerUI.getTalkRoomID();
+                int talkID = tlkM.createTalk(TalkManager.getTotalTalkCount() + 1, talkTitle, talkTime, talkRoomID, speakerID);
+                if (talkID == -1) {
+                    organizerUI.message7();
+                } else {
+                    organizerUI.message6();
+                }
+                break;
+            case 1:
+                break;
+        }
+    }
+
+
+    private void msgDashboard() {
+        int userInput;
+        do {
+            organizerUI.messaging();
+            userInput = chooseMode1();
+            messageOp(userInput);
+        } while (userInput != 8);
+    }
+
+    private void schdlDashboard() {
+        int userInput;
+        do {
+            organizerUI.messaging1();
+            userInput = chooseMode3();
+            schdlOp(userInput);
+        } while (userInput != 3);
+    }
+
+    private void schdlOp(int userInput) {
+        switch (userInput) {
+            case 1:
+                doSchedule();
+            case 2:
+                doReschedule();
+            case 3:
+                break;
+        }
+    }
+
+    private void doReschedule() {
+        int roomID2 = organizerUI.getRoomID();
+        int speaker2ID = organizerUI.getSpeakerID();
+        int oldTalkID = organizerUI.getOldTalkID();
+        int newTalkID = organizerUI.getNewTalkID();
+        rescheduleSpeaker(speaker2ID, oldTalkID, newTalkID, roomID2);
+        organizerUI.askForBack();
+    }
+
+    private void doSchedule() {
+        int roomID = organizerUI.getRoomID();
+        int speakerID = organizerUI.getSpeakerID();
+        int talkID = organizerUI.getTalkID();
+        scheduleRoom(roomID, speakerID, talkID);
+        organizerUI.askForBack();
+    }
+
+    private void messageOp(int userInput) {
+        switch (userInput) {
+            case 1:
+                messageToAttendee();
+                break;
+            case 2:
+                messageToSpeaker();
+                break;
+            case 3:
+                messageToAllSpeaker();
+                break;
+            case 4:
+                messageToAllAttendee();
+                break;
+            case 5:
+                replyToMsg();
+                break;
+            case 6:
+                readAllMsg();
+                break;
+            case 7:
+                msgtoreply();
+                break;
+            case 8:
+                break;
+
+        }
+    }
+
+    private void msgtoreply() {
+        int tmsgid;
+        do {
+            readmsgandrep();
+            tmsgid = targetGetter(1);
+            if (tmsgid != -1) {
+                String txt = enterTxt();
+                MsgM.setreply(tmsgid, txt);
+                organizerUI.askForBack();
+            }
+        } while (tmsgid != -1);
+    }
+
+    private void readmsgandrep() {
+        readallmsg();
+        organizerUI.announcereply();
+    }
+
+    private void readallmsg() {
+        String a = MsgM.formatmsgget(ognM.getinbox());
+        organizerUI.show(a);
+    }
+
+    private void readAllMsg() {
+        ArrayList<Integer> inboxID = new ArrayList<>(ognM.getInbox());
+        if (inboxID.size() != 0) {
+            organizerUI.display(MsgM.formatmsgget(inboxID));
+        } else {
+            organizerUI.message11();
+        }
+        organizerUI.askForBack();
+    }
+
+    private void replyToMsg() {
+        int tAttendeeId;
+        do {
+            readMsg();
+            tAttendeeId = targetGetter(1);
+            if (tAttendeeId != -1) {
+                String txt = enterTxt();
+                messageToIndividual(txt, tAttendeeId);
+                organizerUI.askForBack();
+            }
+        } while (tAttendeeId != -1);
+    }
+
+    private void readMsg() {
+        readAllReply();
+        organizerUI.announceMsg();
+    }
+
+    private void readAllReply() {
+        String a = MsgM.formatreply(ognM.getMsgSend());
+        organizerUI.show(a);
+    }
+
+
+    private void messageToAllSpeaker() {
+        int userInput = chooseMode4();
+        if (userInput == 1) {
+            String txt = enterTxt();
+            sendMessageToAllSpeaker(txt);
+            organizerUI.askForBack();
+        }
+    }
+
+    private void messageToAllAttendee() {
+        int userChoice = chooseMode4();
+        if (userChoice == 1) {
+            String txt = enterTxt();
+            sendMessageToAllAttendee(txt);
+            organizerUI.askForBack();
+        }
+    }
+
+
+    private void messageToSpeaker() {
+        int spkId;
+        do {
+            readAllSpk();
+            spkId = targetGetter(3);
+            if (spkId != -1) {
+                String txt = enterTxt();
+                messageToIndividual(txt, spkId);
+                organizerUI.askForBack();
+            }
+        } while (spkId != -1);
+    }
+
+
+    private void messageToAttendee() {
+        int attId;
+        do {
+            readAllAtt();
+            attId = targetGetter(2);
+            if (attId != -1) {
+                String txt = enterTxt();
+                messageToIndividual(txt, attId);
+                organizerUI.askForBack();
+            }
+        } while (attId != -1);
+    }
+
+    private String enterTxt() {
+        StringBuilder a = new StringBuilder();
+        boolean exit = false;
+        organizerUI.infoEnteringText();
+        do {
+            String line = organizerUI.getLineTxt();
+            if (line.equals("end")) exit = true;
+            else {
+                a.append(line);
+            }
+        } while (!exit);
+        return a.toString();
+    }
+
+
+    private void rescheduleSpeaker(int speakerID, int currentTalkID, int rescheduledTalkID, int rescheduleRoomID) {
+        for (int num : spkM.getTalkList(speakerID)) {
+            if (num == currentTalkID) {
                 tlkM.removeTalk(num);
             }
         }
         scheduleRoom(rescheduleRoomID, speakerID, rescheduledTalkID);
     }
 
-    private void scheduleRoom(int roomID, int speakerID, int talkID){
-        if(!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID)) && !spkM.checkTalk(speakerID, talkID)) {
+    private void scheduleRoom(int roomID, int speakerID, int talkID) {
+        if (!roomM.isOccupiedAt(roomID, tlkM.getStartTime(talkID))) {
             for (int item : spkM.getTalkList(speakerID)) {
                 if (item == tlkM.getStartTime(talkID)) {
-                    organizerUI.messageToDisplay(12);
+                    organizerUI.message2();
                     break;
                 }/*查看Speaker现有talk的时间和当前talk是否会重合*/
             }
             tlkM.setSpeakerTo(speakerID, talkID);
             roomM.scheduleTalk(roomID, talkID, tlkM.getStartTime(talkID));
-            organizerUI.messageToDisplay(13);
-        }else{
-            organizerUI.messageToDisplay(14);
+            organizerUI.message4();
+        } else {
+            organizerUI.message5();
         }
     }
 
-    private int createSpeaker(String username){
+    private int createSpeaker(String username) {
         String password1 = organizerUI.getSpeakerpwd1();
         String password2 = organizerUI.getSpeakerpwd2();
-        if(password1.equals(password2)){
+        if (password1.equals(password2)) {
             accM.createAccount(username, password1, 2);
-            organizerUI.messageToDisplay(9);
+            organizerUI.message9();
             return accM.getTotalNumOfAccount();
-        }else{
-            organizerUI.messageToDisplay(7);
+        } else {
+            organizerUI.message1();
             createSpeaker(username);
         }
         return -1;
     }
 
     private int chooseMode1() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
         int mode = -1;
         boolean valid = false;
         while (!valid) {
-            String userInput = organizerUI.getRequest();
+            String userInput = organizerUI.getRequest1();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 organizerUI.informinvalidchoice();
             else {
@@ -171,11 +351,11 @@ public class OrganizerSystem {
     }
 
     private int chooseMode3() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
         int mode = -1;
         boolean valid = false;
         while (!valid) {
-            String userInput = organizerUI.addTalkPrompt();
+            String userInput = organizerUI.intChooseMode3();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 organizerUI.informinvalidchoice();
             else {
@@ -187,75 +367,92 @@ public class OrganizerSystem {
     }
 
     private int chooseMode4() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
-        int mode = -1;
         boolean valid = false;
-        while (!valid) {
-            String userInput = organizerUI.scheduleMode();
-            if (!strategyM.isValidChoice(userInput, validChoices))
+        String userInput;
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(0, 1));
+        do {
+            userInput = organizerUI.confirmMsgAll();
+            if (strategyM.isValidChoice(userInput, validChoices))
                 organizerUI.informinvalidchoice();
             else {
                 valid = true;
-                mode = Integer.parseInt(userInput);
             }
-        }
-        return mode;
+        } while (!valid);
+        return Integer.parseInt(userInput);
+
     }
 
     private void readAllAtt() {
-        HashMap<Integer, String> attendees = ognM.getAllAttendee();
-        organizerUI.displayAllAttendees(attendees);
+        ArrayList<Integer> att = ognM.getAttendeeList();
+        StringBuilder a = new StringBuilder("These are the attendees. Choose an id to message:");
+        for (Integer i : att) {
+            a.append(accM.getinfoacc(i));
+        }
+        organizerUI.show(a.toString());
     }
 
     private void readAllSpk() {
-        HashMap<Integer, String> speakers = ognM.getAllSpeaker();
-        organizerUI.displayAllSpeakers(speakers);
+        ArrayList<Integer> att = ognM.getSpeakerList();
+        StringBuilder a = new StringBuilder("These are the Speakers. Choose an id to message:");
+        for (Integer i : att) {
+            a.append(accM.getinfoacc(i));
+        }
+        organizerUI.show(a.toString());
     }
 
-    private int getResponse(){
-        ArrayList<Integer> validChoices = new ArrayList<>(ognM.getValidChoices());
+    private int targetGetter(int i) {
+        ArrayList<Integer> validChoices = new ArrayList<>();
+        if (i == 1) {
+            validChoices.addAll(ognM.getAttendeeList());
+            validChoices.addAll(ognM.getSpeakerList());
+        } else if (i == 2) {
+            validChoices.addAll(ognM.getAttendeeList());
+        } else {
+            validChoices.addAll(ognM.getSpeakerList());
+        }
+        validChoices.add(-1);
         String userInput;
-        int mode = -1;
         boolean valid = false;
-        while(!valid){
+        do {
             userInput = organizerUI.getRequest();
             if (!strategyM.isValidChoice(userInput, validChoices))
                 organizerUI.informinvalidchoice();
             else {
                 valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;}
+            }
+        } while (!valid);
+        return Integer.parseInt(userInput);
+    }
 
-    public void messageToIndividual(String str, int receiverID) {
+
+    private void messageToIndividual(String str, int receiverID) {
         int check = ognM.messageable1(receiverID);
-        if(check == 1){
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer(), receiverID, str);
+        if (check == 1) {
+            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), receiverID, str);
             accM.addinbox(receiverID, msg);
-            accM.addsend(ognM.getCurrOrganizer(), msg);
+            accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
+            organizerUI.message8();
         }
-        organizerUI.messageToDisplay(check);
+        organizerUI.message0();
     }
 
-    public void messageToAllSpeaker(String str) {
-        for(int speaker:ognM.getSpeakerList()){
-                int msg = MsgM.createmessage(ognM.getCurrOrganizer(), speaker, str);
-                accM.addinbox(speaker, msg);
-                accM.addsend(ognM.getCurrOrganizer(), msg);
+    private void sendMessageToAllSpeaker(String str) {
+        for (int speaker : ognM.getSpeakerList()) {
+            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), speaker, str);
+            accM.addinbox(speaker, msg);
+            accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
         }
-        organizerUI.messageToDisplay(2);
+        organizerUI.message10();
     }
 
-    public void messageToAllAttendee(String str){
-        for(int attendee:ognM.getAttendeeList()){
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer(), attendee, str);
+    private void sendMessageToAllAttendee(String str) {
+        for (int attendee : ognM.getAttendeeList()) {
+            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), attendee, str);
             accM.addinbox(attendee, msg);
-            accM.addsend(ognM.getCurrOrganizer(), msg);
+            accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
         }
-        organizerUI.messageToDisplay(2);
+        organizerUI.message10();
     }
-
-
 
 
 }
