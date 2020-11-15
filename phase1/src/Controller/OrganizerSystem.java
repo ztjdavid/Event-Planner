@@ -258,7 +258,7 @@ public class OrganizerSystem {
     }
 
     private void readAllOfMsg() {
-        String a = MsgM.formatmsgget(ognM.getinbox());
+        String a = MsgM.formatmsgget(ognM.getInbox());
         organizerUI.show(a);
     }
 
