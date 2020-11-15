@@ -203,7 +203,9 @@ public class OrganizerSystem {
 
     private void doCreateSpeaker() {
         int ID = createSpeaker();
+        if(ID != -1){
         organizerUI.message3(ID);
+        }
         organizerUI.askForBack();
     }
 
@@ -373,7 +375,6 @@ public class OrganizerSystem {
             }
         }else{
             organizerUI.message17();
-            organizerUI.askForBack();
         }
         return -1;
     }

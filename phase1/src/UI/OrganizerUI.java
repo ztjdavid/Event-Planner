@@ -168,21 +168,6 @@ public class OrganizerUI {
         System.out.println("Passwords Do Not Match! Please try again!");
     }
 
-    public void message9(){
-        System.out.println("Speaker Account Successfully Created!");
-    }
-
-    public void message4(){
-        System.out.println("The Speaker Has Been Successfully Scheduled.");
-    }
-
-    public void message5(){
-        System.out.println("The Speaker cannot be scheduled due to conflicts.");
-    }
-
-    public void message2(){
-        System.out.println("There is a Time Conflict with the Existing Talks"); }
-
     public void message3(int ID){
         System.out.println("Speaker Created Successfully with ID:" + ID);
     }
