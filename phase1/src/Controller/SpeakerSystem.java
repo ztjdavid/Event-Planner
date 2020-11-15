@@ -30,6 +30,7 @@ public class SpeakerSystem {
 
 
     }
+
     public void run(){
         int userChoice;
         do{
@@ -86,6 +87,7 @@ public class SpeakerSystem {
                 break;
             case 5:
                 msgtoreply();
+                break;
             case 6:
                 break;
         }
@@ -158,13 +160,12 @@ public class SpeakerSystem {
     private void readrepandmsg(){
         readallreply();
         speakerUI.announcemsg();
-        speakerUI.askForBack();
+
     }
 
     private void readmsgandrep(){
         readallmsg();
         speakerUI.announcereply();
-        speakerUI.askForBack();
     }
 
 
@@ -310,7 +311,7 @@ public class SpeakerSystem {
         }
     }
 
-    public void messagetoatt(String a, int getterid) {
+    private void messagetoatt(String a, int getterid) {
 
         int msg = MsgM.createmessage(accM.getCurrAccountId(), getterid, a);
         accM.addinbox(getterid, msg);
@@ -319,18 +320,18 @@ public class SpeakerSystem {
     }
 
 
-    public void messageall(String a) {
+    private void messageall(String a) {
         ArrayList<Integer> att = getallattendeev1();
         msgToList(a, att);
     }
-    public void messagetotalk(String a, int b) {
+    private void messagetotalk(String a, int b) {
         if (b == 999) {speakerUI.stopmessaging();}
-        ArrayList<Integer> att = talkManager.getTalk(b).getAttendeeId();
+        ArrayList<Integer> att = talkManager.getTalkWithId(b).getAttendeeId();
         msgToList(a, att);
     }
 
 
-    public ArrayList<Integer> getallattendeev1() {
+    private ArrayList<Integer> getallattendeev1() {
         ArrayList<Integer> talklist = SpeakerM.getalltalk();
         return talkManager.getallattendee(talklist);
     }

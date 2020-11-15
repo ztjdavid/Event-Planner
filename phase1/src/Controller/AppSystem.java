@@ -51,13 +51,19 @@ public class AppSystem {
     }
 
     /**
-     * Start the whole program.
+     * Start the whole program and guide users to sign up or sign in.
      */
     public void run(){
-        startUI.startup();
-        int userInput = chooseMode();
-        int currAccountType = enterBranch(userInput);
-        enterSystems(currAccountType);
+        int userChoice;
+        do{
+            startUI.startup();
+            userChoice = chooseMode();
+            if (userChoice != 3){
+                int currAccountType = enterBranch(userChoice);
+                enterSystems(currAccountType);
+            }
+        }while(userChoice != 3);
+        startUI.informQuiting();
     }
 
 
@@ -95,7 +101,7 @@ public class AppSystem {
     }
 
     private int chooseMode(){
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
         String userInput;
         int mode = -1;
         boolean valid = false;

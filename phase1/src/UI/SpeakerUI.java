@@ -12,7 +12,7 @@ public class SpeakerUI {
 
     public void startup(){
         System.out.println("----------------SpeakerSystem-----------------\n" +
-                "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Quit");
+                "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Logout");
     }
 
     public String getrequest(int s){
@@ -37,8 +37,8 @@ public class SpeakerUI {
         System.out.println("1 -> Message to an attendee.\n" +
                             "2 -> Message to attendees in one talk\n" +
                             "3 -> Message all attendees who register your talks\n" +
-                            "4 -> See your reply and message\n" +
-                            "5 -> See your message and reply\n"+
+                            "4 -> Read your replies and send message to repliers\n" +
+                            "5 -> Read your messages and reply to senders\n"+
                             "6 -> Go back.");
     }
 
@@ -70,11 +70,11 @@ public class SpeakerUI {
     }
     public void show(String a){System.out.println(a + "\n");}
 
-    public void announcereply(){System.out.println("Please remember the id of the message " +
+    public void announcereply(){System.out.println("Please enter the id of the message " +
             "if you want to reply to.");
     }
 
-    public void announcemsg(){System.out.println("Please remember the id of the replier " +
+    public void announcemsg(){System.out.println("Please enter the id of the replier " +
             "if you want to message to.");
     }
 
