@@ -61,13 +61,6 @@ public class AttendeeManager extends AccountManager{
         return getCurrAttendee().getTalkList();
     }
 
-    /**
-     * Get current Attendee's all available talk list.
-     * @return An arraylist of current Attendee's all available talk list.
-     */
-    public ArrayList<Integer> getAllAvailableTalks() {
-        return new ArrayList<>(Arrays.asList(0, 1));
-    }
 
     /**
      * Get the current Attendee's inbox.
