@@ -361,8 +361,7 @@ public class OrganizerSystem {
             String password2 = organizerUI.getSpeakerPwd2();
             if (password1.equals(password2)) {
                 accM.createAccount(username, password1, 2);
-                organizerUI.message9();
-                return accM.getTotalNumOfAccount();
+                return accM.getTotalNumOfAccount()-1;
             } else {
                 organizerUI.message1();
                 organizerUI.askForBack();
@@ -422,7 +421,7 @@ public class OrganizerSystem {
 
     private void readAllAtt() {
         ArrayList<Integer> att = ognM.getAttendeeList();
-        StringBuilder a = new StringBuilder("These are the attendees. Choose an id to message:");
+        StringBuilder a = new StringBuilder("These are the attendees. Choose an id to message:\n");
         for (Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
@@ -431,7 +430,7 @@ public class OrganizerSystem {
 
     private void readAllSpk() {
         ArrayList<Integer> att = ognM.getSpeakerList();
-        StringBuilder a = new StringBuilder("These are the Speakers. Choose an id to message:");
+        StringBuilder a = new StringBuilder("These are the Speakers. Choose an id to message:\n");
         for (Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
@@ -470,9 +469,11 @@ public class OrganizerSystem {
             accM.addinbox(receiverID, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
             organizerUI.message8();
+        }else {
+            organizerUI.message0();
         }
-        organizerUI.message0();
     }
+
 
     private void sendMessageToAllSpeaker(String str) {
         for (int speaker : ognM.getSpeakerList()) {
