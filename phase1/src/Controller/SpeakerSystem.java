@@ -159,13 +159,12 @@ public class SpeakerSystem {
     private void readrepandmsg(){
         readallreply();
         speakerUI.announcemsg();
-        speakerUI.askForBack();
+
     }
 
     private void readmsgandrep(){
         readallmsg();
         speakerUI.announcereply();
-        speakerUI.askForBack();
     }
 
 
