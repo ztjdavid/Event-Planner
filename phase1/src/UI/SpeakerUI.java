@@ -37,8 +37,8 @@ public class SpeakerUI {
         System.out.println("1 -> Message to an attendee.\n" +
                             "2 -> Message to attendees in one talk\n" +
                             "3 -> Message all attendees who register your talks\n" +
-                            "4 -> See your reply and message\n" +
-                            "5 -> See your message and reply\n"+
+                            "4 -> Read your replies and send message to repliers\n" +
+                            "5 -> Read your messages and reply to senders\n"+
                             "6 -> Go back.");
     }
 
