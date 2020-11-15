@@ -57,7 +57,7 @@ public class AttendeeManager extends AccountManager{
      * Get the current Attendee's talk list.
      * @return An arraylist of current Attendee's talk list.
      */
-    public ArrayList<Integer> getAllMyTalks() {
+    public ArrayList<Integer> getAllMyTalksId() {
         return getCurrAttendee().getTalkList();
     }
 

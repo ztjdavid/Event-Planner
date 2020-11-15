@@ -117,22 +117,35 @@ public class AttendeeSystem {
     }
 
     private void readAllMyTalks(){
-        StringBuilder a = new StringBuilder("My signed up talks");
-        ArrayList<Integer> alltalks = attendeeM.getAllMyTalks(); //manager need to implement
+        StringBuilder a = new StringBuilder("My signed up talks:");
+        ArrayList<Integer> alltalks = attendeeM.getAllMyTalksId(); //manager need to implement
         for(Integer t:alltalks){
             a.append(talkManager.gettalkinfo(t));}
-        attendeeUI.show(a.toString());}
+        attendeeUI.show(a.toString());
+    }
+
+    private ArrayList<Integer> getNotAttendedTalks(){
+        ArrayList<Integer> mytalksId = attendeeM.getAllMyTalksId();
+        ArrayList<Integer> alltalksId = talkManager.getAllTalksID();
+        ArrayList<Integer> result = new ArrayList<>();
+        for(Integer t:alltalksId){
+            if (!mytalksId.contains(t)) result.add(t);
+        }
+        return result;
+    }
 
     private void readAllAvailableTalks(){
-        StringBuilder a = new StringBuilder("Available Talks");
-        ArrayList<Integer> alltalks = attendeeM.getAllAvailableTalks(); //manager need to implement
-        for(Integer t:alltalks){
-            a.append(talkManager.gettalkinfo(t));}
+        StringBuilder a = new StringBuilder("Available Talks: ");
+        ArrayList<Integer> avaliableTalksId = getNotAttendedTalks();
+        for(Integer t:avaliableTalksId){
+            a.append(talkManager.gettalkinfo(t));
+        }
         attendeeUI.show(a.toString());}
 
 
     private int targetTalksSignUp(){
-        ArrayList<Integer> validChoices = attendeeM.getAllAvailableTalks();//manager need to implement
+        ArrayList<Integer> validChoices = getNotAttendedTalks();
+        validChoices.add(-1);
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -147,15 +160,21 @@ public class AttendeeSystem {
         return mode;}
 
     private void signUpMyNewTalks(){
-        attendeeUI.signUpTalk();
-        readAllAvailableTalks();
-        int input = targetTalksSignUp();
-        attendeeM.enrol(input);
-        attendeeUI.signUpSuc();
+        int input;
+        do{
+            attendeeUI.signUpTalk();
+            readAllAvailableTalks();
+            input = targetTalksSignUp();
+            if (input != -1){
+                attendeeM.enrol(input);
+                attendeeUI.signUpSuc();
+            }
+        }while(input != -1);
     }
 
     private int targetTalksCancel(){
-        ArrayList<Integer> validChoices = attendeeM.getAllMyTalks();//manager need to implement
+        ArrayList<Integer> validChoices = attendeeM.getAllMyTalksId();
+        validChoices.add(-1);
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -170,11 +189,18 @@ public class AttendeeSystem {
         return mode;}
 
     private void cancelMyTalks(){
-        attendeeUI.cancelTalk();
-        readAllMyTalks();
-        int input = targetTalksCancel();
-        attendeeM.drop(input);//manager need to implement
-        attendeeUI.cancelSuc();
+        int input;
+        do{
+            attendeeUI.cancelTalk();
+            readAllMyTalks();
+            input = targetTalksCancel();
+            if (input != -1){
+                attendeeM.drop(input);
+                attendeeUI.cancelSuc();
+            }
+        }while(input != -1);
+
+
     }
 
     private void msgToAttendee(){
@@ -249,16 +275,17 @@ public class AttendeeSystem {
     private void readallreply(){
         String a = MsgM.formatreply(attendeeM.getInbox());
         attendeeUI.show(a);
+        attendeeUI.askForBack();
     }
 
     //this is a helper function to get a list of all attendees in current attendee signed up talks
     public ArrayList<Integer> getAllAttendees() {
-        ArrayList<Integer> talklist = attendeeM.getAllMyTalks();//manager need to implement
+        ArrayList<Integer> talklist = attendeeM.getAllMyTalksId();//manager need to implement
         return talkManager.getallattendee(talklist);
     }
 
     public ArrayList<Integer> getAllSpeakers() {
-        ArrayList<Integer> talklist = attendeeM.getAllMyTalks();//manager need to implement
+        ArrayList<Integer> talklist = attendeeM.getAllMyTalksId();//manager need to implement
         return talkManager.getAllSpeakers(talklist);
     }
 

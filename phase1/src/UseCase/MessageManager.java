@@ -23,7 +23,7 @@ public class MessageManager {
     public void setreply(int messageid, String reply){getmessage(messageid).response(reply);}
 
     public String formatreply(ArrayList<Integer> msgget){
-        String a = "These are the replies";
+        String a = "These are the replies:";
         for(Integer i: msgget){
             if(getmessage(i).getReply().isEmpty()){a += "The message you send to " + getmessage(i).getGetterid() + " has not been replied";}
             else{a += "This reply is from " + getmessage(i).getGetterid() + "\n" + getmessage(i).getReply();}

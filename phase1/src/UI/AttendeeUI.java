@@ -21,17 +21,17 @@ public class AttendeeUI {
     }
 
     public String getrequest1(){
-        System.out.println("Please Enter Your Response(Enter -1 to go back.)");
+        System.out.println("Please Enter Your Response(Enter -1 to go back.): ");
         return attendeescanner.nextLine();
     }
 
     public String getrequest2(){
-        System.out.println("Please Enter The Valid ID of the Talk. Enter ");
+        System.out.println("Please Enter The Valid ID of the Talk(Enter -1 to go back.): ");
         return attendeescanner.nextLine();
     }
 
     public String getrequest3(){
-        System.out.println("Please Enter The Valid ID of one of your talk. Enter ");
+        System.out.println("Please Enter The Valid ID of one of your Talk(Enter -1 to go back.): ");
         return attendeescanner.nextLine();
     }
 
@@ -41,7 +41,8 @@ public class AttendeeUI {
 
     //should also print a list of available talks
     public void signUpTalk(){
-        System.out.println("----------------Signing up a talk-----------------\nPlease enter the id of the talk that you want to sign up");
+        System.out.println("----------------Signing up a talk-----------------\n" +
+                "Please enter the id of the talk that you want to sign up");
     }
 
     public void signUpSuc(){
@@ -49,7 +50,8 @@ public class AttendeeUI {
     }
 
     public void cancelTalk(){
-        System.out.println("----------------Cancelling a talk-----------------\nPlease enter the id of the talk that you want to cancel");
+        System.out.println("----------------Cancelling a talk-----------------\n" +
+                "Please enter the id of the talk that you want to cancel");
     }
 
     public void cancelSuc(){
@@ -80,8 +82,3 @@ public class AttendeeUI {
 
 }
 
-    /*
-    public void signUpTalk(){
-        System.out.println("");
-    }
-    */

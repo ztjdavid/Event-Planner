@@ -103,7 +103,7 @@ public class TalkManager {
      * @return the Talk with the given talkID.
      */
 
-    public Talk getTalk(int talkID){
+    public Talk getTalkWithId(int talkID){
         return this.talkList.get(talkID);
     }
 
@@ -112,8 +112,8 @@ public class TalkManager {
      * @return An ArrayList containing all the Talks.
      */
 
-    public ArrayList<Talk> getAllTalks(){
-        return new ArrayList<>(talkList.values());
+    public ArrayList<Integer> getAllTalksID(){
+        return new ArrayList<>(talkList.keySet());
     }
 
     /**
@@ -147,7 +147,7 @@ public class TalkManager {
 
     public String gettalkinfo(int talkid){
         String a = new String();
-        Talk talk = getTalk(talkid);
+        Talk talk = getTalkWithId(talkid);
         String talktitle = talk.getTalkTitle();
         int talktime = talk.getStartTime();
         int talkroom = talk.getRoomId();
@@ -164,7 +164,7 @@ public class TalkManager {
 
     public String gettalkinfosimp(int talkid){
         String a = new String();
-        Talk talk = getTalk(talkid);
+        Talk talk = getTalkWithId(talkid);
         String talktitle = talk.getTalkTitle();
         a = a + "\n Talk Title:" + talktitle + "\n The id of this talk is  " + talkid;
         return a;
@@ -178,8 +178,10 @@ public class TalkManager {
 
     public ArrayList<Integer> getallattendee(ArrayList<Integer> talklist){
         ArrayList<Integer> att = new ArrayList<>();
-        for(int i = 0; i < talklist.size(); i++){Talk talk = getTalk(talklist.get(i));
-            att.addAll(talk.getAttendeeId());}
+        for(Integer t:talklist){
+            Talk talk = getTalkWithId(t);
+            att.addAll(talk.getAttendeeId());
+        }
         return att;
 
     }
@@ -193,8 +195,10 @@ public class TalkManager {
 
     public ArrayList<Integer> getAllSpeakers(ArrayList<Integer> talkList){
         ArrayList<Integer> speakers = new ArrayList<>();
-        for(int i = 0; i < talkList.size(); i++){Talk talk = getTalk(talkList.get(i));
-            speakers.add(talk.getSpeaker());}
+        for(Integer t:talkList){
+            Talk talk = getTalkWithId(t);
+            speakers.add(talk.getSpeaker());
+        }
         return speakers;
 
     }
@@ -215,7 +219,7 @@ public class TalkManager {
      */
 
     public int getStartTime(int talkID){
-        Talk talk = getTalk(talkID);
+        Talk talk = getTalkWithId(talkID);
         return talk.getStartTime();
     }
 
@@ -226,7 +230,7 @@ public class TalkManager {
      */
 
     public void setSpeakerTo(int speakerID, int talkID){
-        Talk talk = getTalk(talkID);
+        Talk talk = getTalkWithId(talkID);
         talk.setSpeaker(speakerID);
     }
 
@@ -236,7 +240,6 @@ public class TalkManager {
      */
 
     public void removeTalk(int talkID){
-        Talk talk = getTalk(talkID);
         this.talkList.remove(talkID);
     }
 
