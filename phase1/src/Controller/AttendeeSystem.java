@@ -73,7 +73,7 @@ public class AttendeeSystem {
                 msgToSpeaker();
                 break;
             case 3:
-                readallreply();
+                readAllReply();
                 break;
             case 4:
                 break;
@@ -118,26 +118,26 @@ public class AttendeeSystem {
 
     private void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up talks:");
-        ArrayList<Integer> alltalks = attendeeM.getAllMyTalksId(); //manager need to implement
-        for(Integer t:alltalks){
+        ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
+        for(Integer t:allTalks){
             a.append(talkManager.gettalkinfo(t));}
         attendeeUI.show(a.toString());
     }
 
     private ArrayList<Integer> getNotAttendedTalks(){
-        ArrayList<Integer> mytalksId = attendeeM.getAllMyTalksId();
-        ArrayList<Integer> alltalksId = talkManager.getAllTalksID();
+        ArrayList<Integer> myTalksId = attendeeM.getAllMyTalksId();
+        ArrayList<Integer> allTalksId = talkManager.getAllTalksID();
         ArrayList<Integer> result = new ArrayList<>();
-        for(Integer t:alltalksId){
-            if (!mytalksId.contains(t)) result.add(t);
+        for(Integer t:allTalksId){
+            if (!myTalksId.contains(t)) result.add(t);
         }
         return result;
     }
 
     private void readAllAvailableTalks(){
         StringBuilder a = new StringBuilder("Available Talks: ");
-        ArrayList<Integer> avaliableTalksId = getNotAttendedTalks();
-        for(Integer t:avaliableTalksId){
+        ArrayList<Integer> availableTalksId = getNotAttendedTalks();
+        for(Integer t:availableTalksId){
             a.append(talkManager.gettalkinfo(t));
         }
         attendeeUI.show(a.toString());}
@@ -210,7 +210,7 @@ public class AttendeeSystem {
             tAttendeeId = targetGetter();
             if (tAttendeeId != -1){
                 String txt = enterTxt();
-                messagetoatt(txt, tAttendeeId);
+                messageToAtt(txt, tAttendeeId);
                 attendeeUI.askForBack();
             }
         }while(tAttendeeId != -1);
@@ -230,10 +230,10 @@ public class AttendeeSystem {
         return Integer.parseInt(userInput);
     }
 
-    public void messagetoatt(String a, int getterid) {
+    public void messageToAtt(String a, int getterId) {
 
-        int msg = MsgM.createmessage(accM.getCurrAccountId(), getterid, a);
-        accM.addinbox(getterid, msg);
+        int msg = MsgM.createmessage(accM.getCurrAccountId(), getterId, a);
+        accM.addinbox(getterId, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
         attendeeUI.messagesend();
     }
@@ -272,7 +272,7 @@ public class AttendeeSystem {
         return Integer.parseInt(userInput);
     }
 
-    private void readallreply(){
+    private void readAllReply(){
         String a = MsgM.formatreply(attendeeM.getInbox());
         attendeeUI.show(a);
         attendeeUI.askForBack();
@@ -280,13 +280,13 @@ public class AttendeeSystem {
 
     //this is a helper function to get a list of all attendees in current attendee signed up talks
     public ArrayList<Integer> getAllAttendees() {
-        ArrayList<Integer> talklist = attendeeM.getAllMyTalksId();//manager need to implement
-        return talkManager.getallattendee(talklist);
+        ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
+        return talkManager.getallattendee(talkList);
     }
 
     public ArrayList<Integer> getAllSpeakers() {
-        ArrayList<Integer> talklist = attendeeM.getAllMyTalksId();//manager need to implement
-        return talkManager.getAllSpeakers(talklist);
+        ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
+        return talkManager.getAllSpeakers(talkList);
     }
 
     private void readAllAttendees(){
