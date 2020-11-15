@@ -37,8 +37,9 @@ public class SpeakerUI {
         System.out.println("1 -> Message to an attendee.\n" +
                             "2 -> Message to attendees in one talk\n" +
                             "3 -> Message all attendees who register your talks\n" +
-                            "4 -> See your reply\n" +
-                            "5 -> Go back.");
+                            "4 -> See your reply and message\n" +
+                            "5 -> See your message and reply\n"+
+                            "6 -> Go back.");
     }
 
     public void informEnteringText(){
@@ -69,8 +70,12 @@ public class SpeakerUI {
     }
     public void show(String a){System.out.println(a + "\n");}
 
-    public void announcereply(){System.out.println("Please remember the id of the account " +
-            "if you want to send msg to.");
+    public void announcereply(){System.out.println("Please remember the id of the message " +
+            "if you want to reply to.");
+    }
+
+    public void announcemsg(){System.out.println("Please remember the id of the replier " +
+            "if you want to message to.");
     }
 
     public void askForBack(){

@@ -110,6 +110,9 @@ public class SpeakerManager extends AccountManager {
         return new ArrayList<>(speaker.getTalkList());
     }
 
+    public ArrayList<Integer> getmsgsend(){return getCurrSpeaker().getSentMessage();}
+
+
 
 
 }

@@ -65,7 +65,7 @@ public class SpeakerSystem {
             speakerUI.messaging();
             userChoice = chooseMode2();
             msgOp(userChoice);
-        } while (userChoice != 5);
+        } while (userChoice != 6);
 
 
     }
@@ -82,9 +82,11 @@ public class SpeakerSystem {
                 msgToAllTalks();
                 break;
             case 4:
-                readrepandmsg();
+                replytomsg();
                 break;
             case 5:
+                msgtoreply();
+            case 6:
                 break;
         }
     }
@@ -126,8 +128,41 @@ public class SpeakerSystem {
         }
     }
 
+    private void msgtoreply(){
+        int tmsgid;
+        do{
+            readmsgandrep();
+            tmsgid = targetmsg();
+            if (tmsgid != -1){
+                String txt = enterTxt();
+                MsgM.setreply(tmsgid, txt);
+                speakerUI.askForBack();
+            }
+        }while(tmsgid != -1);
+    }
+
+    private void replytomsg(){
+        int tAttendeeId;
+        do{
+            readrepandmsg();
+            tAttendeeId = targetgetter();
+            if (tAttendeeId != -1){
+                String txt = enterTxt();
+                messagetoatt(txt, tAttendeeId);
+                speakerUI.askForBack();
+            }
+        }while(tAttendeeId != -1);
+    }
+
+
     private void readrepandmsg(){
         readallreply();
+        speakerUI.announcemsg();
+        speakerUI.askForBack();
+    }
+
+    private void readmsgandrep(){
+        readallmsg();
         speakerUI.announcereply();
         speakerUI.askForBack();
     }
@@ -150,7 +185,7 @@ public class SpeakerSystem {
     private int chooseMode2(){    // For messaging dashboard.
         boolean valid = false;
         String userInput;
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         do{
             userInput = speakerUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
@@ -215,6 +250,20 @@ public class SpeakerSystem {
         return Integer.parseInt(userInput);
     }
 
+    private int targetmsg(){
+        ArrayList<Integer> validChoices = SpeakerM.getinbox();
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = speakerUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                speakerUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
     private void readalltalks(){
         StringBuilder a = new StringBuilder("Talk Information:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
@@ -241,8 +290,13 @@ public class SpeakerSystem {
         speakerUI.show(a.toString());
     }
 
+    private void readallmsg(){
+        String a = MsgM.formatmsgget(SpeakerM.getinbox());
+        speakerUI.show(a);
+    }
+
     private void readallreply(){
-        String a = MsgM.formatreply(SpeakerM.getinbox());
+        String a = MsgM.formatreply(SpeakerM.getmsgsend());
         speakerUI.show(a);
     }
 
