@@ -122,11 +122,10 @@ public class OrganizerUI {
                 "\n(End editing by typing a single \"end\" in a new line.)");
     }
 
-    public void readTalks(String title, int ID, int startTime, int roomID){
+    public void readTalks(String title, int ID, int startTime, String roomName, int roomId){
         System.out.println("-------------------------");
-        System.out.println("Talk Title:" + title + "\nTalk ID:" + ID + "\nStart time:" + startTime + "\nRoom ID:" +
-                roomID);
-        System.out.println("-------------------------");
+        System.out.println("Talk Title:" + title + "\nTalk ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                roomName + "(id: " + roomId + ")");
     }
 
     public String getLineTxt(){
@@ -236,6 +235,8 @@ public class OrganizerUI {
     public void message18() {
         System.out.println("Talk Creation Failed! Given room id is invalid.");
     }
+
+    public void message19() { System.out.println("Talk Creation Failed! Invalid speaker."); }
 
     public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
         System.out.println("Speaker Account ID:" + accountID + "\nUsername:" + userName);

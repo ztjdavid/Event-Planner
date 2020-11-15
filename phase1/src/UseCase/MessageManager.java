@@ -35,9 +35,11 @@ public class MessageManager {
     }
 
     public String formatmsgget(ArrayList<Integer> inbox){
-        String a = "These are the messages";
+        String a = "These are the messages:\n";
         for(Integer i: inbox){
-            a += "The id of this message is "+getmessage(i).getmessageid()+"This message is from " + getmessage(i).getSenderid() + "\n" + getmessage(i).getTxt();
+            a += "\n-------------------------\n";
+            a += "The id of this message is " + +getmessage(i).getmessageid()+
+                    "\nThis message is from " + getmessage(i).getSenderid() + "\n" + getmessage(i).getTxt();
         }
         return a;
     }

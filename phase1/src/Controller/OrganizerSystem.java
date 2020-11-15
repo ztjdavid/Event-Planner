@@ -109,9 +109,11 @@ public class OrganizerSystem {
         switch (userInput){
             case 1:
                 doCreateTalk();
+                organizerUI.askForBack();
                 break;
             case 2:
                 readAllTalks();
+                organizerUI.askForBack();
                 break;
             case 3:
                 break;
@@ -124,10 +126,10 @@ public class OrganizerSystem {
         for(int item:talkLst){
             String title = tlkM.getTitle(item);
             int startTime = tlkM.getStartTime(item);
-            int roomID = tlkM.getRoom(item);
-            organizerUI.readTalks(title, item, startTime, roomID);
+            String roomName = roomM.getRoomName(tlkM.getRoomIdWithId(item));
+            int roomId = tlkM.getRoomIdWithId(item);
+            organizerUI.readTalks(title, item, startTime, roomName, roomId);
         }
-        organizerUI.askForBack();
     }
 
     private void doCreateTalk(){
@@ -144,23 +146,19 @@ public class OrganizerSystem {
                 roomM.addNewTalkToRoom(talkID, startTime, roomID);
                 spkM.registerNewTalk(talkID, speakerID);
                 organizerUI.message12(talkID);
-            } else if (result == 0) {
-                organizerUI.message14();
-            } else if (result == 1){
-                organizerUI.message18();
-            } else if (result == 2) {
-                organizerUI.message15();
-            }
+            } else if (result == 0) organizerUI.message14();
+            else if (result == 1) organizerUI.message18();
+            else if (result == 2) organizerUI.message15();
+            else if (result == 3) organizerUI.message19();
         }
-        organizerUI.askForBack();
     }
 
     private int checkTalkValidity(int roomID,int startTime, int speakerID){
         int flag = -1;
+
         if (!roomM.isValidRoomId(roomID)) return 1;
-        if(roomM.getTimeTable(roomID).containsValue(startTime)){
-            flag = 0;
-        }
+        else if (!accM.isSpeakerAcc(speakerID)) return 3;
+        else if(roomM.getTimeTable(roomID).containsValue(startTime)) flag = 0;
         for(int item:spkM.getTalkList(speakerID)){
             if(tlkM.getStartTime(item) == startTime){
                 flag = 2;
@@ -357,6 +355,7 @@ public class OrganizerSystem {
             if (line.equals("end")) exit = true;
             else {
                 a.append(line);
+                a.append("\n");
             }
         } while (!exit);
         return a.toString();

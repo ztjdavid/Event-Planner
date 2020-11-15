@@ -307,6 +307,7 @@ public class AttendeeSystem {
             if (line.equals("end")) exit = true;
             else{
                 a.append(line);
+                a.append("\n");
             }
         } while(!exit);
         return a.toString();

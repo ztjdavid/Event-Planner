@@ -101,5 +101,26 @@ public class AccountManager {
         return account.getUsername();
     }
 
+    /**
+     * Check if the given account id is a Speaker.
+     * @param userID The id of an account.
+     * @return True iff the given account is a Speaker.
+     */
+    public boolean isSpeakerAcc(int userID){ return getAccountWithId(userID).getUserType() == 2;}
+
+    /**
+     * Check if the given account id is an Organizer.
+     * @param userID The id of an account.
+     * @return True iff the given account is an Organizer.
+     */
+    public boolean isOrganizerAcc(int userID){ return getAccountWithId(userID).getUserType() == 0;}
+
+    /**
+     * Check if the given account id is an Attendee.
+     * @param userID The id of an account.
+     * @return True iff the given account is an Attendee.
+     */
+    public boolean isAttendeeAcc(int userID){ return getAccountWithId(userID).getUserType() == 1;}
+
 }
 

@@ -1,10 +1,6 @@
 package Controller;
 import UI.SpeakerUI;
-import UseCase.AccountManager;
-import UseCase.StrategyManager;
-import UseCase.TalkManager;
-import UseCase.MessageManager;
-import UseCase.SpeakerManager;
+import UseCase.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,16 +13,18 @@ public class SpeakerSystem {
     protected SpeakerUI speakerUI;
     protected StrategyManager strategyM;
     protected SpeakerManager SpeakerM;
+    protected RoomManager roomM;
 
 
     public SpeakerSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
-                         StrategyManager StrategyManager, SpeakerManager SpeakerM) {
+                         StrategyManager StrategyManager, SpeakerManager SpeakerM, RoomManager roomM) {
         this.accM = accM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.speakerUI = SpeakerUI;
         this.strategyM = StrategyManager;
         this.SpeakerM = SpeakerM;
+        this.roomM = roomM;
 
 
     }
@@ -218,6 +216,7 @@ public class SpeakerSystem {
             if (line.equals("end")) exit = true;
             else{
                 a.append(line);
+                a.append("\n");
             }
         } while(!exit);
         return a.toString();
@@ -270,7 +269,8 @@ public class SpeakerSystem {
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
             a.append("\n-------------------------");
-            a.append(talkManager.gettalkinfo(t));}
+            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
+            a.append(talkManager.gettalkinfoWithName(t, roomName));}
         speakerUI.show(a.toString());
     }
     private void readalltalkssimp(){

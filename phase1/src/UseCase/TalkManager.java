@@ -129,9 +129,9 @@ public class TalkManager {
         int talkId = totalTalkCount;
         Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
         this.talkList.put(talkId, newTalk);
+        totalTalkCount += 1;
         return talkId;
     }
-
 
     /**
      * Return a string information of the Talk given the talk ID.
@@ -146,7 +146,27 @@ public class TalkManager {
         int talktime = talk.getStartTime();
         int talkroom = talk.getRoomId();
         int numatt = talk.getAttendeeId().size();
-        a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";
+        a = a + "\n Talk Title:" + talktitle + "\n This talk starts at " + talktime + "\n This talk holds in roomID " +
+                talkroom +"\n There are " + numatt + " attendees";
+        return a;
+    }
+
+    /**
+     * Return a string information of the Talk given the talk ID and room name.
+     * @param talkid The ID of the Talk.
+     * @param roomName The name of the room this talk is hold in.
+     * @return the string information of the Talk with the given talk ID.(Including talk title, start time, room ID, and number of Attendee.)
+     */
+
+    public String gettalkinfoWithName(int talkid, String roomName){
+        String a = "";
+        Talk talk = getTalkWithId(talkid);
+        String talktitle = talk.getTalkTitle();
+        int talktime = talk.getStartTime();
+        int talkroom = talk.getRoomId();
+        int numatt = talk.getAttendeeId().size();
+        a = a + "\n Talk Title:" + talktitle + "\n This talk starts at " + talktime + "\n This talk holds in roomID " +
+                talkroom + "(" + roomName + ")" +"\n There are " + numatt + " attendees";
         return a;
     }
 
@@ -254,7 +274,7 @@ public class TalkManager {
      * @return an int representation of the room ID
      */
 
-    public int getRoom(int talkID){
+    public int getRoomIdWithId(int talkID){
         Talk talk = this.talkList.get(talkID);
         return talk.getRoomId();
     }
