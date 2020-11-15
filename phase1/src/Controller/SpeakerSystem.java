@@ -86,6 +86,7 @@ public class SpeakerSystem {
                 break;
             case 5:
                 msgtoreply();
+                break;
             case 6:
                 break;
         }
