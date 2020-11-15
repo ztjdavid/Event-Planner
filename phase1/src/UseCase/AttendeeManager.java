@@ -73,7 +73,7 @@ public class AttendeeManager extends AccountManager{
      * Get the current Attendee's inbox.
      * @return An arraylist of current Attendee's inbox.
      */
-    public ArrayList<Integer> getinbox() {
+    public ArrayList<Integer> getInbox() {
         return getCurrAttendee().getInbox();
     }
 
