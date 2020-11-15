@@ -110,18 +110,19 @@ public class AttendeeSystem {
     }
 
     private void readAllMyTalks(){
-        String a = "My signed up talks";
+        StringBuilder a = new StringBuilder("My signed up talks");
         ArrayList<Integer> alltalks = attendeeM.getAllMyTalks(); //manager need to implement
-        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfo(alltalks.get(i));};
-        attendeeUI.show(a);
-    }
+        for(Integer t:alltalks){
+            a.append(talkManager.gettalkinfo(t));}
+        attendeeUI.show(a.toString());}
 
     private void readAllAvailableTalks(){
-        String a = "Available Talks";
+        StringBuilder a = new StringBuilder("Available Talks");
         ArrayList<Integer> alltalks = attendeeM.getAllAvailableTalks(); //manager need to implement
-        for(int i = 0; i < alltalks.size(); i++){a += talkManager.gettalkinfo(alltalks.get(i));};
-        attendeeUI.show(a);
-    }
+        for(Integer t:alltalks){
+            a.append(talkManager.gettalkinfo(t));}
+        attendeeUI.show(a.toString());}
+
 
     private int targetTalksSignUp(){
         ArrayList<Integer> validChoices = attendeeM.getAllAvailableTalks();//manager need to implement
