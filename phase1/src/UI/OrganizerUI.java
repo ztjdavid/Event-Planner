@@ -26,7 +26,7 @@ public class OrganizerUI {
     }
 
     public int getSpeakerID(){
-        System.out.println("Please Enter the SpeakerId of the Speaker of the Talk:");
+        System.out.println("Please Enter the user id of the Speaker of the Talk:");
         return input.nextInt();
     }
 
@@ -123,8 +123,10 @@ public class OrganizerUI {
     }
 
     public void readTalks(String title, int ID, int startTime, int roomID){
+        System.out.println("-------------------------");
         System.out.println("Talk Title:" + title + "\nTalk ID:" + ID + "\nStart time:" + startTime + "\nRoom ID:" +
                 roomID);
+        System.out.println("-------------------------");
     }
 
     public String getLineTxt(){
@@ -202,17 +204,17 @@ public class OrganizerUI {
     }
 
     public void readAllRooms(int id, String roomName, HashMap<Integer, Integer> timeTable){
-        System.out.println("Room ID:" + id + "\nRoom Name:" + roomName + "\n");
+        System.out.println("Room ID:" + id + "\nRoom Name:" + roomName);
         printHashMap(timeTable);
     }
 
     private void printHashMap(HashMap<Integer, Integer> timeTable){
-        System.out.println("\n---------Time Table---------");
+        System.out.println("---------Time Table---------");
         Set<Map.Entry<Integer, Integer>> tool = timeTable.entrySet();
         for(Map.Entry<Integer, Integer> entry: tool){
             System.out.print(entry.getKey() + "=" + entry.getValue());
         }
-        System.out.println("\n---------Time Table---------");
+        System.out.println("----------------------------");
     }
 
     public void message14(){
@@ -236,7 +238,7 @@ public class OrganizerUI {
     }
 
     public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
-        System.out.println("Speaker Account ID:" + accountID + "\nUsername:" + userName + "\n");
+        System.out.println("Speaker Account ID:" + accountID + "\nUsername:" + userName);
         readTalks1(talks);
     }
     public void errorMessage(){
@@ -248,7 +250,7 @@ public class OrganizerUI {
         for(int item : talks){
             System.out.println(item);
         }
-        System.out.println("---------IDs of the Speaker's Talks---------");
+        System.out.println("--------------------------------------------");
     }
 
 

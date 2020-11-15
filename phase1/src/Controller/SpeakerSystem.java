@@ -269,6 +269,7 @@ public class SpeakerSystem {
         StringBuilder a = new StringBuilder("Talk Information:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
+            a.append("\n-------------------------");
             a.append(talkManager.gettalkinfo(t));}
         speakerUI.show(a.toString());
     }

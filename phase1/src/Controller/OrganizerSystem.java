@@ -73,7 +73,7 @@ public class OrganizerSystem {
             case 2:
                 readAllRooms();
                 break;
-            case 3:
+            default:
                 break;
         }
     }
