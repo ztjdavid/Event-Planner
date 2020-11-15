@@ -123,8 +123,8 @@ public class OrganizerUI {
     }
 
     public void readTalks(String title, int ID, int startTime, int roomID){
-        System.out.println("Talk Title:" + title + " Talk ID:" + ID + " Start time:" + startTime + " Room ID:" +
-                roomID + "\n");
+        System.out.println("Talk Title:" + title + "\nTalk ID:" + ID + "\nStart time:" + startTime + "\nRoom ID:" +
+                roomID);
     }
 
     public String getLineTxt(){
@@ -217,7 +217,7 @@ public class OrganizerUI {
     }
 
     public void readAllRooms(int id, String roomName, HashMap<Integer, Integer> timeTable){
-        System.out.println("Room ID:" + id + " Room Name:" + roomName);
+        System.out.println("Room ID:" + id + "\nRoom Name:" + roomName + "\n");
         printHashMap(timeTable);
     }
 
@@ -247,7 +247,7 @@ public class OrganizerUI {
     }
 
     public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
-        System.out.println("Speaker Account ID:" + accountID + " Username:" + userName);
+        System.out.println("Speaker Account ID:" + accountID + "\nUsername:" + userName + "\n");
         readTalks1(talks);
     }
     public void errorMessage(){
