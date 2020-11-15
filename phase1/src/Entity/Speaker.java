@@ -32,6 +32,10 @@ public class Speaker extends Account{
         return new ArrayList<>(this.talksList);
     }
 
+    /**
+     * Register an new talk.
+     * @param talkID The id of the talk that this account is going to register.
+     */
     public void registerTalk(int talkID){
         this.talksList.add(talkID);
     }

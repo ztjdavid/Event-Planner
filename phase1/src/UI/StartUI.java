@@ -17,6 +17,10 @@ public class StartUI {
         System.out.println("Please select one operation from below:\n1 -> login\n2 -> signup");
     }
 
+    public void informQuiting(){
+        System.out.println("Ending the program...");
+    }
+
     public String requestModeSelection(){
         return scannerStart.nextLine();
     }

@@ -17,7 +17,9 @@ public class SignUpSystem {
         this.strategyM = strategyM;
     }
 
-
+    /**
+     * Run the sign up block to create a new account.
+     */
     public void run() {
         String username;
         String password;

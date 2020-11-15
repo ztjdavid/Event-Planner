@@ -10,6 +10,11 @@ public class SignInSystem {
         this.accM = accM;
         this.signInUI = signInUI;
     }
+
+    /**
+     * Run the Sign in block to log in an account.
+     * @return An integer representing the userId of login account.
+     */
     public int run(){
         boolean isValid = false;
         String username;
