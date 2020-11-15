@@ -20,6 +20,11 @@ public class AttendeeUI {
         return attendeescanner.nextLine();
     }
 
+    public String getrequest1(){
+        System.out.println("Please Enter Your Response(Enter -1 to go back.)");
+        return attendeescanner.nextLine();
+    }
+
     public String getrequest2(){
         System.out.println("Please Enter The Valid ID of the Talk. Enter ");
         return attendeescanner.nextLine();
@@ -57,6 +62,22 @@ public class AttendeeUI {
     }
 
     public void show(String a){System.out.println(a);}
+
+    public void informEnteringText(){
+        System.out.println("Please Enter Your Message.\n " +
+                "(End editing by typing a single \"end\" in a new line.)");
+    }
+    public String getLineTxt(){
+        return attendeescanner.nextLine();
+    }
+
+    public void messagesend(){ System.out.println("Message Send\n"); }
+
+    public void askForBack(){
+        System.out.println("\nPress enter to go back.");
+        attendeescanner.nextLine();
+    }
+
 }
 
     /*
