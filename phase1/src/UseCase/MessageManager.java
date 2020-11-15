@@ -7,6 +7,10 @@ import Entity.Account;
 public class MessageManager {
     static ArrayList<Message> allmessage;
 
+    public MessageManager() {
+        allmessage = new ArrayList<>();
+    }
+
     public int createmessage(int senderid, int getterid, String txt) {
         int a = allmessage.size() + 1;
         Message b = new Message(a, senderid, getterid, txt);
