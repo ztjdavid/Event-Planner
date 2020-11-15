@@ -37,14 +37,17 @@ public class AttendeeSystem {
     private void enterBranch(int userChoice){
         switch (userChoice){
             case 1:
-                readAllMyTalks();
+                MyTalksDashboard();
                 break;
             case 2:
                 signUpMyNewTalks();
+                break;
             case 3:
                 cancelMyTalks();
+                break;
             case 4:
                 MsgDashboard();
+                break;
             case 5:
                 break;
         }
@@ -107,6 +110,10 @@ public class AttendeeSystem {
                 mode = Integer.parseInt(userInput);}
         }
         return mode;
+    }
+    private void MyTalksDashboard(){
+        readAllMyTalks();
+        attendeeUI.askForBack();
     }
 
     private void readAllMyTalks(){
