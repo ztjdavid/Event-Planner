@@ -51,7 +51,7 @@ public class AppSystem {
     }
 
     /**
-     * Start the whole program.
+     * Start the whole program and guide users to sign up or sign in.
      */
     public void run(){
         int userChoice;
