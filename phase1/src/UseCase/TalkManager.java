@@ -113,7 +113,7 @@ public class TalkManager {
      */
 
     public ArrayList<Integer> getAllTalksID(){
-        return new ArrayList<>(talkList.keySet());
+        return new ArrayList<>(this.talkList.keySet());
     }
 
     /**
@@ -127,17 +127,11 @@ public class TalkManager {
 
     public int createTalk(String talkTitle, int startTime, int roomId, int speakerID){
         int talkId = totalTalkCount;
-        if(this.talkList.containsKey(talkId)){
-            return -1;
-        }else if(startTime > 9 && startTime <= 17){
-            return -1;
-        } else{
-            Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
-            this.talkList.put(talkId, newTalk);
-            totalTalkCount += 1;
-            return newTalk.getTalkId();
-        }
+        Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
+        this.talkList.put(talkId, newTalk);
+        return talkId;
     }
+
 
     /**
      * Return a string information of the Talk given the talk ID.

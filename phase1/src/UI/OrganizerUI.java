@@ -248,13 +248,13 @@ public class OrganizerUI {
 
     public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
         System.out.println("Speaker Account ID:" + accountID + " Username:" + userName);
-        readTalks(talks);
+        readTalks1(talks);
     }
     public void errorMessage(){
         System.out.println("Scheduling Failed! The StartTime of Talk Must be Between 9 - 17! Please Try again!");
     }
 
-    private void readTalks(ArrayList<Integer> talks){
+    private void readTalks1(ArrayList<Integer> talks){
         System.out.println("\n---------IDs of the Speaker's Talks---------");
         for(int item : talks){
             System.out.println(item + "\n");

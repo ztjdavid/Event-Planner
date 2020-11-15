@@ -118,7 +118,7 @@ public class OrganizerSystem {
 
     private void readAllTalks(){
         organizerUI.message7();
-        ArrayList<Integer> talkLst = tlkM.getAllTalksID();
+        ArrayList<Integer> talkLst = new ArrayList<>(tlkM.getAllTalksID());
         for(int item:talkLst){
             String title = tlkM.getTitle(item);
             int startTime = tlkM.getStartTime(item);
@@ -461,7 +461,6 @@ public class OrganizerSystem {
         return Integer.parseInt(userInput);
     }
 
-
     private void messageToIndividual(String str, int receiverID) {
         int check = ognM.messageable1(receiverID);
         if (check == 1) {
@@ -473,7 +472,6 @@ public class OrganizerSystem {
             organizerUI.message0();
         }
     }
-
 
     private void sendMessageToAllSpeaker(String str) {
         for (int speaker : ognM.getSpeakerList()) {
