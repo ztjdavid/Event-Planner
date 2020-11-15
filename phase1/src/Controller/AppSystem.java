@@ -83,7 +83,7 @@ public class AppSystem {
                 break;
             case 1:
                 System.out.println("run attendee system");
-                //attendeeS.run();
+                attendeeS.run();
                 break;
             case 2:
                 System.out.println("run speaker system");
