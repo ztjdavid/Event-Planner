@@ -12,7 +12,7 @@ public class SpeakerUI {
 
     public void startup(){
         System.out.println("----------------SpeakerSystem-----------------\n" +
-                "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Quit");
+                "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Logout");
     }
 
     public String getrequest(int s){
