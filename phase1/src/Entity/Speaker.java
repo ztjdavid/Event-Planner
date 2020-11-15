@@ -32,11 +32,19 @@ public class Speaker extends Account{
         return new ArrayList<>(this.talksList);
     }
 
+    /**
+     * Register a new talk.
+     * @param talkID The id of the talk that this account is going to register.
+     */
     public void registerTalk(int talkID){
         this.talksList.add(talkID);
     }
 
+    /**
+     * Remove an attended talk.
+     * @param talkID The id of the talk that is going to be removed.
+     */
     public void removeTalk(int talkID){
-        this.talksList.remove(talkID);
+        if (!this.talksList.isEmpty()) this.talksList.remove(talkID);
     }
 }

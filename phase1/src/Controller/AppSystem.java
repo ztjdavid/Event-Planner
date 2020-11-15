@@ -16,16 +16,19 @@ public class AppSystem {
     protected RoomManager roomM;
     protected OrganizerUI organizerUI;
     protected StrategyManager strategyM;
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected TalkManager TalkM;
     protected MessageManager MsgM;
+    protected AttendeeManager attM;
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
+    protected AttendeeUI attUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
 
     public AppSystem(){
+        this.attM = new AttendeeManager();
         this.spkM = new SpeakerManager();
         this.ognM = new OrganizerManager();
         this.roomM = new RoomManager();
@@ -33,25 +36,34 @@ public class AppSystem {
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
         this.speakerUI = new SpeakerUI();
+        this.attUI = new AttendeeUI();
         this.organizerUI = new OrganizerUI();
-        this.loginM = new LoginManager();
+        this.accM = new AccountManager();
         this.MsgM = new MessageManager();
         this.TalkM = new TalkManager();
         this.strategyM = new StrategyManager();
-        this.signInS = new SignInSystem(loginM, signInUI);
-        this.signUpS = new SignUpSystem(loginM, signUpUI, strategyM);
-        this.attendeeS = new AttendeeSystem(loginM);
-        this.organizerS = new OrganizerSystem(loginM, MsgM, organizerUI, strategyM, ognM, spkM, TalkM, roomM);
-        this.speakerS = new SpeakerSystem(loginM, TalkM, MsgM, speakerUI, strategyM, spkM);
+        this.signInS = new SignInSystem(accM, signInUI);
+        this.signUpS = new SignUpSystem(accM, signUpUI, strategyM);
+        this.attendeeS = new AttendeeSystem(accM, TalkM, MsgM, attUI, strategyM, attM);
+        this.organizerS = new OrganizerSystem(accM, MsgM, organizerUI, strategyM, ognM, spkM, TalkM, roomM);
+        this.speakerS = new SpeakerSystem(accM, TalkM, MsgM, speakerUI, strategyM, spkM);
 
     }
 
-
+    /**
+     * Start the whole program and guide users to sign up or sign in.
+     */
     public void run(){
-        startUI.startup();
-        int userInput = chooseMode();
-        int currAccountType = enterBranch(userInput);
-        enterSystems(currAccountType);
+        int userChoice;
+        do{
+            startUI.startup();
+            userChoice = chooseMode();
+            if (userChoice != 3){
+                int currAccountType = enterBranch(userChoice);
+                enterSystems(currAccountType);
+            }
+        }while(userChoice != 3);
+        startUI.informQuiting();
     }
 
 
@@ -77,7 +89,7 @@ public class AppSystem {
                 break;
             case 1:
                 System.out.println("run attendee system");
-                //attendeeS.run();
+                attendeeS.run();
                 break;
             case 2:
                 System.out.println("run speaker system");
@@ -89,7 +101,7 @@ public class AppSystem {
     }
 
     private int chooseMode(){
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
         String userInput;
         int mode = -1;
         boolean valid = false;

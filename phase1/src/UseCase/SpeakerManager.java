@@ -2,43 +2,32 @@ package UseCase;
 import Entity.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * The SpeakerManager class implements all functionalities of a speaker.
  */
 public class SpeakerManager extends AccountManager {
-    protected static Speaker currSpeaker;
-
-
     public SpeakerManager() {
         super();
     }
 
-    public void setCurrSpeaker(Speaker speaker){
-        currSpeaker = speaker;
+    /**
+     * Get the current Speaker.
+     * @return the current Speaker.
+     */
+    public Speaker getCurrSpeaker(){
+        return (Speaker)getCurrAccount();
     }
 
-    public int getCurrSpeaker(){
-        return currSpeaker.getUserId();
-    }
 
-    public void changeUsername(String name){
-        currSpeaker.setUsername(name);
-    }
-
-    public void changePassword(String password){
-        currSpeaker.setPassword(password);
-    }
-
-    public void registerNewTalk(int talkID, int speakerID, HashMap<Integer,Object> accList){
-        Speaker speaker = (Speaker) accList.get(speakerID);
-        setCurrSpeaker(speaker);
+    /**
+     * Register the Speaker given the speaker ID to the new Talk given the talk ID.
+     * @param talkID int value of the Talk ID.
+     * @param speakerID int value of the Speaker ID.
+     */
+    public void registerNewTalk(int talkID, int speakerID){
+        Speaker speaker = (Speaker) accountList.get(speakerID);
         speaker.registerTalk(talkID);
-    }
-
-    public void removeTalk(Talk talk){
-        currSpeaker.removeTalk(talk.getTalkId());
     }
 
 
@@ -54,24 +43,51 @@ public class SpeakerManager extends AccountManager {
         return other.getUserType() == 1;
     }
 
-    public boolean responsibleForTalk(int talkId) {
-        ArrayList<Integer> talkList = currSpeaker.getTalkList();
-        return talkList.contains(talkId);
+    /**
+     * Get the current Speaker's talk list.
+     * @return An arraylist of current Speaker's talk list.
+     */
+    public ArrayList<Integer> getalltalk(){return getCurrSpeaker().getTalkList();}
+
+    public ArrayList<Integer> getTalks(int speakerID){
+        Speaker speaker = (Speaker) accountList.get(speakerID);
+        return speaker.getTalkList();
     }
 
-    public ArrayList<Integer> getalltalk(){return currSpeaker.getTalkList();}
-    public ArrayList<Integer> getinbox(){return currSpeaker.getInbox();}
+    /**
+     * Get the current Speaker's inbox.
+     * @return An arraylist of current Speaker's inbox.
+     */
+    public ArrayList<Integer> getinbox(){return getCurrSpeaker().getInbox();}
 
-    public boolean checkTalk(int speakerID, int talkID, HashMap<Integer,Object> accList){
-        Speaker speaker = (Speaker) accList.get(speakerID);
+    /**
+     * Get the messages that the speaker got.
+     * @return A list of message ids
+     */
+    public ArrayList<Integer> getmsgsend(){return getCurrSpeaker().getSentMessage();}
+
+
+
+    /**
+     * Check if the Speaker given the speaker ID is responsible for the Talk given the talk ID.
+     * @param speakerID The ID of the Speaker.
+     * @param talkID The ID of the Talk.
+     * @return True iff the Speaker responsible for the Talk.
+     */
+    public boolean checkTalk(int speakerID, int talkID){
+        Speaker speaker = (Speaker) getAccountWithId(speakerID);
         return speaker.getTalkList().contains(talkID);
     }
 
-    public ArrayList<Integer> getTalkList(int speakerID, HashMap<Integer,Object> accList){
-        Speaker speaker = (Speaker) accList.get(speakerID);
+    /**
+     * Get the Speaker's talk list given the speaker ID.
+     * @param speakerID The ID of the Speaker
+     * @return The arraylist of the Speaker's talk list.
+     */
+    public ArrayList<Integer> getTalkList(int speakerID){
+        Speaker speaker = (Speaker) accountList.get(speakerID);
         return new ArrayList<>(speaker.getTalkList());
     }
-
 
 }
 

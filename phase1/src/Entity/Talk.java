@@ -90,4 +90,7 @@ public class Talk {
      * @return An integer representing talk remaining seats, where it should be in between 0 to 2.
      */
     public int getRemainingSeat(){return this.remainingSeat;}
+
+
+
 }

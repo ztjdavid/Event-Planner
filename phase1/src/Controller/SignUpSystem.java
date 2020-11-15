@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SignUpSystem {
-    protected LoginManager loginM;
+    protected AccountManager accM;
     protected SignUpUI signUpUI;
     protected StrategyManager strategyM;
 
-    public SignUpSystem(LoginManager loginM, SignUpUI signUpUI, StrategyManager strategyM) {
-        this.loginM = loginM;
+    public SignUpSystem(AccountManager accM, SignUpUI signUpUI, StrategyManager strategyM) {
+        this.accM = accM;
         this.signUpUI = signUpUI;
         this.strategyM = strategyM;
     }
 
-
+    /**
+     * Run the sign up block to create a new account.
+     */
     public void run() {
         String username;
         String password;
@@ -26,7 +28,7 @@ public class SignUpSystem {
         userType = chooseType();
         username = createUsername();
         password = createPassword();
-        loginM.createAccount(username, password, userType);
+        accM.createAccount(username, password, userType);
 
         signUpUI.finishSignUp();
 
@@ -54,7 +56,7 @@ public class SignUpSystem {
         String userInput;
         do{
             userInput = signUpUI.requestUsername();
-            if (!loginM.existsUsername(userInput)) {
+            if (!accM.existsUsername(userInput)) {
                 signUpUI.informValidUsername();
                 succeed = true;
             } else signUpUI.informInvalidUsername();

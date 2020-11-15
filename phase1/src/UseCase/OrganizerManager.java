@@ -3,7 +3,6 @@ import Entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.SplittableRandom;
 
 /**
  * The OrganizerManager class implements all functionalities of an organizer.
@@ -39,72 +38,92 @@ public class OrganizerManager extends AccountManager{
     public void changePassword(Organizer organizer, String password){organizer.setPassword(password);}
 
     /**
-     * Check if the current login account can message a given account.
-     * @param organizer The organizer who want to send message.
-     * @param other Another account that the organizer is going to message(Attendee or Speaker).
-     * @param message The Message the organizer is going to send.
+     * Create a hashmap of all Attendee in the account list.
+     * @return Hashmap of all Attendee with key as user ID and value as username.
      */
-    public boolean sendMessage(Organizer organizer, Account other, Message message){
-        if (this.messageable(other)){
-            organizer.addSentMessage(message.getmessageid());
-            other.addInbox(message.getmessageid());
-            System.out.println("Your message has been sent successfully.");
-            return true;
+    public HashMap<Integer, String> getAllAttendee(){
+        HashMap<Integer, String> allAttendee = new HashMap<>();
+        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
+        for(Account acc : accList.values()){
+            if(acc.getUserType() == 1){
+                allAttendee.put(acc.getUserId(), acc.getUsername());
+            }
+        }return allAttendee;
+    }
 
-        }else{
-            System.out.println("Your message cannot be sent.");
-            return false;
+
+    /**
+     * Create a arraylist of all Attendee's user ID in the account list.
+     * @return Arraylist of all Attendee's user ID.
+     */
+    public ArrayList<Integer> getValidChoices(){
+        ArrayList<Integer> aList = new ArrayList<>();
+        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
+        for(Account item: accList.values()){
+            if (item.getUserType() == 1){
+                aList.add(item.getUserId());
+            }
+        }
+        return aList;
+    }
+
+
+    /**
+     * Return int 1 iff the receiver is message-able. A receiver is message-able iff its user type is Attendee or Speaker. Otherwise return int 3.
+     * @param receiverID The int ID of the receiver.
+     * @return int 1 if the receiver is Attendee or Speaker, int 3 otherwise.
+     */
+    public int messageable1(int receiverID){
+        Account receiver = getAccountWithId(receiverID);
+        if(receiver.getUserType() == 2 || receiver.getUserType() == 1){
+            return 1;
+        }
+        else{
+            return 3;
         }
     }
 
-    /**
-     * Message all the attendee of the given talk.
-     * @param organizer The organizer who want to send message.
-     * @param accountList Hash Map of all accounts.
-     * @param talk The selected talk.
-     * @param message The Message the organizer is going to send.
-     */
-    public boolean messageAllAttendee(Organizer organizer, HashMap<Integer, Account> accountList, Talk talk, Message message){
-        ArrayList<Integer> Attendance = talk.getAttendeeId();
-        int numberAttendee = 0;
-        for (Account value : accountList.values()){
-            if (value.getUserType() == 1 && Attendance.contains(value.getUserId())){
-                organizer.addSentMessage(message.getmessageid());
-                value.addInbox(message.getmessageid());
-                numberAttendee ++;
-            }
-        }
-        if (numberAttendee == 0){
-            System.out.println("No Attendee is attending the selected talk.");
-            return false;
-        }else{
-            System.out.println("Message has been sent to all Attendee of the selected talk.");
-            return true;
-        }
+    public Organizer getCurrOrganizer(){
+        return (Organizer) getCurrAccount();
     }
 
+
     /**
-     * Message all the Speaker.
-     * @param organizer The organizer who want to send message.
-     * @param accountList Hash Map of all accounts.
-     * @param message The Message the organizer is going to send.
+     * Create a arraylist of all Speaker's user ID in the account list.
+     * @return Arraylist of all Speaker's user ID.
      */
-    public boolean messageAllSpeaker(Organizer organizer, HashMap<Integer, Account> accountList, Message message){
-        int numberSpeaker = 0;
-        for (Account value : accountList.values()) {
-            if (value.getUserType() == 2) {
-                organizer.addSentMessage(message.getmessageid());
-                value.addInbox(message.getmessageid());
-                numberSpeaker++;
+    public ArrayList<Integer> getSpeakerList(){
+        ArrayList<Integer> lst = new ArrayList<>();
+        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
+        for(int item:accList.keySet()){
+            if (accList.get(item).getUserType() == 2){
+                lst.add(item);
             }
         }
-        if (numberSpeaker == 0){
-            System.out.println("There is no Speaker.");
-            return false;
-        }else{
-            System.out.println("Message has been sent to all Speakers.");
-            return true;
+        return lst;
+    }
+
+    public ArrayList<Integer> getinbox(){return getCurrOrganizer().getInbox();}
+
+    /**
+     * Create a arraylist of all Attendee's user ID in the account list.
+     * @return Arraylist of all Attendee's user ID.
+     */
+    public ArrayList<Integer> getAttendeeList(){
+        ArrayList<Integer> lst = new ArrayList<>();
+        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
+        for(int item:accList.keySet()){
+            if (accList.get(item).getUserType() == 1){
+                lst.add(item);
+            }
         }
+        return lst;
+    }
+
+    public ArrayList<Integer> getMsgSend(){return getCurrOrganizer().getSentMessage();}
+
+    public ArrayList<Integer> getInbox(){
+        return new ArrayList<>(getCurrOrganizer().getInbox());
     }
 
 }

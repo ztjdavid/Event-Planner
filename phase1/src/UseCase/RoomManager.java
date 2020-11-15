@@ -12,27 +12,73 @@ public class RoomManager {
         this.allRooms = new HashMap<>();
     }
 
-    public void createRoom(String roomName, int roomID){
-        Room room = new Room(roomName, roomID);
-        allRooms.put(roomID, room);
+    /**
+     * Create a new Room with given room name and given room ID.
+     * @param roomName String representation of room name.
+     */
+    public int createRoom(String roomName){
+        int ID = totalRoomCount;
+        Room room = new Room(roomName, ID);
+        allRooms.put(ID, room);
         totalRoomCount += 1;
+        return ID;
     }
 
+    /**
+     * Get the total number of room.
+     * @return int representation of the total number of room.
+     */
     public static int getTotalRoomCount(){
         return totalRoomCount;
     }
 
+    /**
+     * Get the Room associated with the given room ID.
+     * @param roomID int representation of room ID.
+     * @return The Room associated with the room ID.
+     */
     public Room getRoomWithID(int roomID){
         return allRooms.get(roomID);
     }
 
+    /**
+     * Check if the Room given the room ID is occupied at the given start time.
+     * @param roomID int representation of room ID.
+     * @param startTime int representation of the start time.
+     * @return True iff the Room is occupied at the start time.
+     */
     public boolean isOccupiedAt(int roomID, int startTime){
         Room room = getRoomWithID(roomID);
         return room.getTimetable().containsKey(startTime);
     }
 
+    /**
+     * Schedule the Talk given talk ID to the Room given room ID, at the given start time.
+     * @param roomID int representation of room ID.
+     * @param talkID int representation of the talk ID.
+     * @param startTime int representation of the start time of the Talk.
+     */
     public void scheduleTalk(int roomID, int talkID, int startTime){
         Room room = getRoomWithID(roomID);
+        room.scheduleTalk(talkID, startTime);
+    }
+
+    public ArrayList<Integer> getAllRooms(){
+        return new ArrayList<>(this.allRooms.keySet());
+    }
+
+    public String getRoomName(int roomID){
+        Room room = this.allRooms.get(roomID);
+        return room.getRoomName();
+    }
+
+    public HashMap<Integer, Integer> getTimeTable(int roomID){
+        Room room = this.allRooms.get(roomID);
+        return room.getTimetable();
+    }
+
+    public void addNewTalkToRoom(int talkID, int startTime, int roomID){
+        Room room = this.allRooms.get(roomID);
         room.scheduleTalk(talkID, startTime);
     }
 
