@@ -103,8 +103,6 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
-    public ArrayList<Integer> getinbox(){return getCurrOrganizer().getInbox();}
-
     /**
      * Create a arraylist of all Attendee's user ID in the account list.
      * @return Arraylist of all Attendee's user ID.
