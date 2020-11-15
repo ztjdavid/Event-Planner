@@ -185,6 +185,7 @@ public class OrganizerSystem {
                 break;
             case 2:
                 readAllSpeakers();
+                break;
             case 3:
                 break;
         }
