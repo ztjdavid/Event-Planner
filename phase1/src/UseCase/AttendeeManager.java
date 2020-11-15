@@ -34,6 +34,10 @@ public class AttendeeManager extends AccountManager{
     //TODO:为了跑程序暂时乱写的，需要改.
     public ArrayList<Integer> getAllAvailableTalks(){return new ArrayList<>(Arrays.asList(0, 1));}
 
+    public Attendee getCurrAttendee(){
+        return (Attendee) getCurrAccount();
+    }
 
+    public ArrayList<Integer> getInbox(){return getCurrAttendee().getInbox();}
 
 }

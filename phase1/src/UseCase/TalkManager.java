@@ -184,6 +184,21 @@ public class TalkManager {
 
     }
 
+
+    /**
+     * Return an arraylist of all the Attendee of the Talks in the given talk list.
+     * @param talkList Arraylist of all ID of the Talk.
+     * @return Arraylist of all Attendee of all the Talks in the talk list.
+     */
+
+    public ArrayList<Integer> getAllSpeakers(ArrayList<Integer> talkList){
+        ArrayList<Integer> speakers = new ArrayList<>();
+        for(int i = 0; i < talkList.size(); i++){Talk talk = getTalk(talkList.get(i));
+            speakers.add(talk.getSpeaker());}
+        return speakers;
+
+    }
+
     /**
      * Return the total number of Talks
      * @return the int value of the total number of Talks.
