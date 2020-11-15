@@ -247,7 +247,7 @@ public class AttendeeSystem {
     }
 
     private void readallreply(){
-        String a = MsgM.formatreply(attendeeM.getinbox());
+        String a = MsgM.formatreply(attendeeM.getInbox());
         attendeeUI.show(a);
     }
 
