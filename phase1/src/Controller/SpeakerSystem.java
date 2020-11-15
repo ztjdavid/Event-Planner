@@ -326,7 +326,7 @@ public class SpeakerSystem {
     }
     private void messagetotalk(String a, int b) {
         if (b == 999) {speakerUI.stopmessaging();}
-        ArrayList<Integer> att = talkManager.getTalk(b).getAttendeeId();
+        ArrayList<Integer> att = talkManager.getTalkWithId(b).getAttendeeId();
         msgToList(a, att);
     }
 
