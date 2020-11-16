@@ -45,6 +45,10 @@ public class TalkManager {
         this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
     }
 
+    public void addAttendeev2(int talkid, Attendee attendee){
+        this.talkList.get(talkid).getAttendeeId().add(attendee.getUserId());
+    }
+
     /**
      * Remove the attendee from the Talk.
      * @param attendee The unwanted attendee.
@@ -52,6 +56,11 @@ public class TalkManager {
 
     public void removeAttendee(Attendee attendee){
         this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
+    }
+
+
+    public void removeAttendeev2(int talkid, Attendee attendee){
+        this.talkList.get(talkid).getAttendeeId().remove(attendee.getUserId());
     }
 
     /**
