@@ -146,8 +146,8 @@ public class TalkManager {
         int talktime = talk.getStartTime();
         int talkroom = talk.getRoomId();
         int numatt = talk.getAttendeeId().size();
-        a = a + "\n Talk Title:" + talktitle + "\n This talk starts at " + talktime + "\n This talk holds in roomID " +
-                talkroom +"\n There are " + numatt + " attendees";
+        a = a + "\n Talk Title:" + talktitle + "\n Talk ID:" + talkid + "\n This talk starts at " + talktime +
+                "\n This talk holds in roomID " + talkroom +"\n There are " + numatt + " attendees";
         return a;
     }
 
