@@ -74,7 +74,8 @@ public class TalkManager {
      */
 
     public void removeAttendeev2(int talkid, Attendee attendee){
-        this.talkList.get(talkid).getAttendeeId().remove(attendee.getUserId());
+        this.talkList.get(talkid).removeAttendee(attendee.getUserId());
+        //this.talkList.get(talkid).getAttendeeId().remove(attendee.getUserId());
     }
 
     /**
