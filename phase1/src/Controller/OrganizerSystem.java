@@ -137,11 +137,9 @@ public class OrganizerSystem {
         switch (userInput){
             case 1:
                 doCreateTalk();
-                organizerUI.askForBack();
                 break;
             case 2:
                 readAllTalks();
-                organizerUI.askForBack();
                 break;
             case 3:
                 break;
@@ -161,6 +159,7 @@ public class OrganizerSystem {
             int roomId = tlkM.getRoomIdWithId(item);
             organizerUI.readTalks(title, item, startTime, roomName, roomId);
         }
+        organizerUI.askForBack();
     }
 
     /**
@@ -185,6 +184,7 @@ public class OrganizerSystem {
             else if (result == 2) organizerUI.message15();
             else if (result == 3) organizerUI.message19();
         }
+        organizerUI.askForBack();
     }
 
     /**
@@ -251,7 +251,7 @@ public class OrganizerSystem {
     private void doCreateSpeaker() {
         int ID = createSpeaker();
         if(ID != -1){
-        organizerUI.message3(ID);
+            organizerUI.message3(ID);
         }
         organizerUI.askForBack();
     }
@@ -419,12 +419,12 @@ public class OrganizerSystem {
                 return accM.getTotalNumOfAccount()-1;
             } else {
                 organizerUI.message1();
-                organizerUI.askForBack();
+                return -1;
             }
         }else{
             organizerUI.message17();
+            return -1;
         }
-        return -1;
     }
 
     private int chooseMode1() {
