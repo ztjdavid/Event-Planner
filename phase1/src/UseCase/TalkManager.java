@@ -53,7 +53,8 @@ public class TalkManager {
      */
 
     public void addAttendeev2(int talkid, Attendee attendee){
-        this.talkList.get(talkid).getAttendeeId().add(attendee.getUserId());
+        this.talkList.get(talkid).addAttendee(attendee.getUserId());
+        //this.talkList.get(talkid).getAttendeeId().add(attendee.getUserId());
     }
 
     /**
