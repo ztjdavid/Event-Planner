@@ -299,7 +299,8 @@ public class OrganizerSystem {
             getID = targetGetter(1);
             if (getID != -1) {
                 String txt = enterTxt();
-                MsgM.setreply(getID, txt);
+                int replyID = MsgM.setreply(getID, txt);
+                organizerUI.message2(replyID);
                 organizerUI.askForBack();
             }
         } while (getID != -1);
