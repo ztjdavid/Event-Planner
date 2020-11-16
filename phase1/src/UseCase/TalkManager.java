@@ -37,12 +37,13 @@ public class TalkManager {
     }
 
     /**
-     * Add the attendee to the Talk.
+     * Add the attendee to the current Talk.
      * @param attendee The new attendee.
      */
 
     public void addAttendee(Attendee attendee){
-        this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
+        this.talkList.get(currentTalkID).addAttendee(attendee.getUserId());
+        //this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
     }
 
     /**
