@@ -109,5 +109,16 @@ public class Talk {
         return true;
     }
 
+    /**
+     * Remove a Attendee from this talk.
+     * @param attId The id of attendee being removed.
+     * @return True iff the attendee is successfully removed.
+     */
+    public boolean removeAttendee(int attId){
+        if (!this.attendeeId.contains(attId)) return false;
+        this.attendeeId.remove(attId);
+        this.remainingSeat += 1;
+        return true;
+    }
 
 }
