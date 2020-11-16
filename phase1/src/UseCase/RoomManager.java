@@ -13,8 +13,9 @@ public class RoomManager {
     }
 
     /**
-     * Create a new Room with given room name and given room ID.
+     * Create a new Room with given room name, with room ID be the total number of Room.
      * @param roomName String representation of room name.
+     * @return The ID of the room
      */
     public int createRoom(String roomName){
         int ID = totalRoomCount;

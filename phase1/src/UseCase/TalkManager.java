@@ -19,7 +19,7 @@ public class TalkManager {
     }
 
     /**
-     *Set the currentTalkID.
+     * Set the currentTalkID.
      * @param talkID The current talk Id.
      */
 
@@ -45,6 +45,12 @@ public class TalkManager {
         this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
     }
 
+    /**
+     * Add the given Attendee's ID to the Talk's attendee list given the talk ID.
+     * @param talkid ID of the talk.
+     * @param attendee Attendee who want to attend the talk.
+     */
+
     public void addAttendeev2(int talkid, Attendee attendee){
         this.talkList.get(talkid).getAttendeeId().add(attendee.getUserId());
     }
@@ -58,6 +64,11 @@ public class TalkManager {
         this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
     }
 
+    /**
+     * Remove the given Attendee's ID from the Talk's attendee list given the talk ID.
+     * @param talkid ID of the talk.
+     * @param attendee Attendee who need to be removed from the talk.
+     */
 
     public void removeAttendeev2(int talkid, Attendee attendee){
         this.talkList.get(talkid).getAttendeeId().remove(attendee.getUserId());
