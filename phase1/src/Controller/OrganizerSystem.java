@@ -76,7 +76,7 @@ public class OrganizerSystem {
     }
 
     /**
-     * Enter the roomOp according to user input from the Room dashboard.
+     * Enter the Room Option according to user input from the Room dashboard.
      * @param userInput an int chosen by user.
      */
     private void roomOp(int userInput){
@@ -129,7 +129,7 @@ public class OrganizerSystem {
     }
 
     /**
-     * Enter the talk Op according to user input from the talk dashboard.
+     * Enter the Talk Option according to user input from the Talk dashboard.
      * @param userInput an int chosen by user.
      */
     private void tlkOp(int userInput){
@@ -207,6 +207,9 @@ public class OrganizerSystem {
     return flag;
     }
 
+    /**
+     * Run Speaker dashboard, user can choose according to messaging2 options.
+     */
     private void speakerDashboard() {
         int userInput;
         do {
@@ -216,6 +219,10 @@ public class OrganizerSystem {
         } while (userInput != 3);
     }
 
+    /**
+     * Enter the Speaker Option according to user input from the Speaker dashboard.
+     * @param userInput an int chosen by user.
+     */
     private void sprOp(int userInput) {
         switch (userInput) {
             case 1:
