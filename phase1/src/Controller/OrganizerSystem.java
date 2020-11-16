@@ -184,7 +184,6 @@ public class OrganizerSystem {
             else if (result == 2) organizerUI.message15();
             else if (result == 3) organizerUI.message19();
         }
-        organizerUI.askForBack();
     }
 
     /**
@@ -464,9 +463,9 @@ public class OrganizerSystem {
         do {
             userInput = organizerUI.confirmMsgAll();
             if (strategyM.isValidChoice(userInput, validChoices))
-                organizerUI.informInvalidChoice();
-            else {
                 valid = true;
+            else {
+                organizerUI.informInvalidChoice();
             }
         } while (!valid);
         return Integer.parseInt(userInput);
