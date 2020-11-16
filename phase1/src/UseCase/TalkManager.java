@@ -63,7 +63,8 @@ public class TalkManager {
      */
 
     public void removeAttendee(Attendee attendee){
-        this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
+        this.talkList.get(currentTalkID).removeAttendee(attendee.getUserId());
+        //this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
     }
 
     /**
