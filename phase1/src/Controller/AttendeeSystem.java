@@ -167,6 +167,7 @@ public class AttendeeSystem {
             input = targetTalksSignUp();
             if (input != -1){
                 attendeeM.enrol(input);
+                talkManager.addAttendee(attendeeM.getCurrAttendee());
                 attendeeUI.signUpSuc();
             }
         }while(input != -1);
@@ -196,6 +197,7 @@ public class AttendeeSystem {
             input = targetTalksCancel();
             if (input != -1){
                 attendeeM.drop(input);
+                talkManager.removeAttendee(attendeeM.getCurrAttendee());
                 attendeeUI.cancelSuc();
             }
         }while(input != -1);
