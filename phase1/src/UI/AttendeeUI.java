@@ -13,7 +13,7 @@ public class AttendeeUI {
     //not yet implement the message part
     public void startup() {
         System.out.println("----------------AttendeeSystem-----------------\nHi, " +
-                "Attendee! Would you like to\n1 -> View your signed up talks\n2 -> Sign up for a new talk\n3 -> Cancel a talk\n4 ->Send message \n5 -> Quit");
+                "Attendee! Would you like to\n1 -> View your signed up talks\n2 -> Sign up for a new talk\n3 -> Cancel a talk\n4 ->Send message \n5 -> Logout");
     }
     public String getrequest(){
         System.out.println("Please Enter Your Response");
@@ -60,7 +60,7 @@ public class AttendeeUI {
 
     public void msgSelect(){
         System.out.println("----------------Message Interface-----------------\nHi, " +
-                "Would you like to\n1 -> Send Message to a attendee\n2 -> Send a message to the speaker of a talk\n3 -> View your inbox\n4 -> Quit");
+                "Would you like to\n1 -> Send Message to a attendee\n2 -> Send a message to the speaker of a talk\n3 -> View your inbox\n4 -> Go back");
     }
 
     public void show(String a){System.out.println(a);}
