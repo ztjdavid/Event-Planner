@@ -316,7 +316,7 @@ public class SpeakerSystem {
 
     private void messagetoatt(String a, int getterid) {
 
-        int msg = MsgM.createmessage(accM.getCurrAccountId(), getterid, a);
+        int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterid, a);
         accM.addinbox(getterid, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
         speakerUI.messagesend();

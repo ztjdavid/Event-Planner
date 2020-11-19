@@ -51,6 +51,13 @@ public class AccountManager {
     public int getCurrAccountId(){ return currAccountId;}
 
     /**
+     * Get the name of current login account.
+     * @return A string representing name.
+     */
+    public String getCurrAccountName(){ return getCurrAccount().getUsername();}
+
+
+    /**
      * Get the current login account.
      * @return An account which id is currAccountId.
      */

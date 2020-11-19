@@ -18,6 +18,7 @@ public class MessageManager {
      * @return the number of messages as int.
      */
     public int createmessage(int senderid, int getterid, String txt) {
+
         int a = allmessage.size();
         Message b = new Message(a, senderid, getterid, txt);
         allmessage.add(b);
@@ -26,13 +27,27 @@ public class MessageManager {
 
     }
 
+    public int createmessage(String sendername, int senderid, int getterid, String txt) {
+
+
+        int a = allmessage.size();
+        Message b = new Message(a, senderid, getterid, txt);
+        b.setSendername(sendername);
+        allmessage.add(b);
+
+        return a;
+
+    }
+
+    public ArrayList<Message> getAllmessage(){return allmessage;}
+
     /**
      * Get the Message given the message ID.
      * @param messageid The ID of the message.
      * @return the Message.
      */
     public Message getmessage(int messageid){
-        return allmessage.get(messageid);
+        return getAllmessage().get(messageid);
     }
 
     /**
@@ -67,7 +82,8 @@ public class MessageManager {
         for(Integer i: inbox){
             a += "\n-------------------------\n";
             a += "The id of this message is " + +getmessage(i).getmessageid()+
-                    "\nThis message is from " + getmessage(i).getSenderid() + ":\n" + getmessage(i).getTxt();
+                    "\nThis message is from " + getmessage(i).getSendername() + "whose id is" +
+                    getmessage(i).getSenderid() + ":\n" + getmessage(i).getTxt();
         }
         return a;
     }

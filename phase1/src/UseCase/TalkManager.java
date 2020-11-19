@@ -3,6 +3,8 @@ import Entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * TalkManager class contains talks and methods that modify talks
@@ -211,12 +213,14 @@ public class TalkManager {
      */
 
     public ArrayList<Integer> getallattendee(ArrayList<Integer> talklist){
-        ArrayList<Integer> att = new ArrayList<>();
+        Set<Integer> att = new HashSet<>();
         for(Integer t:talklist){
+
             Talk talk = getTalkWithId(t);
             att.addAll(talk.getAttendeeId());
         }
-        return att;
+        ArrayList<Integer> result = new ArrayList<>(att);
+        return result;
 
     }
 

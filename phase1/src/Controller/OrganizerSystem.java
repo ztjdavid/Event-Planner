@@ -518,7 +518,7 @@ public class OrganizerSystem {
     private void messageToIndividual(String str, int receiverID) {
         int check = ognM.messageable1(receiverID);
         if (check == 1) {
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), receiverID, str);
+            int msg = MsgM.createmessage(ognM.getCurrAccountName(), ognM.getCurrOrganizer().getUserId(), receiverID, str);
             accM.addinbox(receiverID, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
             organizerUI.message8();
@@ -529,7 +529,7 @@ public class OrganizerSystem {
 
     private void sendMessageToAllSpeaker(String str) {
         for (int speaker : ognM.getSpeakerList()) {
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), speaker, str);
+            int msg = MsgM.createmessage(ognM.getCurrAccountName(), ognM.getCurrOrganizer().getUserId(), speaker, str);
             accM.addinbox(speaker, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
         }
@@ -538,7 +538,7 @@ public class OrganizerSystem {
 
     private void sendMessageToAllAttendee(String str) {
         for (int attendee : ognM.getAttendeeList()) {
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), attendee, str);
+            int msg = MsgM.createmessage(ognM.getCurrAccountName(), ognM.getCurrOrganizer().getUserId(), attendee, str);
             accM.addinbox(attendee, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
         }
