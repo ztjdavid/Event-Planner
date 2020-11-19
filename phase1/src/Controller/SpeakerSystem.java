@@ -29,6 +29,9 @@ public class SpeakerSystem {
 
     }
 
+    /**
+     * Run Speaker System, user can choose according to startup options.
+     */
     public void run(){
         int userChoice;
         do{

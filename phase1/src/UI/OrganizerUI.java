@@ -254,9 +254,5 @@ public class OrganizerUI {
         System.out.println("--------------------------------------------");
     }
 
-    public void message2(int replyID){
-        System.out.println("Reply message sent! Reply ID:" + replyID);
-    }
-
 
 }

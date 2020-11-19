@@ -40,6 +40,7 @@ public class OrganizerSystem {
         } while (userChoice != 5);
     }
 
+    //Helper methods:
     /**
      * Enter the Branch according to user's choice in the startup menu.
      * @param userChoice an int chosen by user.
@@ -136,9 +137,11 @@ public class OrganizerSystem {
         switch (userInput){
             case 1:
                 doCreateTalk();
+                organizerUI.askForBack();
                 break;
             case 2:
                 readAllTalks();
+                organizerUI.askForBack();
                 break;
             case 3:
                 break;
@@ -158,7 +161,6 @@ public class OrganizerSystem {
             int roomId = tlkM.getRoomIdWithId(item);
             organizerUI.readTalks(title, item, startTime, roomName, roomId);
         }
-        organizerUI.askForBack();
     }
 
     /**
@@ -249,7 +251,7 @@ public class OrganizerSystem {
     private void doCreateSpeaker() {
         int ID = createSpeaker();
         if(ID != -1){
-            organizerUI.message3(ID);
+        organizerUI.message3(ID);
         }
         organizerUI.askForBack();
     }
@@ -298,8 +300,7 @@ public class OrganizerSystem {
             getID = targetGetter(1);
             if (getID != -1) {
                 String txt = enterTxt();
-                int replyID = MsgM.setreply(getID, txt);
-                organizerUI.message2(replyID);
+                MsgM.setreply(getID, txt);
                 organizerUI.askForBack();
             }
         } while (getID != -1);
@@ -418,12 +419,12 @@ public class OrganizerSystem {
                 return accM.getTotalNumOfAccount()-1;
             } else {
                 organizerUI.message1();
-                return -1;
+                organizerUI.askForBack();
             }
         }else{
             organizerUI.message17();
-            return -1;
         }
+        return -1;
     }
 
     private int chooseMode1() {
@@ -463,9 +464,9 @@ public class OrganizerSystem {
         do {
             userInput = organizerUI.confirmMsgAll();
             if (strategyM.isValidChoice(userInput, validChoices))
-                valid = true;
-            else {
                 organizerUI.informInvalidChoice();
+            else {
+                valid = true;
             }
         } while (!valid);
         return Integer.parseInt(userInput);
