@@ -13,15 +13,17 @@ public class AttendeeSystem {
     protected AttendeeUI attendeeUI;
     protected StrategyManager strategyM;
     protected AttendeeManager attendeeM;
+    protected RoomManager roomM;
 
     public AttendeeSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
-                         StrategyManager StrategyManager, AttendeeManager AttendeeM) {
+                         StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM) {
         this.accM = accM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.attendeeUI = attendeeUI;
         this.strategyM = StrategyManager;
         this.attendeeM = AttendeeM;
+        this.roomM = roomM;
 
     }
 
@@ -124,7 +126,8 @@ public class AttendeeSystem {
         StringBuilder a = new StringBuilder("My signed up talks:");
         ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
         for(Integer t:allTalks){
-            a.append(talkManager.gettalkinfo(t));}
+            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
+            a.append(talkManager.gettalkinfoWithName(t, roomName));}
         attendeeUI.show(a.toString());
     }
 
@@ -142,7 +145,8 @@ public class AttendeeSystem {
         StringBuilder a = new StringBuilder("Available Talks: ");
         ArrayList<Integer> availableTalksId = getNotAttendedTalks();
         for(Integer t:availableTalksId){
-            a.append(talkManager.gettalkinfo(t));
+            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
+            a.append(talkManager.gettalkinfoWithName(t, roomName));
         }
         attendeeUI.show(a.toString());}
 
