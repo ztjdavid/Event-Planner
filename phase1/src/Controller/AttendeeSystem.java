@@ -13,15 +13,17 @@ public class AttendeeSystem {
     protected AttendeeUI attendeeUI;
     protected StrategyManager strategyM;
     protected AttendeeManager attendeeM;
+    protected RoomManager roomM;
 
     public AttendeeSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
-                         StrategyManager StrategyManager, AttendeeManager AttendeeM) {
+                         StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM) {
         this.accM = accM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.attendeeUI = attendeeUI;
         this.strategyM = StrategyManager;
         this.attendeeM = AttendeeM;
+        this.roomM = roomM;
 
     }
 
@@ -77,7 +79,7 @@ public class AttendeeSystem {
                 msgToSpeaker();
                 break;
             case 3:
-                readAllReply();
+                readAllMsg();
                 break;
             case 4:
                 break;
@@ -124,7 +126,8 @@ public class AttendeeSystem {
         StringBuilder a = new StringBuilder("My signed up talks:");
         ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
         for(Integer t:allTalks){
-            a.append(talkManager.gettalkinfo(t));}
+            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
+            a.append(talkManager.gettalkinfoWithName(t, roomName));}
         attendeeUI.show(a.toString());
     }
 
@@ -142,7 +145,8 @@ public class AttendeeSystem {
         StringBuilder a = new StringBuilder("Available Talks: ");
         ArrayList<Integer> availableTalksId = getNotAttendedTalks();
         for(Integer t:availableTalksId){
-            a.append(talkManager.gettalkinfo(t));
+            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
+            a.append(talkManager.gettalkinfoWithName(t, roomName));
         }
         attendeeUI.show(a.toString());}
 
@@ -247,7 +251,7 @@ public class AttendeeSystem {
     private void msgToSpeaker(){
         int tSpeakerId;
         do{
-            readAllAttendees();
+            readAllSpeakers();
             tSpeakerId = targetSpeaker();
             if (tSpeakerId != -1){
                 String txt = enterTxt();
@@ -278,32 +282,49 @@ public class AttendeeSystem {
         return Integer.parseInt(userInput);
     }
 
-    private void readAllReply(){
-        String a = MsgM.formatreply(attendeeM.getInbox());
+    private void readAllMsg(){
+
+        String a = MsgM.formatmsgget(attendeeM.getInbox());
         attendeeUI.show(a);
         attendeeUI.askForBack();
+
     }
 
-    //this is a helper function to get a list of all attendees in current attendee signed up talks
-    public ArrayList<Integer> getAllAttendees() {
+    //this is a helper function to get a list of all attendees except itself in current attendee signed up talks
+    private ArrayList<Integer> getAllAttendees() {
         ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
-        return talkManager.getallattendee(talkList);
+        ArrayList<Integer> result = talkManager.getallattendee(talkList);
+        int currAcc = accM.getCurrAccountId();
+        if (result.contains(currAcc)) result.remove(Integer.valueOf(currAcc));
+        return result;
+
+
     }
 
-    public ArrayList<Integer> getAllSpeakers() {
+    private ArrayList<Integer> getAllSpeakers() {
         ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
         return talkManager.getAllSpeakers(talkList);
     }
 
     private void readAllAttendees(){
         ArrayList<Integer> att = getAllAttendees();
-        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:");
+        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:\n");
         for(Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
         attendeeUI.show(a.toString());
     }
 
+    private void readAllSpeakers(){
+        ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
+        StringBuilder a = new StringBuilder("These are the speakers in talks you attend. Choose an id to message:\n");
+        for (Integer t: allTalks){
+            int spkId = talkManager.getSpeakerIDIn(t);
+            String each = "(" + talkManager.getTitle(t) + ")" + accM.getinfoacc(spkId);
+            a.append(each);
+        }
+        attendeeUI.show(a.toString());
+    }
     private String enterTxt(){
         StringBuilder a = new StringBuilder();
         boolean exit = false;
