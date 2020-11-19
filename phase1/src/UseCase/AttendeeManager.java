@@ -78,7 +78,7 @@ public class AttendeeManager extends AccountManager{
      */
     @Override
     public boolean messageable(Account other){
-        return other.getUserType() != 0;
+        return other.getUserType() != 0 && other.getUserId() != getCurrAttendee().getUserId();
     }
 
 }
