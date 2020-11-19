@@ -290,7 +290,8 @@ public class AttendeeSystem {
     private ArrayList<Integer> getAllAttendees() {
         ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
         ArrayList<Integer> result = talkManager.getallattendee(talkList);
-//        if (result.size()!=0){result.remove(accM.getCurrAccountId());}
+        int currAcc = accM.getCurrAccountId();
+        if (result.contains(currAcc)) result.remove(Integer.valueOf(currAcc));
         return result;
 
 
