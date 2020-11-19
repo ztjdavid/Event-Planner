@@ -166,7 +166,7 @@ public class OrganizerUI {
     }
 
     public void message1(){
-        System.out.println("Passwords Do Not Match! Please try again!");
+        System.out.println("Speaker Creation Failed! Passwords Do Not Match!");
     }
 
     public void message3(int ID){
@@ -252,6 +252,10 @@ public class OrganizerUI {
             System.out.println(item);
         }
         System.out.println("--------------------------------------------");
+    }
+
+    public void message2(int replyID){
+        System.out.println("Reply message sent! Reply ID:" + replyID);
     }
 
 
