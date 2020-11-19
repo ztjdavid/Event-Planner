@@ -40,7 +40,6 @@ public class OrganizerSystem {
         } while (userChoice != 5);
     }
 
-    //Helper methods:
     /**
      * Enter the Branch according to user's choice in the startup menu.
      * @param userChoice an int chosen by user.
