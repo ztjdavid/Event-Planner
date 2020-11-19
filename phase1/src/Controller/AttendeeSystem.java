@@ -242,7 +242,7 @@ public class AttendeeSystem {
 
     public void messageToAtt(String a, int getterId) {
 
-        int msg = MsgM.createmessage(accM.getCurrAccountId(), getterId, a);
+        int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterId, a);
         accM.addinbox(getterId, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
         attendeeUI.messagesend();
@@ -261,8 +261,7 @@ public class AttendeeSystem {
         }while(tSpeakerId != -1);
     }
     public void messageToSp(String a, int speakerId) {
-
-        int msg = MsgM.createmessage(accM.getCurrAccountId(), speakerId, a);
+        int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), speakerId, a);
         accM.addinbox(speakerId, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
         attendeeUI.messagesend();
