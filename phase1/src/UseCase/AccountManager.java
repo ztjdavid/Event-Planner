@@ -115,7 +115,7 @@ public class AccountManager {
     public String getinfoacc(int id){
         Account target = getAccountWithId(id);
         String targetname = target.getUsername();
-        return targetname + "id:" + id + "\n";
+        return targetname + " id:" + id + "\n";
     }
 
     /**
