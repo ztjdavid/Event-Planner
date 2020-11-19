@@ -28,6 +28,9 @@ public class OrganizerSystem {
         this.roomM = roomM;
     }
 
+    /**
+     * Run Organizer System, user can choose according to startup options.
+     */
     public void run() {
         int userChoice;
         do {
@@ -37,6 +40,11 @@ public class OrganizerSystem {
         } while (userChoice != 5);
     }
 
+    //Helper methods:
+    /**
+     * Enter the Branch according to user's choice in the startup menu.
+     * @param userChoice an int chosen by user.
+     */
     private void enterBranch(int userChoice) {
         switch (userChoice) {
             case 1:
@@ -56,6 +64,9 @@ public class OrganizerSystem {
         }
     }
 
+    /**
+     * Run Room dashboard, user can choose according to messaging4 options.
+     */
     private void roomDashBoard(){
         int userInput;
         do{
@@ -65,6 +76,10 @@ public class OrganizerSystem {
         }while(userInput != 3);
     }
 
+    /**
+     * Enter the Room Operation according to user input from the Room dashboard.
+     * @param userInput an int chosen by user.
+     */
     private void roomOp(int userInput){
         switch (userInput){
             case 1:
@@ -78,6 +93,9 @@ public class OrganizerSystem {
         }
     }
 
+    /**
+     * Create a Room with Room name according to user's input. After creation, print out the room ID with message13.
+     */
     private void doCreateRoom(){
         String roomName = organizerUI.getRoomName();
         int roomID = roomM.createRoom(roomName);
@@ -85,9 +103,12 @@ public class OrganizerSystem {
         organizerUI.askForBack();
     }
 
+    /**
+     * Show all Rooms with Hashmap consisting of room ID, room name, and room's timetable.
+     */
     public void readAllRooms(){
         organizerUI.message6();
-        ArrayList<Integer> allRooms = roomM.getAllRooms();
+        ArrayList<Integer> allRooms = roomM.getAllRooms(); // Arraylist of all room IDs.
         for(int item : allRooms){
             String name = roomM.getRoomName(item);
             HashMap<Integer, Integer> timeTable = new HashMap<>(roomM.getTimeTable(item));
@@ -96,6 +117,9 @@ public class OrganizerSystem {
         organizerUI.askForBack();
     }
 
+    /**
+     * Run Talk dashboard, user can choose according to messaging3 options.
+     */
     private void talkDashBoard(){
         int userInput;
         do{
@@ -105,21 +129,26 @@ public class OrganizerSystem {
         }while(userInput != 3);
     }
 
+    /**
+     * Enter the Talk Operation according to user input from the Talk dashboard.
+     * @param userInput an int chosen by user.
+     */
     private void tlkOp(int userInput){
         switch (userInput){
             case 1:
                 doCreateTalk();
-                organizerUI.askForBack();
                 break;
             case 2:
                 readAllTalks();
-                organizerUI.askForBack();
                 break;
             case 3:
                 break;
         }
     }
 
+    /**
+     * Show all Talks with each Talk's title, ID, start time, room name, and room ID.
+     */
     private void readAllTalks(){
         organizerUI.message7();
         ArrayList<Integer> talkLst = new ArrayList<>(tlkM.getAllTalksID());
@@ -130,8 +159,12 @@ public class OrganizerSystem {
             int roomId = tlkM.getRoomIdWithId(item);
             organizerUI.readTalks(title, item, startTime, roomName, roomId);
         }
+        organizerUI.askForBack();
     }
 
+    /**
+     * Create a Talk with Talk title, start time, Room ID, Speaker ID according to user's input, iff the values are valid.
+     */
     private void doCreateTalk(){
         String talkTitle = organizerUI.getTalkTitle();
         int startTime = organizerUI.getTalkStartTime();
@@ -153,6 +186,13 @@ public class OrganizerSystem {
         }
     }
 
+    /**
+     * Check if the given room and given speaker are all valid, and both are valid at the given start time.
+     * @param roomID the ID of the Room.
+     * @param startTime the int representation of the start time.
+     * @param speakerID The ID of the Speaker
+     * @return 0 if there is a conflict between room and start time, 1 if the room ID is invalid, 2 if there is a conflict between speaker and start time, 3 if the speaker is invalid, -1 otherwise.
+     */
     private int checkTalkValidity(int roomID,int startTime, int speakerID){
         int flag = -1;
 
@@ -167,6 +207,9 @@ public class OrganizerSystem {
     return flag;
     }
 
+    /**
+     * Run Speaker dashboard, user can choose according to messaging2 options.
+     */
     private void speakerDashboard() {
         int userInput;
         do {
@@ -176,6 +219,10 @@ public class OrganizerSystem {
         } while (userInput != 3);
     }
 
+    /**
+     * Enter the Speaker Operation according to user input from the Speaker dashboard.
+     * @param userInput an int chosen by user.
+     */
     private void sprOp(int userInput) {
         switch (userInput) {
             case 1:
@@ -203,7 +250,7 @@ public class OrganizerSystem {
     private void doCreateSpeaker() {
         int ID = createSpeaker();
         if(ID != -1){
-        organizerUI.message3(ID);
+            organizerUI.message3(ID);
         }
         organizerUI.askForBack();
     }
@@ -252,7 +299,8 @@ public class OrganizerSystem {
             getID = targetGetter(1);
             if (getID != -1) {
                 String txt = enterTxt();
-                MsgM.setreply(getID, txt);
+                int replyID = MsgM.setreply(getID, txt);
+                organizerUI.message2(replyID);
                 organizerUI.askForBack();
             }
         } while (getID != -1);
@@ -371,12 +419,12 @@ public class OrganizerSystem {
                 return accM.getTotalNumOfAccount()-1;
             } else {
                 organizerUI.message1();
-                organizerUI.askForBack();
+                return -1;
             }
         }else{
             organizerUI.message17();
+            return -1;
         }
-        return -1;
     }
 
     private int chooseMode1() {
@@ -416,9 +464,9 @@ public class OrganizerSystem {
         do {
             userInput = organizerUI.confirmMsgAll();
             if (strategyM.isValidChoice(userInput, validChoices))
-                organizerUI.informInvalidChoice();
-            else {
                 valid = true;
+            else {
+                organizerUI.informInvalidChoice();
             }
         } while (!valid);
         return Integer.parseInt(userInput);
