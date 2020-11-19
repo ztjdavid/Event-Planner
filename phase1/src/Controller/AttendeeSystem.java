@@ -25,6 +25,9 @@ public class AttendeeSystem {
 
     }
 
+    /**
+     * Run Attendee System, user can choose according to startup options.
+     */
     public void run() {
         int userChoice;
         do {
@@ -34,6 +37,7 @@ public class AttendeeSystem {
         } while (userChoice != 5);
     }
 
+    //Helper methods:
     private void enterBranch(int userChoice){
         switch (userChoice){
             case 1:

@@ -91,6 +91,34 @@ public class Talk {
      */
     public int getRemainingSeat(){return this.remainingSeat;}
 
+    /**
+     * Check if this talk is full.
+     * @return True iff attendee can still enrol this talk.
+     */
+    public boolean isFull(){ return this.remainingSeat == 0;}
 
+    /**
+     * Add a new Attendee to this talk.
+     * @param attId The id of attendee being added.
+     * @return True iff the attendee is successfully added.
+     */
+    public boolean addAttendee(int attId){
+        if (isFull() || this.attendeeId.contains(attId)) return false;
+        this.attendeeId.add(attId);
+        this.remainingSeat -= 1;
+        return true;
+    }
+
+    /**
+     * Remove a Attendee from this talk.
+     * @param attId The id of attendee being removed.
+     * @return True iff the attendee is successfully removed.
+     */
+    public boolean removeAttendee(int attId){
+        if (!this.attendeeId.contains(attId)) return false;
+        this.attendeeId.remove(attId);
+        this.remainingSeat += 1;
+        return true;
+    }
 
 }
