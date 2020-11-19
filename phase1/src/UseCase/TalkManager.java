@@ -149,7 +149,7 @@ public class TalkManager {
      */
 
     public String gettalkinfo(int talkid){
-        String a = "\n-------------------------";
+        String a = "";
         Talk talk = getTalkWithId(talkid);
         String talktitle = talk.getTalkTitle();
         int talktime = talk.getStartTime();
@@ -168,7 +168,7 @@ public class TalkManager {
      */
 
     public String gettalkinfoWithName(int talkid, String roomName){
-        String a = "\n-------------------------";
+        String a = "";
         Talk talk = getTalkWithId(talkid);
         String talktitle = talk.getTalkTitle();
         int talktime = talk.getStartTime();

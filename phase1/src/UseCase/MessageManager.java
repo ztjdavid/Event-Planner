@@ -28,8 +28,7 @@ public class MessageManager {
     public String formatreply(ArrayList<Integer> msgget){
         String a = "These are the replies:";
         for(Integer i: msgget){
-            if(getmessage(i).getReply().isEmpty()){a += "The message you send to " + getmessage(i).getGetterid() +
-                    " has not been replied";}
+            if(getmessage(i).getReply().isEmpty()){a += "The message you send to " + getmessage(i).getGetterid() + " has not been replied";}
             else{a += "This reply is from " + getmessage(i).getGetterid() + "\n" + getmessage(i).getReply();}
         }
         return a;
@@ -40,7 +39,7 @@ public class MessageManager {
         for(Integer i: inbox){
             a += "\n-------------------------\n";
             a += "The id of this message is " + +getmessage(i).getmessageid()+
-                    "\nThis message is from " + getmessage(i).getSenderid() + ":\n" + getmessage(i).getTxt();
+                    "\nThis message is from " + getmessage(i).getSenderid() + "\n" + getmessage(i).getTxt();
         }
         return a;
     }
