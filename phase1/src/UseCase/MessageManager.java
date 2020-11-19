@@ -17,22 +17,12 @@ public class MessageManager {
      * @param txt String representation of the message
      * @return the number of messages as int.
      */
-    public int createmessage(int senderid, int getterid, String txt) {
-
-        int a = allmessage.size();
-        Message b = new Message(a, senderid, getterid, txt);
-        allmessage.add(b);
-
-        return a;
-
-    }
 
     public int createmessage(String sendername, int senderid, int getterid, String txt) {
 
 
         int a = allmessage.size();
-        Message b = new Message(a, senderid, getterid, txt);
-        b.setSendername(sendername);
+        Message b = new Message(sendername, a, senderid, getterid, txt);
         allmessage.add(b);
 
         return a;

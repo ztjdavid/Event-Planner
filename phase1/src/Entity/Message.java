@@ -8,13 +8,13 @@ public class Message {
     private int getterid;
     private String sendername;
 
-    public Message(int messageid, int senderid, int getterid, String txt){
+    public Message(String sendername, int messageid, int senderid, int getterid, String txt){
         this.messageid = messageid;
         this.senderid = senderid;
         this.getterid = getterid;
         this.txt = txt;
         this.reply = "<<<<<<No Reply>>>>>>";
-        this.sendername = "Anonymous";
+        this.sendername = sendername;
     }
     public void response(String a){
         this.reply = a;
@@ -31,8 +31,6 @@ public class Message {
      public String getTxt(){return this.txt;}
      
      public String getReply(){return this.reply;}
-
-     public void setSendername(String a){this.sendername = a;}
 
      public String getSendername(){return this.sendername;}
 
