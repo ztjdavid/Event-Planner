@@ -32,8 +32,17 @@ public class TalkManager {
      * @return int currentTalkID.
      */
 
-    public Talk getCurrentTalkID(){
+    public Talk getCurrentTalkWithID(){
         return this.talkList.get(currentTalkID);
+    }
+
+    /**
+     * Get the speaker of this talk.
+     * @param talkId The id of a talk.
+     * @return An integer representing the id of the speaker in given talk.
+     */
+    public int getSpeakerIDIn(int talkId){
+        return this.talkList.get(talkId).getSpeaker();
     }
 
     /**

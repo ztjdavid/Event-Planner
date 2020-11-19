@@ -247,7 +247,7 @@ public class AttendeeSystem {
     private void msgToSpeaker(){
         int tSpeakerId;
         do{
-            readAllAttendees();
+            readAllSpeakers();
             tSpeakerId = targetSpeaker();
             if (tSpeakerId != -1){
                 String txt = enterTxt();
@@ -297,9 +297,20 @@ public class AttendeeSystem {
 
     private void readAllAttendees(){
         ArrayList<Integer> att = getAllAttendees();
-        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:");
+        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:\n");
         for(Integer i : att) {
             a.append(accM.getinfoacc(i));
+        }
+        attendeeUI.show(a.toString());
+    }
+
+    private void readAllSpeakers(){
+        ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
+        StringBuilder a = new StringBuilder("These are the speakers in talks you attend. Choose an id to message:\n");
+        for (Integer t: allTalks){
+            int spkId = talkManager.getSpeakerIDIn(t);
+            String each = "(" + talkManager.getTitle(t) + ")" + accM.getinfoacc(spkId);
+            a.append(each);
         }
         attendeeUI.show(a.toString());
     }
