@@ -311,14 +311,15 @@ public class AttendeeSystem {
     }
 
     private void readAllSpeakers(){
-        ArrayList<Integer> speakers = getAllSpeakers();
-        StringBuilder a = new StringBuilder("These are the speakers in your signed up talks. Choose an id to message:\n");
-        for(Integer i : speakers) {
-            a.append(accM.getinfoacc(i));
+        ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
+        StringBuilder a = new StringBuilder("These are the speakers in talks you attend. Choose an id to message:\n");
+        for (Integer t: allTalks){
+            int spkId = talkManager.getSpeakerIDIn(t);
+            String each = "(" + talkManager.getTitle(t) + ")" + accM.getinfoacc(spkId);
+            a.append(each);
         }
         attendeeUI.show(a.toString());
     }
-
     private String enterTxt(){
         StringBuilder a = new StringBuilder();
         boolean exit = false;
