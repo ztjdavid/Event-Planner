@@ -37,12 +37,13 @@ public class TalkManager {
     }
 
     /**
-     * Add the attendee to the Talk.
+     * Add the attendee to the current Talk.
      * @param attendee The new attendee.
      */
 
     public void addAttendee(Attendee attendee){
-        this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
+        this.talkList.get(currentTalkID).addAttendee(attendee.getUserId());
+        //this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
     }
 
     /**
@@ -52,7 +53,8 @@ public class TalkManager {
      */
 
     public void addAttendeev2(int talkid, Attendee attendee){
-        this.talkList.get(talkid).getAttendeeId().add(attendee.getUserId());
+        this.talkList.get(talkid).addAttendee(attendee.getUserId());
+        //this.talkList.get(talkid).getAttendeeId().add(attendee.getUserId());
     }
 
     /**
@@ -61,7 +63,8 @@ public class TalkManager {
      */
 
     public void removeAttendee(Attendee attendee){
-        this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
+        this.talkList.get(currentTalkID).removeAttendee(attendee.getUserId());
+        //this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
     }
 
     /**
@@ -71,7 +74,8 @@ public class TalkManager {
      */
 
     public void removeAttendeev2(int talkid, Attendee attendee){
-        this.talkList.get(talkid).getAttendeeId().remove(attendee.getUserId());
+        this.talkList.get(talkid).removeAttendee(attendee.getUserId());
+        //this.talkList.get(talkid).getAttendeeId().remove(attendee.getUserId());
     }
 
     /**
