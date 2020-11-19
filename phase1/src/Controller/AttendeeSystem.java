@@ -82,6 +82,12 @@ public class AttendeeSystem {
                 readAllMsg();
                 break;
             case 4:
+                replytomsg();
+                break;
+            case 5:
+                msgtoreply();
+                break;
+            case 6:
                 break;
         }
     }
@@ -103,7 +109,7 @@ public class AttendeeSystem {
     }
 
     private int chooseMode2(){    //For MsgDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -121,7 +127,86 @@ public class AttendeeSystem {
         readAllMyTalks();
         attendeeUI.askForBack();
     }
+////////////ERICMODIFY
 
+    private void readrepandmsg(){
+        readallreply();
+        attendeeUI.announcemsg();
+
+    }
+
+    private void readmsgandrep(){
+        readallmsg();
+        attendeeUI.announcereply();
+    }
+
+    private void readallmsg(){
+        String a = MsgM.formatmsgget(attendeeM.getinbox());
+        attendeeUI.show(a);
+    }
+
+    private void readallreply(){
+        String a = MsgM.formatreply(attendeeM.getmsgsend());
+        attendeeUI.show(a);
+    }
+
+
+    private int targetmsg(){
+        ArrayList<Integer> validChoices = attendeeM.getinbox();
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = attendeeUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attendeeUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+    private void msgtoreply(){
+        int tmsgid;
+        do{
+            readmsgandrep();
+            tmsgid = targetmsg();
+            if (tmsgid != -1){
+                String txt = enterTxt();
+                MsgM.setreply(tmsgid, txt);
+                attendeeUI.askForBack();
+            }
+        }while(tmsgid != -1);
+    }
+
+    private int targetgetter(){
+        ArrayList<Integer> a = getAllAttendees();
+        a.addAll(getAllSpeakers());
+        ArrayList<Integer> validChoices = a;
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = attendeeUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attendeeUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+    private void replytomsg(){
+        int targetId;
+        do{
+            readrepandmsg();
+            targetId = targetgetter();
+            if (targetId != -1){
+                String txt = enterTxt();
+                messageToAtt(txt, targetId);
+                attendeeUI.askForBack();
+            }
+        }while(targetId != -1);
+    }
+///////////ERICMODIFY
     private void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up talks:");
         ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
