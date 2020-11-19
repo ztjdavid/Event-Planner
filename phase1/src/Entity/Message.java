@@ -12,6 +12,7 @@ public class Message {
         this.senderid = senderid;
         this.getterid = getterid;
         this.txt = txt;
+        this.reply = "<<<<<<No Reply>>>>>>";
     }
     public void response(String a){
         this.reply = a;
@@ -22,8 +23,11 @@ public class Message {
      }
 
      public int getSenderid(){return this.senderid;}
+
      public int getGetterid(){return this.getterid;}
+
      public String getTxt(){return this.txt;}
+     
      public String getReply(){return this.reply;}
 
 
