@@ -1,6 +1,7 @@
 package UseCase;
 import Entity.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,8 +79,11 @@ public class AttendeeManager extends AccountManager{
      */
     @Override
     public boolean messageable(Account other){
-        return other.getUserType() != 0;
+        return other.getUserType() != 0 && other.getUserId() != getCurrAttendee().getUserId();
     }
+    //////////////ERICMODIFY
+    public ArrayList<Integer> getinbox(){return getCurrAccount().getInbox();}
+    public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentMessage();}
 
 }
 

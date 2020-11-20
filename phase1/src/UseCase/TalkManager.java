@@ -3,6 +3,8 @@ import Entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * TalkManager class contains talks and methods that modify talks
@@ -19,7 +21,7 @@ public class TalkManager {
     }
 
     /**
-     *Set the currentTalkID.
+     * Set the currentTalkID.
      * @param talkID The current talk Id.
      */
 
@@ -32,17 +34,36 @@ public class TalkManager {
      * @return int currentTalkID.
      */
 
-    public Talk getCurrentTalkID(){
+    public Talk getCurrentTalkWithID(){
         return this.talkList.get(currentTalkID);
     }
 
     /**
-     * Add the attendee to the Talk.
+     * Get the speaker of this talk.
+     * @param talkId The id of a talk.
+     * @return An integer representing the id of the speaker in given talk.
+     */
+    public int getSpeakerIDIn(int talkId){
+        return this.talkList.get(talkId).getSpeaker();
+    }
+
+    /**
+     * Add the attendee to the current Talk.
      * @param attendee The new attendee.
      */
 
     public void addAttendee(Attendee attendee){
-        this.talkList.get(currentTalkID).getAttendeeId().add(attendee.getUserId());
+        this.talkList.get(currentTalkID).addAttendee(attendee.getUserId());
+    }
+
+    /**
+     * Add the given Attendee's ID to the Talk's attendee list given the talk ID.
+     * @param talkid ID of the talk.
+     * @param attendee Attendee who want to attend the talk.
+     */
+
+    public void addAttendeev2(int talkid, Attendee attendee){
+        this.talkList.get(talkid).addAttendee(attendee.getUserId());
     }
 
     /**
@@ -51,7 +72,17 @@ public class TalkManager {
      */
 
     public void removeAttendee(Attendee attendee){
-        this.talkList.get(currentTalkID).getAttendeeId().remove(attendee.getUserId());
+        this.talkList.get(currentTalkID).removeAttendee(attendee.getUserId());
+    }
+
+    /**
+     * Remove the given Attendee's ID from the Talk's attendee list given the talk ID.
+     * @param talkid ID of the talk.
+     * @param attendee Attendee who need to be removed from the talk.
+     */
+
+    public void removeAttendeev2(int talkid, Attendee attendee){
+        this.talkList.get(talkid).removeAttendee(attendee.getUserId());
     }
 
     /**
@@ -113,7 +144,7 @@ public class TalkManager {
      */
 
     public ArrayList<Integer> getAllTalksID(){
-        return new ArrayList<>(talkList.keySet());
+        return new ArrayList<>(this.talkList.keySet());
     }
 
     /**
@@ -127,16 +158,10 @@ public class TalkManager {
 
     public int createTalk(String talkTitle, int startTime, int roomId, int speakerID){
         int talkId = totalTalkCount;
-        if(this.talkList.containsKey(talkId)){
-            return -1;
-        }else if(startTime > 9 && startTime <= 17){
-            return -1;
-        } else{
-            Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
-            this.talkList.put(talkId, newTalk);
-            totalTalkCount += 1;
-            return newTalk.getTalkId();
-        }
+        Talk newTalk = new Talk(talkId, talkTitle,startTime, roomId, speakerID);
+        this.talkList.put(talkId, newTalk);
+        totalTalkCount += 1;
+        return talkId;
     }
 
     /**
@@ -146,13 +171,33 @@ public class TalkManager {
      */
 
     public String gettalkinfo(int talkid){
-        String a = "";
+        String a = "\n-------------------------";
         Talk talk = getTalkWithId(talkid);
         String talktitle = talk.getTalkTitle();
         int talktime = talk.getStartTime();
         int talkroom = talk.getRoomId();
         int numatt = talk.getAttendeeId().size();
-        a = a + "\n Talk Title:" + talktitle + "\n This talk start at " + talktime + "\n This talk hold in room " + talkroom + "\n There are " + numatt + "attendees";
+        a = a + "\n Talk Title:" + talktitle + "\n Talk ID:" + talkid + "\n This talk starts at " + talktime +
+                "\n This talk holds in roomID " + talkroom +"\n There are " + numatt + " attendees";
+        return a;
+    }
+
+    /**
+     * Return a string information of the Talk given the talk ID and room name.
+     * @param talkid The ID of the Talk.
+     * @param roomName The name of the room this talk is hold in.
+     * @return the string information of the Talk with the given talk ID.(Including talk title, start time, room ID, and number of Attendee.)
+     */
+
+    public String gettalkinfoWithName(int talkid, String roomName){
+        String a = "\n-------------------------";
+        Talk talk = getTalkWithId(talkid);
+        String talktitle = talk.getTalkTitle();
+        int talktime = talk.getStartTime();
+        int talkroom = talk.getRoomId();
+        int numatt = talk.getAttendeeId().size();
+        a = a + "\n Talk ID: "+ talkid +"\n Talk Title:" + talktitle + "\n This talk starts at " + talktime +
+                "\n This talk holds in roomID " + talkroom + "(" + roomName + ")" +"\n There are " + numatt + " attendees";
         return a;
     }
 
@@ -177,12 +222,14 @@ public class TalkManager {
      */
 
     public ArrayList<Integer> getallattendee(ArrayList<Integer> talklist){
-        ArrayList<Integer> att = new ArrayList<>();
+        Set<Integer> att = new HashSet<>();
         for(Integer t:talklist){
+
             Talk talk = getTalkWithId(t);
             att.addAll(talk.getAttendeeId());
         }
-        return att;
+        ArrayList<Integer> result = new ArrayList<>(att);
+        return result;
 
     }
 
@@ -243,12 +290,24 @@ public class TalkManager {
         this.talkList.remove(talkID);
     }
 
+    /**
+     * Get the title of the Talk given the talk ID.
+     * @param talkID The ID of the talk.
+     * @return a String representation of the Talk title.
+     */
+
     public String getTitle(int talkID){
         Talk talk = this.talkList.get(talkID);
         return talk.getTalkTitle();
     }
 
-    public int getRoom(int talkID){
+    /**
+     * Get the room ID of the Talk given the talk ID.
+     * @param talkID The ID of the talk.
+     * @return an int representation of the room ID
+     */
+
+    public int getRoomIdWithId(int talkID){
         Talk talk = this.talkList.get(talkID);
         return talk.getRoomId();
     }

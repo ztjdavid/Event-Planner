@@ -26,7 +26,7 @@ public class OrganizerUI {
     }
 
     public int getSpeakerID(){
-        System.out.println("Please Enter the SpeakerId of the Speaker of the Talk:");
+        System.out.println("Please Enter the user id of the Speaker of the Talk:");
         return input.nextInt();
     }
 
@@ -122,9 +122,10 @@ public class OrganizerUI {
                 "\n(End editing by typing a single \"end\" in a new line.)");
     }
 
-    public void readTalks(String title, int ID, int startTime, int roomID){
-        System.out.println("Talk Title:" + title + " Talk ID:" + ID + " Start time:" + startTime + " Room ID:" +
-                roomID + "\n");
+    public void readTalks(String title, int ID, int startTime, String roomName, int roomId){
+        System.out.println("-------------------------");
+        System.out.println("Talk Title:" + title + "\nTalk ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                roomName + "(id: " + roomId + ")");
     }
 
     public String getLineTxt(){
@@ -165,23 +166,8 @@ public class OrganizerUI {
     }
 
     public void message1(){
-        System.out.println("Passwords Do Not Match! Please try again!");
+        System.out.println("Speaker Creation Failed! Passwords Do Not Match!");
     }
-
-    public void message9(){
-        System.out.println("Speaker Account Successfully Created!");
-    }
-
-    public void message4(){
-        System.out.println("The Speaker Has Been Successfully Scheduled.");
-    }
-
-    public void message5(){
-        System.out.println("The Speaker cannot be scheduled due to conflicts.");
-    }
-
-    public void message2(){
-        System.out.println("There is a Time Conflict with the Existing Talks"); }
 
     public void message3(int ID){
         System.out.println("Speaker Created Successfully with ID:" + ID);
@@ -217,17 +203,17 @@ public class OrganizerUI {
     }
 
     public void readAllRooms(int id, String roomName, HashMap<Integer, Integer> timeTable){
-        System.out.println("Room ID:" + id + " Room Name:" + roomName);
+        System.out.println("Room ID:" + id + "\nRoom Name:" + roomName);
         printHashMap(timeTable);
     }
 
     private void printHashMap(HashMap<Integer, Integer> timeTable){
-        System.out.println("\n---------Time Table---------");
+        System.out.println("---------Time Table---------");
         Set<Map.Entry<Integer, Integer>> tool = timeTable.entrySet();
         for(Map.Entry<Integer, Integer> entry: tool){
             System.out.print(entry.getKey() + "=" + entry.getValue());
         }
-        System.out.println("\n---------Time Table---------");
+        System.out.println("----------------------------");
     }
 
     public void message14(){
@@ -239,27 +225,33 @@ public class OrganizerUI {
     }
 
     public void message16(){
-        System.out.println("These are All of the Speakers");
+        System.out.println("These are All of the Speakers:");
     }
 
     public void message17(){
         System.out.println("Creation Failed! The username Already Exists!");
     }
 
+    public void message18() {
+        System.out.println("Talk Creation Failed! Given room id is invalid.");
+    }
+
+    public void message19() { System.out.println("Talk Creation Failed! Invalid speaker."); }
+
     public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
-        System.out.println("Speaker Account ID:" + accountID + " Username:" + userName);
-        readTalks(talks);
+        System.out.println("Speaker Account ID:" + accountID + "\nUsername:" + userName);
+        readTalks1(talks);
     }
     public void errorMessage(){
         System.out.println("Scheduling Failed! The StartTime of Talk Must be Between 9 - 17! Please Try again!");
     }
 
-    private void readTalks(ArrayList<Integer> talks){
-        System.out.println("\n---------IDs of the Speaker's Talks---------");
+    private void readTalks1(ArrayList<Integer> talks){
+        System.out.println("---------IDs of the Speaker's Talks---------");
         for(int item : talks){
-            System.out.println(item + "\n");
+            System.out.println(item);
         }
-        System.out.println("\n---------IDs of the Speaker's Talks---------");
+        System.out.println("--------------------------------------------");
     }
 
 

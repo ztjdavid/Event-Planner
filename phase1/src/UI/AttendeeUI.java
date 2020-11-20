@@ -10,10 +10,10 @@ public class AttendeeUI {
         this.attendeescanner = new Scanner(System.in);
     }
 
-    //not yet implement the message part
+
     public void startup() {
         System.out.println("----------------AttendeeSystem-----------------\nHi, " +
-                "Attendee! Would you like to\n1 -> View your signed up talks\n2 -> Sign up for a new talk\n3 -> Cancel a talk\n4 ->Send message \n5 -> Quit");
+                "Attendee! Would you like to\n1 -> View your signed up talks\n2 -> Sign up for a new talk\n3 -> Cancel a talk\n4 -> Send message \n5 -> Logout");
     }
     public String getrequest(){
         System.out.println("Please Enter Your Response");
@@ -60,7 +60,11 @@ public class AttendeeUI {
 
     public void msgSelect(){
         System.out.println("----------------Message Interface-----------------\nHi, " +
-                "Would you like to\n1 -> Send Message to a attendee\n2 -> Send a message to the speaker of a talk\n3 -> View your inbox\n4 -> Quit");
+                "Would you like to\n1 -> Send Message to a attendee\n2 -> Send a message to the speaker of a talk\n" +
+                "3 -> View your inbox\n" +
+                "4 -> Read your replies and send message to repliers\n" +
+                "5 -> Read your messages and reply to senders\n" +
+                "6 -> Go back.");////////////ERICMODIFY
     }
 
     public void show(String a){System.out.println(a);}
@@ -73,11 +77,31 @@ public class AttendeeUI {
         return attendeescanner.nextLine();
     }
 
-    public void messagesend(){ System.out.println("Message Send\n"); }
+    public void messagesend(){ System.out.println("Message sent\n"); }
 
     public void askForBack(){
         System.out.println("\nPress enter to go back.");
         attendeescanner.nextLine();
+    }
+    /////////ERICMODIFY
+    public String getrequest(int s){
+        switch (s){
+            case 1:
+                System.out.println("Please Enter Your Response.");
+                break;
+            case 2:
+                System.out.println("Please Enter Your Response(Enter -1 to go back.)");
+                break;
+        }
+        return attendeescanner.nextLine();
+    }
+
+    public void announcereply(){System.out.println("Please enter the id of the message " +
+            "if you want to reply to.");
+    }
+
+    public void announcemsg(){System.out.println("Please enter the id of the replier " +
+            "if you want to message to.");
     }
 
 

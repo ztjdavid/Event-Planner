@@ -83,6 +83,10 @@ public class OrganizerManager extends AccountManager{
         }
     }
 
+    /**
+     * Get the current Organizer.
+     * @return the current account as an Organizer.
+     */
     public Organizer getCurrOrganizer(){
         return (Organizer) getCurrAccount();
     }
@@ -103,8 +107,6 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
-    public ArrayList<Integer> getinbox(){return getCurrOrganizer().getInbox();}
-
     /**
      * Create a arraylist of all Attendee's user ID in the account list.
      * @return Arraylist of all Attendee's user ID.
@@ -120,8 +122,16 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
+    /**
+     * Get the current Organizer's sent messages.
+     * @return an arraylist representation of the current Organizer's sent messages.
+     */
     public ArrayList<Integer> getMsgSend(){return getCurrOrganizer().getSentMessage();}
 
+    /**
+     * Get all message IDs received by the current Organizer.
+     * @return A copy of inbox of the current Organizer containing message IDs.
+     */
     public ArrayList<Integer> getInbox(){
         return new ArrayList<>(getCurrOrganizer().getInbox());
     }

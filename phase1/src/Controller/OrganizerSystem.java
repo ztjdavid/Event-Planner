@@ -28,6 +28,9 @@ public class OrganizerSystem {
         this.roomM = roomM;
     }
 
+    /**
+     * Run Organizer System, user can choose according to startup options.
+     */
     public void run() {
         int userChoice;
         do {
@@ -37,6 +40,11 @@ public class OrganizerSystem {
         } while (userChoice != 5);
     }
 
+    //Helper methods:
+    /**
+     * Enter the Branch according to user's choice in the startup menu.
+     * @param userChoice an int chosen by user.
+     */
     private void enterBranch(int userChoice) {
         switch (userChoice) {
             case 1:
@@ -47,13 +55,18 @@ public class OrganizerSystem {
                 break;
             case 3:
                 talkDashBoard();
+                break;
             case 4:
                 roomDashBoard();
+                break;
             case 5:
                 break;
         }
     }
 
+    /**
+     * Run Room dashboard, user can choose according to messaging4 options.
+     */
     private void roomDashBoard(){
         int userInput;
         do{
@@ -63,6 +76,10 @@ public class OrganizerSystem {
         }while(userInput != 3);
     }
 
+    /**
+     * Enter the Room Operation according to user input from the Room dashboard.
+     * @param userInput an int chosen by user.
+     */
     private void roomOp(int userInput){
         switch (userInput){
             case 1:
@@ -71,11 +88,14 @@ public class OrganizerSystem {
             case 2:
                 readAllRooms();
                 break;
-            case 3:
+            default:
                 break;
         }
     }
 
+    /**
+     * Create a Room with Room name according to user's input. After creation, print out the room ID with message13.
+     */
     private void doCreateRoom(){
         String roomName = organizerUI.getRoomName();
         int roomID = roomM.createRoom(roomName);
@@ -83,9 +103,12 @@ public class OrganizerSystem {
         organizerUI.askForBack();
     }
 
+    /**
+     * Show all Rooms with Hashmap consisting of room ID, room name, and room's timetable.
+     */
     public void readAllRooms(){
         organizerUI.message6();
-        ArrayList<Integer> allRooms = roomM.getAllRooms();
+        ArrayList<Integer> allRooms = roomM.getAllRooms(); // Arraylist of all room IDs.
         for(int item : allRooms){
             String name = roomM.getRoomName(item);
             HashMap<Integer, Integer> timeTable = new HashMap<>(roomM.getTimeTable(item));
@@ -94,6 +117,9 @@ public class OrganizerSystem {
         organizerUI.askForBack();
     }
 
+    /**
+     * Run Talk dashboard, user can choose according to messaging3 options.
+     */
     private void talkDashBoard(){
         int userInput;
         do{
@@ -103,31 +129,43 @@ public class OrganizerSystem {
         }while(userInput != 3);
     }
 
+    /**
+     * Enter the Talk Operation according to user input from the Talk dashboard.
+     * @param userInput an int chosen by user.
+     */
     private void tlkOp(int userInput){
         switch (userInput){
             case 1:
                 doCreateTalk();
+                organizerUI.askForBack();
                 break;
             case 2:
                 readAllTalks();
+                organizerUI.askForBack();
                 break;
             case 3:
                 break;
         }
     }
 
+    /**
+     * Show all Talks with each Talk's title, ID, start time, room name, and room ID.
+     */
     private void readAllTalks(){
         organizerUI.message7();
-        ArrayList<Integer> talkLst = tlkM.getAllTalksID();
+        ArrayList<Integer> talkLst = new ArrayList<>(tlkM.getAllTalksID());
         for(int item:talkLst){
             String title = tlkM.getTitle(item);
             int startTime = tlkM.getStartTime(item);
-            int roomID = tlkM.getRoom(item);
-            organizerUI.readTalks(title, item, startTime, roomID);
+            String roomName = roomM.getRoomName(tlkM.getRoomIdWithId(item));
+            int roomId = tlkM.getRoomIdWithId(item);
+            organizerUI.readTalks(title, item, startTime, roomName, roomId);
         }
-        organizerUI.askForBack();
     }
 
+    /**
+     * Create a Talk with Talk title, start time, Room ID, Speaker ID according to user's input, iff the values are valid.
+     */
     private void doCreateTalk(){
         String talkTitle = organizerUI.getTalkTitle();
         int startTime = organizerUI.getTalkStartTime();
@@ -142,20 +180,26 @@ public class OrganizerSystem {
                 roomM.addNewTalkToRoom(talkID, startTime, roomID);
                 spkM.registerNewTalk(talkID, speakerID);
                 organizerUI.message12(talkID);
-            } else if (result == 0) {
-                organizerUI.message14();
-            } else if (result == 2) {
-                organizerUI.message15();
-            }
+            } else if (result == 0) organizerUI.message14();
+            else if (result == 1) organizerUI.message18();
+            else if (result == 2) organizerUI.message15();
+            else if (result == 3) organizerUI.message19();
         }
-        organizerUI.askForBack();
     }
 
+    /**
+     * Check if the given room and given speaker are all valid, and both are valid at the given start time.
+     * @param roomID the ID of the Room.
+     * @param startTime the int representation of the start time.
+     * @param speakerID The ID of the Speaker
+     * @return 0 if there is a conflict between room and start time, 1 if the room ID is invalid, 2 if there is a conflict between speaker and start time, 3 if the speaker is invalid, -1 otherwise.
+     */
     private int checkTalkValidity(int roomID,int startTime, int speakerID){
         int flag = -1;
-        if(roomM.getTimeTable(roomID).containsValue(startTime)){
-            flag = 0;
-        }
+
+        if (!roomM.isValidRoomId(roomID)) return 1;
+        else if (!accM.isSpeakerAcc(speakerID)) return 3;
+        else if(roomM.getTimeTable(roomID).containsValue(startTime)) flag = 0;
         for(int item:spkM.getTalkList(speakerID)){
             if(tlkM.getStartTime(item) == startTime){
                 flag = 2;
@@ -164,6 +208,9 @@ public class OrganizerSystem {
     return flag;
     }
 
+    /**
+     * Run Speaker dashboard, user can choose according to messaging2 options.
+     */
     private void speakerDashboard() {
         int userInput;
         do {
@@ -173,6 +220,10 @@ public class OrganizerSystem {
         } while (userInput != 3);
     }
 
+    /**
+     * Enter the Speaker Operation according to user input from the Speaker dashboard.
+     * @param userInput an int chosen by user.
+     */
     private void sprOp(int userInput) {
         switch (userInput) {
             case 1:
@@ -180,6 +231,7 @@ public class OrganizerSystem {
                 break;
             case 2:
                 readAllSpeakers();
+                break;
             case 3:
                 break;
         }
@@ -198,7 +250,9 @@ public class OrganizerSystem {
 
     private void doCreateSpeaker() {
         int ID = createSpeaker();
+        if(ID != -1){
         organizerUI.message3(ID);
+        }
         organizerUI.askForBack();
     }
 
@@ -246,7 +300,7 @@ public class OrganizerSystem {
             getID = targetGetter(1);
             if (getID != -1) {
                 String txt = enterTxt();
-                MsgM.setreply(getID, txt);
+                MsgM.setreply(getID, txt, accM.getCurrAccountName());
                 organizerUI.askForBack();
             }
         } while (getID != -1);
@@ -258,7 +312,7 @@ public class OrganizerSystem {
     }
 
     private void readAllOfMsg() {
-        String a = MsgM.formatmsgget(ognM.getinbox());
+        String a = MsgM.formatmsgget(ognM.getInbox());
         organizerUI.show(a);
     }
 
@@ -349,6 +403,7 @@ public class OrganizerSystem {
             if (line.equals("end")) exit = true;
             else {
                 a.append(line);
+                a.append("\n");
             }
         } while (!exit);
         return a.toString();
@@ -361,15 +416,13 @@ public class OrganizerSystem {
             String password2 = organizerUI.getSpeakerPwd2();
             if (password1.equals(password2)) {
                 accM.createAccount(username, password1, 2);
-                organizerUI.message9();
-                return accM.getTotalNumOfAccount();
+                return accM.getTotalNumOfAccount()-1;
             } else {
                 organizerUI.message1();
                 organizerUI.askForBack();
             }
         }else{
             organizerUI.message17();
-            organizerUI.askForBack();
         }
         return -1;
     }
@@ -422,7 +475,7 @@ public class OrganizerSystem {
 
     private void readAllAtt() {
         ArrayList<Integer> att = ognM.getAttendeeList();
-        StringBuilder a = new StringBuilder("These are the attendees. Choose an id to message:");
+        StringBuilder a = new StringBuilder("These are the attendees. Choose an id to message:\n");
         for (Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
@@ -431,7 +484,7 @@ public class OrganizerSystem {
 
     private void readAllSpk() {
         ArrayList<Integer> att = ognM.getSpeakerList();
-        StringBuilder a = new StringBuilder("These are the Speakers. Choose an id to message:");
+        StringBuilder a = new StringBuilder("These are the Speakers. Choose an id to message:\n");
         for (Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
@@ -462,21 +515,21 @@ public class OrganizerSystem {
         return Integer.parseInt(userInput);
     }
 
-
     private void messageToIndividual(String str, int receiverID) {
         int check = ognM.messageable1(receiverID);
         if (check == 1) {
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), receiverID, str);
+            int msg = MsgM.createmessage(ognM.getCurrAccountName(), ognM.getCurrOrganizer().getUserId(), receiverID, str);
             accM.addinbox(receiverID, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
             organizerUI.message8();
+        }else {
+            organizerUI.message0();
         }
-        organizerUI.message0();
     }
 
     private void sendMessageToAllSpeaker(String str) {
         for (int speaker : ognM.getSpeakerList()) {
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), speaker, str);
+            int msg = MsgM.createmessage(ognM.getCurrAccountName(), ognM.getCurrOrganizer().getUserId(), speaker, str);
             accM.addinbox(speaker, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
         }
@@ -485,7 +538,7 @@ public class OrganizerSystem {
 
     private void sendMessageToAllAttendee(String str) {
         for (int attendee : ognM.getAttendeeList()) {
-            int msg = MsgM.createmessage(ognM.getCurrOrganizer().getUserId(), attendee, str);
+            int msg = MsgM.createmessage(ognM.getCurrAccountName(), ognM.getCurrOrganizer().getUserId(), attendee, str);
             accM.addinbox(attendee, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
         }

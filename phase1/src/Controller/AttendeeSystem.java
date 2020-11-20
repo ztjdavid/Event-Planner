@@ -13,18 +13,23 @@ public class AttendeeSystem {
     protected AttendeeUI attendeeUI;
     protected StrategyManager strategyM;
     protected AttendeeManager attendeeM;
+    protected RoomManager roomM;
 
     public AttendeeSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
-                         StrategyManager StrategyManager, AttendeeManager AttendeeM) {
+                         StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM) {
         this.accM = accM;
         this.talkManager = TalkM;
         this.MsgM = MsgM;
         this.attendeeUI = attendeeUI;
         this.strategyM = StrategyManager;
         this.attendeeM = AttendeeM;
+        this.roomM = roomM;
 
     }
 
+    /**
+     * Run Attendee System, user can choose according to startup options.
+     */
     public void run() {
         int userChoice;
         do {
@@ -34,6 +39,7 @@ public class AttendeeSystem {
         } while (userChoice != 5);
     }
 
+    //Helper methods:
     private void enterBranch(int userChoice){
         switch (userChoice){
             case 1:
@@ -59,7 +65,7 @@ public class AttendeeSystem {
             attendeeUI.msgSelect();
             userChoice = chooseMode2();
             msgOp(userChoice);
-        } while (userChoice != 4);
+        } while (userChoice != 6);
 
 
     }
@@ -73,9 +79,15 @@ public class AttendeeSystem {
                 msgToSpeaker();
                 break;
             case 3:
-                readAllReply();
+                readAllMsg();
                 break;
             case 4:
+                replytomsg();
+                break;
+            case 5:
+                msgtoreply();
+                break;
+            case 6:
                 break;
         }
     }
@@ -97,7 +109,7 @@ public class AttendeeSystem {
     }
 
     private int chooseMode2(){    //For MsgDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -116,11 +128,89 @@ public class AttendeeSystem {
         attendeeUI.askForBack();
     }
 
+    private void readrepandmsg(){
+        readallreply();
+        attendeeUI.announcemsg();
+
+    }
+
+    private void readmsgandrep(){
+        readallmsg();
+        attendeeUI.announcereply();
+    }
+
+    private void readallmsg(){
+        String a = MsgM.formatmsgget(attendeeM.getinbox());
+        attendeeUI.show(a);
+    }
+
+    private void readallreply(){
+        String a = MsgM.formatreply(attendeeM.getmsgsend());
+        attendeeUI.show(a);
+    }
+
+
+    private int targetmsg(){
+        ArrayList<Integer> validChoices = attendeeM.getinbox();
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = attendeeUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attendeeUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+    private void msgtoreply(){
+        int tmsgid;
+        do{
+            readmsgandrep();
+            tmsgid = targetmsg();
+            if (tmsgid != -1){
+                String txt = enterTxt();
+                MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
+                attendeeUI.askForBack();
+            }
+        }while(tmsgid != -1);
+    }
+
+    private int targetgetter(){
+        ArrayList<Integer> validChoices = getAllAttendees();
+        validChoices.addAll(getAllSpeakers());
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = attendeeUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attendeeUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+    private void replytomsg(){
+        int targetId;
+        do{
+            readrepandmsg();
+            targetId = targetgetter();
+            if (targetId != -1){
+                String txt = enterTxt();
+                messageToAtt(txt, targetId);
+                attendeeUI.askForBack();
+            }
+        }while(targetId != -1);
+    }
+///////////ERICMODIFY
     private void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up talks:");
         ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
         for(Integer t:allTalks){
-            a.append(talkManager.gettalkinfo(t));}
+            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
+            a.append(talkManager.gettalkinfoWithName(t, roomName));}
         attendeeUI.show(a.toString());
     }
 
@@ -138,7 +228,8 @@ public class AttendeeSystem {
         StringBuilder a = new StringBuilder("Available Talks: ");
         ArrayList<Integer> availableTalksId = getNotAttendedTalks();
         for(Integer t:availableTalksId){
-            a.append(talkManager.gettalkinfo(t));
+            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
+            a.append(talkManager.gettalkinfoWithName(t, roomName));
         }
         attendeeUI.show(a.toString());}
 
@@ -167,6 +258,7 @@ public class AttendeeSystem {
             input = targetTalksSignUp();
             if (input != -1){
                 attendeeM.enrol(input);
+                talkManager.addAttendeev2(input, attendeeM.getCurrAttendee());
                 attendeeUI.signUpSuc();
             }
         }while(input != -1);
@@ -196,6 +288,7 @@ public class AttendeeSystem {
             input = targetTalksCancel();
             if (input != -1){
                 attendeeM.drop(input);
+                talkManager.removeAttendeev2(input, attendeeM.getCurrAttendee());
                 attendeeUI.cancelSuc();
             }
         }while(input != -1);
@@ -232,7 +325,7 @@ public class AttendeeSystem {
 
     public void messageToAtt(String a, int getterId) {
 
-        int msg = MsgM.createmessage(accM.getCurrAccountId(), getterId, a);
+        int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterId, a);
         accM.addinbox(getterId, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
         attendeeUI.messagesend();
@@ -241,7 +334,7 @@ public class AttendeeSystem {
     private void msgToSpeaker(){
         int tSpeakerId;
         do{
-            readAllAttendees();
+            readAllSpeakers();
             tSpeakerId = targetSpeaker();
             if (tSpeakerId != -1){
                 String txt = enterTxt();
@@ -251,8 +344,7 @@ public class AttendeeSystem {
         }while(tSpeakerId != -1);
     }
     public void messageToSp(String a, int speakerId) {
-
-        int msg = MsgM.createmessage(accM.getCurrAccountId(), speakerId, a);
+        int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), speakerId, a);
         accM.addinbox(speakerId, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
         attendeeUI.messagesend();
@@ -272,32 +364,49 @@ public class AttendeeSystem {
         return Integer.parseInt(userInput);
     }
 
-    private void readAllReply(){
-        String a = MsgM.formatreply(attendeeM.getInbox());
+    private void readAllMsg(){
+
+        String a = MsgM.formatmsgget(attendeeM.getInbox());
         attendeeUI.show(a);
         attendeeUI.askForBack();
+
     }
 
-    //this is a helper function to get a list of all attendees in current attendee signed up talks
-    public ArrayList<Integer> getAllAttendees() {
+    //this is a helper function to get a list of all attendees except itself in current attendee signed up talks
+    private ArrayList<Integer> getAllAttendees() {
         ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
-        return talkManager.getallattendee(talkList);
+        ArrayList<Integer> result = talkManager.getallattendee(talkList);
+        int currAcc = accM.getCurrAccountId();
+        if (result.contains(currAcc)) result.remove(Integer.valueOf(currAcc));
+        return result;
+
+
     }
 
-    public ArrayList<Integer> getAllSpeakers() {
+    private ArrayList<Integer> getAllSpeakers() {
         ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
         return talkManager.getAllSpeakers(talkList);
     }
 
     private void readAllAttendees(){
         ArrayList<Integer> att = getAllAttendees();
-        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:");
+        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:\n");
         for(Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
         attendeeUI.show(a.toString());
     }
 
+    private void readAllSpeakers(){
+        ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
+        StringBuilder a = new StringBuilder("These are the speakers in talks you attend. Choose an id to message:\n");
+        for (Integer t: allTalks){
+            int spkId = talkManager.getSpeakerIDIn(t);
+            String each = "(" + talkManager.getTitle(t) + ")" + accM.getinfoacc(spkId);
+            a.append(each);
+        }
+        attendeeUI.show(a.toString());
+    }
     private String enterTxt(){
         StringBuilder a = new StringBuilder();
         boolean exit = false;
@@ -307,6 +416,7 @@ public class AttendeeSystem {
             if (line.equals("end")) exit = true;
             else{
                 a.append(line);
+                a.append("\n");
             }
         } while(!exit);
         return a.toString();

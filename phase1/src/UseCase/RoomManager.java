@@ -13,8 +13,9 @@ public class RoomManager {
     }
 
     /**
-     * Create a new Room with given room name and given room ID.
+     * Create a new Room with given room name, with room ID be the total number of Room.
      * @param roomName String representation of room name.
+     * @return The ID of the room
      */
     public int createRoom(String roomName){
         int ID = totalRoomCount;
@@ -63,24 +64,51 @@ public class RoomManager {
         room.scheduleTalk(talkID, startTime);
     }
 
+    /**
+     * Get an arraylist of all the Rooms' room ID as int.
+     * @return The arraylist of all the Room ID.
+     */
     public ArrayList<Integer> getAllRooms(){
         return new ArrayList<>(this.allRooms.keySet());
     }
 
+    /**
+     * Get the string representation of Room name given the room ID.
+     * @param roomID The ID of the Room.
+     * @return The name of the Room.
+     */
     public String getRoomName(int roomID){
         Room room = this.allRooms.get(roomID);
         return room.getRoomName();
     }
 
+    /**
+     * Get the hashmap of Room's timetable given the room ID, with key as start time and value as talk ID.
+     * @param roomID The ID of the Room.
+     * @return The timetable of the Room.
+     */
     public HashMap<Integer, Integer> getTimeTable(int roomID){
         Room room = this.allRooms.get(roomID);
         return room.getTimetable();
     }
 
+    /**
+     * Schedule the Talk with the given talk ID to the Room given the room ID at the given start time.
+     * @param talkID the ID of the Talk as int.
+     * @param startTime the start time of the Talk as int.
+     * @param roomID The ID of the Room as int.
+     */
     public void addNewTalkToRoom(int talkID, int startTime, int roomID){
         Room room = this.allRooms.get(roomID);
         room.scheduleTalk(talkID, startTime);
     }
+
+    /**
+     * Check if the given room id is valid.
+     * @param roomId The room id to be checked.
+     * @return True iff the given room exists.
+     */
+    public boolean isValidRoomId(int roomId){ return allRooms.containsKey(roomId);}
 
 
 }
