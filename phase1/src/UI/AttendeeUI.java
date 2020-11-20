@@ -10,10 +10,10 @@ public class AttendeeUI {
         this.attendeescanner = new Scanner(System.in);
     }
 
-    //not yet implement the message part
+
     public void startup() {
         System.out.println("----------------AttendeeSystem-----------------\nHi, " +
-                "Attendee! Would you like to\n1 -> View your signed up talks\n2 -> Sign up for a new talk\n3 -> Cancel a talk\n4 ->Send message \n5 -> Logout");
+                "Attendee! Would you like to\n1 -> View your signed up talks\n2 -> Sign up for a new talk\n3 -> Cancel a talk\n4 -> Send message \n5 -> Logout");
     }
     public String getrequest(){
         System.out.println("Please Enter Your Response");
@@ -77,7 +77,7 @@ public class AttendeeUI {
         return attendeescanner.nextLine();
     }
 
-    public void messagesend(){ System.out.println("Message Send\n"); }
+    public void messagesend(){ System.out.println("Message sent\n"); }
 
     public void askForBack(){
         System.out.println("\nPress enter to go back.");
