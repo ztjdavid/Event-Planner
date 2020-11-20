@@ -18,4 +18,5 @@ Instructions:
 1. When you enter our program, please follow the showed instruction. Please do not enter any invalid response.
 2. The valid response of dashboard are mostly integer. For example, if the dashboard shows "3 -> View your inbox" and you want to view all the message you got. Please enter "3".
 3. If this is the first time you use the program, you'd better to signup first.
+4. When you type in a message, if you want to finish typing, please type "end" in a new line.
 
