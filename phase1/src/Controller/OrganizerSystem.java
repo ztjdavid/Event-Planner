@@ -300,7 +300,7 @@ public class OrganizerSystem {
             getID = targetGetter(1);
             if (getID != -1) {
                 String txt = enterTxt();
-                MsgM.setreply(getID, txt);
+                MsgM.setreply(getID, txt, accM.getCurrAccountName());
                 organizerUI.askForBack();
             }
         } while (getID != -1);

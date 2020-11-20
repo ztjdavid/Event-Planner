@@ -4,6 +4,7 @@ public class Message {
     protected int messageid;
     private String txt;
     protected String reply;
+    private String replyer;
     private int senderid;
     private int getterid;
     private String sendername;
@@ -13,8 +14,9 @@ public class Message {
         this.senderid = senderid;
         this.getterid = getterid;
         this.txt = txt;
-        this.reply = "<<<<<<No Reply>>>>>>";
+        this.reply = "";
         this.sendername = sendername;
+        this.replyer = "";
     }
     public void response(String a){
         this.reply = a;
@@ -34,5 +36,7 @@ public class Message {
 
      public String getSendername(){return this.sendername;}
 
+     public void setReplyer(String replyer){this.replyer = replyer;}
 
+     public String getReplyer(){return this.replyer;}
 }

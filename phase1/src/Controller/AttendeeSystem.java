@@ -172,16 +172,15 @@ public class AttendeeSystem {
             tmsgid = targetmsg();
             if (tmsgid != -1){
                 String txt = enterTxt();
-                MsgM.setreply(tmsgid, txt);
+                MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
                 attendeeUI.askForBack();
             }
         }while(tmsgid != -1);
     }
 
     private int targetgetter(){
-        ArrayList<Integer> a = getAllAttendees();
-        a.addAll(getAllSpeakers());
-        ArrayList<Integer> validChoices = a;
+        ArrayList<Integer> validChoices = getAllAttendees();
+        validChoices.addAll(getAllSpeakers());
         validChoices.add(-1);
         String userInput;
         boolean valid = false;

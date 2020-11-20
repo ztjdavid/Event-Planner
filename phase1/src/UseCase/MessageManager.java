@@ -45,7 +45,11 @@ public class MessageManager {
      * @param messageid the ID of the message.
      * @param reply a string representation of the reply.
      */
-    public void setreply(int messageid, String reply){getmessage(messageid).response(reply);}
+    public void setreply(int messageid, String reply, String replyer){
+        Message msg = getmessage(messageid);
+        msg.response(reply);
+        msg.setReplyer(replyer);
+        }
 
     /**
      * Return a string showing if the message of the Arraylist has been replied.
@@ -53,11 +57,13 @@ public class MessageManager {
      * @return a string showing the replies to the given message IDs.
      */
     public String formatreply(ArrayList<Integer> msgget){
-        String a = "These are the replies:";
+        String a = "These are the replies:\n";
         for(Integer i: msgget){
-            if(getmessage(i).getReply().isEmpty()){a += "The message you send to " + getmessage(i).getGetterid() +
+            Message msg = getmessage(i);
+            if(msg.getReply().isEmpty()){a += "The message(id:" + msg.getmessageid() +") you send to " + getmessage(i).getGetterid() +
                     " has not been replied";}
-            else{a += "This reply is from id " + getmessage(i).getGetterid() + "\n" + getmessage(i).getReply();}
+            else{a += "This reply is from id " + getmessage(i).getGetterid() + "(" + msg.getReplyer() + ")"
+                    + ":\n" + getmessage(i).getReply();}
         }
         return a;
     }

@@ -138,7 +138,7 @@ public class SpeakerSystem {
             tmsgid = targetmsg();
             if (tmsgid != -1){
                 String txt = enterTxt();
-                MsgM.setreply(tmsgid, txt);
+                MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
                 speakerUI.askForBack();
             }
         }while(tmsgid != -1);
