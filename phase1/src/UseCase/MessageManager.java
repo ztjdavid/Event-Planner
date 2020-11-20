@@ -61,7 +61,7 @@ public class MessageManager {
         for(Integer i: msgget){
             Message msg = getmessage(i);
             if(msg.getReply().isEmpty()){a += "The message(id:" + msg.getmessageid() +") you send to " + getmessage(i).getGetterid() +
-                    " has not been replied";}
+                    " has not been replied.";}
             else{a += "This reply is from id " + getmessage(i).getGetterid() + "(" + msg.getReplyer() + ")"
                     + ":\n" + getmessage(i).getReply();}
         }

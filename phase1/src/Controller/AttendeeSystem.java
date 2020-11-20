@@ -127,7 +127,6 @@ public class AttendeeSystem {
         readAllMyTalks();
         attendeeUI.askForBack();
     }
-////////////ERICMODIFY
 
     private void readrepandmsg(){
         readallreply();

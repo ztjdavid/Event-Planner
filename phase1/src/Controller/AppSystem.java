@@ -84,19 +84,16 @@ public class AppSystem {
     private void enterSystems(int currAccountType){
         switch (currAccountType){
             case 0:
-                System.out.println("run organizer system");
                 organizerS.run();
                 break;
             case 1:
-                System.out.println("run attendee system");
                 attendeeS.run();
                 break;
             case 2:
-                System.out.println("run speaker system");
                 speakerS.run();
                 break;
             default:
-                System.out.println("To be implemented. Some necessary classes are not finished.");
+                break;
         }
     }
 
