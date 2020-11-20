@@ -65,7 +65,7 @@ public class AttendeeSystem {
             attendeeUI.msgSelect();
             userChoice = chooseMode2();
             msgOp(userChoice);
-        } while (userChoice != 4);
+        } while (userChoice != 6);
 
 
     }
