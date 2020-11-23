@@ -82,7 +82,16 @@ public class AttendeeManager extends AccountManager{
         return other.getUserType() != 0 && other.getUserId() != getCurrAttendee().getUserId();
     }
     //////////////ERICMODIFY
+
+    /**
+     * Get the inbox of the current account
+     * @return a Arraylist of integer, which contain the ids of the messages that got by current account.
+     */
     public ArrayList<Integer> getinbox(){return getCurrAccount().getInbox();}
+    /**
+     * Get the ids of messages send from the current account
+     * @return a Arraylist of integer, which contain the ids of the messages that current account send.
+     */
     public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentMessage();}
 
 }

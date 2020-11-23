@@ -29,6 +29,11 @@ public class MessageManager {
 
     }
 
+    /**
+     * Get all the messages
+     * @return a arraylist of message
+     */
+
     public ArrayList<Message> getAllmessage(){return allmessage;}
 
     /**

@@ -323,7 +323,7 @@ public class AttendeeSystem {
         return Integer.parseInt(userInput);
     }
 
-    public void messageToAtt(String a, int getterId) {
+    private void messageToAtt(String a, int getterId) {
 
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterId, a);
         accM.addinbox(getterId, msg);
@@ -343,7 +343,7 @@ public class AttendeeSystem {
             }
         }while(tSpeakerId != -1);
     }
-    public void messageToSp(String a, int speakerId) {
+    private void messageToSp(String a, int speakerId) {
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), speakerId, a);
         accM.addinbox(speakerId, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
