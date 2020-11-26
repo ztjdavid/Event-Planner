@@ -129,18 +129,39 @@ public class OrganizerUI {
                 "\n(End editing by typing a single \"end\" in a new line.)");
     }
 
-    public void readTalks(String title, int ID, int startTime, String roomName, int roomId, int type){
+    public void readTalks(String title, int ID, int startTime, String roomName, int roomId, int type,
+                          ArrayList<Integer> speakers, ArrayList<Integer> attendees){
         System.out.println("-------------------------");
-        String str;
         if(type == 1){
-            str = "Talk";
+            StringBuilder str1 = new StringBuilder();
+            for(int item:attendees){
+                str1.append(item);
+                str1.append("\n");
+            }
+            System.out.println("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType:talk" + "\nSpeaker:" + speakers.get(0) + "\nAttendees:\n" + str1);
         }else if(type == 0){
-            str = "Party";
+            StringBuilder str2 = new StringBuilder();
+            for(int item:attendees){
+                str2.append(item);
+                str2.append("\n");
+            }
+            System.out.println("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType:party" + "\nAttendees:\n" + str2);
         }else{
-            str = "Discussion";
+            StringBuilder str3 = new StringBuilder();
+            for(int item:attendees){
+                str3.append(item);
+                str3.append("\n");
+            }
+            StringBuilder str4 = new StringBuilder();
+            for(int item:speakers){
+                str4.append(item);
+                str4.append("\n");
+            }
+            System.out.println("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType:discussion" + "\nAttendees:" + str3 + "\nSpeakers:\n" + str4);
         }
-        System.out.println("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
-                roomName + "(id: " + roomId + ")" + "\nType:" + str);
     }
 
     public String getLineTxt(){

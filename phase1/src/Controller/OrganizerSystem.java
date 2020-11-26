@@ -226,7 +226,9 @@ public class OrganizerSystem {
             String roomName = roomM.getRoomName(eventM.getRoomIdWithId(item));
             int roomId = eventM.getRoomIdWithId(item);
             int type = eventM.getEventTypeWithID(item);
-            organizerUI.readTalks(title, item, startTime, roomName, roomId, type);
+            ArrayList<Integer> speaker = new ArrayList<>(eventM.getSpeakerOfEvent(item));
+            ArrayList<Integer> attendee = new ArrayList<>(eventM.getAttendeeOfEvent(item));
+            organizerUI.readTalks(title, item, startTime, roomName, roomId, type, speaker, attendee);
         }
     }
 

@@ -1,6 +1,7 @@
 package UseCase;
 import Entity.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -329,6 +330,16 @@ public class EventManager {
     public int getEventTypeWithID(int talkID){
         Event event = this.eventList.get(talkID);
         return event.getEventType();
+    }
+
+    public ArrayList<Integer> getSpeakerOfEvent(int eventID){
+        Event event = this.eventList.get(eventID);
+        return new ArrayList<>(event.getSpeakerList());
+    }
+
+    public ArrayList<Integer> getAttendeeOfEvent(int eventID){
+        Event event = this.eventList.get(eventID);
+        return new ArrayList<>(event.getAttendeeId());
     }
 
 
