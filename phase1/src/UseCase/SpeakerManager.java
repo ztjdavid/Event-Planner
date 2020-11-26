@@ -21,8 +21,8 @@ public class SpeakerManager extends AccountManager {
 
 
     /**
-     * Register the Speaker given the speaker ID to the new Talk given the talk ID.
-     * @param talkID int value of the Talk ID.
+     * Register the Speaker given the speaker ID to the new Event given the talk ID.
+     * @param talkID int value of the Event ID.
      * @param speakerID int value of the Speaker ID.
      */
     public void registerNewTalk(int talkID, int speakerID){
@@ -74,10 +74,10 @@ public class SpeakerManager extends AccountManager {
 
 
     /**
-     * Check if the Speaker given the speaker ID is responsible for the Talk given the talk ID.
+     * Check if the Speaker given the speaker ID is responsible for the Event given the talk ID.
      * @param speakerID The ID of the Speaker.
-     * @param talkID The ID of the Talk.
-     * @return True iff the Speaker's talk list contains the Talk.
+     * @param talkID The ID of the Event.
+     * @return True iff the Speaker's talk list contains the Event.
      */
     public boolean checkTalk(int speakerID, int talkID){
         Speaker speaker = (Speaker) getAccountWithId(speakerID);

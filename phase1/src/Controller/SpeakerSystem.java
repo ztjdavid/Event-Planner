@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class SpeakerSystem {
     protected AccountManager accM;
-    protected TalkManager talkManager;
+    protected EventManager eventManager;
     protected MessageManager MsgM;
     protected SpeakerUI speakerUI;
     protected StrategyManager strategyM;
@@ -16,10 +16,10 @@ public class SpeakerSystem {
     protected RoomManager roomM;
 
 
-    public SpeakerSystem(AccountManager accM, TalkManager TalkM, MessageManager MsgM, SpeakerUI SpeakerUI,
+    public SpeakerSystem(AccountManager accM, EventManager eventM, MessageManager MsgM, SpeakerUI SpeakerUI,
                          StrategyManager StrategyManager, SpeakerManager SpeakerM, RoomManager roomM) {
         this.accM = accM;
-        this.talkManager = TalkM;
+        this.eventManager = eventM;
         this.MsgM = MsgM;
         this.speakerUI = SpeakerUI;
         this.strategyM = StrategyManager;
@@ -268,18 +268,18 @@ public class SpeakerSystem {
     }
 
     private void readalltalks(){
-        StringBuilder a = new StringBuilder("Talk Information:");
+        StringBuilder a = new StringBuilder("Event Information:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
-            String roomName = roomM.getRoomName(talkManager.getRoomIdWithId(t));
-            a.append(talkManager.gettalkinfoWithName(t, roomName));}
+            String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
+            a.append(eventManager.gettalkinfoWithName(t, roomName));}
         speakerUI.show(a.toString());
     }
     private void readalltalkssimp(){
-        StringBuilder a = new StringBuilder("Talk Information with id:");
+        StringBuilder a = new StringBuilder("Event Information with id:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
-            a.append(talkManager.gettalkinfosimp(t));}
+            a.append(eventManager.gettalkinfosimp(t));}
         speakerUI.show(a.toString());
     }
 
@@ -329,14 +329,14 @@ public class SpeakerSystem {
     }
     private void messagetotalk(String a, int b) {
         if (b == 999) {speakerUI.stopmessaging();}
-        ArrayList<Integer> att = talkManager.getTalkWithId(b).getAttendeeId();
+        ArrayList<Integer> att = eventManager.getTalkWithId(b).getAttendeeId();
         msgToList(a, att);
     }
 
 
     private ArrayList<Integer> getallattendeev1() {
         ArrayList<Integer> talklist = SpeakerM.getalltalk();
-        return talkManager.getallattendee(talklist);
+        return eventManager.getallattendee(talklist);
     }
 
 

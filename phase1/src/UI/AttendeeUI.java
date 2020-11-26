@@ -26,12 +26,12 @@ public class AttendeeUI {
     }
 
     public String getrequest2(){
-        System.out.println("Please Enter The Valid ID of the Talk(Enter -1 to go back.): ");
+        System.out.println("Please Enter The Valid ID of the Event(Enter -1 to go back.): ");
         return attendeescanner.nextLine();
     }
 
     public String getrequest3(){
-        System.out.println("Please Enter The Valid ID of one of your Talk(Enter -1 to go back.): ");
+        System.out.println("Please Enter The Valid ID of one of your Event(Enter -1 to go back.): ");
         return attendeescanner.nextLine();
     }
 

@@ -7,12 +7,12 @@ import java.util.ArrayList;
  * Level in Clean Architecture: Entity.
  */
 public class Speaker extends Account{
-    private ArrayList<Integer> talksList;
+    private ArrayList<Integer> eventList;
 
 
     public Speaker(String username, String password, int userId){
         super(username, password, userId);
-        this.talksList = new ArrayList<>();
+        this.eventList = new ArrayList<>();
     }
 
     /**
@@ -29,7 +29,7 @@ public class Speaker extends Account{
      * @return A copy of talkList containing all talks this speaker holds.
      */
     public ArrayList<Integer> getTalkList() {
-        return new ArrayList<>(this.talksList);
+        return new ArrayList<>(this.eventList);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Speaker extends Account{
      * @param talkID The id of the talk that this account is going to register.
      */
     public void registerTalk(int talkID){
-        this.talksList.add(talkID);
+        this.eventList.add(talkID);
     }
 
     /**
@@ -45,6 +45,6 @@ public class Speaker extends Account{
      * @param talkID The id of the talk that is going to be removed.
      */
     public void removeTalk(int talkID){
-        if (!this.talksList.isEmpty()) this.talksList.remove(talkID);
+        if (!this.eventList.isEmpty()) this.eventList.remove(talkID);
     }
 }

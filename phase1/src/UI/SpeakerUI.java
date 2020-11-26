@@ -52,7 +52,7 @@ public class SpeakerUI {
     }
 
     public String getrequest2(){
-        System.out.println("Please Enter the ID of ONE Talk. Enter -1 to cancel and go back. ");
+        System.out.println("Please Enter the ID of ONE Event. Enter -1 to cancel and go back. ");
         return speakerscanner.nextLine();
     }
 

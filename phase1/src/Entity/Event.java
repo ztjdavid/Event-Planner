@@ -2,25 +2,26 @@ package Entity;
 import java.util.ArrayList;
 
 /**
- * Talk class contains info about a talk and...
+ * Event class contains info about a talk and...
  * Level in Clean Architecture: Entity.
  */
 
-public class Talk {
+public class Event {
     protected final int talkId;
     protected String talkTitle;
     protected int startTime;
     protected int roomId;
-    protected int speakerId;
+    protected ArrayList<Integer> speakerList;
     protected ArrayList<Integer> attendeeId;
     protected int remainingSeat;
 
-    public Talk(int talkId, String talkTitle, int startTime, int roomId, int speakerID){
+    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
         this.roomId = roomId;
-        this.speakerId = speakerID;
+        this.speakerList = new ArrayList<>();
+        this.speakerList.addAll(speakerID);
         this.attendeeId = new ArrayList<>();
         this.remainingSeat = 2;
     }
@@ -71,13 +72,15 @@ public class Talk {
      * Get the speaker of this talk.
      * @return The ID of a talk speaker.
      */
-    public int getSpeaker(){return this.speakerId;}
+    public ArrayList<Integer> getSpeakerList(){
+        return new ArrayList<>(this.speakerList);
+    }
 
     /**
      * Set talk speaker.
      * @param speakerID The ID of the new talk speaker.
      */
-    public void setSpeaker(int speakerID){this.speakerId = speakerID;}
+    public void setSpeaker(int speakerID){this.speakerList.add(speakerID);}
 
     /**
      * Get a copy of the attendees' id of this talk.
@@ -119,6 +122,16 @@ public class Talk {
         this.attendeeId.remove(attId);
         this.remainingSeat += 1;
         return true;
+    }
+
+    public int getEventType(){
+        if(this.speakerList.size()==1){
+            return 1; //1 is talk
+        }else if(this.speakerList.size()==0){
+            return 0; //0 is party
+        }else {
+            return 2; //2 is discussion
+        }
     }
 
 }

@@ -3,13 +3,13 @@ This program is a design of conference system which allow users to do several op
 We have three kinds of users: Organizer, Speaker, Attendee.
 Each type of user will login to their own system and only allowed to do operations depend on their type.
 
-Organizer are allowed to access to message system, create speaker account, schedule a talk, and create room.
+Organizer are allowed to access to message system, create speaker account, schedule a event, and create room.
 They are able to message all the attendees and speakers, at once or individually.
 
 Speakers are allowed to read the information of talks that they will present(like time, room, etc) and access to messaging system.
 They are able to message all the attendees who attend their own talks, at once or individually.
 
-Attendees are allowed to read information about the talk they registered, sign up anc cancel registration for new talk, and also access to messaging system.
+Attendees are allowed to read information about the event they registered, sign up anc cancel registration for new event, and also access to messaging system.
 They are able to message to other attendees and the speakers of the talks they registered.
 
 In our program, the dashboard of each systems are clear and precise to do all the operations above.

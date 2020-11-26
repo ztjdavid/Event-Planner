@@ -1,5 +1,4 @@
 package Controller;
-import Entity.Organizer;
 import UseCase.*;
 import UI.*;
 
@@ -17,7 +16,7 @@ public class AppSystem {
     protected OrganizerUI organizerUI;
     protected StrategyManager strategyM;
     protected AccountManager accM;
-    protected TalkManager TalkM;
+    protected EventManager eventM;
     protected MessageManager MsgM;
     protected AttendeeManager attM;
     protected StartUI startUI;
@@ -40,13 +39,13 @@ public class AppSystem {
         this.organizerUI = new OrganizerUI();
         this.accM = new AccountManager();
         this.MsgM = new MessageManager();
-        this.TalkM = new TalkManager();
+        this.eventM = new EventManager();
         this.strategyM = new StrategyManager();
         this.signInS = new SignInSystem(accM, signInUI);
         this.signUpS = new SignUpSystem(accM, signUpUI, strategyM);
-        this.attendeeS = new AttendeeSystem(accM, TalkM, MsgM, attUI, strategyM, attM, roomM);
-        this.organizerS = new OrganizerSystem(accM, MsgM, organizerUI, strategyM, ognM, spkM, TalkM, roomM);
-        this.speakerS = new SpeakerSystem(accM, TalkM, MsgM, speakerUI, strategyM, spkM, roomM);
+        this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM);
+        this.organizerS = new OrganizerSystem(accM, MsgM, organizerUI, strategyM, ognM, spkM, eventM, roomM);
+        this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM);
 
     }
 
