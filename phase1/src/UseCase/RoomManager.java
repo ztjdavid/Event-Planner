@@ -54,10 +54,10 @@ public class RoomManager {
     }
 
     /**
-     * Schedule the Talk given talk ID to the Room given room ID, at the given start time.
+     * Schedule the Event given talk ID to the Room given room ID, at the given start time.
      * @param roomID int representation of room ID.
      * @param talkID int representation of the talk ID.
-     * @param startTime int representation of the start time of the Talk.
+     * @param startTime int representation of the start time of the Event.
      */
     public void scheduleTalk(int roomID, int talkID, int startTime){
         Room room = getRoomWithID(roomID);
@@ -93,9 +93,9 @@ public class RoomManager {
     }
 
     /**
-     * Schedule the Talk with the given talk ID to the Room given the room ID at the given start time.
-     * @param talkID the ID of the Talk as int.
-     * @param startTime the start time of the Talk as int.
+     * Schedule the Event with the given talk ID to the Room given the room ID at the given start time.
+     * @param talkID the ID of the Event as int.
+     * @param startTime the start time of the Event as int.
      * @param roomID The ID of the Room as int.
      */
     public void addNewTalkToRoom(int talkID, int startTime, int roomID){

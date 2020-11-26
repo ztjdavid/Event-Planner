@@ -13,18 +13,18 @@ public class OrganizerSystem {
     protected OrganizerUI organizerUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
-    protected TalkManager tlkM;
+    protected EventManager eventM;
     protected RoomManager roomM;
 
     public OrganizerSystem(AccountManager accM, MessageManager MsgM, OrganizerUI organizerUI, StrategyManager strategyM,
-                           OrganizerManager ognM, SpeakerManager spkM, TalkManager tlkM, RoomManager roomM) {
+                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM) {
         this.accM = accM;
         this.MsgM = MsgM;
         this.strategyM = strategyM;
         this.organizerUI = organizerUI;
         this.ognM = ognM;
         this.spkM = spkM;
-        this.tlkM = tlkM;
+        this.eventM = eventM;
         this.roomM = roomM;
     }
 
@@ -118,19 +118,19 @@ public class OrganizerSystem {
     }
 
     /**
-     * Run Talk dashboard, user can choose according to messaging3 options.
+     * Run Event dashboard, user can choose according to messaging3 options.
      */
     private void talkDashBoard(){
         int userInput;
         do{
             organizerUI.messaging3();
-            userInput = chooseMode3();
+            userInput = chooseMode2();
             tlkOp(userInput);
-        }while(userInput != 3);
+        }while(userInput != 5);
     }
 
     /**
-     * Enter the Talk Operation according to user input from the Talk dashboard.
+     * Enter the Event Operation according to user input from the Event dashboard.
      * @param userInput an int chosen by user.
      */
     private void tlkOp(int userInput){
@@ -140,31 +140,100 @@ public class OrganizerSystem {
                 organizerUI.askForBack();
                 break;
             case 2:
-                readAllTalks();
+                doCreateDiscussion();
                 organizerUI.askForBack();
                 break;
             case 3:
+                doCreateParty();
+                organizerUI.askForBack();
+                break;
+            case 4:
+                readAllEvents();
+                organizerUI.askForBack();
+                break;
+            case 5:
                 break;
         }
     }
 
+    private void doCreateParty(){
+        String talkTitle = organizerUI.getTalkTitle();
+        int startTime = organizerUI.getTalkStartTime();
+        if(startTime < 9 || startTime > 17){
+            organizerUI.errorMessage();
+        }else {
+            int roomID = organizerUI.getRoomID();
+            ArrayList<Integer> speakerList = new ArrayList<>();
+            int result = checkTalkValidity1(roomID, startTime);
+            if(result == -1) {
+                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList);
+                roomM.addNewTalkToRoom(talkID, startTime, roomID);
+                organizerUI.message12(talkID);
+            }else if (result == 0) organizerUI.message14();
+            else if (result == 1) organizerUI.message18();
+        }
+    }
+
+    private int checkTalkValidity1(int roomID,int startTime){
+        int flag = -1;
+        if (!roomM.isValidRoomId(roomID)) return 1;
+        else if(roomM.getTimeTable(roomID).containsValue(startTime)) flag = 0;
+        return flag;
+    }
+
+    private void doCreateDiscussion(){
+        String talkTitle = organizerUI.getTalkTitle();
+        int startTime = organizerUI.getTalkStartTime();
+        if(startTime < 9 || startTime > 17){
+            organizerUI.errorMessage();
+        }else {
+            int roomID = organizerUI.getRoomID();
+            int speakerNum = organizerUI.getSpeakerNum();
+            int i = 0;
+            ArrayList<Integer> speakerList = new ArrayList<>();
+            while(i != speakerNum) {
+                int speakerID = organizerUI.getSpeakerID();
+                int result = checkTalkValidity(roomID, startTime, speakerID);
+                if (result == -1) {
+                    speakerList.add(speakerID);
+                } else if (result == 0) organizerUI.message14();
+                else if (result == 1) organizerUI.message18();
+                else if (result == 2) organizerUI.message15();
+                else if (result == 3) organizerUI.message19();
+                i++;
+            }
+            if (speakerList.size()==speakerNum) {
+                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList);
+                roomM.addNewTalkToRoom(talkID, startTime, roomID);
+                for(int item:speakerList) {
+                    spkM.registerNewTalk(talkID, item);
+                }
+                organizerUI.message12(talkID);
+            }
+        }
+    }
+
+
     /**
-     * Show all Talks with each Talk's title, ID, start time, room name, and room ID.
+     * Show all Talks with each Event's title, ID, start time, room name, and room ID.
      */
-    private void readAllTalks(){
+    private void readAllEvents(){
         organizerUI.message7();
-        ArrayList<Integer> talkLst = new ArrayList<>(tlkM.getAllTalksID());
+        ArrayList<Integer> talkLst = new ArrayList<>(eventM.getAllEvents());
         for(int item:talkLst){
-            String title = tlkM.getTitle(item);
-            int startTime = tlkM.getStartTime(item);
-            String roomName = roomM.getRoomName(tlkM.getRoomIdWithId(item));
-            int roomId = tlkM.getRoomIdWithId(item);
-            organizerUI.readTalks(title, item, startTime, roomName, roomId);
+            String title = eventM.getTitle(item);
+            int startTime = eventM.getStartTime(item);
+            String roomName = roomM.getRoomName(eventM.getRoomIdWithId(item));
+            int roomId = eventM.getRoomIdWithId(item);
+            int type = eventM.getEventTypeWithID(item);
+            ArrayList<Integer> speaker = new ArrayList<>(eventM.getSpeakerOfEvent(item));
+            ArrayList<Integer> attendee = new ArrayList<>(eventM.getAttendeeOfEvent(item));
+            organizerUI.readTalks(title, item, startTime, roomName, roomId, type, speaker, attendee);
         }
     }
 
     /**
-     * Create a Talk with Talk title, start time, Room ID, Speaker ID according to user's input, iff the values are valid.
+     * Create a Event with Event title, start time, Room ID, Speaker ID according to user's input, iff the values are valid.
      */
     private void doCreateTalk(){
         String talkTitle = organizerUI.getTalkTitle();
@@ -174,9 +243,11 @@ public class OrganizerSystem {
         }else {
             int roomID = organizerUI.getRoomID();
             int speakerID = organizerUI.getSpeakerID();
+            ArrayList<Integer> speakerList = new ArrayList<>();
+            speakerList.add(speakerID);
             int result = checkTalkValidity(roomID, startTime, speakerID);
             if (result == -1) {
-                int talkID = tlkM.createTalk(talkTitle, startTime, roomID, speakerID);
+                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList);
                 roomM.addNewTalkToRoom(talkID, startTime, roomID);
                 spkM.registerNewTalk(talkID, speakerID);
                 organizerUI.message12(talkID);
@@ -201,7 +272,7 @@ public class OrganizerSystem {
         else if (!accM.isSpeakerAcc(speakerID)) return 3;
         else if(roomM.getTimeTable(roomID).containsValue(startTime)) flag = 0;
         for(int item:spkM.getTalkList(speakerID)){
-            if(tlkM.getStartTime(item) == startTime){
+            if(eventM.getStartTime(item) == startTime){
                 flag = 2;
             }
         }

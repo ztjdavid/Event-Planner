@@ -15,28 +15,33 @@ public class OrganizerUI {
                 "\nHi, Organizer! Would you like to" +
                 "\n1 -> Message" +
                 "\n2 -> Create a Speaker Account" +
-                "\n3 -> Schedule a Talk" +
+                "\n3 -> Schedule a Event" +
                 "\n4 -> Create a Room" +
                 "\n5 -> Logout");
     }
 
     public int getRoomID(){
-        System.out.println("Please Enter the RoomID of the Room of the Talk:");
+        System.out.println("Please Enter the RoomID of the Room of the Event:");
         return input.nextInt();
     }
 
     public int getSpeakerID(){
-        System.out.println("Please Enter the user id of the Speaker of the Talk:");
+        System.out.println("Please Enter the user id of the Speaker of the Event:");
+        return input.nextInt();
+    }
+
+    public int getSpeakerNum(){
+        System.out.println("Please Enter Number of Speakers of the discussion (must be greater than 1):");
         return input.nextInt();
     }
 
     public int getNewTime(){
-        System.out.println("Please Enter the New Start Time of the Talk you would like to change:");
+        System.out.println("Please Enter the New Start Time of the Event you would like to change:");
         return input.nextInt();
     }
 
     public int getReTalkID(){
-        System.out.println("Please Enter the ID of the Talk you would like to change:");
+        System.out.println("Please Enter the ID of the Event you would like to change:");
         return input.nextInt();
     }
 
@@ -66,12 +71,12 @@ public class OrganizerUI {
     }
 
     public String getTalkTitle(){
-        System.out.println("Please Enter the Talk Title:");
+        System.out.println("Please Enter the Event Title:");
         return input.nextLine();
     }
 
     public int getTalkStartTime(){
-        System.out.println("Please Enter the Start Time of the Talk (the Start Time Must be Between 9 - 17 in 24-hour format):");
+        System.out.println("Please Enter the Start Time of the Event (the Start Time Must be Between 9 - 17 in 24-hour format):");
         return input.nextInt();
     }
 
@@ -101,11 +106,13 @@ public class OrganizerUI {
     }
 
     public void messaging3(){
-        System.out.println("----------------Creating Talk-----------------" +
+        System.out.println("----------------Creating Event-----------------" +
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Create a Talk" +
-                "\n2 -> Read all Talks" +
-                "\n3 -> Go back");
+                "\n2 -> Create a Discussion" +
+                "\n3 -> Create a Party" +
+                "\n4 -> Read all Events" +
+                "\n5 -> Go back");
     }
 
     public void messaging4(){
@@ -122,10 +129,39 @@ public class OrganizerUI {
                 "\n(End editing by typing a single \"end\" in a new line.)");
     }
 
-    public void readTalks(String title, int ID, int startTime, String roomName, int roomId){
+    public void readTalks(String title, int ID, int startTime, String roomName, int roomId, int type,
+                          ArrayList<Integer> speakers, ArrayList<Integer> attendees){
         System.out.println("-------------------------");
-        System.out.println("Talk Title:" + title + "\nTalk ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
-                roomName + "(id: " + roomId + ")");
+        if(type == 1){
+            StringBuilder str1 = new StringBuilder();
+            for(int item:attendees){
+                str1.append(item);
+                str1.append("\n");
+            }
+            System.out.println("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType:talk" + "\nSpeaker:" + speakers.get(0) + "\nAttendees:\n" + str1);
+        }else if(type == 0){
+            StringBuilder str2 = new StringBuilder();
+            for(int item:attendees){
+                str2.append(item);
+                str2.append("\n");
+            }
+            System.out.println("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType:party" + "\nAttendees:\n" + str2);
+        }else{
+            StringBuilder str3 = new StringBuilder();
+            for(int item:attendees){
+                str3.append(item);
+                str3.append("\n");
+            }
+            StringBuilder str4 = new StringBuilder();
+            for(int item:speakers){
+                str4.append(item);
+                str4.append("\n");
+            }
+            System.out.println("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType:discussion" + "\nAttendees:" + str3 + "\nSpeakers:\n" + str4);
+        }
     }
 
     public String getLineTxt(){
@@ -178,7 +214,7 @@ public class OrganizerUI {
     }
 
     public void message7(){
-        System.out.println("These are ALl of the Talks");
+        System.out.println("These are ALl of the Events");
     }
 
     public void message11(){
@@ -186,7 +222,7 @@ public class OrganizerUI {
     }
 
     public void message12(int id){
-        System.out.println("Talk Created Successfully with id:" + id);
+        System.out.println("Event Created Successfully with id:" + id);
     }
 
     public void announceMsg(){System.out.println("Please remember the id of the replier " +
@@ -217,11 +253,11 @@ public class OrganizerUI {
     }
 
     public void message14(){
-        System.out.println("Talk Creation Failed! Reason: StartTime Conflict in the Given Room.");
+        System.out.println("Event Creation Failed! Reason: StartTime Conflict in the Given Room.");
     }
 
     public void message15(){
-        System.out.println("Talk Creation Failed! Reason: StartTime Conflict with the Given Speaker.");
+        System.out.println("Event Creation Failed! Reason: StartTime Conflict with the Given Speaker.");
     }
 
     public void message16(){
@@ -233,17 +269,17 @@ public class OrganizerUI {
     }
 
     public void message18() {
-        System.out.println("Talk Creation Failed! Given room id is invalid.");
+        System.out.println("Event Creation Failed! Given room id is invalid.");
     }
 
-    public void message19() { System.out.println("Talk Creation Failed! Invalid speaker."); }
+    public void message19() { System.out.println("Event Creation Failed! Invalid speaker."); }
 
     public void readSpeakers(String userName, int accountID, ArrayList<Integer> talks){
         System.out.println("Speaker Account ID:" + accountID + "\nUsername:" + userName);
         readTalks1(talks);
     }
     public void errorMessage(){
-        System.out.println("Scheduling Failed! The StartTime of Talk Must be Between 9 - 17! Please Try again!");
+        System.out.println("Scheduling Failed! The StartTime of Event Must be Between 9 - 17! Please Try again!");
     }
 
     private void readTalks1(ArrayList<Integer> talks){

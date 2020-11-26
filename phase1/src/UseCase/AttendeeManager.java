@@ -40,7 +40,7 @@ public class AttendeeManager extends AccountManager{
 
     /**
      * Sign up the Attendee a new talk given the talk ID.
-     * @param talkID int value of the Talk ID.
+     * @param talkID int value of the Event ID.
      */
     public void enrol(int talkID){
         getCurrAttendee().addTalk(talkID);
@@ -48,7 +48,7 @@ public class AttendeeManager extends AccountManager{
 
     /**
      * Cancel the Attendee an existing talk given the talk ID.
-     * @param talkID int value of the Talk ID.
+     * @param talkID int value of the Event ID.
      */
     public void drop(int talkID) {
         getCurrAttendee().cancelTalk(talkID);
