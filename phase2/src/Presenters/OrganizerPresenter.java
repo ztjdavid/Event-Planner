@@ -39,10 +39,6 @@ public class OrganizerPresenter extends Presenter{
         return requestInput("Please Enter Your Response (Enter -1 to go back.):");
     }
 
-    public String getRequest1(){
-        return requestInput("Please Enter Your Response:");
-    }
-
     public String getSpeakerUsername(){
         return requestInput("Please Enter The Username of The Speaker:");
     }
@@ -117,12 +113,6 @@ public class OrganizerPresenter extends Presenter{
                 "\n3 -> Go back");
     }
 
-
-    public void infoEnteringText(){
-        printText("Please Enter Your Message." +
-                "\n(End editing by typing a single \"end\" in a new line.)");
-    }
-
     public void readTalks(String title, int ID, int startTime, String roomName, int roomId, int type,
                           ArrayList<Integer> speakers, ArrayList<Integer> attendees){
         printText("-------------------------");
@@ -158,10 +148,6 @@ public class OrganizerPresenter extends Presenter{
         }
     }
 
-    public String getLineTxt(){
-        return requestInput();
-    }
-
     public void askForBack(){
         printText("\nPress enter to go back.");
         pause();
@@ -173,11 +159,6 @@ public class OrganizerPresenter extends Presenter{
 
     public void display(String str){
         printText(str);
-    }
-
-    public String confirmMsgAll(){
-        return requestInput("Are you sure to message all attendees in this system?" +
-                "\nEnter 1 to confirm, 0 to cancel and go back.(Irreversible once confirmed.)");
     }
 
     public void show(String a){printText(a + "\n");}

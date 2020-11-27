@@ -3,7 +3,6 @@ import Presenters.OrganizerPresenter;
 import UseCase.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class OrganizerSystem {
@@ -35,7 +34,8 @@ public class OrganizerSystem {
         int userChoice;
         do {
             organizerPresenter.startup();
-            userChoice = chooseMode2();
+            userChoice = organizerPresenter.chooseOption(getChoiceList(5),
+                    "Please Choose a Dashboard:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
         } while (userChoice != 5);
     }
@@ -71,7 +71,8 @@ public class OrganizerSystem {
         int userInput;
         do{
             organizerPresenter.messaging4();
-            userInput = chooseMode3();
+            userInput = organizerPresenter.chooseOption(getChoiceList(3),
+                    "Please Choose a Option:", "Invalid Choice! Please Try Again:");
             roomOp(userInput);
         }while(userInput != 3);
     }
@@ -125,9 +126,22 @@ public class OrganizerSystem {
         int userInput;
         do{
             organizerPresenter.messaging3();
-            userInput = chooseMode5();
+            userInput = organizerPresenter.chooseOption(getChoiceList(6),
+                    "Please Choose a Option:", "Invalid Choice! Please Try Again:");
             tlkOp(userInput);
         }while(userInput != 6);
+    }
+
+    private ArrayList<Integer> getChoiceList(Integer size){
+        int i = 0;
+        int j = 1;
+        ArrayList<Integer> choiceList = new ArrayList<>();
+        while (i!=size){
+            choiceList.add(j);
+            j++;
+            i++;
+        }
+        return choiceList;
     }
 
     /**
@@ -315,7 +329,8 @@ public class OrganizerSystem {
         int userInput;
         do {
             organizerPresenter.messaging2();
-            userInput = chooseMode2();
+            userInput = organizerPresenter.chooseOption(getChoiceList(5),
+                    "Please Choose a Option:", "Invalid Choice! Please Try Again:");
             sprOp(userInput);
         } while (userInput != 5);
     }
@@ -418,7 +433,8 @@ public class OrganizerSystem {
         int userInput;
         do {
             organizerPresenter.messaging();
-            userInput = chooseMode1();
+            userInput = organizerPresenter.chooseOption(getChoiceList(8),
+                    "Please Choose a Option:", "Invalid Choice! Please Try Again:");
             messageOp(userInput);
         } while (userInput != 8);
     }
@@ -457,7 +473,8 @@ public class OrganizerSystem {
             readMsgAndPrep();
             getID = targetGetter(1);
             if (getID != -1) {
-                String txt = enterTxt();
+                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                        "\n(End editing by typing a single \"end\" in a new line.)");
                 MsgM.setreply(getID, txt, accM.getCurrAccountName());
                 organizerPresenter.askForBack();
             }
@@ -490,7 +507,8 @@ public class OrganizerSystem {
             readMsg();
             tAttendeeId = targetGetter(1);
             if (tAttendeeId != -1) {
-                String txt = enterTxt();
+                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                        "\n(End editing by typing a single \"end\" in a new line.)");
                 messageToIndividual(txt, tAttendeeId);
                 organizerPresenter.askForBack();
             }
@@ -508,18 +526,24 @@ public class OrganizerSystem {
     }
 
     private void messageToAllSpeaker() {
-        int userInput = chooseMode4();
+        int userInput = organizerPresenter.chooseOption(getChoiceList(2),
+                "Are you sure to message all Speakers in this system?\nEnter 2 to confirm, 1 to cancel and go back.(Irreversible once confirmed.)",
+                "Invalid Chooice, Please Try Again:");
         if (userInput == 1) {
-            String txt = enterTxt();
+            String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                    "\n(End editing by typing a single \"end\" in a new line.)");
             sendMessageToAllSpeaker(txt);
             organizerPresenter.askForBack();
         }
     }
 
     private void messageToAllAttendee() {
-        int userChoice = chooseMode4();
+        int userChoice = organizerPresenter.chooseOption(getChoiceList(2),
+                "Are you sure to message all attendees in this system?\nEnter 2 to confirm, 1 to cancel and go back.(Irreversible once confirmed.)",
+                "Invalid Chooice, Please Try Again:");
         if (userChoice == 1) {
-            String txt = enterTxt();
+            String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                    "\n(End editing by typing a single \"end\" in a new line.)");
             sendMessageToAllAttendee(txt);
             organizerPresenter.askForBack();
         }
@@ -531,7 +555,8 @@ public class OrganizerSystem {
             readAllSpk();
             spkId = targetGetter(3);
             if (spkId != -1) {
-                String txt = enterTxt();
+                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                        "\n(End editing by typing a single \"end\" in a new line.)");
                 messageToIndividual(txt, spkId);
                 organizerPresenter.askForBack();
             }
@@ -545,26 +570,12 @@ public class OrganizerSystem {
             readAllAtt();
             attId = targetGetter(2);
             if (attId != -1) {
-                String txt = enterTxt();
+                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                        "\n(End editing by typing a single \"end\" in a new line.)");
                 messageToIndividual(txt, attId);
                 organizerPresenter.askForBack();
             }
         } while (attId != -1);
-    }
-
-    private String enterTxt() {
-        StringBuilder a = new StringBuilder();
-        boolean exit = false;
-        organizerPresenter.infoEnteringText();
-        do {
-            String line = organizerPresenter.getLineTxt();
-            if (line.equals("end")) exit = true;
-            else {
-                a.append(line);
-                a.append("\n");
-            }
-        } while (!exit);
-        return a.toString();
     }
 
     private int createSpeaker() {
@@ -583,57 +594,6 @@ public class OrganizerSystem {
             organizerPresenter.message17();
         }
         return -1;
-    }
-
-    private int chooseMode1() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
-        return chooseMode(validChoices);
-    }
-
-    private int chooseMode2() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-        return chooseMode(validChoices);
-    }
-
-    private int chooseMode5() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
-        return chooseMode(validChoices);
-    }
-
-    private int chooseMode3() {
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        return chooseMode(validChoices);
-    }
-
-    private int chooseMode(ArrayList<Integer> validChoices) {
-        int mode = -1;
-        boolean valid = false;
-        while (!valid) {
-            String userInput = organizerPresenter.getRequest1();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                organizerPresenter.informInvalidChoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);
-            }
-        }
-        return mode;
-    }
-
-    private int chooseMode4() {
-        boolean valid = false;
-        String userInput;
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(0, 1));
-        do {
-            userInput = organizerPresenter.confirmMsgAll();
-            if (strategyM.isValidChoice(userInput, validChoices))
-                organizerPresenter.informInvalidChoice();
-            else {
-                valid = true;
-            }
-        } while (!valid);
-        return Integer.parseInt(userInput);
-
     }
 
     private void readAllAtt() {

@@ -124,4 +124,19 @@ public class Presenter {
         }
         return choiceList.contains(num);
     }
+
+    public String enterMessage(String requestInfo) {
+        StringBuilder a = new StringBuilder();
+        boolean exit = false;
+        printText(requestInfo);
+        do {
+            String line = requestInput();
+            if (line.equals("end")) exit = true;
+            else {
+                a.append(line);
+                a.append("\n");
+            }
+        } while (!exit);
+        return a.toString();
+    }
 }
