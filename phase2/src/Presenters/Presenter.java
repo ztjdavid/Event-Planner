@@ -12,6 +12,7 @@ public class Presenter {
         this.textUI = UI;
     }
 
+
     /**
      * Print text on screen(Console).
      * @param txt String being printed.

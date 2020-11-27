@@ -1,6 +1,7 @@
 package Controller;
 import Presenters.*;
 import UseCase.*;
+import UI.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ public class AppSystem {
     protected SpeakerSystem speakerS;
     protected SpeakerUI speakerUI;
     protected RoomManager roomM;
-    protected OrganizerUI organizerUI;
+    protected OrganizerPresenter organizerPresenter;
     protected StrategyManager strategyM;
     protected AccountManager accM;
     protected EventManager eventM;
@@ -25,8 +26,11 @@ public class AppSystem {
     protected AttendeeUI attUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
+    protected TextUI textUI;
+
 
     public AppSystem(){
+        this.textUI = new TextUI();
         this.attM = new AttendeeManager();
         this.spkM = new SpeakerManager();
         this.ognM = new OrganizerManager();
@@ -36,7 +40,7 @@ public class AppSystem {
         this.signUpUI = new SignUpUI();
         this.speakerUI = new SpeakerUI();
         this.attUI = new AttendeeUI();
-        this.organizerUI = new OrganizerUI();
+        this.organizerPresenter = new OrganizerPresenter(textUI);
         this.accM = new AccountManager();
         this.MsgM = new MessageManager();
         this.eventM = new EventManager();
@@ -44,7 +48,7 @@ public class AppSystem {
         this.signInS = new SignInSystem(accM, signInUI);
         this.signUpS = new SignUpSystem(accM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM);
-        this.organizerS = new OrganizerSystem(accM, MsgM, organizerUI, strategyM, ognM, spkM, eventM, roomM);
+        this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM);
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM);
 
     }
