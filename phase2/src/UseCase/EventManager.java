@@ -342,6 +342,11 @@ public class EventManager {
         return new ArrayList<>(event.getAttendeeId());
     }
 
+    public boolean checkEventExists(int eventID){
+        return this.eventList.keySet().contains(eventID);
+    }
+
+
 
 }
 

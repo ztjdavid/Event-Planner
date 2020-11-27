@@ -125,9 +125,9 @@ public class OrganizerSystem {
         int userInput;
         do{
             organizerUI.messaging3();
-            userInput = chooseMode2();
+            userInput = chooseMode5();
             tlkOp(userInput);
-        }while(userInput != 5);
+        }while(userInput != 6);
     }
 
     /**
@@ -149,11 +149,25 @@ public class OrganizerSystem {
                 organizerUI.askForBack();
                 break;
             case 4:
-                readAllEvents();
+                doCancelEvent();
                 organizerUI.askForBack();
                 break;
             case 5:
+                readAllEvents();
+                organizerUI.askForBack();
                 break;
+            case 6:
+                break;
+        }
+    }
+
+    private void doCancelEvent(){
+        int eventID = organizerUI.getEventID();
+        if(eventM.checkEventExists(eventID)){
+            eventM.removeTalk(eventID);
+            organizerUI.message4();
+        }else{
+            organizerUI.message5();
         }
     }
 
@@ -520,6 +534,11 @@ public class OrganizerSystem {
 
     private int chooseMode2() {
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        return chooseMode(validChoices);
+    }
+
+    private int chooseMode5() {
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         return chooseMode(validChoices);
     }
 

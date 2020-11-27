@@ -13,10 +13,10 @@ public class OrganizerUI {
     public void startup(){
         System.out.println("----------------OrganizerSystem-----------------" +
                 "\nHi, Organizer! Would you like to" +
-                "\n1 -> Message" +
-                "\n2 -> Create a Speaker Account" +
-                "\n3 -> Schedule a Event" +
-                "\n4 -> Create a Room" +
+                "\n1 -> Message Dashboard" +
+                "\n2 -> Account Dashboard" +
+                "\n3 -> Event Dashboard" +
+                "\n4 -> Room Dashboard" +
                 "\n5 -> Logout");
     }
 
@@ -85,7 +85,7 @@ public class OrganizerUI {
     }
 
     public void messaging(){
-        System.out.println("----------------Messaging-----------------" +
+        System.out.println("----------------Message Dashboard-----------------" +
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Message to one attendee" +
                 "\n2 -> Message to one speaker" +
@@ -98,7 +98,7 @@ public class OrganizerUI {
     }
 
     public void messaging2(){
-        System.out.println("----------------Creating Speaker Account-----------------" +
+        System.out.println("----------------Account DashBoard-----------------" +
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Create a speaker" +
                 "\n2 -> Read All Speaker" +
@@ -106,17 +106,18 @@ public class OrganizerUI {
     }
 
     public void messaging3(){
-        System.out.println("----------------Creating Event-----------------" +
+        System.out.println("----------------Event Dashboard-----------------" +
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Create a Talk" +
                 "\n2 -> Create a Discussion" +
                 "\n3 -> Create a Party" +
-                "\n4 -> Read all Events" +
-                "\n5 -> Go back");
+                "\n4 -> Cancel an event" +
+                "\n5 -> Read all Events" +
+                "\n6 -> Go back");
     }
 
     public void messaging4(){
-        System.out.println("----------------Creating Room-----------------" +
+        System.out.println("----------------Room Dashboard-----------------" +
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Create a Room" +
                 "\n2 -> Read all Rooms" +
@@ -302,6 +303,19 @@ public class OrganizerUI {
 
     public void message2(){
         System.out.println("Event Creation Failed! The Event Capacity Exceeds the Room Capacity:");
+    }
+
+    public int getEventID(){
+        System.out.println("Please Enter the ID of the Event You Would Like to Cancel:");
+        return input.nextInt();
+    }
+
+    public void message4(){
+        System.out.println("The Event Has Been Canceled!");
+    }
+
+    public void message5(){
+        System.out.println("The Event ID You Entered is Invalid!");
     }
 
 
