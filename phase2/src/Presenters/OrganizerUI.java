@@ -60,13 +60,23 @@ public class OrganizerUI {
         return input.nextLine();
     }
 
+    public String getAttendeeUsername(){
+        System.out.println("Please Enter The Username of The Attendee");
+        return input.nextLine();
+    }
+
+    public String getVIPUsername(){
+        System.out.println("Please Enter The Username of The VIP Attendee");
+        return input.nextLine();
+    }
+
     public String getSpeakerPwd1(){
-        System.out.println("Please Enter The Password of The Speaker:");
+        System.out.println("Please Enter The Password:");
         return input.nextLine();
     }
 
     public String getSpeakerPwd2(){
-        System.out.println("Great! Please Enter The Password of The Speaker Again:");
+        System.out.println("Great! Please Enter The Password Again:");
         return input.nextLine();
     }
 
@@ -101,8 +111,10 @@ public class OrganizerUI {
         System.out.println("----------------Account DashBoard-----------------" +
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Create a speaker" +
-                "\n2 -> Read All Speaker" +
-                "\n3 -> Go back");
+                "\n2 -> Create an Attendee" +
+                "\n3 -> Create a VIP Attendee" +
+                "\n4 -> Read All Speaker" +
+                "\n5 -> Go back");
     }
 
     public void messaging3(){
@@ -203,7 +215,7 @@ public class OrganizerUI {
     }
 
     public void message1(){
-        System.out.println("Speaker Creation Failed! Passwords Do Not Match!");
+        System.out.println("Account Creation Failed! Passwords Do Not Match!");
     }
 
     public void message3(int ID){
@@ -266,7 +278,7 @@ public class OrganizerUI {
     }
 
     public void message17(){
-        System.out.println("Creation Failed! The username Already Exists!");
+        System.out.println("Account Creation Failed! The username Already Exists!");
     }
 
     public void message18() {
@@ -316,6 +328,14 @@ public class OrganizerUI {
 
     public void message5(){
         System.out.println("The Event ID You Entered is Invalid!");
+    }
+
+    public void message9(int attendeeID){
+        System.out.println("Attendee Created Successfully with ID:" + attendeeID);
+    }
+
+    public void message10(int attendeeID){
+        System.out.println("VIP Attendee Created Successfully with ID:" + attendeeID);
     }
 
 

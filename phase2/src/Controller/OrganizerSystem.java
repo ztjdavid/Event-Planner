@@ -315,9 +315,9 @@ public class OrganizerSystem {
         int userInput;
         do {
             organizerUI.messaging2();
-            userInput = chooseMode3();
+            userInput = chooseMode2();
             sprOp(userInput);
-        } while (userInput != 3);
+        } while (userInput != 5);
     }
 
     /**
@@ -330,11 +330,69 @@ public class OrganizerSystem {
                 doCreateSpeaker();
                 break;
             case 2:
-                readAllSpeakers();
+                doCreateAttendee();
                 break;
             case 3:
+                doCreateVIP();
+                break;
+            case 4:
+                readAllSpeakers();
+                break;
+            case 5:
                 break;
         }
+    }
+
+    private void doCreateAttendee(){
+        int ID = createAttendee();
+        if(ID != -1){
+            organizerUI.message9(ID);
+        }
+        organizerUI.askForBack();
+    }
+
+    private void doCreateVIP(){
+        int ID = CreateVIP();
+        if(ID != -1){
+            organizerUI.message10(ID);
+        }
+        organizerUI.askForBack();
+    }
+
+    private int createAttendee(){
+            String username = organizerUI.getAttendeeUsername();
+            if (!accM.existsUsername(username)){
+                String password1 = organizerUI.getSpeakerPwd1();
+                String password2 = organizerUI.getSpeakerPwd2();
+                if (password1.equals(password2)) {
+                    accM.createAccount(username, password1, 1);
+                    return accM.getTotalNumOfAccount()-1;
+                } else {
+                    organizerUI.message1();
+                    organizerUI.askForBack();
+                }
+            }else{
+                organizerUI.message17();
+            }
+            return -1;
+    }
+
+    private int CreateVIP(){
+        String username = organizerUI.getVIPUsername();
+        if (!accM.existsUsername(username)){
+            String password1 = organizerUI.getSpeakerPwd1();
+            String password2 = organizerUI.getSpeakerPwd2();
+            if (password1.equals(password2)) {
+                accM.createAccount(username, password1, 3);
+                return accM.getTotalNumOfAccount()-1;
+            } else {
+                organizerUI.message1();
+                organizerUI.askForBack();
+            }
+        }else{
+            organizerUI.message17();
+        }
+        return -1;
     }
 
     private void readAllSpeakers(){
