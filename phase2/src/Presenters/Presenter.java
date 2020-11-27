@@ -18,6 +18,28 @@ public class Presenter {
         return textUI.request();
     }
 
+    public String requestInput(String requestInfo){
+        printText(requestInfo);
+        return requestInput();
+    }
+
+    public int requestNumInput(String requestInfo){
+        int num = -2;
+        boolean exit;
+        do{
+            exit = true;
+            String userInput = requestInput(requestInfo);
+            try{
+                num = Integer.parseInt(userInput);
+            }catch (NumberFormatException nfe){
+                exit = false;
+            }
+        }while(!exit);
+        return num;
+    }
+
+    public void pause(){ requestInput(); }
+
     public int chooseOption(ArrayList<Integer> choiceList, String requestInfo,
                             String invalidInfo){
         boolean exit = false;
