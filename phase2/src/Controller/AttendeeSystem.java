@@ -1,5 +1,5 @@
 package Controller;
-import UI.AttendeeUI;
+import Presenters.AttendeeUI;
 import UseCase.*;
 
 import java.util.ArrayList;

@@ -1,5 +1,5 @@
 package Controller;
-import UI.OrganizerUI;
+import Presenters.OrganizerUI;
 import UseCase.*;
 
 import java.util.ArrayList;

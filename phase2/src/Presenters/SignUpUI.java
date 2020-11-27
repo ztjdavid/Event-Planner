@@ -1,4 +1,4 @@
-package UI;
+package Presenters;
 import java.util.Scanner;
 
 public class SignUpUI {

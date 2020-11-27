@@ -1,5 +1,5 @@
 package Controller;
-import UI.SignUpUI;
+import Presenters.SignUpUI;
 import UseCase.*;
 import java.util.ArrayList;
 
