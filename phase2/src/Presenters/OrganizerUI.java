@@ -295,5 +295,14 @@ public class OrganizerUI {
         return input.nextInt();
     }
 
+    public int eventCapacity(){
+        System.out.println("Please Enter the Event Capacity:");
+        return input.nextInt();
+    }
+
+    public void message2(){
+        System.out.println("Event Creation Failed! The Event Capacity Exceeds the Room Capacity:");
+    }
+
 
 }

@@ -110,5 +110,10 @@ public class RoomManager {
      */
     public boolean isValidRoomId(int roomId){ return allRooms.containsKey(roomId);}
 
+    public boolean isWithinCapacity(int roomID, int eventCapacity){
+        Room room = allRooms.get(roomID);
+        return room.getRoomCapacity() >= eventCapacity;
+    }
+
 
 }

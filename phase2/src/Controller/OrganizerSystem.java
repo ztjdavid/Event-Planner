@@ -167,9 +167,14 @@ public class OrganizerSystem {
             ArrayList<Integer> speakerList = new ArrayList<>();
             int result = checkTalkValidity1(roomID, startTime);
             if(result == -1) {
-                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList);
-                roomM.addNewTalkToRoom(talkID, startTime, roomID);
-                organizerUI.message12(talkID);
+                int eventCapacity = organizerUI.eventCapacity();
+                if(roomM.isWithinCapacity(roomID, eventCapacity)) {
+                    int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity);
+                    roomM.addNewTalkToRoom(talkID, startTime, roomID);
+                    organizerUI.message12(talkID);
+                }else{
+                    organizerUI.message2();
+                }
             }else if (result == 0) organizerUI.message14();
             else if (result == 1) organizerUI.message18();
         }
@@ -190,9 +195,11 @@ public class OrganizerSystem {
         }else {
             int roomID = organizerUI.getRoomID();
             int speakerNum = organizerUI.getSpeakerNum();
-            int i = 0;
+            int eventCapacity = organizerUI.eventCapacity();
             ArrayList<Integer> speakerList = new ArrayList<>();
-            while(i != speakerNum) {
+            if(roomM.isWithinCapacity(roomID, eventCapacity)){
+                int i = 0;
+                while(i != speakerNum) {
                 int speakerID = organizerUI.getSpeakerID();
                 int result = checkTalkValidity(roomID, startTime, speakerID);
                 if (result == -1) {
@@ -203,8 +210,11 @@ public class OrganizerSystem {
                 else if (result == 3) organizerUI.message19();
                 i++;
             }
+            }else{
+                organizerUI.message2();
+            }
             if (speakerList.size()==speakerNum) {
-                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList);
+                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity);
                 roomM.addNewTalkToRoom(talkID, startTime, roomID);
                 for(int item:speakerList) {
                     spkM.registerNewTalk(talkID, item);
@@ -248,10 +258,15 @@ public class OrganizerSystem {
             speakerList.add(speakerID);
             int result = checkTalkValidity(roomID, startTime, speakerID);
             if (result == -1) {
-                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList);
-                roomM.addNewTalkToRoom(talkID, startTime, roomID);
-                spkM.registerNewTalk(talkID, speakerID);
-                organizerUI.message12(talkID);
+                int eventCapacity = organizerUI.eventCapacity();
+                if (roomM.isWithinCapacity(roomID, eventCapacity)) {
+                    int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity);
+                    roomM.addNewTalkToRoom(talkID, startTime, roomID);
+                    spkM.registerNewTalk(talkID, speakerID);
+                    organizerUI.message12(talkID);
+                }else{
+                    organizerUI.message2();
+                }
             } else if (result == 0) organizerUI.message14();
             else if (result == 1) organizerUI.message18();
             else if (result == 2) organizerUI.message15();
@@ -268,7 +283,6 @@ public class OrganizerSystem {
      */
     private int checkTalkValidity(int roomID,int startTime, int speakerID){
         int flag = -1;
-
         if (!roomM.isValidRoomId(roomID)) return 1;
         else if (!accM.isSpeakerAcc(speakerID)) return 3;
         else if(roomM.getTimeTable(roomID).containsValue(startTime)) flag = 0;

@@ -10,7 +10,6 @@ public class Room {
     private String roomName;
     private final HashMap<Integer, Integer> timetable;
     private int roomCapacity;
-    private int seatsOccupied = 0;
 
     public Room(String roomName, int roomId, int roomCapacity){
         this.roomId = roomId;
@@ -93,6 +92,10 @@ public class Room {
      */
     public HashMap<Integer, Integer> getTimetable(){
         return new HashMap<>(this.timetable);
+    }
+
+    public int getRoomCapacity(){
+        return this.roomCapacity;
     }
 
 }

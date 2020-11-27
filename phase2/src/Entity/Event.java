@@ -14,8 +14,10 @@ public class Event {
     protected ArrayList<Integer> speakerList;
     protected ArrayList<Integer> attendeeId;
     protected int remainingSeat;
+    protected int eventCapacity;
+    protected int seatsOccupied;
 
-    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID){
+    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
@@ -24,6 +26,8 @@ public class Event {
         this.speakerList.addAll(speakerID);
         this.attendeeId = new ArrayList<>();
         this.remainingSeat = 2;
+        this.eventCapacity = eventCapacity;
+        this.seatsOccupied = 0;
     }
 
     /**
@@ -109,6 +113,7 @@ public class Event {
         if (isFull() || this.attendeeId.contains(attId)) return false;
         this.attendeeId.add(attId);
         this.remainingSeat -= 1;
+        this.seatsOccupied += 1;
         return true;
     }
 
