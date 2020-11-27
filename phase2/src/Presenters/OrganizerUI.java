@@ -290,5 +290,10 @@ public class OrganizerUI {
         System.out.println("--------------------------------------------");
     }
 
+    public int roomCapacity(){
+        System.out.println("Please Enter the Room Capacity:");
+        return input.nextInt();
+    }
+
 
 }

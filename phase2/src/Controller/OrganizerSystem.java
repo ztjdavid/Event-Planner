@@ -98,7 +98,8 @@ public class OrganizerSystem {
      */
     private void doCreateRoom(){
         String roomName = organizerUI.getRoomName();
-        int roomID = roomM.createRoom(roomName);
+        int roomCapacity = organizerUI.roomCapacity();
+        int roomID = roomM.createRoom(roomName, roomCapacity);
         organizerUI.message13(roomID);
         organizerUI.askForBack();
     }

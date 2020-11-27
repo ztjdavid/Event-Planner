@@ -106,13 +106,19 @@ public class OrganizerUI {
     }
 
     public void messaging3(){
-        System.out.println("----------------Creating Event-----------------" +
+        System.out.println("----------------Scheduling Event-----------------" +
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Create a Talk" +
                 "\n2 -> Create a Discussion" +
                 "\n3 -> Create a Party" +
                 "\n4 -> Read all Events" +
-                "\n5 -> Go back");
+                "\n5 -> Cancel an Event" +
+                "\n6 -> Go back");
+    }
+
+    public int getEventID(){
+        System.out.println("Please enter the ID of the Event You Would Like to Cancel:");
+        return input.nextInt();
     }
 
     public void messaging4(){

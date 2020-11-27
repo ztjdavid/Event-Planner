@@ -9,11 +9,14 @@ public class Room {
     private final int roomId;
     private String roomName;
     private final HashMap<Integer, Integer> timetable;
+    private int roomCapacity;
+    private int seatsOccupied = 0;
 
-    public Room(String roomName, int roomId){
+    public Room(String roomName, int roomId, int roomCapacity){
         this.roomId = roomId;
         this.roomName = roomName;
         this.timetable = new HashMap<>();
+        this.roomCapacity = roomCapacity;
     }
 
     /**
