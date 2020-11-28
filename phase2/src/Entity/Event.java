@@ -16,8 +16,9 @@ public class Event {
     protected int remainingSeat;
     protected int eventCapacity;
     protected int seatsOccupied;
+    protected int duration;
 
-    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity){
+    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
@@ -28,6 +29,7 @@ public class Event {
         this.remainingSeat = 2;
         this.eventCapacity = eventCapacity;
         this.seatsOccupied = 0;
+        this.duration = duration;
     }
 
     /**
@@ -138,5 +140,10 @@ public class Event {
             return 2; //2 is discussion
         }
     }
+
+    public int getDuration(){
+        return this.duration;
+    }
+
 
 }

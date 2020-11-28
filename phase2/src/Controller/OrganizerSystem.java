@@ -185,69 +185,90 @@ public class OrganizerSystem {
         }
     }
 
-    private void doCreateParty(){
+    private void doCreateParty() {
         String talkTitle = organizerPresenter.getTalkTitle();
         int startTime = organizerPresenter.getTalkStartTime();
-        if(startTime < 9 || startTime > 17){
+        if (startTime < 9 || startTime > 17) {
             organizerPresenter.errorMessage();
-        }else {
+        } else {
             int roomID = organizerPresenter.getRoomID();
             ArrayList<Integer> speakerList = new ArrayList<>();
-            int result = checkTalkValidity1(roomID, startTime);
-            if(result == -1) {
-                int eventCapacity = organizerPresenter.eventCapacity();
-                if(roomM.isWithinCapacity(roomID, eventCapacity)) {
-                    int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity);
-                    roomM.addNewTalkToRoom(talkID, startTime, roomID);
-                    organizerPresenter.message12(talkID);
-                }else{
-                    organizerPresenter.message2();
-                }
-            }else if (result == 0) organizerPresenter.message14();
-            else if (result == 1) organizerPresenter.message18();
+            int duration = organizerPresenter.message3();
+            if (duration + startTime < 19) {
+                int result = checkTalkValidity1(roomID, startTime, duration);
+                if (result == -1) {
+                    int eventCapacity = organizerPresenter.eventCapacity();
+                    if (roomM.isWithinCapacity(roomID, eventCapacity)) {
+                        int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity, duration);
+                        boolean added = roomM.addNewTalkToRoom(talkID, startTime, roomID, duration);
+                        if (added) {
+                            organizerPresenter.message12(talkID);
+                        } else {
+                            organizerPresenter.message9();
+                            eventM.removeTalk(talkID);
+                        }
+                    } else {
+                        organizerPresenter.message2();
+                    }
+                } else if (result == 0) organizerPresenter.message14();
+                else if (result == 1) organizerPresenter.message18();
+            }
+            else{
+                organizerPresenter.message12();
+            }
         }
     }
 
-    private int checkTalkValidity1(int roomID,int startTime){
+    private int checkTalkValidity1(int roomID, int startTime, int duration){
         int flag = -1;
         if (!roomM.isValidRoomId(roomID)) return 1;
         else if(roomM.getTimeTable(roomID).containsValue(startTime)) flag = 0;
         return flag;
     }
 
-    private void doCreateDiscussion(){
+    private void doCreateDiscussion() {
         String talkTitle = organizerPresenter.getTalkTitle();
         int startTime = organizerPresenter.getTalkStartTime();
-        if(startTime < 9 || startTime > 17){
+        if (startTime < 9 || startTime > 17) {
             organizerPresenter.errorMessage();
-        }else {
+        } else {
             int roomID = organizerPresenter.getRoomID();
             int speakerNum = organizerPresenter.getSpeakerNum();
             int eventCapacity = organizerPresenter.eventCapacity();
-            ArrayList<Integer> speakerList = new ArrayList<>();
-            if(roomM.isWithinCapacity(roomID, eventCapacity)){
-                int i = 0;
-                while(i != speakerNum) {
-                int speakerID = organizerPresenter.getSpeakerID();
-                int result = checkTalkValidity(roomID, startTime, speakerID);
-                if (result == -1) {
-                    speakerList.add(speakerID);
-                } else if (result == 0) organizerPresenter.message14();
-                else if (result == 1) organizerPresenter.message18();
-                else if (result == 2) organizerPresenter.message15();
-                else if (result == 3) organizerPresenter.message19();
-                i++;
-            }
-            }else{
-                organizerPresenter.message2();
-            }
-            if (speakerList.size()==speakerNum) {
-                int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity);
-                roomM.addNewTalkToRoom(talkID, startTime, roomID);
-                for(int item:speakerList) {
-                    spkM.registerNewTalk(talkID, item);
+            int duration = organizerPresenter.message3();
+            if (duration + startTime < 19) {
+                ArrayList<Integer> speakerList = new ArrayList<>();
+                if (roomM.isWithinCapacity(roomID, eventCapacity)) {
+                    int i = 0;
+                    while (i != speakerNum) {
+                        int speakerID = organizerPresenter.getSpeakerID();
+                        int result = checkTalkValidity(roomID, startTime, speakerID, duration);
+                        if (result == -1) {
+                            speakerList.add(speakerID);
+                        } else if (result == 0) organizerPresenter.message14();
+                        else if (result == 1) organizerPresenter.message18();
+                        else if (result == 2) organizerPresenter.message15();
+                        else if (result == 3) organizerPresenter.message19();
+                        i++;
+                    }
+                } else {
+                    organizerPresenter.message2();
                 }
-                organizerPresenter.message12(talkID);
+                if (speakerList.size() == speakerNum) {
+                    int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity, duration);
+                    boolean added = roomM.addNewTalkToRoom(talkID, startTime, roomID, duration);
+                    for (int item : speakerList) {
+                        spkM.registerNewTalk(talkID, item);
+                    }
+                    if (added) {
+                        organizerPresenter.message12(talkID);
+                    } else {
+                        organizerPresenter.message9();
+                        eventM.removeTalk(talkID);
+                    }
+                }
+            }else{
+                organizerPresenter.message12();
             }
         }
     }
@@ -265,9 +286,10 @@ public class OrganizerSystem {
             String roomName = roomM.getRoomName(eventM.getRoomIdWithId(item));
             int roomId = eventM.getRoomIdWithId(item);
             int type = eventM.getEventTypeWithID(item);
+            int duration = eventM.getDuration(item);
             ArrayList<Integer> speaker = new ArrayList<>(eventM.getSpeakerOfEvent(item));
             ArrayList<Integer> attendee = new ArrayList<>(eventM.getAttendeeOfEvent(item));
-            organizerPresenter.readTalks(title, item, startTime, roomName, roomId, type, speaker, attendee);
+            organizerPresenter.readTalks(title, item, startTime, roomName, roomId, type, speaker, attendee, duration);
         }
     }
 
@@ -282,23 +304,33 @@ public class OrganizerSystem {
         }else {
             int roomID = organizerPresenter.getRoomID();
             int speakerID = organizerPresenter.getSpeakerID();
-            ArrayList<Integer> speakerList = new ArrayList<>();
-            speakerList.add(speakerID);
-            int result = checkTalkValidity(roomID, startTime, speakerID);
-            if (result == -1) {
-                int eventCapacity = organizerPresenter.eventCapacity();
-                if (roomM.isWithinCapacity(roomID, eventCapacity)) {
-                    int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity);
-                    roomM.addNewTalkToRoom(talkID, startTime, roomID);
-                    spkM.registerNewTalk(talkID, speakerID);
-                    organizerPresenter.message12(talkID);
-                }else{
-                    organizerPresenter.message2();
-                }
-            } else if (result == 0) organizerPresenter.message14();
-            else if (result == 1) organizerPresenter.message18();
-            else if (result == 2) organizerPresenter.message15();
-            else if (result == 3) organizerPresenter.message19();
+            int duration = organizerPresenter.message3();
+            if(duration + startTime < 19) {
+                ArrayList<Integer> speakerList = new ArrayList<>();
+                speakerList.add(speakerID);
+                int result = checkTalkValidity(roomID, startTime, speakerID, duration);
+                if (result == -1) {
+                    int eventCapacity = organizerPresenter.eventCapacity();
+                    if (roomM.isWithinCapacity(roomID, eventCapacity)) {
+                        int talkID = eventM.createEvent(talkTitle, startTime, roomID, speakerList, eventCapacity, duration);
+                        boolean added = roomM.addNewTalkToRoom(talkID, startTime, roomID, duration);
+                        spkM.registerNewTalk(talkID, speakerID);
+                        if (added) {
+                            organizerPresenter.message12(talkID);
+                        } else {
+                            organizerPresenter.message9();
+                            eventM.removeTalk(talkID);
+                        }
+                    } else {
+                        organizerPresenter.message2();
+                    }
+                } else if (result == 0) organizerPresenter.message14();
+                else if (result == 1) organizerPresenter.message18();
+                else if (result == 2) organizerPresenter.message15();
+                else if (result == 3) organizerPresenter.message19();
+            }else{
+                organizerPresenter.message12();
+            }
         }
     }
 
@@ -309,7 +341,7 @@ public class OrganizerSystem {
      * @param speakerID The ID of the Speaker
      * @return 0 if there is a conflict between room and start time, 1 if the room ID is invalid, 2 if there is a conflict between speaker and start time, 3 if the speaker is invalid, -1 otherwise.
      */
-    private int checkTalkValidity(int roomID,int startTime, int speakerID){
+    private int checkTalkValidity(int roomID,int startTime, int speakerID, int duration){
         int flag = -1;
         if (!roomM.isValidRoomId(roomID)) return 1;
         else if (!accM.isSpeakerAcc(speakerID)) return 3;
@@ -667,6 +699,7 @@ public class OrganizerSystem {
         }
         organizerPresenter.message10();
     }
+
 
 
 }

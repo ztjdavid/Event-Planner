@@ -53,16 +53,6 @@ public class RoomManager {
         return room.getTimetable().containsKey(startTime);
     }
 
-    /**
-     * Schedule the Event given talk ID to the Room given room ID, at the given start time.
-     * @param roomID int representation of room ID.
-     * @param talkID int representation of the talk ID.
-     * @param startTime int representation of the start time of the Event.
-     */
-    public void scheduleTalk(int roomID, int talkID, int startTime){
-        Room room = getRoomWithID(roomID);
-        room.scheduleTalk(talkID, startTime);
-    }
 
     /**
      * Get an arraylist of all the Rooms' room ID as int.
@@ -98,9 +88,9 @@ public class RoomManager {
      * @param startTime the start time of the Event as int.
      * @param roomID The ID of the Room as int.
      */
-    public void addNewTalkToRoom(int talkID, int startTime, int roomID){
+    public boolean addNewTalkToRoom(int talkID, int startTime, int roomID, int duration){
         Room room = this.allRooms.get(roomID);
-        room.scheduleTalk(talkID, startTime);
+        return room.scheduleTalk(talkID, startTime, duration);
     }
 
     /**

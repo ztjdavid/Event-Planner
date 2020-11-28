@@ -9,7 +9,7 @@ public class Room {
     private final int roomId;
     private String roomName;
     private final HashMap<Integer, Integer> timetable;
-    private int roomCapacity;
+    private final int roomCapacity;
 
     public Room(String roomName, int roomId, int roomCapacity){
         this.roomId = roomId;
@@ -49,9 +49,15 @@ public class Room {
      * @param startTime Starting time of this talk.
      * @return True iff a talk is successfully scheduled in this room.
      */
-    public boolean scheduleTalk(int talkId, int startTime){
+    public boolean scheduleTalk(int talkId, int startTime, int duration){
+        int i = 1;
         if (timetable.containsKey(startTime)) return false;
         timetable.put(startTime, talkId);
+        while(i != duration) {
+            if (timetable.containsKey(startTime + i)) return false;
+            timetable.put(startTime + i, talkId);
+            i++;
+        }
         return true;
     }
 

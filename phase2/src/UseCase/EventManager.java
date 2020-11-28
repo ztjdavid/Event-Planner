@@ -172,9 +172,9 @@ public class EventManager {
      * @return the ID of the talk iff the talk is successfully created.
      */
 
-    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity){
+    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration){
         int talkId = totalTalkCount;
-        Event newEvent = new Event(talkId, talkTitle,startTime, roomId, speakerID, eventCapacity);
+        Event newEvent = new Event(talkId, talkTitle,startTime, roomId, speakerID, eventCapacity, duration);
         this.eventList.put(talkId, newEvent);
         totalTalkCount += 1;
         return talkId;
@@ -346,6 +346,10 @@ public class EventManager {
         return this.eventList.keySet().contains(eventID);
     }
 
+    public int getDuration(int eventID){
+        Event event = this.eventList.get(eventID);
+        return event.getDuration();
+    }
 
 
 }

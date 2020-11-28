@@ -114,7 +114,7 @@ public class OrganizerPresenter extends Presenter{
     }
 
     public void readTalks(String title, int ID, int startTime, String roomName, int roomId, int type,
-                          ArrayList<Integer> speakers, ArrayList<Integer> attendees){
+                          ArrayList<Integer> speakers, ArrayList<Integer> attendees, int duration){
         printText("-------------------------");
         if(type == 1){
             StringBuilder str1 = new StringBuilder();
@@ -122,7 +122,7 @@ public class OrganizerPresenter extends Presenter{
                 str1.append(item);
                 str1.append("\n");
             }
-            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration + "\nRoom:" +
                     roomName + "(id: " + roomId + ")" + "\nType:talk" + "\nSpeaker:" + speakers.get(0) + "\nAttendees:\n" + str1);
         }else if(type == 0){
             StringBuilder str2 = new StringBuilder();
@@ -130,7 +130,7 @@ public class OrganizerPresenter extends Presenter{
                 str2.append(item);
                 str2.append("\n");
             }
-            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration +"\nRoom:" +
                     roomName + "(id: " + roomId + ")" + "\nType:party" + "\nAttendees:\n" + str2);
         }else{
             StringBuilder str3 = new StringBuilder();
@@ -143,13 +143,12 @@ public class OrganizerPresenter extends Presenter{
                 str4.append(item);
                 str4.append("\n");
             }
-            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nRoom:" +
+            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration + "\nRoom:" +
                     roomName + "(id: " + roomId + ")" + "\nType:discussion" + "\nAttendees:" + str3 + "\nSpeakers:\n" + str4);
         }
     }
 
     public void askForBack(){
-        printText("\nPress enter to go back.");
         pause();
     }
 
@@ -295,5 +294,18 @@ public class OrganizerPresenter extends Presenter{
         printText("VIP Attendee Created Successfully with ID:" + attendeeID);
     }
 
+    public int message3(){
+        return requestNumInput("Please Enter the Duration of the Event that satisfy these conditions:" +
+                "\n1. duration must an integer greater than 0 that represents the number of hours" +
+                "\n2. duration + start time must be less than 19:");
+    }
+
+    public void message9(){
+        printText("Event Creation Failed Due to Time Conflict!");
+    }
+
+    public void message12(){
+        printText("Event Creation Failed. The During Exceeds the Limit. Rooms are Closed After 5 P.M.!");
+    }
 
 }
