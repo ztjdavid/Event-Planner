@@ -12,12 +12,14 @@ public class UserGateway {
 
     public void writeData() throws IOException{
         iniFile.put("0", "Name", "Eric");
+        iniFile.put("0", "Password", "111111");
         iniFile.store();
     }
 
     public void loadData(){
         String name = iniFile.get("0", "Name", String.class);
-        System.out.println(name);
+        String password = iniFile.get("1", "Name");
+        System.out.println(name+ "\n" + password);
     }
 
 
