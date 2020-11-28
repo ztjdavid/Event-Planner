@@ -62,7 +62,10 @@ public class Presenter {
     /**
      * Ask user to press Enter.
      */
-    public void pause(){ requestInput(); }
+    public void pause(){
+        printText("Press Enter to continue.");
+        requestInput();
+    }
 
     /**
      * Ask user to choose an option(numeric).
@@ -76,8 +79,7 @@ public class Presenter {
         boolean exit = false;
         String userInput;
         do{
-            printText(requestInfo);
-            userInput = requestInput();
+            userInput = requestInput(requestInfo);
             if (!isValidChoice(userInput, choiceList)) printText(invalidInfo);
             else exit = true;
         }while(!exit);
@@ -97,8 +99,7 @@ public class Presenter {
         boolean exit = false;
         String userInput;
         do{
-            printText(requestInfo);
-            userInput = requestInput();
+            userInput = requestInput(requestInfo);
             if (!isValidChoice(userInput, choiceList)) printText(invalidInfo);
             else{
                 printText(successInfo);
