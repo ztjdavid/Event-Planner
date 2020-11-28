@@ -214,19 +214,19 @@ public class AttendeeSystem {
         attendeeUI.show(a.toString());
     }
 
-    private ArrayList<Integer> getNotAttendedTalks(){
+    private ArrayList<Integer> getAllAvailableTalks(){
         ArrayList<Integer> myTalksId = attendeeM.getAllMyTalksId();
         ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(1);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
-            if (!myTalksId.contains(t)) result.add(t);
+            if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
         }
         return result;
     }
 
     private void readAllAvailableTalks(){
         StringBuilder a = new StringBuilder("Available Talks: ");
-        ArrayList<Integer> availableTalksId = getNotAttendedTalks();
+        ArrayList<Integer> availableTalksId = getAllAvailableTalks();
         for(Integer t:availableTalksId){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
             a.append(eventManager.gettalkinfoWithName(t, roomName));
@@ -235,7 +235,7 @@ public class AttendeeSystem {
 
 
     private int targetTalksSignUp(){
-        ArrayList<Integer> validChoices = getNotAttendedTalks();
+        ArrayList<Integer> validChoices = getAllAvailableTalks();
         validChoices.add(-1);
         String userInput;
         int mode = -1;

@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AccountUI {
-    private final Scanner input;
+    private final Scanner accountUI;
+
 
     public AccountUI(){
-        this.input = new Scanner(System.in);
+        this.accountUI = new Scanner(System.in);
     }
 
     public void startup(){
@@ -23,13 +24,8 @@ public class AccountUI {
 
     public String requestFilePath(){
         System.out.println("Please provide the file path to the account data file you want to create:");
-        return input.nextLine();
+        return accountUI.nextLine();
     }
-
-//    public void reportDataBase(){
-//        System.out.println("----------------Accessing the database-----------------");
-//        // write data to json then convert to csv?
-//    }
 
     public void finishSetUp(){
         System.out.println("Accounts successfully created from file.");
@@ -43,15 +39,6 @@ public class AccountUI {
         }
         System.out.println(accountData);
     }
-
-//    public void changepassword(){
-//        System.out.println("----------------Accessing the database-----------------\nPlease enter the id of the account you want to change");
-//    }
-
-//    public void informinvalidchoice(){
-//        System.out.println("Invalid Choice. Please try again.");
-//    }
-
 
 }
 
