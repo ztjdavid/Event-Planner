@@ -124,7 +124,7 @@ public class OrganizerSystem {
         int userInput;
         do{
             organizerUI.messaging3();
-            userInput = chooseMode2();
+            userInput = chooseMode5();
             tlkOp(userInput);
         }while(userInput != 5);
     }
@@ -152,8 +152,17 @@ public class OrganizerSystem {
                 organizerUI.askForBack();
                 break;
             case 5:
+                cancelEvent();
+                organizerUI.askForBack();
+                break;
+            case 6:
                 break;
         }
+    }
+
+    private void cancelEvent(){
+        int eventID = organizerUI.getEventID();
+        
     }
 
     private void doCreateParty(){
@@ -510,6 +519,11 @@ public class OrganizerSystem {
 
     private int chooseMode3() {
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
+        return chooseMode(validChoices);
+    }
+
+    private int chooseMode5() {
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         return chooseMode(validChoices);
     }
 
