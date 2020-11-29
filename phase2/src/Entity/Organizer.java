@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.ArrayList;
+
 /**
  * The Organizer class stores all info of an organizer account.
  * <p>
@@ -18,4 +20,8 @@ public class Organizer extends Account{
     public int getUserType() {
         return 0;
     }
+
+    public void setInbox(ArrayList<Integer> inbox){ this.inbox = inbox;}
+
+    public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
 }

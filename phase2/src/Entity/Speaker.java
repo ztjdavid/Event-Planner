@@ -47,4 +47,10 @@ public class Speaker extends Account{
     public void removeTalk(int talkID){
         if (!this.eventList.isEmpty()) this.eventList.remove(talkID);
     }
+
+    public void setInbox(ArrayList<Integer> inbox){ this.inbox = inbox;}
+
+    public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
+
+    public void setEventList(ArrayList<Integer> eventList) {this.eventList = eventList;}
 }

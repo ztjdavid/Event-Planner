@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Level in Clean Architecture: Entity
  */
 public class Attendee extends Account{
-    private final ArrayList<Integer> talksList;
+    private ArrayList<Integer> talksList;
 
     public Attendee(String username, String password, int userId){
         super(username, password, userId);
@@ -57,5 +57,11 @@ public class Attendee extends Account{
             return true;
         }
     }
+
+    public void setInbox(ArrayList<Integer> inbox){ this.inbox = inbox;}
+
+    public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
+
+    public void setEventList(ArrayList<Integer> eventList) {this.talksList = eventList;}
 
 }

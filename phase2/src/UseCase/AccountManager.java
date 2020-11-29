@@ -168,6 +168,5 @@ public class AccountManager {
      * @return True iff the given account is an Attendee.
      */
     public boolean isAttendeeAcc(int userID){ return getAccountWithId(userID).getUserType() == 1;}
-
 }
 

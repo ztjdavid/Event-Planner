@@ -1,0 +1,25 @@
+# Format of Attendee info.
+# [ID]
+# Type = 1
+# Username
+# Password
+# Inbox
+# SentBox
+# EventList
+#
+# Format of Organizer info.
+# [ID]
+# Type = 0
+# Username
+# Password
+# Inbox
+# SentBox
+#
+# Format of Speaker info.
+# [ID]
+# Type = 2
+# Username
+# Password
+# Inbox
+# SentBox
+# EventList

@@ -136,4 +136,9 @@ public class OrganizerManager extends AccountManager{
         return new ArrayList<>(getCurrOrganizer().getInbox());
     }
 
+    public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox){
+        Organizer acc = (Organizer) getAccountWithId(id);
+        acc.setInbox(inbox);
+        acc.setSentBox(sentBox);
+    }
 }

@@ -9,8 +9,8 @@ public abstract class Account {
     protected String username;
     protected String password;
     protected final int userId;
-    protected final ArrayList<Integer> sentMessage;
-    protected final ArrayList<Integer> inbox;
+    protected ArrayList<Integer> sentMessage;
+    protected ArrayList<Integer> inbox;
 
 
     public Account(String username, String password, int userId){

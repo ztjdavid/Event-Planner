@@ -94,5 +94,12 @@ public class SpeakerManager extends AccountManager {
         return new ArrayList<>(speaker.getTalkList());
     }
 
+    public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox, ArrayList<Integer> eventList){
+        Speaker acc = (Speaker) getAccountWithId(id);
+        acc.setInbox(inbox);
+        acc.setSentBox(sentBox);
+        acc.setEventList(eventList);
+    }
+
 }
 
