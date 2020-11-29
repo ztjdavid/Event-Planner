@@ -8,7 +8,7 @@ public class Request {
 
     public Request(int requestid, String service, boolean status, int senderid){
         this.requestid = requestid;
-        this.service = "";
+        this.service = "";//"dietary restrictions" or something like that to a talk
         this.status = false;//false means pending; true means addressed
         this.senderid = senderid;
     }
