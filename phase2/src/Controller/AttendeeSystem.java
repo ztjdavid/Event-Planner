@@ -214,13 +214,20 @@ public class AttendeeSystem {
         attendeeUI.show(a.toString());
     }
 
+    /**
+     * Get all available events that this account can attend.
+     * @return A tlkList containing all events this account can attend.
+     */
     private ArrayList<Integer> getAllAvailableTalks(){
         ArrayList<Integer> myTalksId = attendeeM.getAllMyTalksId();
         ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(1);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
+            // Boolean is_VIP = false;
+            // if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
+            // TODO: add a checker for VIP event, waiting for event flag var update.
+            // if event t is vip, add t to result only if cur_acc is a VIP.
             if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
-            // add a checker for VIP event
         }
         return result;
     }

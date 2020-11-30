@@ -1,6 +1,9 @@
 package UseCase;
-import Entity.*;
-import java.util.ArrayList;
+import Entity.Account;
+import Entity.Attendee;
+import Entity.Organizer;
+import Entity.Speaker;
+
 import java.util.HashMap;
 
 /**
@@ -168,5 +171,12 @@ public class AccountManager {
      * @return True iff the given account is an Attendee.
      */
     public boolean isAttendeeAcc(int userID){ return getAccountWithId(userID).getUserType() == 1;}
+
+    /**
+     * Check if the given account id is a VIP.
+     * @param userID The id of an account.
+     * @return True iff the given account is a VIP.
+     */
+    public boolean isVIPAcc(int userID){ return getAccountWithId(userID).getUserType() == 3;}
 }
 
