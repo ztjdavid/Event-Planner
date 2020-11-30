@@ -223,11 +223,11 @@ public class AttendeeSystem {
         ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(1);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
+            if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
             // Boolean is_VIP = false;
             // if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
             // TODO: add a checker for VIP event, waiting for event flag var update.
-            // if event t is vip, add t to result only if cur_acc is a VIP.
-            if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
+            // if event t is vip, remove t from result if cur_acc is not a VIP.
         }
         return result;
     }
