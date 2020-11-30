@@ -7,11 +7,11 @@ import java.util.ArrayList;
  * Level in Clean Architecture: Entity
  */
 public class Attendee extends Account{
-    private ArrayList<Integer> talksList;
+    protected ArrayList<Integer> eventList;
 
     public Attendee(String username, String password, int userId){
         super(username, password, userId);
-        this.talksList = new ArrayList<>();
+        this.eventList = new ArrayList<>();
     }
 
 
@@ -27,8 +27,8 @@ public class Attendee extends Account{
      * Get all talks that this account attends.
      * @return A copy of tlkList containing all talks this account attends.
      */
-    public ArrayList<Integer> getTalkList(){
-        return new ArrayList<>(this.talksList);
+    public ArrayList<Integer> getEventList(){
+        return new ArrayList<>(this.eventList);
     }
 
     /**
@@ -37,8 +37,8 @@ public class Attendee extends Account{
      * <b>NOTICE: This method is not responsible for checking correctness of the input.</b>
      * @param talkId The id of new talk that this account wants to attend.
      */
-    public void addTalk(int talkId){
-        this.talksList.add(talkId);
+    public void addEvent(int talkId){
+        this.eventList.add(talkId);
     }
 
     /**
@@ -46,22 +46,18 @@ public class Attendee extends Account{
      * @param talkId The id of talk that is going to be removed.
      * @return Return true if the talk is successfully removed from talkList, otherwise return False.
      */
-    public boolean cancelTalk(int talkId){
+    public boolean cancelEvent(int talkId){
         int deleteID = -1;
-        for (int i = 0; i < this.talksList.size(); i++){
-            if (this.talksList.get(i) == talkId) deleteID = i;
+        for (int i = 0; i < this.eventList.size(); i++){
+            if (this.eventList.get(i) == talkId) deleteID = i;
         }
         if (deleteID == -1) return false;
         else {
-            this.talksList.remove(deleteID);
+            this.eventList.remove(deleteID);
             return true;
         }
     }
 
-    public void setInbox(ArrayList<Integer> inbox){ this.inbox = inbox;}
-
-    public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
-
-    public void setEventList(ArrayList<Integer> eventList) {this.talksList = eventList;}
+    public void setEventList(ArrayList<Integer> eventList) {this.eventList = eventList;}
 
 }

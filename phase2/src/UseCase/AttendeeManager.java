@@ -1,10 +1,7 @@
 package UseCase;
 import Entity.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 
 /**
@@ -43,7 +40,7 @@ public class AttendeeManager extends AccountManager{
      * @param talkID int value of the Event ID.
      */
     public void enrol(int talkID){
-        getCurrAttendee().addTalk(talkID);
+        getCurrAttendee().addEvent(talkID);
     }
 
     /**
@@ -51,7 +48,7 @@ public class AttendeeManager extends AccountManager{
      * @param talkID int value of the Event ID.
      */
     public void drop(int talkID) {
-        getCurrAttendee().cancelTalk(talkID);
+        getCurrAttendee().cancelEvent(talkID);
     }
 
     /**
@@ -59,7 +56,7 @@ public class AttendeeManager extends AccountManager{
      * @return An arraylist of current Attendee's talk list.
      */
     public ArrayList<Integer> getAllMyTalksId() {
-        return getCurrAttendee().getTalkList();
+        return getCurrAttendee().getEventList();
     }
 
 

@@ -24,5 +24,4 @@ public class StartUI {
     public String requestModeSelection(){
         return scannerStart.nextLine();
     }
-
 }

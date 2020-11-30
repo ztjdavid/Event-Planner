@@ -1,7 +1,7 @@
 package UseCase;
 import Entity.*;
 
-import java.util.Hashmap;
+import java.util.HashMap;
 
 public class RequestManager {
     protected HashMap<Integer, Request> requestList;

@@ -107,4 +107,8 @@ public abstract class Account {
         this.inbox.add(mesID);
     }
 
+    public void setInbox(ArrayList<Integer> inbox){ this.inbox = inbox;}
+
+    public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
+
 }

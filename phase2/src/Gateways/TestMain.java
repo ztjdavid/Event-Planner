@@ -1,14 +1,13 @@
 package Gateways;
+import Entity.*;
+
+import java.util.ArrayList;
 
 public class TestMain {
     public static void main(String[] args) {
-        try{
-            //UserFileGateway ug = new UserFileGateway("phase2/DataBase/test.ini");
-            //ug.writeData();
-            //ug.loadData();
-        }catch (Exception e){
-            System.out.println("Something is wrong!");
-        }
-
+    VIP vip = new VIP("a", "1",1);
+    vip.addEvent(1);
+    ArrayList<Integer> lst = vip.getEventList();
+    System.out.println(lst.get(1));
     }
 }
