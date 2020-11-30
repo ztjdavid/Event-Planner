@@ -4,7 +4,7 @@ import Entity.*;
 import java.util.Hashmap;
 
 public class RequestManager {
-    protected HashMap<Integer, Event> requestList;
+    protected HashMap<Integer, Request> requestList;
     protected static int totalRequestCount = 0;
 
     public RequestManager() {this.requestList = new HashMap<>();}
@@ -18,7 +18,7 @@ public class RequestManager {
     }
 
     public String showStatus(int requestid){
-        if (requestList.get(requestid).getstatus() == false){
+        if (requestList.get(requestid).getStatus() == false){
             return "pending";
         }
         else {
