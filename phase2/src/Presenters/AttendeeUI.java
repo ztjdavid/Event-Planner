@@ -104,6 +104,15 @@ public class AttendeeUI {
             "if you want to message to.");
     }
 
+    //////////LouisaModify
+    public void signUpVipTalk(){
+        System.out.println("This is an Vip Event.");
+    }
+
+    public void informNotVip(){
+        System.out.println("You do not have the permission to sign up for a VIP event.");
+    }
+
 
 }
 

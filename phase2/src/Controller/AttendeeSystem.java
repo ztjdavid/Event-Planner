@@ -258,6 +258,7 @@ public class AttendeeSystem {
         }
         return mode;}
 
+    ///// Louisa Modified
     private void signUpMyNewTalks(){
         int input;
         do{
@@ -265,9 +266,18 @@ public class AttendeeSystem {
             readAllAvailableTalks();
             input = targetTalksSignUp();
             if (input != -1){
-                attendeeM.enrol(input);
-                eventManager.addAttendeev2(input, attendeeM.getCurrAttendee());
-                attendeeUI.signUpSuc();
+                if(eventManager.checkVIP(input)){
+                    attendeeUI.signUpVipTalk();
+                    if(attendeeM.getCurrAttendee().getUserType() == 3){
+                        attendeeM.enrol(input);
+                        eventManager.addAttendeev2(input, attendeeM.getCurrAttendee());
+                        attendeeUI.signUpSuc();
+                    }else{attendeeUI.informNotVip();}
+                }else if(!eventManager.checkVIP(input)){
+                    attendeeM.enrol(input);
+                    eventManager.addAttendeev2(input, attendeeM.getCurrAttendee());
+                    attendeeUI.signUpSuc();
+                }
             }
         }while(input != -1);
     }

@@ -17,8 +17,9 @@ public class Event {
     protected int eventCapacity;
     protected int seatsOccupied;
     protected int duration;
+    protected boolean IsVip;
 
-    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration){
+    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean IsVip){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
@@ -30,6 +31,7 @@ public class Event {
         this.eventCapacity = eventCapacity;
         this.seatsOccupied = 0;
         this.duration = duration;
+        this.IsVip = IsVip;
     }
 
     /**
@@ -144,6 +146,8 @@ public class Event {
     public int getDuration(){
         return this.duration;
     }
+
+    public boolean getVIP(){return this.IsVip;}
 
 
 }

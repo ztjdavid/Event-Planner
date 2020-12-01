@@ -1,5 +1,6 @@
 package Presenters;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -57,6 +58,15 @@ public class OrganizerPresenter extends Presenter{
 
     public String getSpeakerPwd2(){
         return requestInput("Great! Please Enter The Password Again:");
+    }
+
+    public boolean getVipEvent(){
+        ArrayList<Integer> Options = new ArrayList<Integer>();
+        Options.add(0);
+        Options.add(1);
+        int result;
+        result = chooseOption(Options, "Is this Event only for VIP? (Enter 0 if true, 1 if false)","Invalid choice, please try again.");
+        return result == 1;
     }
 
     public String getTalkTitle(){
