@@ -47,7 +47,7 @@ public class VipSystem {
                 MyTalksDashboard();
                 break;
             case 2:
-                signUpMyNewTalks();
+                EventDashboard();
                 break;
             case 3:
                 cancelMyTalks();
@@ -70,6 +70,43 @@ public class VipSystem {
 
 
     }
+    /////event ERIC
+    private void EventDashboard(){
+        int userChoice;
+        do{
+            vipUI.eventselect();
+            userChoice = chooseMode3();
+            EventOp(userChoice);
+        } while (userChoice != 7);
+    }
+
+    private void EventOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                signUpMyNewTalks(1);
+                break;
+            case 2:
+                signUpMyNewTalks(2);
+                break;
+            case 3:
+                signUpMyNewTalks(0);
+                break;
+            case 4:
+                signUpMyNewTalks(3);
+                break;
+            case 5:
+                signUpMyNewTalks(4);
+                break;
+            case 6:
+                signUpMyNewTalks(5);
+                break;
+            case 7:
+                break;
+        }
+    }
+
+
+    ///////////////
 
     private void msgOp(int userChoice){
         switch (userChoice){
@@ -124,6 +161,23 @@ public class VipSystem {
         }
         return mode;
     }
+
+    private int chooseMode3(){    //For EventDashboard.
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
+        String userInput;
+        int mode = -1;
+        boolean valid = false;
+        while(!valid){
+            userInput = vipUI.getrequest();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                vipUI.informinvalidchoice();
+            else {
+                valid = true;
+                mode = Integer.parseInt(userInput);}
+        }
+        return mode;
+    }
+
     private void MyTalksDashboard(){
         readAllMyTalks();
         vipUI.askForBack();
@@ -219,9 +273,9 @@ public class VipSystem {
      * Get all available events that this account can attend.
      * @return A tlkList containing all events this account can attend.
      */
-    private ArrayList<Integer> getAllAvailableTalks(){
+    private ArrayList<Integer> getAllAvailableTalks(int a){
         ArrayList<Integer> myTalksId = vipM.getAllMyTalksId();
-        ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(1);
+        ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(a);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
             if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
@@ -233,9 +287,9 @@ public class VipSystem {
         return result;
     }
 
-    private void readAllAvailableTalks(){
+    private void readAllAvailableTalks(int type){
         StringBuilder a = new StringBuilder("Available Talks: ");
-        ArrayList<Integer> availableTalksId = getAllAvailableTalks();
+        ArrayList<Integer> availableTalksId = getAllAvailableTalks(type);
         for(Integer t:availableTalksId){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
             a.append(eventManager.gettalkinfoWithName(t, roomName));
@@ -243,8 +297,8 @@ public class VipSystem {
         vipUI.show(a.toString());}
 
 
-    private int targetTalksSignUp(){
-        ArrayList<Integer> validChoices = getAllAvailableTalks();
+    private int targetTalksSignUp(int type){
+        ArrayList<Integer> validChoices = getAllAvailableTalks(type);
         validChoices.add(-1);
         String userInput;
         int mode = -1;
@@ -260,12 +314,12 @@ public class VipSystem {
         return mode;}
 
     ///// Louisa Modified
-    private void signUpMyNewTalks(){
+    private void signUpMyNewTalks(int a){
         int input;
         do{
             vipUI.signUpTalk();
-            readAllAvailableTalks();
-            input = targetTalksSignUp();
+            readAllAvailableTalks(a);
+            input = targetTalksSignUp(a);
             if (input != -1){
                 if(eventManager.checkVIP(input)){
                     vipUI.signUpVipTalk();
