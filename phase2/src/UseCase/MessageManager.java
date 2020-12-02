@@ -68,15 +68,15 @@ public class MessageManager {
      * @return a string showing the replies to the given message IDs.
      */
     public String formatreply(ArrayList<Integer> msgget){
-        String a = "These are the replies:\n";
+        StringBuilder a = new StringBuilder("These are the replies:\n");
         for(Integer i: msgget){
             Message msg = getmessage(i);
-            if(msg.getReply() == -1){a += "The message(id:" + msg.getmessageid() +") you send to " + getmessage(i).getGetterid() +
-                    " has not been replied.\n";}
-            else{a += "This reply is from id " + getmessage(i).getGetterid() + "(" + msg.getReplyer() + ")"
-                    + ":\n" + allmessage.get(getmessage(i).getReply()).getTxt();}
+            if(msg.getReply() == -1){
+                a.append("The message(id:").append(msg.getmessageid()).append(") you send to ").append(getmessage(i).getGetterid()).append(" has not been replied.\n");}
+            else{
+                a.append("This reply is from id ").append(getmessage(i).getGetterid()).append("(").append(msg.getReplyer()).append(")").append(":\n").append(allmessage.get(getmessage(i).getReply()).getTxt());}
         }
-        return a;
+        return a.toString();
     }
     /////
 
