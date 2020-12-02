@@ -47,7 +47,7 @@ public class AttendeeSystem {
                 MyTalksDashboard();
                 break;
             case 2:
-                signUpMyNewTalks();
+                EventDashboard();
                 break;
             case 3:
                 cancelMyTalks();
@@ -70,7 +70,7 @@ public class AttendeeSystem {
 
 
     }
-/*
+
     private void EventDashboard(){
         int userChoice;
         do{
@@ -83,19 +83,19 @@ public class AttendeeSystem {
     private void EventOp(int userChoice){
         switch (userChoice){
             case 1:
-                signUpMyNewTalks();
+                signUpMyNewTalks(1);
                 break;
             case 2:
-                signUpMyNewTalks();
+                signUpMyNewTalks(2);
                 break;
             case 3:
-                signUpMyNewTalks();
+                signUpMyNewTalks(0);
                 break;
             case 4:
                 break;
         }
     }
-*/
+
     private void msgOp(int userChoice){
         switch (userChoice){
             case 1:
@@ -149,7 +149,7 @@ public class AttendeeSystem {
         }
         return mode;
     }
-/*
+
     private int chooseMode3(){    //For EventDashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         String userInput;
@@ -165,7 +165,7 @@ public class AttendeeSystem {
         }
         return mode;
     }
-*/
+
     private void MyTalksDashboard(){
         readAllMyTalks();
         attendeeUI.askForBack();
@@ -261,9 +261,9 @@ public class AttendeeSystem {
      * Get all available events that this account can attend.
      * @return A tlkList containing all events this account can attend.
      */
-    private ArrayList<Integer> getAllAvailableTalks(){
+    private ArrayList<Integer> getAllAvailableTalks(int a){
         ArrayList<Integer> myTalksId = attendeeM.getAllMyTalksId();
-        ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(1);
+        ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(a);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
             if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
@@ -275,9 +275,9 @@ public class AttendeeSystem {
         return result;
     }
 
-    private void readAllAvailableTalks(){
+    private void readAllAvailableTalks(int type){
         StringBuilder a = new StringBuilder("Available Talks: ");
-        ArrayList<Integer> availableTalksId = getAllAvailableTalks();
+        ArrayList<Integer> availableTalksId = getAllAvailableTalks(type);
         for(Integer t:availableTalksId){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
             a.append(eventManager.gettalkinfoWithName(t, roomName));
@@ -285,8 +285,8 @@ public class AttendeeSystem {
         attendeeUI.show(a.toString());}
 
 
-    private int targetTalksSignUp(){
-        ArrayList<Integer> validChoices = getAllAvailableTalks();
+    private int targetTalksSignUp(int type){
+        ArrayList<Integer> validChoices = getAllAvailableTalks(type);
         validChoices.add(-1);
         String userInput;
         int mode = -1;
@@ -302,12 +302,12 @@ public class AttendeeSystem {
         return mode;}
 
     ///// Louisa Modified
-    private void signUpMyNewTalks(){
+    private void signUpMyNewTalks(int a){
         int input;
         do{
             attendeeUI.signUpTalk();
-            readAllAvailableTalks();
-            input = targetTalksSignUp();
+            readAllAvailableTalks(a);
+            input = targetTalksSignUp(a);
             if (input != -1){
                 if(eventManager.checkVIP(input)){
                     attendeeUI.signUpVipTalk();
