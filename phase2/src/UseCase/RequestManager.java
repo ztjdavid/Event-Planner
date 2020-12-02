@@ -18,7 +18,7 @@ public class RequestManager {
     }
 
     public String showStatus(int requestid){
-        if (requestList.get(requestid).getStatus() == false){
+        if (!requestList.get(requestid).getStatus()){
             return "pending";
         }
         else {
