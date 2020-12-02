@@ -11,6 +11,7 @@ public class AppSystem {
     protected SignUpSystem signUpS;
     protected OrganizerSystem organizerS;
     protected AttendeeSystem attendeeS;
+    protected VipSystem vipsystem;
     protected SpeakerSystem speakerS;
     protected SpeakerUI speakerUI;
     protected RoomManager roomM;
@@ -20,6 +21,7 @@ public class AppSystem {
     protected EventManager eventM;
     protected MessageManager MsgM;
     protected AttendeeManager attM;
+    protected VIPManager vipM;
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
@@ -27,11 +29,14 @@ public class AppSystem {
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
     protected TextUI textUI;
+    protected VipUI vipUI;
+
 
 
     public AppSystem(){
         this.textUI = new TextUI();
         this.attM = new AttendeeManager();
+        this.vipM = new VIPManager();
         this.spkM = new SpeakerManager();
         this.ognM = new OrganizerManager();
         this.roomM = new RoomManager();
@@ -40,6 +45,7 @@ public class AppSystem {
         this.signUpUI = new SignUpUI();
         this.speakerUI = new SpeakerUI();
         this.attUI = new AttendeeUI();
+        this.vipUI = new VipUI();
         this.organizerPresenter = new OrganizerPresenter(textUI);
         this.accM = new AccountManager();
         this.MsgM = new MessageManager();
@@ -50,6 +56,7 @@ public class AppSystem {
         this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM);
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM);
+        this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM);
 
     }
 
@@ -61,11 +68,11 @@ public class AppSystem {
         do{
             startUI.startup();
             userChoice = chooseMode();
-            if (userChoice != 3){
+            if (userChoice != 4){
                 int currAccountType = enterBranch(userChoice);
                 enterSystems(currAccountType);
             }
-        }while(userChoice != 3);
+        }while(userChoice != 4);
         startUI.informQuiting();
     }
 
@@ -95,13 +102,16 @@ public class AppSystem {
             case 2:
                 speakerS.run();
                 break;
+            case 3:
+                vipsystem.run();
+                break;
             default:
                 break;
         }
     }
 
     private int chooseMode(){
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         String userInput;
         int mode = -1;
         boolean valid = false;

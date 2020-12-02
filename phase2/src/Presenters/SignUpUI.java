@@ -12,12 +12,12 @@ public class SignUpUI {
     public void startup(){
         System.out.println("----------------SignUpSystem-----------------");
         System.out.println("What type of account you want to create?\n" +
-                "0 -> Organizer\n1 -> Attendee\n2 -> Speaker");
+                "0 -> Organizer\n1 -> Attendee\n2 -> Speaker\n3 -> VIP");
     }
 
     public void informInValidChoice(){
         System.out.println("Please select one type from below:\n"
-                + "0 -> Organizer\n1 -> Attendee\n2 -> Speaker");
+                + "0 -> Organizer\n1 -> Attendee\n2 -> Speaker\n3 -> VIP\"");
     }
 
     public void informValidUsername(){
