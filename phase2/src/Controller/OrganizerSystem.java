@@ -510,7 +510,8 @@ public class OrganizerSystem {
             if (getID != -1) {
                 String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
                         "\n(End editing by typing a single \"end\" in a new line.)");
-                MsgM.setreply(getID, txt, accM.getCurrAccountName());
+                int replyId = MsgM.setreply(getID, txt, accM.getCurrAccountName());
+                organizerPresenter.message20(replyId);
                 organizerPresenter.askForBack();
             }
         } while (getID != -1);
