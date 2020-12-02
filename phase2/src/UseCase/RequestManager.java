@@ -43,11 +43,12 @@ public class RequestManager {
     }
 
     /////Louisa Modified
-    public Request getRequestWithId(int requestid){return requestList.get(requestid);}
 
     public void cancelRequest(int requestid){requestList.remove(requestid);}
 
     public boolean checkRequestExist(int requestid){return requestList.containsKey(requestid);}
+
+    public HashMap<Integer, Request> getRequestList(){return new HashMap<>(requestList);}
 
 
 }
