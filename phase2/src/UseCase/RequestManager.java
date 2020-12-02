@@ -9,16 +9,17 @@ public class RequestManager {
 
     public RequestManager() {this.requestList = new HashMap<>();}
 
-    //add the attribute of talk to relate a request with a talk?
-    public void createRequest(String service, boolean status, int senderid){
+    public void createRequest(String service, boolean status, int senderid, int talkid){
         int requestid = totalRequestCount;
-        Request newRequest = new Request(requestid, service, status, senderid);
+        Request newRequest = new Request(requestid, service, status, senderid, talkid);
         this.requestList.put(requestid, newRequest);
         totalRequestCount +=1;
     }
 
+    public Request getRequestWithID(int requestid) { return this.requestList.get(requestid);}
+
     public String showStatus(int requestid){
-        if (!requestList.get(requestid).getStatus()){
+        if (!getRequestWithID(requestid).getStatus()){
             return "pending";
         }
         else {
@@ -26,8 +27,19 @@ public class RequestManager {
         }
     }
 
-    public void changeToAddressed(int requestid){
-        requestList.get(requestid).setStatus(true);
+    public void changeToAddressed(int requestid) {getRequestWithID(requestid).setStatus(true);}
+
+    //for all organizer to see
+    public String getRequestInfo(int requestid) {
+        String a = "";
+        Request request = getRequestWithID(requestid);
+        int senderid = request.getSenderid();
+        int talkid = request.getTalkid();
+        String service = request.getService();
+        String status = showStatus(requestid);
+        a = a + "User(" + senderid + ") in the event(" + talkid + ") want " + service + "in that event" +
+                "\nStatus: " + status;
+        return a;
     }
 
 
