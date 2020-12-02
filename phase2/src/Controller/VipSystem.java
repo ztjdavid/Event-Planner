@@ -288,7 +288,7 @@ public class VipSystem {
     }
 
     private void readAllAvailableTalks(int type){
-        StringBuilder a = new StringBuilder("Available Talks: ");
+        StringBuilder a = new StringBuilder("Available Event: ");
         ArrayList<Integer> availableTalksId = getAllAvailableTalks(type);
         for(Integer t:availableTalksId){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
