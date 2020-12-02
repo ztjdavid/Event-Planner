@@ -4,7 +4,7 @@ import Entity.*;
 
 import java.util.ArrayList;
 
-public class VIPManager extends AccountManager{
+public class VIPManager extends AttendeeManager{
     public VIPManager(){ super();}
 
     public VIP getCurrVIP() throws ClassCastException{
