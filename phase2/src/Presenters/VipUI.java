@@ -65,6 +65,17 @@ public class VipUI {
                 "5 -> Read your messages and reply to senders\n" +
                 "6 -> Go back.");////////////ERICMODIFY
     }
+    //////////////event Eric
+    public void eventselect(){
+        System.out.println("----------------Event Interface-----------------\nHi, " +
+                "Which type of event you would like to register\n1 -> Talk\n2 -> Discussion\n" +
+                "3 -> Party\n" +
+                "4 -> VIP Talk\n" +
+                "5 -> VIP Discussion\n" +
+                "6 -> VIP Party\n" + "7 -> Go back"
+                );////////////ERICMODIFY
+    }
+    /////////////
 
     public void show(String a){System.out.println(a);}
 
