@@ -1,5 +1,4 @@
 package Controller;
-import Entity.Attendee;
 import Presenters.AttendeeUI;
 import UseCase.*;
 
