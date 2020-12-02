@@ -1,4 +1,5 @@
 package Controller;
+import Entity.Attendee;
 import Presenters.AttendeeUI;
 import UseCase.*;
 
@@ -69,7 +70,32 @@ public class AttendeeSystem {
 
 
     }
+/*
+    private void EventDashboard(){
+        int userChoice;
+        do{
+            attendeeUI.eventselect();
+            userChoice = chooseMode3();
+            EventOp(userChoice);
+        } while (userChoice != 4);
+    }
 
+    private void EventOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                signUpMyNewTalks();
+                break;
+            case 2:
+                signUpMyNewTalks();
+                break;
+            case 3:
+                signUpMyNewTalks();
+                break;
+            case 4:
+                break;
+        }
+    }
+*/
     private void msgOp(int userChoice){
         switch (userChoice){
             case 1:
@@ -123,6 +149,23 @@ public class AttendeeSystem {
         }
         return mode;
     }
+/*
+    private int chooseMode3(){    //For EventDashboard.
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        String userInput;
+        int mode = -1;
+        boolean valid = false;
+        while(!valid){
+            userInput = attendeeUI.getrequest();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attendeeUI.informinvalidchoice();
+            else {
+                valid = true;
+                mode = Integer.parseInt(userInput);}
+        }
+        return mode;
+    }
+*/
     private void MyTalksDashboard(){
         readAllMyTalks();
         attendeeUI.askForBack();

@@ -67,6 +67,16 @@ public class AttendeeUI {
                 "6 -> Go back.");////////////ERICMODIFY
     }
 
+    public void eventselect(){
+        System.out.println("----------------Event Interface-----------------\nHi, " +
+                "Which type of event you would like to register\n" +
+                "1 -> Talk\n" +
+                "2 -> Discussion\n" +
+                "3 -> Party\n" +
+                "4 -> Go back"
+        );
+    }
+
     public void show(String a){System.out.println(a);}
 
     public void informEnteringText(){
