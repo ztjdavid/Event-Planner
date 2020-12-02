@@ -96,6 +96,14 @@ public class MessageManager {
         return a;
     }
 
+    ///// Louisa added
+    public boolean checkMessageStatus(int messageId){return getmessage(messageId).getReadStatus();}
+
+    public void readMessage(int messageId){getmessage(messageId).setReadStatusRead();}
+
+    public void unreadMessage(int messageId){getmessage(messageId).setReadStatusUnread();}
+    /////
+
 
 
 

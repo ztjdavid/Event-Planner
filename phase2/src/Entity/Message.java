@@ -13,6 +13,7 @@ public class Message {
     private int senderid;
     private int getterid;
     private String sendername;
+    private boolean haveRead;
 
     public Message(String sendername, int messageid, int senderid, int getterid, String txt){
         this.messageid = messageid;
@@ -22,6 +23,7 @@ public class Message {
         this.replyId = -1;
         this.sendername = sendername;
         this.replyer = "";
+        this.haveRead = false; // unread by default
     }
 
     /**
@@ -70,4 +72,12 @@ public class Message {
      * @return a string replier name
      */
      public String getReplyer(){return this.replyer;}
+
+     ///// Louisa added
+     public boolean getReadStatus(){return this.haveRead;}
+
+     public void setReadStatusRead(){this.haveRead = true;}
+
+     public void setReadStatusUnread(){this.haveRead = false;}
+     /////
 }
