@@ -134,13 +134,24 @@ public class Event {
     }
 
     public int getEventType(){
-        if(this.speakerList.size()==1){
+        if(this.speakerList.size()==1 && this.IsVip){
+            return 3; //3 is Vip talk
+        }else if(this.speakerList.size()==0 && this.IsVip){
+            return 5; //5 is Vip party
+        }else if (this.speakerList.size()>1 && this.IsVip){
+            return 4; //4 is vip discussion
+        }
+        else if(this.speakerList.size()==1){
             return 1; //1 is talk
-        }else if(this.speakerList.size()==0){
+        }
+        else if(this.speakerList.size()==0){
             return 0; //0 is party
-        }else {
+        }
+        else {
             return 2; //2 is discussion
         }
+
+
     }
 
     public int getDuration(){
