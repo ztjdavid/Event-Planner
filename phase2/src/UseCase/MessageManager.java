@@ -1,6 +1,7 @@
 package UseCase;
 import Entity.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MessageManager {
@@ -15,7 +16,7 @@ public class MessageManager {
      * @param senderid message sender's ID as int.
      * @param getterid message getter's ID as int.
      * @param txt String representation of the message
-     * @return the number of messages as int.
+     * @return the id of message as int.
      */
 
     public int createmessage(String sendername, int senderid, int getterid, String txt) {
@@ -45,15 +46,21 @@ public class MessageManager {
         return getAllmessage().get(messageid);
     }
 
+    ///// Louisa modified
     /**
-     * Set the reply to the Message given the message ID.
+     * Set the reply to the Message given the message ID. Return the new reply's ID.
      * @param messageid the ID of the message.
      * @param reply a string representation of the reply.
+     * @param replyer the replyer(getter) of the new reply.
      */
-    public void setreply(int messageid, String reply, String replyer){
+    public int setreply(int messageid, String reply, String replyer){
+        int receiverId = allmessage.get(messageid).getSenderid();
+        int senderId = allmessage.get(messageid).getGetterid();
+        int replyId = createmessage(allmessage.get(messageid).getReplyer(), senderId, receiverId, reply);
         Message msg = getmessage(messageid);
-        msg.response(reply);
+        msg.setReply(replyId);
         msg.setReplyer(replyer);
+        return replyId;
         }
 
     /**
@@ -62,16 +69,17 @@ public class MessageManager {
      * @return a string showing the replies to the given message IDs.
      */
     public String formatreply(ArrayList<Integer> msgget){
-        String a = "These are the replies:\n";
+        StringBuilder a = new StringBuilder("These are the replies:\n");
         for(Integer i: msgget){
             Message msg = getmessage(i);
-            if(msg.getReply().isEmpty()){a += "The message(id:" + msg.getmessageid() +") you send to " + getmessage(i).getGetterid() +
-                    " has not been replied.\n";}
-            else{a += "This reply is from id " + getmessage(i).getGetterid() + "(" + msg.getReplyer() + ")"
-                    + ":\n" + getmessage(i).getReply();}
+            if(msg.getReply() == -1){
+                a.append("The message(id:").append(msg.getmessageid()).append(") you send to ").append(getmessage(i).getGetterid()).append(" has not been replied.\n");}
+            else{
+                a.append("This reply is from id ").append(getmessage(i).getGetterid()).append("(").append(msg.getReplyer()).append(")").append(":\n").append(allmessage.get(getmessage(i).getReply()).getTxt());}
         }
-        return a;
+        return a.toString();
     }
+    /////
 
     /**
      * Return a string showing the messages in the given arraylist of message IDs and their senders.
@@ -88,6 +96,25 @@ public class MessageManager {
         }
         return a;
     }
+
+    ///// Louisa added
+    public boolean checkMessageStatus(int messageId){return getmessage(messageId).getReadStatus();}
+
+    public void readMessage(int messageId){getmessage(messageId).setReadStatusRead();}
+
+    public void unreadMessage(int messageId){getmessage(messageId).setReadStatusUnread();}
+
+    public String formatAllUnread(ArrayList<Integer> unread){
+        StringBuilder a = new StringBuilder("These are the unread messages:\n");
+        for(Integer i: unread){
+            a.append("\n-------------------------\n");
+            Message msg = getmessage(i);
+            a.append("The id of this message is ").append(msg.getmessageid()).append("\nThis message is from").append(msg.getSendername()).append(" whose id is ").append(msg.getSenderid());
+        }
+        return a.toString();
+    }
+
+    /////
 
 
 

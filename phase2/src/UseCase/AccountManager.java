@@ -178,5 +178,7 @@ public class AccountManager {
      * @return True iff the given account is a VIP.
      */
     public boolean isVIPAcc(int userID){ return getAccountWithId(userID).getUserType() == 3;}
+
+    public void addUnread(int accountId, int unreadId){getAccountWithId(accountId).addUnreadInbox(unreadId);}
 }
 

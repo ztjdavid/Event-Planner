@@ -17,8 +17,9 @@ public class Event {
     protected int eventCapacity;
     protected int seatsOccupied;
     protected int duration;
+    protected boolean IsVip;
 
-    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration){
+    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean IsVip){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
@@ -30,6 +31,7 @@ public class Event {
         this.eventCapacity = eventCapacity;
         this.seatsOccupied = 0;
         this.duration = duration;
+        this.IsVip = IsVip;
     }
 
     /**
@@ -132,18 +134,31 @@ public class Event {
     }
 
     public int getEventType(){
-        if(this.speakerList.size()==1){
+        if(this.speakerList.size()==1 && this.IsVip){
+            return 3; //3 is Vip talk
+        }else if(this.speakerList.size()==0 && this.IsVip){
+            return 5; //5 is Vip party
+        }else if (this.speakerList.size()>1 && this.IsVip){
+            return 4; //4 is vip discussion
+        }
+        else if(this.speakerList.size()==1){
             return 1; //1 is talk
-        }else if(this.speakerList.size()==0){
+        }
+        else if(this.speakerList.size()==0){
             return 0; //0 is party
-        }else {
+        }
+        else {
             return 2; //2 is discussion
         }
+
+
     }
 
     public int getDuration(){
         return this.duration;
     }
+
+    public boolean getVIP(){return this.IsVip;}
 
 
 }

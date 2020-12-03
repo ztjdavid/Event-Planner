@@ -66,6 +66,9 @@ public class EventManager {
     public void addAttendeev2(int talkid, Attendee attendee){
         this.eventList.get(talkid).addAttendee(attendee.getUserId());
     }
+    public void addAttendeev2(int talkid, VIP vip){
+        this.eventList.get(talkid).addAttendee(vip.getUserId());
+    }
 
     /**
      * Remove the attendee from the Event.
@@ -84,6 +87,9 @@ public class EventManager {
 
     public void removeAttendeev2(int talkid, Attendee attendee){
         this.eventList.get(talkid).removeAttendee(attendee.getUserId());
+    }
+    public void removeAttendeev2(int talkid, VIP vip){
+        this.eventList.get(talkid).removeAttendee(vip.getUserId());
     }
 
     /**
@@ -169,9 +175,9 @@ public class EventManager {
      * @return the ID of the talk iff the talk is successfully created.
      */
 
-    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration){
+    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip){
         int talkId = totalTalkCount;
-        Event newEvent = new Event(talkId, talkTitle,startTime, roomId, speakerID, eventCapacity, duration);
+        Event newEvent = new Event(talkId, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
         this.eventList.put(talkId, newEvent);
         totalTalkCount += 1;
         return talkId;
@@ -346,6 +352,11 @@ public class EventManager {
     public int getDuration(int eventID){
         Event event = this.eventList.get(eventID);
         return event.getDuration();
+    }
+
+    public boolean checkVIP(int eventID){
+        Event event = this.eventList.get(eventID);
+        return event.getVIP();
     }
 
 

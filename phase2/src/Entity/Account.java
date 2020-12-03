@@ -1,4 +1,5 @@
 package Entity;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +12,7 @@ public abstract class Account {
     protected final int userId;
     protected ArrayList<Integer> sentMessage;
     protected ArrayList<Integer> inbox;
+    protected ArrayList<Integer> unreadInbox;
 
 
     public Account(String username, String password, int userId){
@@ -19,6 +21,7 @@ public abstract class Account {
         this.password = password;
         this.sentMessage = new ArrayList<>();
         this.inbox = new ArrayList<>();
+        this.unreadInbox = new ArrayList<>();
     }
 
 
@@ -110,5 +113,13 @@ public abstract class Account {
     public void setInbox(ArrayList<Integer> inbox){ this.inbox = inbox;}
 
     public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
+
+    ///// Louisa Added
+    public ArrayList<Integer> getUnreadInbox(){return new ArrayList<>(this.inbox);}
+
+    public void setUnreadInbox(ArrayList<Integer> unreadInbox){this.unreadInbox = unreadInbox;}
+
+    public void addUnreadInbox(int unreadId){this.unreadInbox.add(unreadId);}
+    /////
 
 }

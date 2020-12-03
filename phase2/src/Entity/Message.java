@@ -1,31 +1,29 @@
 package Entity;
+import org.omg.PortableInterceptor.INACTIVE;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class Message {
     protected int messageid;
     private String txt;
-    protected String reply;
+    protected int replyId;
     private String replyer;
     private int senderid;
     private int getterid;
     private String sendername;
+    private boolean haveRead;
 
     public Message(String sendername, int messageid, int senderid, int getterid, String txt){
         this.messageid = messageid;
         this.senderid = senderid;
         this.getterid = getterid;
         this.txt = txt;
-        this.reply = "";
+        this.replyId = -1;
         this.sendername = sendername;
         this.replyer = "";
-    }
-
-    /**
-     * Set the reply of a message.
-     * @param a is a string which represent the text of reply
-     */
-    public void response(String a){
-        this.reply = a;
-
+        this.haveRead = false; // unread by default
     }
 
     /**
@@ -50,15 +48,20 @@ public class Message {
      * @return a string which is the text of this message
      */
      public String getTxt(){return this.txt;}
+
+    ///// Louisa modified
     /**
      * Get the reply of this message
      * @return a string which is the reply of this message
      */
-     public String getReply(){return this.reply;}
+     public int getReply(){return this.replyId;}
+
+     public void setReply(int replyId){this.replyId = replyId;}
     /**
      * Get the name of the sender of this message
      * @return a string sender name
      */
+    /////
      public String getSendername(){return this.sendername;}
     /**
      * Set the name of the replier of this message
@@ -69,4 +72,12 @@ public class Message {
      * @return a string replier name
      */
      public String getReplyer(){return this.replyer;}
+
+     ///// Louisa added
+     public boolean getReadStatus(){return this.haveRead;}
+
+     public void setReadStatusRead(){this.haveRead = true;}
+
+     public void setReadStatusUnread(){this.haveRead = false;}
+     /////
 }
