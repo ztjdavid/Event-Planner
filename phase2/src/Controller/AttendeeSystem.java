@@ -291,15 +291,21 @@ public class AttendeeSystem {
      * @return A tlkList containing all events this account can attend.
      */
     private ArrayList<Integer> getAllAvailableTalks(int a){
+        boolean is_VIP = false;
+        if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
         ArrayList<Integer> myTalksId = attendeeM.getAllMyTalksId();
         ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(a);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
             if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
-            // Boolean is_VIP = false;
-            // if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
-            // TODO: add a checker for VIP event, waiting for event flag var update.
-            // if event t is vip, remove t from result if cur_acc is not a VIP.
+
+
+        if (!is_VIP){
+            for (Integer i:result){
+                if (eventManager.checkVIP(t)) result.remove(Integer.valueOf(i));
+
+        }}
+
         }
         return result;
     }
@@ -334,7 +340,7 @@ public class AttendeeSystem {
     private void signUpMyNewTalks(int a){
         int input;
         do{
-            attendeeUI.signUpTalk();
+            attendeeUI.signUpEvent(a);
             readAllAvailableTalks(a);
             input = targetTalksSignUp(a);
             if (input != -1){
