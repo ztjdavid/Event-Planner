@@ -195,18 +195,18 @@ public class VipSystem {
     }
 
     private void readallmsg(){
-        String a = MsgM.formatmsgget(vipM.getinbox());
+        String a = MsgM.formatmsgget(vipM.getInbox(accM.getCurrAccountId()));
         vipUI.show(a);
     }
 
     private void readallreply(){
-        String a = MsgM.formatreply(vipM.getmsgsend());
+        String a = MsgM.formatreply(vipM.getSentBox(accM.getCurrAccountId()));
         vipUI.show(a);
     }
 
 
     private int targetmsg(){
-        ArrayList<Integer> validChoices = vipM.getinbox();
+        ArrayList<Integer> validChoices = vipM.getInbox(accM.getCurrAccountId());
         validChoices.add(-1);
         String userInput;
         boolean valid = false;
@@ -262,7 +262,7 @@ public class VipSystem {
     ///////////ERICMODIFY
     private void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up talks:");
-        ArrayList<Integer> allTalks = vipM.getAllMyTalksId();
+        ArrayList<Integer> allTalks = vipM.getEventList(accM.getCurrAccountId());
         for(Integer t:allTalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
             a.append(eventManager.gettalkinfoWithName(t, roomName));}
@@ -274,7 +274,7 @@ public class VipSystem {
      * @return A tlkList containing all events this account can attend.
      */
     private ArrayList<Integer> getAllAvailableTalks(int a){
-        ArrayList<Integer> myTalksId = vipM.getAllMyTalksId();
+        ArrayList<Integer> myTalksId = vipM.getEventList(accM.getCurrAccountId());
         ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(a);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
@@ -323,14 +323,14 @@ public class VipSystem {
             if (input != -1){
                 if(eventManager.checkVIP(input)){
                     vipUI.signUpVipTalk();
-                    if(vipM.getCurrAttendee().getUserType() == 3){
-                        vipM.enrol(input);
-                        eventManager.addAttendeev2(input, vipM.getCurrAttendee());
+                    if(vipM.getCurrVIP().getUserType() == 3){
+                        vipM.enrolEvent(accM.getCurrAccountId(), input);
+                        eventManager.addAttendeev2(input, vipM.getCurrVIP());
                         vipUI.signUpSuc();
                     }else{vipUI.informNotVip();}
                 }else if(!eventManager.checkVIP(input)){
-                    vipM.enrol(input);
-                    eventManager.addAttendeev2(input, vipM.getCurrAttendee());
+                    vipM.enrolEvent(accM.getCurrAccountId(), input);
+                    eventManager.addAttendeev2(input, vipM.getCurrVIP());
                     vipUI.signUpSuc();
                 }
             }
@@ -338,7 +338,7 @@ public class VipSystem {
     }
 
     private int targetTalksCancel(){
-        ArrayList<Integer> validChoices = vipM.getAllMyTalksId();
+        ArrayList<Integer> validChoices = vipM.getEventList(accM.getCurrAccountId());
         validChoices.add(-1);
         String userInput;
         int mode = -1;
@@ -360,8 +360,8 @@ public class VipSystem {
             readAllMyTalks();
             input = targetTalksCancel();
             if (input != -1){
-                vipM.drop(input);
-                eventManager.removeAttendeev2(input, vipM.getCurrAttendee());
+                vipM.dropEvent(accM.getCurrAccountId(), input);
+                eventManager.removeAttendeev2(input, vipM.getCurrVIP());
                 vipUI.cancelSuc();
             }
         }while(input != -1);
@@ -439,7 +439,7 @@ public class VipSystem {
 
     private void readAllMsg(){
 
-        String a = MsgM.formatmsgget(vipM.getInbox());
+        String a = MsgM.formatmsgget(vipM.getInbox(accM.getCurrAccountId()));
         vipUI.show(a);
         vipUI.askForBack();
 
@@ -447,7 +447,7 @@ public class VipSystem {
 
     //this is a helper function to get a list of all attendees except itself in current attendee signed up talks
     private ArrayList<Integer> getAllAttendees() {
-        ArrayList<Integer> talkList = vipM.getAllMyTalksId();
+        ArrayList<Integer> talkList = vipM.getEventList(accM.getCurrAccountId());
         ArrayList<Integer> result = eventManager.getallattendee(talkList);
         int currAcc = accM.getCurrAccountId();
         if (result.contains(currAcc)) result.remove(Integer.valueOf(currAcc));
@@ -457,7 +457,7 @@ public class VipSystem {
     }
 
     private ArrayList<Integer> getAllSpeakers() {
-        ArrayList<Integer> talkList = vipM.getAllMyTalksId();
+        ArrayList<Integer> talkList = vipM.getEventList(accM.getCurrAccountId());
         return eventManager.getAllSpeakers(talkList);
     }
 
@@ -471,7 +471,7 @@ public class VipSystem {
     }
 
     private void readAllSpeakers(){
-        ArrayList<Integer> allTalks = vipM.getAllMyTalksId();
+        ArrayList<Integer> allTalks = vipM.getEventList(accM.getCurrAccountId());
         StringBuilder a = new StringBuilder("These are the speakers in talks you attend. Choose an id to message:\n");
         for (Integer t: allTalks){
             ArrayList<Integer> spkLst = new ArrayList<>(eventManager.getSpeakerIDIn(t));

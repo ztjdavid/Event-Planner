@@ -1,7 +1,5 @@
 package Presenters;
 
-import java.util.Scanner;
-
 public class VipUI extends Presenter{
 
     public VipUI(ITextUI textUI){
