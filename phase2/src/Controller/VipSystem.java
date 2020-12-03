@@ -44,43 +44,49 @@ public class VipSystem {
     private void enterBranch(int userChoice){
         switch (userChoice){
             case 1:
-                MyTalksDashboard();
+                EventDashboard();
                 break;
             case 2:
-                EventDashboard();
+                MsgDashboard();
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    /////event ERIC
+    private void EventDashboard(){
+        int userChoice;
+        do{
+            vipUI.eventmain();
+            userChoice = chooseMode4();
+            EventOp(userChoice);
+        } while (userChoice != 7);
+    }
+    private void EventOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                SignupDashboard();
+                break;
+            case 2:
+                MyTalksDashboard();
                 break;
             case 3:
                 cancelMyTalks();
                 break;
             case 4:
-                MsgDashboard();
-                break;
-            case 5:
                 break;
         }
     }
-
-    private void MsgDashboard(){
-        int userChoice;
-        do{
-            vipUI.msgSelect();
-            userChoice = chooseMode2();
-            msgOp(userChoice);
-        } while (userChoice != 6);
-
-
-    }
-    /////event ERIC
-    private void EventDashboard(){
+    private void SignupDashboard(){
         int userChoice;
         do{
             vipUI.eventselect();
             userChoice = chooseMode3();
-            EventOp(userChoice);
+            EventSignup(userChoice);
         } while (userChoice != 7);
     }
-
-    private void EventOp(int userChoice){
+    private void EventSignup(int userChoice){
         switch (userChoice){
             case 1:
                 signUpMyNewTalks(1);
@@ -104,10 +110,16 @@ public class VipSystem {
                 break;
         }
     }
+    private void MsgDashboard(){
+        int userChoice;
+        do{
+            vipUI.msgSelect();
+            userChoice = chooseMode2();
+            msgOp(userChoice);
+        } while (userChoice != 6);
 
 
-    ///////////////
-
+    }
     private void msgOp(int userChoice){
         switch (userChoice){
             case 1:
@@ -130,8 +142,8 @@ public class VipSystem {
         }
     }
 
-    private int chooseMode1(){    //For Attendee Dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+    private int chooseMode1(){    //For Main Dashboard.
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -162,7 +174,7 @@ public class VipSystem {
         return mode;
     }
 
-    private int chooseMode3(){    //For EventDashboard.
+    private int chooseMode3(){    //For SignupDashboard.
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         String userInput;
         int mode = -1;
@@ -177,6 +189,23 @@ public class VipSystem {
         }
         return mode;
     }
+
+    private int chooseMode4(){    //For EventDashboard.
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        String userInput;
+        int mode = -1;
+        boolean valid = false;
+        while(!valid){
+            userInput = vipUI.getrequest();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                vipUI.informinvalidchoice();
+            else {
+                valid = true;
+                mode = Integer.parseInt(userInput);}
+        }
+        return mode;
+    }
+
 
     private void MyTalksDashboard(){
         readAllMyTalks();
