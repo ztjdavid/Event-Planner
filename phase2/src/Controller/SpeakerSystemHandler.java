@@ -1,4 +1,4 @@
-package Controller.SpeakerHandler;
+package Controller;
 
 import Entity.Message;
 import Entity.Speaker;
@@ -7,12 +7,12 @@ import UseCase.*;
 
 import java.util.ArrayList;
 
-public class UnreadHandler {
+public class SpeakerSystemHandler {
     protected MessageManager MsgM;
     protected SpeakerUI speakerUI;
     protected SpeakerManager SpeakerM;
 
-    public UnreadHandler(MessageManager MsgM, SpeakerUI speakerUI, SpeakerManager SpeakerM) {
+    public SpeakerSystemHandler(MessageManager MsgM, SpeakerUI speakerUI, SpeakerManager SpeakerM) {
         this.MsgM = MsgM;
         this.speakerUI = speakerUI;
         this.SpeakerM = SpeakerM;

@@ -1,5 +1,4 @@
 package Controller;
-import Controller.SpeakerHandler.UnreadHandler;
 import Presenters.SpeakerUI;
 import UseCase.*;
 
@@ -15,7 +14,7 @@ public class SpeakerSystem {
     protected StrategyManager strategyM;
     protected SpeakerManager SpeakerM;
     protected RoomManager roomM;
-    protected UnreadHandler UnreadHandler;
+    protected SpeakerSystemHandler SpeakerSystemHandler;
 
 
     public SpeakerSystem(AccountManager accM, EventManager eventM, MessageManager MsgM, SpeakerUI SpeakerUI,
@@ -182,7 +181,7 @@ public class SpeakerSystem {
     }
 
     private void readAllUnread(){
-        UnreadHandler UnH = new UnreadHandler(MsgM, speakerUI, SpeakerM);
+        SpeakerSystemHandler UnH = new SpeakerSystemHandler(MsgM, speakerUI, SpeakerM);
         String all = MsgM.formatAllUnread(UnH.getAllUnread(SpeakerM.getCurrAccountId()));
         speakerUI.show(all);
     }
