@@ -31,7 +31,7 @@ public class VipSystem {
     }
 
     /**
-     * Run Attendee System, user can choose according to startup options.
+     * Run VIP System, user can choose according to startup options.
      */
     public void run() {
         int userChoice;

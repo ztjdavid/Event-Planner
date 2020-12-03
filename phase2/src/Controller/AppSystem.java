@@ -45,7 +45,7 @@ public class AppSystem {
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
         this.speakerUI = new SpeakerUI();
-        this.attUI = new AttendeeUI();
+        this.attUI = new AttendeeUI(textUI);
         this.vipUI = new VipUI(textUI);
         this.organizerPresenter = new OrganizerPresenter(textUI);
         this.accM = new AccountManager();

@@ -43,18 +43,12 @@ public class AttendeeSystem {
     private void enterBranch(int userChoice){
         switch (userChoice){
             case 1:
-                MyTalksDashboard();
-                break;
-            case 2:
                 EventDashboard();
                 break;
-            case 3:
-                cancelMyTalks();
-                break;
-            case 4:
+            case 2:
                 MsgDashboard();
                 break;
-            case 5:
+            case 3:
                 break;
         }
     }
@@ -69,17 +63,38 @@ public class AttendeeSystem {
 
 
     }
-
     private void EventDashboard(){
+        int userChoice;
+        do{
+            attendeeUI.eventmain();
+            userChoice = chooseMode4();
+            EventOp(userChoice);
+        } while (userChoice != 7);
+    }
+    private void EventOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                SignupDashboard();
+                break;
+            case 2:
+                MyTalksDashboard();
+                break;
+            case 3:
+                cancelMyTalks();
+                break;
+            case 4:
+                break;
+        }
+    }
+    private void SignupDashboard(){
         int userChoice;
         do{
             attendeeUI.eventselect();
             userChoice = chooseMode3();
-            EventOp(userChoice);
-        } while (userChoice != 4);
+            EventSignup(userChoice);
+        } while (userChoice != 7);
     }
-
-    private void EventOp(int userChoice){
+    private void EventSignup(int userChoice){
         switch (userChoice){
             case 1:
                 signUpMyNewTalks(1);
@@ -94,7 +109,6 @@ public class AttendeeSystem {
                 break;
         }
     }
-
     private void msgOp(int userChoice){
         switch (userChoice){
             case 1:
@@ -118,7 +132,7 @@ public class AttendeeSystem {
     }
 
     private int chooseMode1(){    //For Attendee Dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -156,6 +170,22 @@ public class AttendeeSystem {
         boolean valid = false;
         while(!valid){
             userInput = attendeeUI.getrequest();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attendeeUI.informinvalidchoice();
+            else {
+                valid = true;
+                mode = Integer.parseInt(userInput);}
+        }
+        return mode;
+    }
+
+    public int chooseMode4(){    //For EventDashboard.
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        String userInput;
+        int mode = -1;
+        boolean valid = false;
+        while(!valid){
+            userInput = attendeeUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else {

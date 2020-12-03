@@ -3,10 +3,12 @@ package Presenters;
 import java.util.Scanner;
 
 
-public class AttendeeUI {
+public class AttendeeUI extends Presenter{
     private final Scanner attendeescanner;
 
-    public AttendeeUI() {
+
+    public AttendeeUI(ITextUI textUI) {
+        super(textUI);
         this.attendeescanner = new Scanner(System.in);
     }
 
@@ -97,13 +99,19 @@ public class AttendeeUI {
     public String getrequest(int s){
         switch (s){
             case 1:
-                System.out.println("Please Enter Your Response.");
+                printText("Please Enter Your Response.");
                 break;
             case 2:
-                System.out.println("Please Enter Your Response(Enter -1 to go back.)");
+                printText("Please Enter Your Response(Enter -1 to go back.)");
+                break;
+            case 3:
+                printText("Please Enter The Valid ID of the Event(Enter -1 to go back.): ");
+                break;
+            case 4:
+                printText("Please Enter The Valid ID of one of your Event(Enter -1 to go back.): ");
                 break;
         }
-        return attendeescanner.nextLine();
+        return requestInput();
     }
 
     public void announcereply(){System.out.println("Please enter the id of the message " +
@@ -122,6 +130,16 @@ public class AttendeeUI {
     public void informNotVip(){
         System.out.println("You do not have the permission to sign up for a VIP event.");
     }
+
+    public void eventmain(){
+        printText("----------------Event Interface-----------------\nHi, " +
+                "Would you like to\n1 -> Sign Up a New Event\n2 -> View All My Event\n" +
+                "3 -> Leave an Event\n" +
+                "4 -> Go back");
+
+    }
+
+
 
 
 }

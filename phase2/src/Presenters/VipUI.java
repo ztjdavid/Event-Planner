@@ -44,7 +44,7 @@ public class VipUI extends Presenter{
                 "5 -> Read your messages and reply to senders\n" +
                 "6 -> Go back.");////////////ERICMODIFY
     }
-    //////////////event Eric
+
     public void eventmain(){
         printText("----------------Event Interface-----------------\nHi, " +
                 "Would you like to\n1 -> Sign Up a New Event\n2 -> View All My Event\n" +
