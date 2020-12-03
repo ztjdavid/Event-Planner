@@ -1,8 +1,10 @@
 package Controller;
+import Controller.MessageHandler.UnreadHandler;
 import Entity.Message;
 import Entity.Speaker;
 import Presenters.SpeakerUI;
 import UseCase.*;
+import com.sun.xml.internal.ws.api.handler.MessageHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +18,7 @@ public class SpeakerSystem {
     protected StrategyManager strategyM;
     protected SpeakerManager SpeakerM;
     protected RoomManager roomM;
+    protected UnreadHandler UnreadHandler;
 
 
     public SpeakerSystem(AccountManager accM, EventManager eventM, MessageManager MsgM, SpeakerUI SpeakerUI,
@@ -27,7 +30,6 @@ public class SpeakerSystem {
         this.strategyM = StrategyManager;
         this.SpeakerM = SpeakerM;
         this.roomM = roomM;
-
 
     }
 
@@ -69,7 +71,7 @@ public class SpeakerSystem {
             speakerUI.messaging();
             userChoice = chooseMode2();
             msgOp(userChoice);
-        } while (userChoice != 6);
+        } while (userChoice != 7);
 
 
     }
@@ -92,6 +94,8 @@ public class SpeakerSystem {
                 msgtoreply();
                 break;
             case 6:
+                allunreadmsg();
+            case 7:
                 break;
         }
     }
@@ -158,6 +162,33 @@ public class SpeakerSystem {
             }
         }while(tAttendeeId != -1);
     }
+
+    ///// Louisa added
+    private void allunreadmsg(){
+        int tmsgid;
+        do{
+            readAllUnreadMsg();
+            tmsgid = targetunread();
+            if(tmsgid != -1){
+                MsgM.readMessage(tmsgid);
+                speakerUI.unreadSuccess(tmsgid);
+                speakerUI.askForBack();
+            }
+        }while(tmsgid != -1);
+    }
+
+    private void readAllUnreadMsg(){
+        readAllUnread();
+        speakerUI.annouceUnread();
+
+    }
+
+    private void readAllUnread(){
+        UnreadHandler UnH = new UnreadHandler(MsgM, speakerUI, SpeakerM);
+        String all = MsgM.formatAllUnread(UnH.getAllUnread(SpeakerM.getCurrAccountId()));
+        speakerUI.show(all);
+    }
+    /////
 
 
     private void readrepandmsg(){
@@ -269,6 +300,22 @@ public class SpeakerSystem {
         return Integer.parseInt(userInput);
     }
 
+    ///// Louisa added
+    private int targetunread(){
+        ArrayList<Integer> validChoices = SpeakerM.getUnread();
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = speakerUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                speakerUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+    /////
+
     private void readalltalks(){
         StringBuilder a = new StringBuilder("Event Information:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
@@ -342,30 +389,7 @@ public class SpeakerSystem {
     }
 
     ///// Louisa added
-    public ArrayList<Message> getAllUnread(int speakerId){
-        Speaker acc = (Speaker) SpeakerM.getAccountWithId(speakerId);
-        ArrayList<Integer> inbox = acc.getInbox();
-        ArrayList<Message> unread = new ArrayList<>();
-        for(Integer i : inbox){
-            Message msg = MsgM.getmessage(i);
-            if(!msg.getReadStatus()){
-                unread.add(msg);
-            }
-        }
-        return unread;
-    }
-    public ArrayList<Message> getAllRead(int speakerId){
-        Speaker acc = (Speaker) SpeakerM.getAccountWithId(speakerId);
-        ArrayList<Integer> inbox = acc.getInbox();
-        ArrayList<Message> read = new ArrayList<>();
-        for(Integer i : inbox){
-            Message msg = MsgM.getmessage(i);
-            if(!msg.getReadStatus()){
-                read.add(msg);
-            }
-        }
-        return read;
-    }
+
 
     /////
 

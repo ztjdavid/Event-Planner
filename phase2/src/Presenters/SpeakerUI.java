@@ -77,6 +77,13 @@ public class SpeakerUI {
     public void announcemsg(){System.out.println("Please enter the id of the replier " +
             "if you want to message to.");
     }
+    ///// Louisa added
+    public void annouceUnread(){System.out.println("Please enter the id of the message" +
+            "if you want to read.");}
+
+     public void unreadSuccess(int messageId){System.out.println("Your message with id: " + messageId +
+             " has been succesfully read!");}
+    /////
 
     public void askForBack(){
         System.out.println("\nPress enter to go back.");

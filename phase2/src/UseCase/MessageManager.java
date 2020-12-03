@@ -1,6 +1,7 @@
 package UseCase;
 import Entity.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MessageManager {
@@ -102,6 +103,17 @@ public class MessageManager {
     public void readMessage(int messageId){getmessage(messageId).setReadStatusRead();}
 
     public void unreadMessage(int messageId){getmessage(messageId).setReadStatusUnread();}
+
+    public String formatAllUnread(ArrayList<Integer> unread){
+        StringBuilder a = new StringBuilder("These are the unread messages:\n");
+        for(Integer i: unread){
+            a.append("\n-------------------------\n");
+            Message msg = getmessage(i);
+            a.append("The id of this message is ").append(msg.getmessageid()).append("\nThis message is from").append(msg.getSendername()).append(" whose id is ").append(msg.getSenderid());
+        }
+        return a.toString();
+    }
+
     /////
 
 
