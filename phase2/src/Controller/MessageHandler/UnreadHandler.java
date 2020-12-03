@@ -4,6 +4,7 @@ import Entity.Message;
 import Entity.Speaker;
 import Presenters.SpeakerUI;
 import UseCase.*;
+import org.omg.CORBA.INTERNAL;
 
 import java.util.ArrayList;
 
@@ -18,27 +19,27 @@ public class UnreadHandler {
         this.SpeakerM = SpeakerM;
     }
 
-    public ArrayList<Message> getAllUnread(int speakerId) {
+    public ArrayList<Integer> getAllUnread(int speakerId) {
         Speaker acc = (Speaker) SpeakerM.getAccountWithId(speakerId);
         ArrayList<Integer> inbox = acc.getInbox();
-        ArrayList<Message> unread = new ArrayList<>();
+        ArrayList<Integer> unread = new ArrayList<>();
         for (Integer i : inbox) {
             Message msg = MsgM.getmessage(i);
             if (!msg.getReadStatus()) {
-                unread.add(msg);
+                unread.add(msg.getmessageid());
             }
         }
         return unread;
     }
 
-    public ArrayList<Message> getAllRead(int speakerId) {
+    public ArrayList<Integer> getAllRead(int speakerId) {
         Speaker acc = (Speaker) SpeakerM.getAccountWithId(speakerId);
         ArrayList<Integer> inbox = acc.getInbox();
-        ArrayList<Message> read = new ArrayList<>();
+        ArrayList<Integer> read = new ArrayList<>();
         for (Integer i : inbox) {
             Message msg = MsgM.getmessage(i);
             if (!msg.getReadStatus()) {
-                read.add(msg);
+                read.add(msg.getmessageid());
             }
         }
         return read;

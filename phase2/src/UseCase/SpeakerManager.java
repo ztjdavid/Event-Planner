@@ -101,5 +101,6 @@ public class SpeakerManager extends AccountManager {
         acc.setEventList(eventList);
     }
 
+    public ArrayList<Integer> getUnread(){return getCurrSpeaker().getUnreadInbox();}
 }
 
