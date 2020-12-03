@@ -32,6 +32,7 @@ public class AppSystem {
     protected VipUI vipUI;
     protected VIPsystemhandler vh;
     protected Attendeesystemhandler ah;
+    protected OrganizerSystemHandler oh;
 
 
 
@@ -61,6 +62,7 @@ public class AppSystem {
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM);
         this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, vh);
         this.ah = new Attendeesystemhandler(accM, eventM, MsgM, attUI, strategyM, attM, roomM);
+        this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter);
 
 
     }
@@ -131,6 +133,24 @@ public class AppSystem {
         return mode;
     }
 
+    /**
+     * Show all Talks with each Event's title, ID, start time, room name, and room ID.
+     */
+    public void readAllEvents(){
+        organizerPresenter.message7();
+        ArrayList<Integer> talkLst = new ArrayList<>(eventM.getAllEvents());
+        for(int item:talkLst){
+            String title = eventM.getTitle(item);
+            int startTime = eventM.getStartTime(item);
+            String roomName = roomM.getRoomName(eventM.getRoomIdWithId(item));
+            int roomId = eventM.getRoomIdWithId(item);
+            int type = eventM.getEventTypeWithID(item);
+            int duration = eventM.getDuration(item);
+            ArrayList<Integer> speaker = new ArrayList<>(eventM.getSpeakerOfEvent(item));
+            ArrayList<Integer> attendee = new ArrayList<>(eventM.getAttendeeOfEvent(item));
+            organizerPresenter.readTalks(title, item, startTime, roomName, roomId, type, speaker, attendee, duration);
+        }
+    }
 
 
 }
