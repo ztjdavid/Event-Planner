@@ -31,6 +31,7 @@ public class AppSystem {
     protected TextUI textUI;
     protected VipUI vipUI;
     protected VIPsystemhandler vh;
+    protected Attendeesystemhandler ah;
 
 
 
@@ -55,10 +56,12 @@ public class AppSystem {
         this.vh = new VIPsystemhandler(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM);
         this.signInS = new SignInSystem(accM, signInUI);
         this.signUpS = new SignUpSystem(accM, signUpUI, strategyM);
-        this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM);
+        this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, ah);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM);
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM);
         this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, vh);
+        this.ah = new Attendeesystemhandler(accM, eventM, MsgM, attUI, strategyM, attM, roomM);
+
 
     }
 

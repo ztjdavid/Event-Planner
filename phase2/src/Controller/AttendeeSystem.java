@@ -14,9 +14,10 @@ public class AttendeeSystem {
     protected StrategyManager strategyM;
     protected AttendeeManager attendeeM;
     protected RoomManager roomM;
+    protected Attendeesystemhandler ah;
 
     public AttendeeSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
-                          StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM) {
+                          StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM, Attendeesystemhandler ah) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -24,6 +25,7 @@ public class AttendeeSystem {
         this.strategyM = StrategyManager;
         this.attendeeM = AttendeeM;
         this.roomM = roomM;
+        this.ah = ah;
 
     }
 
@@ -34,7 +36,7 @@ public class AttendeeSystem {
         int userChoice;
         do {
             attendeeUI.startup();
-            userChoice = chooseMode1();
+            userChoice = ah.chooseMode1();
             enterBranch(userChoice);
         } while (userChoice != 5);
     }
@@ -57,7 +59,7 @@ public class AttendeeSystem {
         int userChoice;
         do{
             attendeeUI.msgSelect();
-            userChoice = chooseMode2();
+            userChoice = ah.chooseMode2();
             msgOp(userChoice);
         } while (userChoice != 6);
 
@@ -67,7 +69,7 @@ public class AttendeeSystem {
         int userChoice;
         do{
             attendeeUI.eventmain();
-            userChoice = chooseMode4();
+            userChoice = ah.chooseMode4();
             EventOp(userChoice);
         } while (userChoice != 7);
     }
@@ -90,7 +92,7 @@ public class AttendeeSystem {
         int userChoice;
         do{
             attendeeUI.eventselect();
-            userChoice = chooseMode3();
+            userChoice = ah.chooseMode3();
             EventSignup(userChoice);
         } while (userChoice != 7);
     }
@@ -196,7 +198,7 @@ public class AttendeeSystem {
     }
 
     private void MyTalksDashboard(){
-        readAllMyTalks();
+        ah.readAllMyTalks();
         attendeeUI.askForBack();
     }
 
@@ -240,9 +242,9 @@ public class AttendeeSystem {
         int tmsgid;
         do{
             readmsgandrep();
-            tmsgid = targetmsg();
+            tmsgid = ah.targetmsg();
             if (tmsgid != -1){
-                String txt = enterTxt();
+                String txt = ah.enterTxt();
                 MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
                 attendeeUI.askForBack();
             }
@@ -268,15 +270,15 @@ public class AttendeeSystem {
         int targetId;
         do{
             readrepandmsg();
-            targetId = targetgetter();
+            targetId = ah.targetgetter();
             if (targetId != -1){
-                String txt = enterTxt();
+                String txt = ah.enterTxt();
                 messageToAtt(txt, targetId);
                 attendeeUI.askForBack();
             }
         }while(targetId != -1);
     }
-///////////ERICMODIFY
+
     private void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up talks:");
         ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
@@ -335,8 +337,8 @@ public class AttendeeSystem {
         int input;
         do{
             attendeeUI.signUpTalk();
-            readAllAvailableTalks(a);
-            input = targetTalksSignUp(a);
+            ah.readAllAvailableTalks(a);
+            input = ah.targetTalksSignUp(a);
             if (input != -1){
                 if(eventManager.checkVIP(input)){
                     attendeeUI.signUpVipTalk();
@@ -374,8 +376,8 @@ public class AttendeeSystem {
         int input;
         do{
             attendeeUI.cancelTalk();
-            readAllMyTalks();
-            input = targetTalksCancel();
+            ah.readAllMyTalks();
+            input = ah.targetTalksCancel();
             if (input != -1){
                 attendeeM.drop(input);
                 eventManager.removeAttendeev2(input, attendeeM.getCurrAttendee());
@@ -389,10 +391,10 @@ public class AttendeeSystem {
     private void msgToAttendee(){
         int tAttendeeId;
         do{
-            readAllAttendees();
-            tAttendeeId = targetGetter();
+            ah.readAllAttendees();
+            tAttendeeId = ah.targetgetter();
             if (tAttendeeId != -1){
-                String txt = enterTxt();
+                String txt = ah.enterTxt();
                 messageToAtt(txt, tAttendeeId);
                 attendeeUI.askForBack();
             }
@@ -424,10 +426,10 @@ public class AttendeeSystem {
     private void msgToSpeaker(){
         int tSpeakerId;
         do{
-            readAllSpeakers();
-            tSpeakerId = targetSpeaker();
+            ah.readAllSpeakers();
+            tSpeakerId = ah.targetgetter();
             if (tSpeakerId != -1){
-                String txt = enterTxt();
+                String txt = ah.enterTxt();
                 messageToSp(txt, tSpeakerId);
                 attendeeUI.askForBack();
             }
@@ -477,6 +479,7 @@ public class AttendeeSystem {
         ArrayList<Integer> talkList = attendeeM.getAllMyTalksId();
         return eventManager.getAllSpeakers(talkList);
     }
+
 
     private void readAllAttendees(){
         ArrayList<Integer> att = getAllAttendees();
