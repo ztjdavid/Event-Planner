@@ -15,9 +15,10 @@ public class VipSystem {
     protected StrategyManager strategyM;
     protected VIPManager vipM;
     protected RoomManager roomM;
+    protected VIPsystemhandler vh;
 
     public VipSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipUI vipUI,
-                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM) {
+                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, VIPsystemhandler vh) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -25,6 +26,7 @@ public class VipSystem {
         this.strategyM = StrategyManager;
         this.vipM = vipM;
         this.roomM = roomM;
+        this.vh = vh;
 
     }
 
@@ -35,7 +37,7 @@ public class VipSystem {
         int userChoice;
         do {
             vipUI.startup();
-            userChoice = chooseMode1();
+            userChoice = vh.chooseMode1();
             enterBranch(userChoice);
         } while (userChoice != 5);
     }
@@ -54,12 +56,12 @@ public class VipSystem {
         }
     }
 
-    /////event ERIC
+
     private void EventDashboard(){
         int userChoice;
         do{
             vipUI.eventmain();
-            userChoice = chooseMode4();
+            userChoice = vh.chooseMode4();
             EventOp(userChoice);
         } while (userChoice != 7);
     }
@@ -82,7 +84,7 @@ public class VipSystem {
         int userChoice;
         do{
             vipUI.eventselect();
-            userChoice = chooseMode3();
+            userChoice = vh.chooseMode3();
             EventSignup(userChoice);
         } while (userChoice != 7);
     }
@@ -114,7 +116,7 @@ public class VipSystem {
         int userChoice;
         do{
             vipUI.msgSelect();
-            userChoice = chooseMode2();
+            userChoice = vh.chooseMode2();
             msgOp(userChoice);
         } while (userChoice != 6);
 
@@ -142,73 +144,8 @@ public class VipSystem {
         }
     }
 
-    private int chooseMode1(){    //For Main Dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    private int chooseMode2(){    //For MsgDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    private int chooseMode3(){    //For SignupDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    private int chooseMode4(){    //For EventDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-
     private void MyTalksDashboard(){
-        readAllMyTalks();
+        vh.readAllMyTalks();
         vipUI.askForBack();
     }
 
@@ -234,121 +171,40 @@ public class VipSystem {
     }
 
 
-    private int targetmsg(){
-        ArrayList<Integer> validChoices = vipM.getInbox(accM.getCurrAccountId());
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = vipUI.getrequest(2);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
     private void msgtoreply(){
         int tmsgid;
         do{
             readmsgandrep();
-            tmsgid = targetmsg();
+            tmsgid = vh.targetmsg();
             if (tmsgid != -1){
-                String txt = enterTxt();
+                String txt = vh.enterTxt();
                 MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
                 vipUI.askForBack();
             }
         }while(tmsgid != -1);
     }
 
-    private int targetgetter(){
-        ArrayList<Integer> validChoices = getAllAttendees();
-        validChoices.addAll(getAllSpeakers());
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = vipUI.getrequest(2);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
 
     private void replytomsg(){
         int targetId;
         do{
             readrepandmsg();
-            targetId = targetgetter();
+            targetId = vh.targetgetter();
             if (targetId != -1){
-                String txt = enterTxt();
+                String txt = vh.enterTxt();
                 messageToAtt(txt, targetId);
                 vipUI.askForBack();
             }
         }while(targetId != -1);
     }
-    ///////////ERICMODIFY
-    private void readAllMyTalks(){
-        StringBuilder a = new StringBuilder("My signed up talks:");
-        ArrayList<Integer> allTalks = vipM.getEventList(accM.getCurrAccountId());
-        for(Integer t:allTalks){
-            String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));}
-        vipUI.show(a.toString());
-    }
-
-    /**
-     * Get all available events that this account can attend.
-     * @return A tlkList containing all events this account can attend.
-     */
-    private ArrayList<Integer> getAllAvailableTalks(int a){
-        ArrayList<Integer> myTalksId = vipM.getEventList(accM.getCurrAccountId());
-        ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(a);
-        ArrayList<Integer> result = new ArrayList<>();
-        for(Integer t:allTalksId){
-            if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
-            // Boolean is_VIP = false;
-            // if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
-            // TODO: add a checker for VIP event, waiting for event flag var update.
-            // if event t is vip, remove t from result if cur_acc is not a VIP.
-        }
-        return result;
-    }
-
-    private void readAllAvailableTalks(int type){
-        StringBuilder a = new StringBuilder("Available Event: ");
-        ArrayList<Integer> availableTalksId = getAllAvailableTalks(type);
-        for(Integer t:availableTalksId){
-            String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));
-        }
-        vipUI.show(a.toString());}
 
 
-    private int targetTalksSignUp(int type){
-        ArrayList<Integer> validChoices = getAllAvailableTalks(type);
-        validChoices.add(-1);
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest2();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;}
-
-    ///// Louisa Modified
     private void signUpMyNewTalks(int a){
         int input;
         do{
             vipUI.signUpTalk();
-            readAllAvailableTalks(a);
-            input = targetTalksSignUp(a);
+            vh.readAllAvailableTalks(a);
+            input = vh.targetTalksSignUp(a);
             if (input != -1){
                 if(eventManager.checkVIP(input)){
                     vipUI.signUpVipTalk();
@@ -366,28 +222,13 @@ public class VipSystem {
         }while(input != -1);
     }
 
-    private int targetTalksCancel(){
-        ArrayList<Integer> validChoices = vipM.getEventList(accM.getCurrAccountId());
-        validChoices.add(-1);
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest3();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;}
 
     private void cancelMyTalks(){
         int input;
         do{
             vipUI.cancelTalk();
-            readAllMyTalks();
-            input = targetTalksCancel();
+            vh.readAllMyTalks();
+            input = vh.targetTalksCancel();
             if (input != -1){
                 vipM.dropEvent(accM.getCurrAccountId(), input);
                 eventManager.removeAttendeev2(input, vipM.getCurrVIP());
@@ -401,29 +242,16 @@ public class VipSystem {
     private void msgToAttendee(){
         int tAttendeeId;
         do{
-            readAllAttendees();
-            tAttendeeId = targetGetter();
+            vh.readAllAttendees();
+            tAttendeeId = vh.targetgetter();
             if (tAttendeeId != -1){
-                String txt = enterTxt();
+                String txt = vh.enterTxt();
                 messageToAtt(txt, tAttendeeId);
                 vipUI.askForBack();
             }
         }while(tAttendeeId != -1);
     }
 
-    private int targetGetter(){
-        ArrayList<Integer> validChoices = getAllAttendees();
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = vipUI.getrequest1();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
 
     private void messageToAtt(String a, int getterId) {
 
@@ -436,35 +264,23 @@ public class VipSystem {
     private void msgToSpeaker(){
         int tSpeakerId;
         do{
-            readAllSpeakers();
-            tSpeakerId = targetSpeaker();
+            vh.readAllSpeakers();
+            tSpeakerId = vh.targetgetter();
             if (tSpeakerId != -1){
-                String txt = enterTxt();
-                messageToSp(txt, tSpeakerId);
+                String txt = vh.enterTxt();
+                messageToSphelper(txt, tSpeakerId);
                 vipUI.askForBack();
             }
         }while(tSpeakerId != -1);
     }
-    private void messageToSp(String a, int speakerId) {
+
+    private void messageToSphelper(String a, int speakerId) {
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), speakerId, a);
         accM.addinbox(speakerId, msg);
         accM.addsend(accM.getCurrAccountId(), msg);
         vipUI.messagesend();
     }
 
-    private int targetSpeaker(){
-        ArrayList<Integer> validChoices = getAllSpeakers();
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = vipUI.getrequest1();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
 
     private void readAllMsg(){
 
@@ -474,56 +290,5 @@ public class VipSystem {
 
     }
 
-    //this is a helper function to get a list of all attendees except itself in current attendee signed up talks
-    private ArrayList<Integer> getAllAttendees() {
-        ArrayList<Integer> talkList = vipM.getEventList(accM.getCurrAccountId());
-        ArrayList<Integer> result = eventManager.getallattendee(talkList);
-        int currAcc = accM.getCurrAccountId();
-        if (result.contains(currAcc)) result.remove(Integer.valueOf(currAcc));
-        return result;
-
-
-    }
-
-    private ArrayList<Integer> getAllSpeakers() {
-        ArrayList<Integer> talkList = vipM.getEventList(accM.getCurrAccountId());
-        return eventManager.getAllSpeakers(talkList);
-    }
-
-    private void readAllAttendees(){
-        ArrayList<Integer> att = getAllAttendees();
-        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:\n");
-        for(Integer i : att) {
-            a.append(accM.getinfoacc(i));
-        }
-        vipUI.show(a.toString());
-    }
-
-    private void readAllSpeakers(){
-        ArrayList<Integer> allTalks = vipM.getEventList(accM.getCurrAccountId());
-        StringBuilder a = new StringBuilder("These are the speakers in talks you attend. Choose an id to message:\n");
-        for (Integer t: allTalks){
-            ArrayList<Integer> spkLst = new ArrayList<>(eventManager.getSpeakerIDIn(t));
-            for(int speaker:spkLst){
-                String each = "(" + eventManager.getTitle(t) + ")" + accM.getinfoacc(speaker);
-                a.append(each);
-            }
-        }
-        vipUI.show(a.toString());
-    }
-    private String enterTxt(){
-        StringBuilder a = new StringBuilder();
-        boolean exit = false;
-        vipUI.informEnteringText();
-        do{
-            String line = vipUI.getLineTxt();
-            if (line.equals("end")) exit = true;
-            else{
-                a.append(line);
-                a.append("\n");
-            }
-        } while(!exit);
-        return a.toString();
-    }
 
 }

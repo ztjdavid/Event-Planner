@@ -11,21 +11,7 @@ public class VipUI extends Presenter{
         printText("----------------VIPSystem-----------------\nHi, " +
                 "VIP! Would you like to\n1 -> View, Attend, Leave event\n2 -> Send message \n3 -> Logout");
     }
-    public String getrequest(){
-        return requestInput("Please Enter Your Response");
-    }
 
-    public String getrequest1(){
-        return requestInput("Please Enter Your Response(Enter -1 to go back.): ");
-    }
-
-    public String getrequest2(){
-        return requestInput("Please Enter The Valid ID of the Event(Enter -1 to go back.): ");
-    }
-
-    public String getrequest3(){
-        return requestInput("Please Enter The Valid ID of one of your Event(Enter -1 to go back.): ");
-    }
 
     public void informinvalidchoice(){
         printText("Invalid Choice. Please try again.");
@@ -101,9 +87,16 @@ public class VipUI extends Presenter{
             case 2:
                 printText("Please Enter Your Response(Enter -1 to go back.)");
                 break;
+            case 3:
+                printText("Please Enter The Valid ID of the Event(Enter -1 to go back.): ");
+                break;
+            case 4:
+                printText("Please Enter The Valid ID of one of your Event(Enter -1 to go back.): ");
+                break;
         }
         return requestInput();
     }
+
 
     public void announcereply(){printText("Please enter the id of the message " +
             "if you want to reply to.");
