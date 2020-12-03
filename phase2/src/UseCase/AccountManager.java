@@ -179,6 +179,6 @@ public class AccountManager {
      */
     public boolean isVIPAcc(int userID){ return getAccountWithId(userID).getUserType() == 3;}
 
-    public void addUnread(int accountId, int unreadId){getAccountWithId(accountId).addUnreadInbox(unreadId);}
+    public void getUnread(int accountId, int unreadId){getAccountWithId(accountId).addUnreadInbox(unreadId);}
 }
 
