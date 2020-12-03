@@ -17,7 +17,6 @@ public class VipUI extends Presenter{
         printText("Invalid Choice. Please try again.");
     }
 
-    //should also print a list of available talks
     public void signUpTalk(){
         printText("----------------Signing up a talk-----------------\n" +
                 "Please enter the id of the talk that you want to sign up");

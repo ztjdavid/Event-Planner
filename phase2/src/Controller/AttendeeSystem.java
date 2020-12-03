@@ -137,7 +137,7 @@ public class AttendeeSystem {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = attendeeUI.getrequest();
+            userInput = attendeeUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else {
@@ -153,7 +153,7 @@ public class AttendeeSystem {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = attendeeUI.getrequest();
+            userInput = attendeeUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else {
@@ -169,7 +169,7 @@ public class AttendeeSystem {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = attendeeUI.getrequest();
+            userInput = attendeeUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else {
@@ -321,7 +321,7 @@ public class AttendeeSystem {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = attendeeUI.getrequest2();
+            userInput = attendeeUI.getrequest(3);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else {
@@ -361,7 +361,7 @@ public class AttendeeSystem {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = attendeeUI.getrequest3();
+            userInput = attendeeUI.getrequest(4);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else {
@@ -405,7 +405,7 @@ public class AttendeeSystem {
         String userInput;
         boolean valid = false;
         do{
-            userInput = attendeeUI.getrequest1();
+            userInput = attendeeUI.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else { valid = true; }
@@ -446,7 +446,7 @@ public class AttendeeSystem {
         String userInput;
         boolean valid = false;
         do{
-            userInput = attendeeUI.getrequest1();
+            userInput = attendeeUI.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
                 attendeeUI.informinvalidchoice();
             else { valid = true; }
