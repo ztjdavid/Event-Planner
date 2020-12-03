@@ -1,10 +1,7 @@
 package Controller;
-import Controller.MessageHandler.UnreadHandler;
-import Entity.Message;
-import Entity.Speaker;
+import Controller.SpeakerHandler.UnreadHandler;
 import Presenters.SpeakerUI;
 import UseCase.*;
-import com.sun.xml.internal.ws.api.handler.MessageHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -174,6 +171,7 @@ public class SpeakerSystem {
                 speakerUI.unreadSuccess(tmsgid);
                 speakerUI.askForBack();
             }
+
         }while(tmsgid != -1);
     }
 

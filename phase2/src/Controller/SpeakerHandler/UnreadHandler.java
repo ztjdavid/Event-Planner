@@ -1,10 +1,9 @@
-package Controller.MessageHandler;
+package Controller.SpeakerHandler;
 
 import Entity.Message;
 import Entity.Speaker;
 import Presenters.SpeakerUI;
 import UseCase.*;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.ArrayList;
 
