@@ -125,9 +125,6 @@ public class EventManager {
      * @return true iff the event's time is in conflict with the current event.
      */
 
-    public boolean checkTimeConflict(Event event){
-        return this.eventList.get(currentTalkID).getStartTime() == event.getStartTime();
-    }
 
     /**
      * Return the Event given the talkID
