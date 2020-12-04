@@ -182,6 +182,9 @@ public class OrganizerPresenter extends Presenter{
     public void message8(){
         printText("Message sent!");
     }
+    public void message8(int replyID){
+        printText("Reply sent with ID:" + replyID + "!");
+    }
 
     public void message1(){
         printText("Account Creation Failed! Passwords Do Not Match!");

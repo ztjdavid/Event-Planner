@@ -523,7 +523,7 @@ public class OrganizerSystemHandler {
             int msg = MsgM.setreply(replyid, str, replier);
             accM.addinbox(receiverID, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
-            organizerPresenter.message8();
+            organizerPresenter.message8(msg);
         }else {
             organizerPresenter.message0();
         }
