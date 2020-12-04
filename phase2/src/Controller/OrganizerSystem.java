@@ -13,9 +13,11 @@ public class OrganizerSystem {
     protected EventManager eventM;
     protected RoomManager roomM;
     protected OrganizerSystemHandler oh;
+    protected RequestManager rqstM;
 
     public OrganizerSystem(AccountManager accM, MessageManager MsgM, OrganizerPresenter organizerPresenter, StrategyManager strategyM,
-                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM, OrganizerSystemHandler oh) {
+                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM,
+                           OrganizerSystemHandler oh, RequestManager rqstM) {
         this.accM = accM;
         this.MsgM = MsgM;
         this.strategyM = strategyM;
@@ -25,6 +27,7 @@ public class OrganizerSystem {
         this.eventM = eventM;
         this.roomM = roomM;
         this.oh = oh;
+        this.rqstM = rqstM;
     }
 
     /**
@@ -34,10 +37,10 @@ public class OrganizerSystem {
         int userChoice;
         do {
             organizerPresenter.startup();
-            userChoice = organizerPresenter.chooseOption(oh.getChoiceList(5),
+            userChoice = organizerPresenter.chooseOption(oh.getChoiceList(6),
                     "Please Choose a Dashboard:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
-        } while (userChoice != 5);
+        } while (userChoice != 6);
     }
 
     //Helper methods:
@@ -60,6 +63,31 @@ public class OrganizerSystem {
                 roomDashBoard();
                 break;
             case 5:
+                requestDashBoard();
+            case 6:
+                break;
+        }
+    }
+
+    private void requestDashBoard(){
+        int userInput;
+        do{
+            organizerPresenter.messaging1();
+            userInput = organizerPresenter.chooseOption(oh.getChoiceList(3),
+                    "Please Choose a Option:", "Invalid Choice! Please Try Again:");
+            requestOp(userInput);
+        }while(userInput != 3);
+    }
+
+    private void requestOp(int userInput) {
+        switch (userInput) {
+            case 1:
+                oh.readAllRequest();
+                break;
+            case 2:
+                oh.changeStatus();
+                break;
+            default:
                 break;
         }
     }

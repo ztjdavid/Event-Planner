@@ -1,6 +1,7 @@
 package UseCase;
 import Entity.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RequestManager {
@@ -49,6 +50,10 @@ public class RequestManager {
     public boolean checkRequestExist(int requestid){return requestList.containsKey(requestid);}
 
     public HashMap<Integer, Request> getRequestList(){return new HashMap<>(requestList);}
+
+    public ArrayList<Integer> getRequestID(){
+        return new ArrayList<>(this.requestList.keySet());
+    }
 
 
 }

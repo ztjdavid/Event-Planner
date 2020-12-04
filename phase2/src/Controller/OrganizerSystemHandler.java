@@ -16,9 +16,12 @@ public class OrganizerSystemHandler {
     protected EventManager eventM;
     protected RoomManager roomM;
     protected OrganizerPresenter organizerPresenter;
+    protected RequestManager rqstM;
 
     public OrganizerSystemHandler(AccountManager accM, MessageManager MsgM, StrategyManager strategyM, OrganizerManager ognM,
-                                  SpeakerManager spkM, EventManager eventM, RoomManager roomM, OrganizerPresenter organizerPresenter){
+                                  SpeakerManager spkM, EventManager eventM, RoomManager roomM, OrganizerPresenter organizerPresenter,
+                                  RequestManager rqstM){
+        this.rqstM = rqstM;
         this.accM = accM;
         this.MsgM = MsgM;
         this.strategyM = strategyM;
@@ -452,7 +455,7 @@ public class OrganizerSystemHandler {
         int spkId;
         do {
             readAllSpk();
-            spkId = targetGetter(4);
+            spkId = targetGetter(5);
             if (spkId != -1) {
                 String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
                         "\n(End editing by typing a single \"end\" in a new line.)");
@@ -506,6 +509,8 @@ public class OrganizerSystemHandler {
             validChoices.addAll(ognM.getVIPList());
         } else if (i == 3){
             validChoices.addAll(ognM.getInbox());
+        } else if(i == 4){
+            validChoices.addAll(rqstM.getRequestID());
         } else{
             validChoices.addAll(ognM.getSpeakerList());
         }
@@ -585,9 +590,41 @@ public class OrganizerSystemHandler {
         String a = MsgM.formatmsgget(arrayList);
         organizerPresenter.show(a);
         organizerPresenter.askForBack();
+    }
+
+    protected void readAllRequest(){
+        ArrayList<Integer> requestIDs = new ArrayList<>(rqstM.getRequestID());
+        StringBuilder a = new StringBuilder();
+        for (int item : requestIDs){
+            a.append(rqstM.getRequestInfo(item));
         }
+        organizerPresenter.show(a.toString());
+        organizerPresenter.askForBack();
+    }
+
+    protected void changeStatus(){
+        ArrayList<Integer> requestIDs = new ArrayList<>(rqstM.getRequestID());
+        if(requestIDs.size() == 0){
+            organizerPresenter.message24();
+            organizerPresenter.askForBack();
+        }else {
+            int requestID;
+            readAllRequest(requestIDs);
+            requestID = targetGetter(4);
+            rqstM.changeToAddressed(requestID);
+            organizerPresenter.message25();
+            organizerPresenter.askForBack();
+        }
+    }
+
+    private void readAllRequest(ArrayList<Integer> lst){
+        StringBuilder a = new StringBuilder("These are the Requests. Choose an ID to Change Status:\n");
+        for (int item : lst) {
+            a.append(accM.getinfoacc(item));
+        }
+        organizerPresenter.show(a.toString());
+    }
+
 
 }
-
-
 

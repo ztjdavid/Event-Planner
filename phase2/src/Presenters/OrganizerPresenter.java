@@ -17,7 +17,8 @@ public class OrganizerPresenter extends Presenter{
                 "\n2 -> Account Dashboard" +
                 "\n3 -> Event Dashboard" +
                 "\n4 -> Room Dashboard" +
-                "\n5 -> Logout");
+                "\n5 -> Request Dashboard" +
+                "\n6 -> Logout");
     }
 
     public int getRoomID(){
@@ -120,6 +121,14 @@ public class OrganizerPresenter extends Presenter{
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Create a Room" +
                 "\n2 -> Read all Rooms" +
+                "\n3 -> Go back");
+    }
+
+    public void messaging1(){
+        printText("----------------Request Dashboard-----------------" +
+                "\nHi, Organizer! Would you like to:" +
+                "\n1 -> Read all Request" +
+                "\n2 -> Change the Status of a Request" +
                 "\n3 -> Go back");
     }
 
@@ -347,6 +356,14 @@ public class OrganizerPresenter extends Presenter{
 
     public void message13(){
         printText("You Do Not Have a Message That Has Been Replied!");
+    }
+
+    public void message24(){
+        printText("There is Currently no Request Recorded.");
+    }
+
+    public void message25(){
+        printText("Request Status Changed to Addressed Successfully!");
     }
 
 }
