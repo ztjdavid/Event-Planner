@@ -141,4 +141,16 @@ public class OrganizerManager extends AccountManager{
         acc.setInbox(inbox);
         acc.setSentBox(sentBox);
     }
+
+    public ArrayList<Integer> getVIPList(){
+        ArrayList<Integer> lst = new ArrayList<>();
+        HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
+        for(int item:accList.keySet()){
+            if (accList.get(item).getUserType() == 3){
+                lst.add(item);
+            }
+        }
+        return lst;
+    }
+
 }

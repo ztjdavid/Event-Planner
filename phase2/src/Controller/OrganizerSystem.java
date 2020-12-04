@@ -1,4 +1,5 @@
 package Controller;
+import Entity.Organizer;
 import Presenters.OrganizerPresenter;
 import UseCase.*;
 
@@ -17,7 +18,7 @@ public class OrganizerSystem {
     protected OrganizerSystemHandler oh;
 
     public OrganizerSystem(AccountManager accM, MessageManager MsgM, OrganizerPresenter organizerPresenter, StrategyManager strategyM,
-                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM) {
+                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM, OrganizerSystemHandler oh) {
         this.accM = accM;
         this.MsgM = MsgM;
         this.strategyM = strategyM;
@@ -26,6 +27,7 @@ public class OrganizerSystem {
         this.spkM = spkM;
         this.eventM = eventM;
         this.roomM = roomM;
+        this.oh = oh;
     }
 
     /**
@@ -168,7 +170,7 @@ public class OrganizerSystem {
                 oh.doCreateVIP();
                 break;
             case 4:
-                oh.readAllSpeakers();
+                oh.readAllAccounts();
                 break;
             case 5:
                 break;
@@ -179,10 +181,10 @@ public class OrganizerSystem {
         int userInput;
         do {
             organizerPresenter.messaging();
-            userInput = organizerPresenter.chooseOption(oh.getChoiceList(8),
+            userInput = organizerPresenter.chooseOption(oh.getChoiceList(7),
                     "Please Choose a Option:", "Invalid Choice! Please Try Again:");
             messageOp(userInput);
-        } while (userInput != 8);
+        } while (userInput != 7);
     }
 
     private void messageOp(int userInput) {
@@ -206,9 +208,6 @@ public class OrganizerSystem {
                 oh.readAllMsg();
                 break;
             case 7:
-                oh.msgToReply();
-                break;
-            case 8:
                 break;
         }
     }

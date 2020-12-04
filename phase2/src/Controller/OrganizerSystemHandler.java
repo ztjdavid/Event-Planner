@@ -316,76 +316,87 @@ public class OrganizerSystemHandler {
         return -1;
     }
 
-    protected void readAllSpeakers(){
+    protected void readAllAccounts(){
         organizerPresenter.message16();
         ArrayList<Integer> speakerList = ognM.getSpeakerList();
+        ArrayList<Integer> attendeeList = ognM.getAttendeeList();
+        ArrayList<Integer> VIPList = ognM.getVIPList();
         for(int item: speakerList){
             String username = accM.getUserName(item);
             ArrayList<Integer> talks = new ArrayList<>(spkM.getTalkList(item));
             organizerPresenter.readSpeakers(username, item, talks);
         }
-        organizerPresenter.askForBack();
-    }
-
-    protected void msgToReply() {
-        int getID;
-        do {
-            readMsgAndPrep();
-            getID = targetGetter(1);
-            if (getID != -1) {
-                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
-                        "\n(End editing by typing a single \"end\" in a new line.)");
-                int replyId = MsgM.setreply(getID, txt, accM.getCurrAccountName());
-                organizerPresenter.message20(replyId);
-                organizerPresenter.askForBack();
-            }
-        } while (getID != -1);
-    }
-
-
-
-    private void readMsgAndPrep() {
-        readAllOfMsg();
-        organizerPresenter.announceReply();
-    }
-
-    private void readAllOfMsg() {
-        String a = MsgM.formatmsgget(ognM.getInbox());
-        organizerPresenter.show(a);
-    }
-
-    protected void readAllMsg() {
-        ArrayList<Integer> inboxID = new ArrayList<>(ognM.getInbox());
-        if (inboxID.size() != 0) {
-            organizerPresenter.display(MsgM.formatmsgget(inboxID));
-        } else {
-            organizerPresenter.message11();
+        for(int item: attendeeList){
+            String username = accM.getUserName(item);
+            ArrayList<Integer> talks = new ArrayList<>(spkM.getTalkList(item));
+            organizerPresenter.readAttendee(username, item, talks);
+        }
+        for(int item: VIPList){
+            String username = accM.getUserName(item);
+            ArrayList<Integer> talks = new ArrayList<>(spkM.getTalkList(item));
+            organizerPresenter.readVIP(username, item, talks);
         }
         organizerPresenter.askForBack();
     }
 
-    protected void replyToMsg() {
-        int tAttendeeId;
-        do {
-            readMsg();
-            tAttendeeId = targetGetter(1);
-            if (tAttendeeId != -1) {
-                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
-                        "\n(End editing by typing a single \"end\" in a new line.)");
-                messageToIndividual(txt, tAttendeeId);
-                organizerPresenter.askForBack();
-            }
-        } while (tAttendeeId != -1);
+    protected void readAllMsg() {
+        int messageID;
+        ArrayList<Integer> inbox = ognM.getInbox();
+        StringBuilder a = new StringBuilder("These are the messages. Choose an id to read:\n");
+        if (inbox.size() != 0) {
+            do {
+                for (int item : inbox) {
+                    a.append(item);
+                }
+                organizerPresenter.show(a.toString());
+                messageID = targetGetter(3);
+                if(messageID != -1){
+                    organizerPresenter.display(MsgM.getString(messageID));
+                    //askToAchieve();
+                }
+            }while(messageID != -1);
+        } else {
+            organizerPresenter.message11();
+            organizerPresenter.askForBack();
+        }
     }
 
-    private void readMsg() {
-        readAllReply();
-        organizerPresenter.announceMsg();
+    protected void replyToMsg() {
+        int messageID;
+        do {
+            readAllReply();
+            messageID = targetGetter(1);
+            if (messageID != -1) {
+                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                        "\n(End editing by typing a single \"end\" in a new line.)");
+                replyToIndividual(txt, messageID);
+                organizerPresenter.askForBack();
+            }
+        } while (messageID != -1);
+    }
+
+    private ArrayList<Integer> replyList(){
+        ArrayList<Integer> sent = new ArrayList<>(ognM.getMsgSend());
+        ArrayList<Integer> replies = new ArrayList<>();
+        for(int item : sent){
+            if(MsgM.hasReply(item)){
+                replies.add(item);
+            }
+        }
+        return replies;
     }
 
     private void readAllReply() {
-        String a = MsgM.formatreply(ognM.getMsgSend());
-        organizerPresenter.show(a);
+        ArrayList<Integer> replies = new ArrayList<>(replyList());
+        if(replies.size() == 0){
+            organizerPresenter.message13();
+        }else{
+                StringBuilder a = new StringBuilder("These are the Replies. Choose an ID to reply:\n");
+                for (int item : replies) {
+                    a.append(item);
+                }
+                organizerPresenter.show(a.toString());
+        }
     }
 
     protected void messageToAllSpeaker() {
@@ -416,7 +427,7 @@ public class OrganizerSystemHandler {
         int spkId;
         do {
             readAllSpk();
-            spkId = targetGetter(3);
+            spkId = targetGetter(4);
             if (spkId != -1) {
                 String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
                         "\n(End editing by typing a single \"end\" in a new line.)");
@@ -463,11 +474,12 @@ public class OrganizerSystemHandler {
     private int targetGetter(int i) {
         ArrayList<Integer> validChoices = new ArrayList<>();
         if (i == 1) {
-            validChoices.addAll(ognM.getAttendeeList());
-            validChoices.addAll(ognM.getSpeakerList());
+            validChoices.addAll(replyList());
         } else if (i == 2) {
             validChoices.addAll(ognM.getAttendeeList());
-        } else {
+        } else if (i == 3){
+            validChoices.addAll(ognM.getInbox());
+        } else{
             validChoices.addAll(ognM.getSpeakerList());
         }
         validChoices.add(-1);
@@ -488,6 +500,21 @@ public class OrganizerSystemHandler {
         int check = ognM.messageable1(receiverID);
         if (check == 1) {
             int msg = MsgM.createmessage(ognM.getCurrAccountName(), ognM.getCurrOrganizer().getUserId(), receiverID, str);
+            accM.addinbox(receiverID, msg);
+            accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
+            organizerPresenter.message8();
+        }else {
+            organizerPresenter.message0();
+        }
+    }
+
+    private void replyToIndividual(String str, int messageID) {
+        int replyid = MsgM.replyID(messageID);
+        int receiverID = MsgM.getReceiverID(messageID);
+        String replier = MsgM.getReplier(messageID);
+        int check = ognM.messageable1(receiverID);
+        if (check == 1) {
+            int msg = MsgM.setreply(replyid, str, replier);
             accM.addinbox(receiverID, msg);
             accM.addsend(ognM.getCurrOrganizer().getUserId(), msg);
             organizerPresenter.message8();

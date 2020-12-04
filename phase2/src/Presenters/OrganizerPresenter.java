@@ -90,8 +90,7 @@ public class OrganizerPresenter extends Presenter{
                 "\n4 -> Message to all speakers" +
                 "\n5 -> Read your replies and send message to repliers" +
                 "\n6 -> Read all Messages in Inbox" +
-                "\n7 -> Read your messages and reply to senders" +
-                "\n8 -> Go Back");
+                "\n7 -> Go Back");
     }
 
     public void messaging2(){
@@ -260,6 +259,17 @@ public class OrganizerPresenter extends Presenter{
         printText("Speaker Account ID:" + accountID + "\nUsername:" + userName);
         readTalks1(talks);
     }
+
+    public void readAttendee(String userName, int accountID, ArrayList<Integer> talks){
+        printText("Attendee Account ID:" + accountID + "\nUsername:" + userName);
+        readTalks1(talks);
+    }
+
+    public void readVIP(String userName, int accountID, ArrayList<Integer> talks){
+        printText("VIP Attendee Account ID:" + accountID + "\nUsername:" + userName);
+        readTalks1(talks);
+    }
+
     public void errorMessage(){
         printText("Scheduling Failed! The StartTime of Event Must be Between 9 - 17! Please Try again!");
     }
@@ -318,10 +328,8 @@ public class OrganizerPresenter extends Presenter{
         printText("Event Creation Failed. The During Exceeds the Limit. Rooms are Closed After 5 P.M.!");
     }
 
-    ///// Louisa Modified
-    public void message20(int replyId){
-        System.out.println("Reply Message sent! Here is the Reply Id:" + replyId);
+    public void message13(){
+        printText("You Do Not Have a Message That Has Been Replied!");
     }
-    /////
 
 }

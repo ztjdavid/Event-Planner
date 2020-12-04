@@ -46,6 +46,11 @@ public class MessageManager {
         return getAllmessage().get(messageid);
     }
 
+    public String getString(int messageid){
+        return getAllmessage().get(messageid).getTxt();
+    }
+
+
     ///// Louisa modified
     /**
      * Set the reply to the Message given the message ID. Return the new reply's ID.
@@ -116,8 +121,25 @@ public class MessageManager {
 
     /////
 
+    public boolean hasReply(int messageID){
+        Message message = allmessage.get(messageID);
+        return (message.getReply() != -1);
+    }
 
+    public int replyID(int messageID){
+        Message message = allmessage.get(messageID);
+        return message.getReply();
+    }
 
+    public int getReceiverID(int messageID){
+        Message message = allmessage.get(messageID);
+        return message.getGetterid();
+    }
+
+    public String getReplier(int messageID){
+        Message message = allmessage.get(messageID);
+        return message.getReplyer();
+    }
 
 }
 
