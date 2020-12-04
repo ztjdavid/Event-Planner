@@ -141,6 +141,10 @@ public class MessageManager {
         return message.getReplyer();
     }
 
+    public void removeMessage(int messageID){
+        allmessage.remove(messageID);
+    }
+
 }
 
 

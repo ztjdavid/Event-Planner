@@ -352,13 +352,32 @@ public class OrganizerSystemHandler {
                 messageID = targetGetter(3);
                 if(messageID != -1){
                     organizerPresenter.display(MsgM.getString(messageID));
-                    //askToAchieve();
+                    askToAchieve(messageID);
                 }
             }while(messageID != -1);
         } else {
             organizerPresenter.message11();
             organizerPresenter.askForBack();
         }
+    }
+
+    private void askToAchieve(int messageID){
+        int userInput = organizerPresenter.chooseOption(getChoiceList(3), "Would you like to:" +
+                "\n1 -> Mark as Unread" +
+                "\n2 -> Move to Archive" +
+                "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
+        if(userInput == 1){
+            organizerPresenter.message20();
+        } else if(userInput == 2){
+            accM.removeMessage(messageID);
+            accM.archiveMessage(messageID);
+            organizerPresenter.message21();
+        }else if(userInput == 3){
+            accM.removeMessage(messageID);
+            MsgM.removeMessage(messageID);
+            organizerPresenter.message22();
+        }
+        organizerPresenter.askForBack();
     }
 
     protected void replyToMsg() {
@@ -461,7 +480,8 @@ public class OrganizerSystemHandler {
 
     private void readAllAtt() {
         ArrayList<Integer> att = ognM.getAttendeeList();
-        StringBuilder a = new StringBuilder("These are the attendees. Choose an id to message:\n");
+        att.addAll(ognM.getVIPList());
+        StringBuilder a = new StringBuilder("These are the Attendees and VIP Attendees. Choose an ID to Message:\n");
         for (Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
@@ -470,7 +490,7 @@ public class OrganizerSystemHandler {
 
     private void readAllSpk() {
         ArrayList<Integer> att = ognM.getSpeakerList();
-        StringBuilder a = new StringBuilder("These are the Speakers. Choose an id to message:\n");
+        StringBuilder a = new StringBuilder("These are the Speakers. Choose an ID to Message:\n");
         for (Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
@@ -483,6 +503,7 @@ public class OrganizerSystemHandler {
             validChoices.addAll(replyList());
         } else if (i == 2) {
             validChoices.addAll(ognM.getAttendeeList());
+            validChoices.addAll(ognM.getVIPList());
         } else if (i == 3){
             validChoices.addAll(ognM.getInbox());
         } else{
@@ -547,7 +568,7 @@ public class OrganizerSystemHandler {
         organizerPresenter.message10();
     }
 
-    protected ArrayList<Integer> getChoiceList(Integer size){
+    protected ArrayList<Integer> getChoiceList(int size){
         int i = 0;
         int j = 1;
         ArrayList<Integer> choiceList = new ArrayList<>();
@@ -559,5 +580,14 @@ public class OrganizerSystemHandler {
         return choiceList;
     }
 
+    protected void readArchivedMsg(){
+        ArrayList<Integer> arrayList = new ArrayList<>(accM.getArchive());
+        String a = MsgM.formatmsgget(arrayList);
+        organizerPresenter.show(a);
+        organizerPresenter.askForBack();
+        }
 
 }
+
+
+

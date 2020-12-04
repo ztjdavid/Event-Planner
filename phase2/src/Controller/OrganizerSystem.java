@@ -1,10 +1,7 @@
 package Controller;
-import Entity.Organizer;
 import Presenters.OrganizerPresenter;
 import UseCase.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class OrganizerSystem {
     protected AccountManager accM;
@@ -181,10 +178,10 @@ public class OrganizerSystem {
         int userInput;
         do {
             organizerPresenter.messaging();
-            userInput = organizerPresenter.chooseOption(oh.getChoiceList(7),
+            userInput = organizerPresenter.chooseOption(oh.getChoiceList(8),
                     "Please Choose a Option:", "Invalid Choice! Please Try Again:");
             messageOp(userInput);
-        } while (userInput != 7);
+        } while (userInput != 8);
     }
 
     private void messageOp(int userInput) {
@@ -208,6 +205,9 @@ public class OrganizerSystem {
                 oh.readAllMsg();
                 break;
             case 7:
+                oh.readArchivedMsg();
+                break;
+            case 8:
                 break;
         }
     }

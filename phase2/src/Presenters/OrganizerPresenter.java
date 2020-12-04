@@ -89,8 +89,9 @@ public class OrganizerPresenter extends Presenter{
                 "\n3 -> Message to all of the attendees" +
                 "\n4 -> Message to all speakers" +
                 "\n5 -> Read your replies and send message to repliers" +
-                "\n6 -> Read all Messages in Inbox" +
-                "\n7 -> Go Back");
+                "\n6 -> Read all of Unread Messages" +
+                "\n7 -> Read all of Archived Messages"+
+                "\n8 -> Go Back");
     }
 
     public void messaging2(){
@@ -121,6 +122,19 @@ public class OrganizerPresenter extends Presenter{
                 "\n2 -> Read all Rooms" +
                 "\n3 -> Go back");
     }
+
+    public void message20(){
+        printText("Message Successfully Marked as Unread.");
+    }
+
+    public void message21(){
+        printText("Message Successfully Archived.");
+    }
+
+    public void message22(){
+        printText("Message Successfully Deleted.");
+    }
+
 
     public void readTalks(String title, int ID, int startTime, String roomName, int roomId, int type,
                           ArrayList<Integer> speakers, ArrayList<Integer> attendees, int duration){

@@ -4,6 +4,7 @@ import Entity.Attendee;
 import Entity.Organizer;
 import Entity.Speaker;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -180,5 +181,20 @@ public class AccountManager {
     public boolean isVIPAcc(int userID){ return getAccountWithId(userID).getUserType() == 3;}
 
     public void addUnread(int accountId, int unreadId){getAccountWithId(accountId).addUnreadInbox(unreadId);}
+
+    public void removeMessage(int messageID){
+        Account acc = getCurrAccount();
+        acc.removeMessage(messageID);
+    }
+
+    public void archiveMessage(int messageID){
+        Account acc = getCurrAccount();
+        acc.archiveMessage(messageID);
+    }
+
+    public ArrayList<Integer> getArchive(){
+        return new ArrayList<>(getCurrAccount().archiveMessage());
+    }
+
 }
 

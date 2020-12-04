@@ -122,4 +122,16 @@ public abstract class Account {
     public void addUnreadInbox(int unreadId){this.unreadInbox.add(unreadId);}
     /////
 
+    public void removeMessage(int messageID){
+        this.unreadInbox.remove(messageID);
+    }
+
+    public void archiveMessage(int messageID){
+        this.inbox.add(messageID);
+    }
+
+    public ArrayList<Integer> archiveMessage(){
+        return new ArrayList<>(this.inbox);
+    }
+
 }
