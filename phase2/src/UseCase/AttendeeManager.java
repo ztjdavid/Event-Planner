@@ -97,5 +97,15 @@ public class AttendeeManager extends AccountManager{
         acc.setSentBox(sentBox);
         acc.setEventList(eventList);
     }
+    ///Grey modify
+    public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}
+
+    public void deleteUnreadInbox(int msgid){
+         ArrayList<Integer> inbox = getCurrAccount().getUnreadInbox();
+         inbox.remove(Integer.valueOf(msgid));
+
+    }
+
+
 }
 

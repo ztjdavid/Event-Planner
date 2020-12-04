@@ -61,7 +61,7 @@ public class AttendeeSystem {
             attendeeUI.msgSelect();
             userChoice = ah.chooseMode2();
             msgOp(userChoice);
-        } while (userChoice != 6);
+        } while (userChoice != 7);
 
 
     }
@@ -129,6 +129,9 @@ public class AttendeeSystem {
                 msgtoreply();
                 break;
             case 6:
+                allUnreadMsg();
+                break;
+            case 7:
                 break;
         }
     }
@@ -301,14 +304,15 @@ public class AttendeeSystem {
         for(Integer t:allTalksId){
             if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
 
-
-            if (!is_VIP){
-                for (Integer i:result){
-                    if (eventManager.checkVIP(t)) result.remove(Integer.valueOf(i));
-
-                }}
-
         }
+        if (!is_VIP){
+            for (Integer i:result){
+                if (eventManager.checkVIP(i)) result.remove(Integer.valueOf(i));
+
+            }}
+
+
+
         return result;
     }
 
@@ -522,7 +526,22 @@ public class AttendeeSystem {
         } while(!exit);
         return a.toString();
     }
+///Grey modify
 
+    private void allUnreadMsg(){
+        int tmsgid;
+        do{
+            ah.readAllUnreadMsg();
+            tmsgid = ah.targetunread();
+            if(tmsgid != -1){
+                MsgM.readMessage(tmsgid);
+                attendeeM.deleteUnreadInbox(tmsgid);
+                attendeeUI.unreadSuccess(tmsgid);
+                attendeeUI.askForBack();
+            }
+
+        }while(tmsgid != -1);
+    }
 
 
 }

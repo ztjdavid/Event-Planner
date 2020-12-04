@@ -44,7 +44,8 @@ public class AttendeeUI extends Presenter{
                 "3 -> View your inbox\n" +
                 "4 -> Read your replies and send message to repliers\n" +
                 "5 -> Read your messages and reply to senders\n" +
-                "6 -> Go back.");////////////ERICMODIFY
+                "6 -> Read your unread messages and mark those as read\n" +
+                "7 -> Go Back");
     }
 
     public void eventselect(){
@@ -99,6 +100,14 @@ public class AttendeeUI extends Presenter{
     public void announcemsg(){printText("Please enter the id of the replier " +
             "if you want to message to.");
     }
+
+    public void annouceUnread(){System.out.println("Please enter the id of the message" +
+            "if you want to read.");}
+
+    public void unreadSuccess(int messageId){System.out.println("Your message with id: " + messageId +
+            " has been succesfully read!");}
+
+
 
     //////////LouisaModify
     public void signUpVipTalk(){

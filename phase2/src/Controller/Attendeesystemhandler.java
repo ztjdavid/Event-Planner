@@ -1,5 +1,7 @@
 package Controller;
 
+import Entity.Message;
+import Entity.Speaker;
 import Presenters.AttendeeUI;
 import UseCase.*;
 
@@ -46,7 +48,7 @@ public class Attendeesystemhandler {
     }
 
     public int chooseMode2(){    //For MsgDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -110,16 +112,20 @@ public class Attendeesystemhandler {
      * @return A tlkList containing all events this account can attend.
      */
     private ArrayList<Integer> getAllAvailableTalks(int a){
+        boolean is_VIP = false;
+        if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
         ArrayList<Integer> myTalksId = attM.getAllMyTalksId();
         ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(a);
         ArrayList<Integer> result = new ArrayList<>();
         for(Integer t:allTalksId){
             if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
-            // Boolean is_VIP = false;
-            // if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
-            // TODO: add a checker for VIP event, waiting for event flag var update.
-            // if event t is vip, remove t from result if cur_acc is not a VIP.
+
         }
+
+        if (!is_VIP){
+            for (Integer i:result){
+                if (eventManager.checkVIP(i)) result.remove(Integer.valueOf(i));
+            }}
         return result;
     }
 
@@ -251,4 +257,48 @@ public class Attendeesystemhandler {
         }while(!valid);
         return Integer.parseInt(userInput);
     }
+///////Grey modify
+    private ArrayList<Integer> getAllUnread() {
+        ArrayList<Integer> inbox = attM.getInbox();
+        ArrayList<Integer> unread = new ArrayList<>();
+        for (Integer i : inbox) {
+            boolean is_Read = MsgM.checkMessageStatus(i);
+            if (!is_Read) {
+            unread.add(i);
+            accM.addUnread(attM.getCurrAccountId(), i);
+        }
+    }
+
+    return unread;
+}
+
+
+
+    protected void readAllUnreadMsg(){
+        readAllUnread();
+        attUI.annouceUnread();
+
+    }
+
+    private void readAllUnread(){
+
+        String all = MsgM.formatAllUnread(getAllUnread());
+        attUI.show(all);
+    }
+
+    protected int targetunread(){
+        ArrayList<Integer> validChoices = attM.getUnreadInbox();
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = attUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+
 }
