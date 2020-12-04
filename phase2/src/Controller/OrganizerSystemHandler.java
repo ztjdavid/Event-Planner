@@ -363,16 +363,20 @@ public class OrganizerSystemHandler {
 
     protected void replyToMsg() {
         int messageID;
-        do {
-            readAllReply();
-            messageID = targetGetter(1);
-            if (messageID != -1) {
-                String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
-                        "\n(End editing by typing a single \"end\" in a new line.)");
-                replyToIndividual(txt, messageID);
-                organizerPresenter.askForBack();
-            }
-        } while (messageID != -1);
+        boolean hasReplies = readAllReply();
+        if(hasReplies) {
+            do {
+                messageID = targetGetter(1);
+                if (messageID != -1) {
+                    String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
+                            "\n(End editing by typing a single \"end\" in a new line.)");
+                    replyToIndividual(txt, messageID);
+                    organizerPresenter.askForBack();
+                }
+            } while (messageID != -1);
+        }else{
+            organizerPresenter.askForBack();
+        }
     }
 
     private ArrayList<Integer> replyList(){
@@ -386,16 +390,18 @@ public class OrganizerSystemHandler {
         return replies;
     }
 
-    private void readAllReply() {
+    private boolean readAllReply() {
         ArrayList<Integer> replies = new ArrayList<>(replyList());
         if(replies.size() == 0){
             organizerPresenter.message13();
+            return false;
         }else{
                 StringBuilder a = new StringBuilder("These are the Replies. Choose an ID to reply:\n");
                 for (int item : replies) {
                     a.append(item);
                 }
                 organizerPresenter.show(a.toString());
+                return true;
         }
     }
 
