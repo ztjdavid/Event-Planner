@@ -7,13 +7,14 @@ public class Request {
     private int senderid;
     private int talkid;
 
-    public Request(int requestid, String service, boolean status, int senderid, int talkid){
+    public Request(int requestid, String service, int senderid, int talkid){
         this.requestid = requestid;
-        this.service = "";//"dietary restrictions" or something like that to a talk
+        this.service = service;//"dietary restrictions" or something like that to a talk
         this.status = false;//false means pending; true means addressed
         this.senderid = senderid;
         this.talkid = talkid;
     }
+    public int getRequestid(){return this.requestid;}
 
     public void setService(String service){this.service = service;}
 

@@ -3,19 +3,23 @@ import Entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RequestManager {
     protected HashMap<Integer, Request> requestList;
     protected static int totalRequestCount = 0;
+    protected ArrayList<Request> requestl;
 
-    public RequestManager() {this.requestList = new HashMap<>();}
+    public RequestManager() {this.requestList = new HashMap<>(); this.requestl = new ArrayList<>();}
 
-    public void createRequest(String service, boolean status, int senderid, int talkid){
+    public void createRequest(String service, int senderid, int talkid){
         int requestid = totalRequestCount;
-        Request newRequest = new Request(requestid, service, status, senderid, talkid);
+        Request newRequest = new Request(requestid, service, senderid, talkid);
+        this.requestl.add(newRequest);
         this.requestList.put(requestid, newRequest);
         totalRequestCount +=1;
     }
+
 
     public Request getRequestWithID(int requestid) { return this.requestList.get(requestid);}
 
@@ -53,6 +57,26 @@ public class RequestManager {
 
     public ArrayList<Integer> getRequestID(){
         return new ArrayList<>(this.requestList.keySet());
+    }
+
+    private ArrayList<Request> getrequestofsender(int senderid){
+        ArrayList<Request> res = new ArrayList<>();
+        for(Request re : requestl){
+            if(re.getSenderid() == senderid){res.add(re);}
+        }
+        return res;
+    }
+
+    private String showall(ArrayList<Request> requestlist){
+        String a = new String();
+        a += "These are your requests";
+        for(Request re : requestlist){a += "\n" + getRequestInfo(re.getRequestid());}
+        return a;
+
+    }
+
+    public String showallre(int senderid){
+        return showall(getrequestofsender(senderid));
     }
 
 

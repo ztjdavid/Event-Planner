@@ -36,8 +36,21 @@ public class SpeakerUI extends Presenter{
                             "3 -> Message all attendees who register your talks\n" +
                             "4 -> Read your replies and send message to repliers\n" +
                             "5 -> Read your messages and reply to senders\n"+
-                            "6 -> Go back.");
+                            "6 -> Read all unread message.\n"+
+                "6 -> Go back.");
     }
+
+    public void eventdb(){
+        printText("---------------Event-------------\nHi Speaker! Would you like to:" +
+                "\n1 -> Read all information about your events" +
+                "\n2 -> Your Request\n3 -> Go back");
+    }
+    public void requestdb(){
+        printText("--------------Your Request------------\nHi Speaker! Would you like to:" +
+                "\n1 -> Read all my requests with status" +
+                "\n2 -> Send new request\n3 -> Go back");
+    }
+
 
     public void informEnteringText(){
         printText("Please Enter Your Message.\n " +
@@ -59,8 +72,10 @@ public class SpeakerUI extends Presenter{
     }
     public void stopmessaging(){
         printText("Stop Messaging");
-
     }
+
+    public void stoprequest(){printText("Stop Request");}
+
     public void show(String a){printText(a + "\n");}
 
     public void announcereply(){printText("Please enter the id of the message " +

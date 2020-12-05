@@ -14,11 +14,12 @@ public class SpeakerSystem {
     protected StrategyManager strategyM;
     protected SpeakerManager SpeakerM;
     protected RoomManager roomM;
+    protected RequestManager reM;
     protected SpeakerSystemHandler sh;
 
 
     public SpeakerSystem(AccountManager accM, EventManager eventM, MessageManager MsgM, SpeakerUI SpeakerUI,
-                         StrategyManager StrategyManager, SpeakerManager SpeakerM, RoomManager roomM) {
+                         StrategyManager StrategyManager, SpeakerManager SpeakerM, RoomManager roomM, RequestManager reM) {
         this.accM = accM;
         this.eventManager = eventM;
         this.MsgM = MsgM;
@@ -26,6 +27,7 @@ public class SpeakerSystem {
         this.strategyM = StrategyManager;
         this.SpeakerM = SpeakerM;
         this.roomM = roomM;
+        this.reM = reM;
 
     }
 
@@ -46,7 +48,7 @@ public class SpeakerSystem {
     private void enterBranch(int userChoice){
         switch (userChoice){
             case 1:
-                talkDashboard();
+                EventDashboard1();
                 break;
             case 2:
                 MsgDashboard();
@@ -56,9 +58,68 @@ public class SpeakerSystem {
         }
     }
 
-    private void talkDashboard(){
+    private void Readallevent(){
         readalltalks();
         speakerUI.askForBack();
+    }
+    /////////////////////EVENT DB//////////////
+    private void EventDashboard1(){
+        int userChoice;
+        do {
+            speakerUI.eventdb();
+            userChoice = chooseMode1();
+            eventop(userChoice);
+        } while (userChoice != 3);
+    }
+
+    private void eventop(int userChoice){
+        switch (userChoice){
+            case 1:
+                Readallevent();
+                break;
+            case 2:
+                Request();
+                break;
+            case 3:
+                break;
+    }}
+////////////////REQUEST///////////////
+    private void Request(){
+        int userChoice;
+        do {
+            speakerUI.requestdb();
+            userChoice = chooseMode1();
+            requestop(userChoice);
+        } while (userChoice != 3);
+    }
+
+    private void requestop(int userChoice){
+        switch (userChoice){
+            case 1:
+                Readallrequest();
+                break;
+            case 2:
+                Sendnewrequest();
+                break;
+            case 3:
+                break;
+        }}
+
+    private void Readallrequest(){
+        reM.showallre(accM.getCurrAccountId());
+    }
+
+    private void Sendnewrequest(){
+        int targettalk;
+        do{
+            readalltalkssimp();
+            targettalk = targettalks();
+            if (targettalk != -1){
+                String txt = enterTxt();
+                requestfortalk(txt, targettalk);
+                speakerUI.askForBack();
+            }
+        } while (targettalk != -1);
     }
 
     private void MsgDashboard(){
@@ -217,7 +278,7 @@ public class SpeakerSystem {
     private int chooseMode2(){    // For messaging dashboard.
         boolean valid = false;
         String userInput;
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         do{
             userInput = speakerUI.getrequest(1);
             if (!strategyM.isValidChoice(userInput, validChoices))
@@ -373,11 +434,18 @@ public class SpeakerSystem {
         ArrayList<Integer> att = getallattendeev1();
         msgToList(a, att);
     }
+
     private void messagetotalk(String a, int b) {
-        if (b == 999) {speakerUI.stopmessaging();}
-        ArrayList<Integer> att = eventManager.getTalkWithId(b).getAttendeeId();
-        msgToList(a, att);
+        if (b != -1) {ArrayList<Integer> att = eventManager.getTalkWithId(b).getAttendeeId();
+            msgToList(a, att);}
+        speakerUI.stopmessaging();
     }
+
+    private void requestfortalk(String a, int b) {
+        if (b != -1) {reM.createRequest(a, accM.getCurrAccountId(), b);}
+        speakerUI.stoprequest();
+    }
+
 
 
     private ArrayList<Integer> getallattendeev1() {

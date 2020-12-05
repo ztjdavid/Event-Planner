@@ -63,7 +63,7 @@ public class AppSystem {
         this.signUpS = new SignUpSystem(accM, signUpUI, strategyM);
         this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, ah);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM, oh, rqstM);
-        this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM);
+        this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
         this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, vh);
         this.ah = new Attendeesystemhandler(accM, eventM, MsgM, attUI, strategyM, attM, roomM);
 
