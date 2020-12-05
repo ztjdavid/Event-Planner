@@ -300,5 +300,35 @@ public class Attendeesystemhandler {
         return Integer.parseInt(userInput);
     }
 
+    protected ArrayList<Integer> getChoiceList(int size){
+        int i = 0;
+        int j = 1;
+        ArrayList<Integer> choiceList = new ArrayList<>();
+        while (i!=size){
+            choiceList.add(j);
+            j++;
+            i++;
+        }
+        return choiceList;
+    }
+
+    protected void askToAchieve(int msgId){
+        int userInput = attUI.chooseOption(getChoiceList(3), "Would you like to:" +
+                "\n1 -> Mark as Unread" +
+                "\n2 -> Move to Archive" +
+                "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
+        if(userInput == 1){
+            attUI.annouceMarkUnread();
+        } else if(userInput == 2){
+            accM.removeMessage(msgId);
+            accM.archiveMessage(msgId);
+            attUI.archiveMsg();
+        }else if(userInput == 3){
+            accM.removeMessage(msgId);
+            MsgM.removeMessage(msgId);
+            attUI.deleteMsg();
+        }
+        attUI.askForBack();}
+
 
 }

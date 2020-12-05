@@ -468,9 +468,24 @@ public class AttendeeSystem {
 
     private void readAllMsg(){
 
-        String a = MsgM.formatmsgget(attendeeM.getInbox());
-        attendeeUI.show(a);
-        attendeeUI.askForBack();
+        int messageID;
+        ArrayList<Integer> inbox = attendeeM.getInbox();
+
+        if (inbox.size() != 0) {
+            do {
+                String a = MsgM.formatmsgget(attendeeM.getInbox());
+                attendeeUI.show(a);
+                messageID = targetmsg();
+                if(messageID != -1){
+                    attendeeUI.show(MsgM.getString(messageID));
+                    ah.askToAchieve(messageID);
+                }
+            }while(messageID != -1);
+        } else {
+            attendeeUI.announceEmptyInbox();
+            attendeeUI.askForBack();
+        }
+
 
     }
 
@@ -542,7 +557,6 @@ public class AttendeeSystem {
 
         }while(tmsgid != -1);
     }
-
 
 }
 

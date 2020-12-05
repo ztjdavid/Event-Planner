@@ -103,11 +103,16 @@ public class AttendeeUI extends Presenter{
 
     public void annouceUnread(){System.out.println("Please enter the id of the message" +
             "if you want to read.");}
+    public void annouceMarkUnread(){System.out.println("Message Successfully Marked as Unread.");}
 
     public void unreadSuccess(int messageId){System.out.println("Your message with id: " + messageId +
             " has been succesfully read!");}
 
+    public void announceEmptyInbox(){ printText("There is No Message in Your Inbox."); }
 
+    public void archiveMsg(){ printText("Message Successfully Archived."); }
+
+    public void deleteMsg(){ printText("Message Successfully Deleted."); }
 
     //////////LouisaModify
     public void signUpVipTalk(){
