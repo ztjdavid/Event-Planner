@@ -19,7 +19,7 @@ public class SpeakerSystem {
 
 
     public SpeakerSystem(AccountManager accM, EventManager eventM, MessageManager MsgM, SpeakerUI SpeakerUI,
-                         StrategyManager StrategyManager, SpeakerManager SpeakerM, RoomManager roomM, RequestManager reM) {
+                         StrategyManager StrategyManager, SpeakerManager SpeakerM, RoomManager roomM, RequestManager reM, SpeakerSystemHandler sh) {
         this.accM = accM;
         this.eventManager = eventM;
         this.MsgM = MsgM;
@@ -28,6 +28,7 @@ public class SpeakerSystem {
         this.SpeakerM = SpeakerM;
         this.roomM = roomM;
         this.reM = reM;
+        this.sh = sh;
 
     }
 
@@ -38,7 +39,7 @@ public class SpeakerSystem {
         int userChoice;
         do{
             speakerUI.startup();
-            userChoice = chooseMode1();
+            userChoice = sh.chooseMode1();
             enterBranch(userChoice);
         } while (userChoice != 3);
     }
@@ -48,7 +49,7 @@ public class SpeakerSystem {
     private void enterBranch(int userChoice){
         switch (userChoice){
             case 1:
-                EventDashboard1();
+                EventDashboard();
                 break;
             case 2:
                 MsgDashboard();
@@ -59,15 +60,15 @@ public class SpeakerSystem {
     }
 
     private void Readallevent(){
-        readalltalks();
+        sh.readalltalks();
         speakerUI.askForBack();
     }
     /////////////////////EVENT DB//////////////
-    private void EventDashboard1(){
+    private void EventDashboard(){
         int userChoice;
         do {
             speakerUI.eventdb();
-            userChoice = chooseMode1();
+            userChoice = sh.chooseMode1();
             eventop(userChoice);
         } while (userChoice != 3);
     }
@@ -88,7 +89,7 @@ public class SpeakerSystem {
         int userChoice;
         do {
             speakerUI.requestdb();
-            userChoice = chooseMode1();
+            userChoice = sh.chooseMode1();
             requestop(userChoice);
         } while (userChoice != 3);
     }
@@ -112,11 +113,11 @@ public class SpeakerSystem {
     private void Sendnewrequest(){
         int targettalk;
         do{
-            readalltalkssimp();
-            targettalk = targettalks();
+            sh.readalltalkssimp();
+            targettalk = sh.targettalks();
             if (targettalk != -1){
-                String txt = enterTxt();
-                requestfortalk(txt, targettalk);
+                String txt = sh.enterTxt();
+                sh.requestfortalk(txt, targettalk);
                 speakerUI.askForBack();
             }
         } while (targettalk != -1);
@@ -126,7 +127,7 @@ public class SpeakerSystem {
         int userChoice;
         do{
             speakerUI.messaging();
-            userChoice = chooseMode2();
+            userChoice = sh.chooseMode2();
             msgOp(userChoice);
         } while (userChoice != 7);
 
@@ -162,11 +163,11 @@ public class SpeakerSystem {
     private void msgToAttendee(){
         int tAttendeeId;
         do{
-            readallatt();
-            tAttendeeId = targetgetter();
+            sh.readallatt();
+            tAttendeeId = sh.targetgetter();
             if (tAttendeeId != -1){
-                String txt = enterTxt();
-                messagetoatt(txt, tAttendeeId);
+                String txt = sh.enterTxt();
+                sh.messagetoatt(txt, tAttendeeId);
                 speakerUI.askForBack();
             }
         }while(tAttendeeId != -1);
@@ -175,21 +176,21 @@ public class SpeakerSystem {
     private void msgToTalk(){
         int targettalk;
         do{
-            readalltalkssimp();
-            targettalk= targettalks();
+            sh.readalltalkssimp();
+            targettalk= sh.targettalks();
             if (targettalk != -1){
-                String txt = enterTxt();
-                messagetotalk(txt, targettalk);
+                String txt = sh.enterTxt();
+                sh.messagetotalk(txt, targettalk);
                 speakerUI.askForBack();
             }
         } while (targettalk != -1);
     }
 
     private void msgToAllTalks(){
-        int userChoice = chooseMode3();
+        int userChoice = sh.chooseMode3();
         if (userChoice == 1){
-            String txt = enterTxt();
-            messageall(txt);
+            String txt = sh.enterTxt();
+            sh.messageall(txt);
             speakerUI.askForBack();
         }
     }
@@ -197,10 +198,10 @@ public class SpeakerSystem {
     private void msgtoreply(){
         int tmsgid;
         do{
-            readmsgandrep();
-            tmsgid = targetmsg();
+            sh.readmsgandrep();
+            tmsgid = sh.targetmsg();
             if (tmsgid != -1){
-                String txt = enterTxt();
+                String txt = sh.enterTxt();
                 MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
                 speakerUI.askForBack();
             }
@@ -210,11 +211,11 @@ public class SpeakerSystem {
     private void replytomsg(){
         int tAttendeeId;
         do{
-            readrepandmsg();
-            tAttendeeId = targetgetter();
+            sh.readrepandmsg();
+            tAttendeeId = sh.targetgetter();
             if (tAttendeeId != -1){
-                String txt = enterTxt();
-                messagetoatt(txt, tAttendeeId);
+                String txt = sh.enterTxt();
+                sh.messagetoatt(txt, tAttendeeId);
                 speakerUI.askForBack();
             }
         }while(tAttendeeId != -1);
@@ -242,123 +243,10 @@ public class SpeakerSystem {
     }
 
     private void readAllUnread(){
-        SpeakerSystemHandler UnH = new SpeakerSystemHandler(MsgM, speakerUI, SpeakerM);
-        String all = MsgM.formatAllUnread(UnH.getAllUnread(SpeakerM.getCurrAccountId()));
+        String all = MsgM.formatAllUnread(sh.getAllUnread(SpeakerM.getCurrAccountId()));
         speakerUI.show(all);
     }
-    /////
 
-
-    private void readrepandmsg(){
-        readallreply();
-        speakerUI.announcemsg();
-
-    }
-
-    private void readmsgandrep(){
-        readallmsg();
-        speakerUI.announcereply();
-    }
-
-
-    //Helper Methods:
-    private int chooseMode1(){    //For Speaker Dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = speakerUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
-    private int chooseMode2(){    // For messaging dashboard.
-        boolean valid = false;
-        String userInput;
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-        do{
-            userInput = speakerUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
-    private int chooseMode3(){    // For MessageAll confirmation.
-        boolean valid = false;
-        String userInput;
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(0, 1));
-        do{
-            userInput = speakerUI.confirmMsgAll();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
-    private String enterTxt(){
-        StringBuilder a = new StringBuilder();
-        boolean exit = false;
-        speakerUI.informEnteringText();
-        do{
-            String line = speakerUI.getLineTxt();
-            if (line.equals("end")) exit = true;
-            else{
-                a.append(line);
-                a.append("\n");
-            }
-        } while(!exit);
-        return a.toString();
-    }
-
-    private int targetgetter(){
-        ArrayList<Integer> validChoices = getallattendeev1();
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = speakerUI.getrequest(2);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
-    private int targettalks(){
-        ArrayList<Integer> validChoices = SpeakerM.getalltalk();
-        validChoices.add(-1);
-        boolean valid = false;
-        String userInput;
-        do{
-            userInput = speakerUI.getrequest2();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        } while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
-    private int targetmsg(){
-        ArrayList<Integer> validChoices = SpeakerM.getinbox();
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = speakerUI.getrequest(2);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
-    ///// Louisa added
     private int targetunread(){
         ArrayList<Integer> validChoices = SpeakerM.getUnread();
         validChoices.add(-1);
@@ -372,90 +260,5 @@ public class SpeakerSystem {
         }while(!valid);
         return Integer.parseInt(userInput);
     }
-    /////
-
-    private void readalltalks(){
-        StringBuilder a = new StringBuilder("Event Information:");
-        ArrayList<Integer> alltalks = SpeakerM.getalltalk();
-        for(Integer t:alltalks){
-            String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));}
-        speakerUI.show(a.toString());
-    }
-    private void readalltalkssimp(){
-        StringBuilder a = new StringBuilder("Event Information with id:");
-        ArrayList<Integer> alltalks = SpeakerM.getalltalk();
-        for(Integer t:alltalks){
-            a.append(eventManager.gettalkinfosimp(t));}
-        speakerUI.show(a.toString());
-    }
-
-
-    private void readallatt(){
-        ArrayList<Integer> att = getallattendeev1();
-        StringBuilder a = new StringBuilder("These are the attendees who attend your talk. Choose an id to message:");
-        for(Integer i : att) {
-            a.append(accM.getinfoacc(i));
-
-        }
-        speakerUI.show(a.toString());
-    }
-
-    private void readallmsg(){
-        String a = MsgM.formatmsgget(SpeakerM.getinbox());
-        speakerUI.show(a);
-    }
-
-    private void readallreply(){
-        String a = MsgM.formatreply(SpeakerM.getmsgsend());
-        speakerUI.show(a);
-    }
-
-    private void msgToList(String a, ArrayList<Integer> att){
-        if (att.isEmpty()) speakerUI.noattendees();
-        else{
-            for (int getterid : att) {
-                messagetoatt(a, getterid);
-            }
-            speakerUI.messagesend();
-        }
-    }
-
-    private void messagetoatt(String a, int getterid) {
-
-        int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterid, a);
-        accM.addinbox(getterid, msg);
-        accM.addsend(accM.getCurrAccountId(), msg);
-        speakerUI.messagesend();
-    }
-
-
-    private void messageall(String a) {
-        ArrayList<Integer> att = getallattendeev1();
-        msgToList(a, att);
-    }
-
-    private void messagetotalk(String a, int b) {
-        if (b != -1) {ArrayList<Integer> att = eventManager.getTalkWithId(b).getAttendeeId();
-            msgToList(a, att);}
-        speakerUI.stopmessaging();
-    }
-
-    private void requestfortalk(String a, int b) {
-        if (b != -1) {reM.createRequest(a, accM.getCurrAccountId(), b);}
-        speakerUI.stoprequest();
-    }
-
-
-
-    private ArrayList<Integer> getallattendeev1() {
-        ArrayList<Integer> talklist = SpeakerM.getalltalk();
-        return eventManager.getallattendee(talklist);
-    }
-
-    ///// Louisa added
-
-
-    /////
 
 }
