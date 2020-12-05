@@ -34,6 +34,7 @@ public class AppSystem {
     protected VIPsystemhandler vh;
     protected Attendeesystemhandler ah;
     protected OrganizerSystemHandler oh;
+    protected SpeakerSystemHandler sh;
 
 
 
@@ -48,7 +49,7 @@ public class AppSystem {
         this.startUI = new StartUI();
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
-        this.speakerUI = new SpeakerUI();
+        this.speakerUI = new SpeakerUI(textUI);
         this.attUI = new AttendeeUI(textUI);
         this.vipUI = new VipUI(textUI);
         this.organizerPresenter = new OrganizerPresenter(textUI);
