@@ -94,7 +94,7 @@ public class AttendeeSystem {
             attendeeUI.eventselect();
             userChoice = ah.chooseMode3();
             EventSignup(userChoice);
-        } while (userChoice != 7);
+        } while (userChoice != 4);
     }
     private void EventSignup(int userChoice){
         switch (userChoice){
@@ -346,7 +346,7 @@ public class AttendeeSystem {
     private void signUpMyNewTalks(int a){
         int input;
         do{
-            attendeeUI.signUpTalk();
+            attendeeUI.signUpTalk(a);
             ah.readAllAvailableTalks(a);
             input = ah.targetTalksSignUp(a);
             if (input != -1){

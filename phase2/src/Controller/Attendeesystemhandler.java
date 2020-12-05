@@ -148,7 +148,7 @@ public class Attendeesystemhandler {
     //////////////CANCEL TALK////////////////
 
     public void readAllMyTalks(){
-        StringBuilder a = new StringBuilder("My signed up talks:");
+        StringBuilder a = new StringBuilder("My signed up events:");
         ArrayList<Integer> allTalks = attM.getAllMyTalksId();
         for(Integer t:allTalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
