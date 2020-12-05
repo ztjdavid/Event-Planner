@@ -1,40 +1,37 @@
 package Presenters;
 
-import java.util.Scanner;
+public class SpeakerUI extends Presenter{
 
-public class SpeakerUI {
-    private final Scanner speakerscanner;
-
-    public SpeakerUI(){
-        this.speakerscanner = new Scanner(System.in);
+    public SpeakerUI(ITextUI textUI) {
+        super(textUI);
     }
 
 
     public void startup(){
-        System.out.println("----------------SpeakerSystem-----------------\n" +
+        printText("----------------SpeakerSystem-----------------\n" +
                 "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Logout");
     }
 
     public String getrequest(int s){
         switch (s){
             case 1:
-                System.out.println("Please Enter Your Response.");
+                printText("Please Enter Your Response.");
                 break;
             case 2:
-                System.out.println("Please Enter Your Response(Enter -1 to go back.)");
+                printText("Please Enter Your Response(Enter -1 to go back.)");
                 break;
         }
-        return speakerscanner.nextLine();
+        return requestInput();
     }
 
     public void informinvalidchoice(){
-        System.out.println("Invalid Choice. Please try again.");
+        printText("Invalid Choice. Please try again.");
 
     }
     public void messaging(){
-        System.out.println("----------------Messaging-----------------");
-        System.out.println("Hi, Speaker! Would you like to:");
-        System.out.println("1 -> Message to an attendee.\n" +
+        printText("----------------Messaging-----------------");
+        printText("Hi, Speaker! Would you like to:");
+        printText("1 -> Message to an attendee.\n" +
                             "2 -> Message to attendees in one talk\n" +
                             "3 -> Message all attendees who register your talks\n" +
                             "4 -> Read your replies and send message to repliers\n" +
@@ -43,57 +40,52 @@ public class SpeakerUI {
     }
 
     public void informEnteringText(){
-        System.out.println("Please Enter Your Message.\n " +
+        printText("Please Enter Your Message.\n " +
                 "(End editing by typing a single \"end\" in a new line.)");
     }
 
-    public String getLineTxt(){
-        return speakerscanner.nextLine();
-    }
-
     public String getrequest2(){
-        System.out.println("Please Enter the ID of ONE Event. Enter -1 to cancel and go back. ");
-        return speakerscanner.nextLine();
+        printText("Please Enter the ID of ONE Event. Enter -1 to cancel and go back. ");
+        return requestInput();
     }
 
     public void messagesend(){
-        System.out.println("Message Send\n");
+        printText("Message Send\n");
 
     }
     public void noattendees(){
-        System.out.println("No Attendees");
+        printText("No Attendees");
 
     }
     public void stopmessaging(){
-        System.out.println("Stop Messaging");
+        printText("Stop Messaging");
 
     }
-    public void show(String a){System.out.println(a + "\n");}
+    public void show(String a){printText(a + "\n");}
 
-    public void announcereply(){System.out.println("Please enter the id of the message " +
+    public void announcereply(){printText("Please enter the id of the message " +
             "if you want to reply to.");
     }
 
-    public void announcemsg(){System.out.println("Please enter the id of the replier " +
+    public void announcemsg(){printText("Please enter the id of the replier " +
             "if you want to message to.");
     }
     ///// Louisa added
-    public void annouceUnread(){System.out.println("Please enter the id of the message" +
+    public void annouceUnread(){printText("Please enter the id of the message" +
             "if you want to read.");}
 
-     public void unreadSuccess(int messageId){System.out.println("Your message with id: " + messageId +
+     public void unreadSuccess(int messageId){printText("Your message with id: " + messageId +
              " has been succesfully read!");}
     /////
 
     public void askForBack(){
-        System.out.println("\nPress enter to go back.");
-        speakerscanner.nextLine();
+        requestInput("\nPress enter to go back.");
     }
 
     public String confirmMsgAll(){
-        System.out.println("Are you sure to message all attendees in this system?" +
+        printText("Are you sure to message all attendees in this system?" +
                 "\nEnter 1 to confirm, 0 to cancel and go back.(Irreversible once confirmed.)");
-        return speakerscanner.nextLine();
+        return requestInput();
     }
 
 }
