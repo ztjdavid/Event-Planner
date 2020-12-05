@@ -12,7 +12,9 @@ public class AttendeeUI extends Presenter{
 
     public void startup() {
         printText("----------------AttendeeSystem-----------------\nHi, " +
-                "Attendee! Would you like to\n1 -> View your signed up talks\n2 -> Sign up for a new talk\n3 -> Cancel a talk\n4 -> Send message \n5 -> Logout");
+                "Attendee! Would you like to\n1 -> View your signed up events\n" +
+                "2 -> Sign up for a new events\n" +
+                "3 -> Cancel a events\n4 -> Send message \n5 -> Logout");
     }
 
     public void informinvalidchoice(){
@@ -20,9 +22,21 @@ public class AttendeeUI extends Presenter{
     }
 
     //should also print a list of available talks
-    public void signUpTalk(){
-        printText("----------------Signing up a talk-----------------\n" +
-                "Please enter the id of the talk that you want to sign up");
+    public void signUpTalk(int s){
+        switch (s){
+            case 1:
+                printText("----------------Signing up a talk-----------------\n" +
+                        "Please enter the id of the talk that you want to sign up");
+                break;
+            case 2:
+                printText("----------------Signing up a discussion-----------------\n" +
+                        "Please enter the id of the discussion that you want to sign up");
+                break;
+            case 0:
+                printText("----------------Signing up a party-----------------\n" +
+                        "Please enter the id of the party that you want to sign up");
+                break;
+        }
     }
 
     public void signUpSuc(){
