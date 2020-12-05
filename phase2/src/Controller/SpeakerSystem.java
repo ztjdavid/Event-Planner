@@ -14,7 +14,7 @@ public class SpeakerSystem {
     protected StrategyManager strategyM;
     protected SpeakerManager SpeakerM;
     protected RoomManager roomM;
-    protected SpeakerSystemHandler SpeakerSystemHandler;
+    protected SpeakerSystemHandler sh;
 
 
     public SpeakerSystem(AccountManager accM, EventManager eventM, MessageManager MsgM, SpeakerUI SpeakerUI,

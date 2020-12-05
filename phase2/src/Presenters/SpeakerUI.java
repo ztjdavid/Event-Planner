@@ -88,4 +88,9 @@ public class SpeakerUI extends Presenter{
         return requestInput();
     }
 
+    public String getLineTxt(){
+        return requestInput();
+    }
+
+
 }
