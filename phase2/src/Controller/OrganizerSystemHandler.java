@@ -90,7 +90,10 @@ public class OrganizerSystemHandler {
         else if (!accM.isSpeakerAcc(speakerID)) return 3;
         else if(roomM.getTimeTable(roomID).containsValue(startTime)) flag = 0;
         for(int item:spkM.getTalkList(speakerID)){
-            if(eventM.getStartTime(item) == startTime){
+            int start = eventM.getStartTime(item);
+            int end = eventM.getStartTime(item) + eventM.getDuration(item);
+            if(start >= startTime + duration || end <= startTime){}
+            else{
                 flag = 2;
             }
         }
