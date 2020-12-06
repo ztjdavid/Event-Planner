@@ -101,7 +101,7 @@ public class OrganizerPresenter extends Presenter{
                 "\n1 -> Create a speaker" +
                 "\n2 -> Create an Attendee" +
                 "\n3 -> Create a VIP Attendee" +
-                "\n4 -> Read All Speaker" +
+                "\n4 -> Read All Accounts" +
                 "\n5 -> Go back");
     }
 
@@ -268,7 +268,7 @@ public class OrganizerPresenter extends Presenter{
     }
 
     public void message16(){
-        printText("These are All of the Speakers:");
+        printText("These are All of the Accounts:");
     }
 
     public void message17(){
@@ -286,14 +286,12 @@ public class OrganizerPresenter extends Presenter{
         readTalks1(talks);
     }
 
-    public void readAttendee(String userName, int accountID, ArrayList<Integer> talks){
+    public void readAttendee(String userName, int accountID){
         printText("Attendee Account ID:" + accountID + "\nUsername:" + userName);
-        readTalks1(talks);
     }
 
-    public void readVIP(String userName, int accountID, ArrayList<Integer> talks){
+    public void readVIP(String userName, int accountID){
         printText("VIP Attendee Account ID:" + accountID + "\nUsername:" + userName);
-        readTalks1(talks);
     }
 
     public void errorMessage(){

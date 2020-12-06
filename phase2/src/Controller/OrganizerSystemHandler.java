@@ -334,13 +334,11 @@ public class OrganizerSystemHandler {
         }
         for(int item: attendeeList){
             String username = accM.getUserName(item);
-            ArrayList<Integer> talks = new ArrayList<>(spkM.getTalkList(item));
-            organizerPresenter.readAttendee(username, item, talks);
+            organizerPresenter.readAttendee(username, item);
         }
         for(int item: VIPList){
             String username = accM.getUserName(item);
-            ArrayList<Integer> talks = new ArrayList<>(spkM.getTalkList(item));
-            organizerPresenter.readVIP(username, item, talks);
+            organizerPresenter.readVIP(username, item);
         }
         organizerPresenter.askForBack();
     }

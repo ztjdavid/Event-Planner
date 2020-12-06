@@ -1,8 +1,5 @@
 package UseCase;
-import Entity.Account;
-import Entity.Attendee;
-import Entity.Organizer;
-import Entity.Speaker;
+import Entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +36,10 @@ public class AccountManager {
             case 2:
                 accountList.put(TotalNumOfAccount,
                         new Speaker(username, password, TotalNumOfAccount));
+                break;
+            case 3:
+                accountList.put(TotalNumOfAccount,
+                        new VIP(username, password, TotalNumOfAccount));
                 break;
             default:
                 accountList.put(TotalNumOfAccount,
