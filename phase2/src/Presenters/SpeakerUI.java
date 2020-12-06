@@ -9,7 +9,7 @@ public class SpeakerUI extends Presenter{
 
     public void startup(){
         printText("----------------SpeakerSystem-----------------\n" +
-                "Hi, Speaker! Would you like to\n1 -> Read Your Talks\n2 -> Message\n3 -> Logout");
+                "Hi, Speaker! Would you like to\n1 -> Read Your Events\n2 -> Message\n3 -> Logout");
     }
 
     public String getrequest(int s){
@@ -32,8 +32,8 @@ public class SpeakerUI extends Presenter{
         printText("----------------Messaging-----------------");
         printText("Hi, Speaker! Would you like to:");
         printText("1 -> Message to an attendee.\n" +
-                            "2 -> Message to attendees in one talk\n" +
-                            "3 -> Message all attendees who register your talks\n" +
+                            "2 -> Message to attendees in one event\n" +
+                            "3 -> Message all attendees who register your events\n" +
                             "4 -> Read your replies and send message to repliers\n" +
                             "5 -> Read your messages and reply to senders\n"+
                             "6 -> Read all unread message.\n"+
