@@ -46,7 +46,7 @@ public class VIPsystemhandler {
     }
 
     public int chooseMode2(){    //For MsgDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -235,6 +235,46 @@ public class VIPsystemhandler {
             }
         } while(!exit);
         return a.toString();
+    }
+
+    private ArrayList<Integer> getAllUnread() {
+        ArrayList<Integer> inbox = vipM.getInbox(accM.getCurrAccountId());
+        ArrayList<Integer> unread = new ArrayList<>();
+        for (Integer i : inbox) {
+            boolean is_Read = MsgM.checkMessageStatus(i);
+            if (!is_Read) {
+                unread.add(i);
+                accM.addUnread(vipM.getCurrAccountId(), i);
+            }
+        }
+
+        return unread;
+    }
+
+    public void readAllUnreadMsg(){
+        readAllUnread();
+        vipUI.annouceUnread();
+
+    }
+
+    private void readAllUnread(){
+
+        String all = MsgM.formatAllUnread(getAllUnread());
+        vipUI.show(all);
+    }
+
+    public int targetunread(){
+        ArrayList<Integer> validChoices = vipM.getUnreadInbox();
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = vipUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                vipUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
     }
 
     ////////////////////MODIFY LATER///////////

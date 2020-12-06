@@ -43,6 +43,16 @@ public class VIPManager extends AccountManager{
         return getVIPWithId(id).getSentMessage();
     }
 
+    public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}
+
+
+    public void deleteUnreadInbox(int msgid){
+        ArrayList<Integer> inbox = getCurrAccount().getUnreadInbox();
+        inbox.remove(Integer.valueOf(msgid));
+
+    }
+
+
     @Override
     public boolean messageable(Account other){
         return other.getUserType() != 0 && other.getUserId() != getCurrVIP().getUserId();

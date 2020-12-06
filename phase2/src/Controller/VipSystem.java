@@ -140,6 +140,9 @@ public class VipSystem {
                 msgtoreply();
                 break;
             case 6:
+                allUnreadMsg();
+                break;
+            case 7:
                 break;
         }
     }
@@ -288,6 +291,21 @@ public class VipSystem {
         vipUI.show(a);
         vipUI.askForBack();
 
+    }
+
+    private void allUnreadMsg(){
+        int tmsgid;
+        do{
+            vh.readAllUnreadMsg();
+            tmsgid = vh.targetunread();
+            if(tmsgid != -1){
+                MsgM.readMessage(tmsgid);
+                vipM.deleteUnreadInbox(tmsgid);
+                vipUI.unreadSuccess(tmsgid);
+                vipUI.askForBack();
+            }
+
+        }while(tmsgid != -1);
     }
 
 

@@ -41,7 +41,8 @@ public class VipUI extends Presenter{
                 "3 -> View your inbox\n" +
                 "4 -> Read your replies and send message to repliers\n" +
                 "5 -> Read your messages and reply to senders\n" +
-                "6 -> Go back.");////////////ERICMODIFY
+                "6 -> Read your unread messages and mark those as read\n" +
+                "7 -> Go Back");
     }
 
     public void eventmain(){
@@ -58,9 +59,7 @@ public class VipUI extends Presenter{
                 "4 -> VIP Talk\n" +
                 "5 -> VIP Discussion\n" +
                 "6 -> VIP Party\n" + "7 -> Go back"
-                );////////////ERICMODIFY
-    }
-    /////////////
+                );}
 
     public void show(String a){printText(a);}
 
@@ -104,6 +103,13 @@ public class VipUI extends Presenter{
     public void announcemsg(){printText("Please enter the id of the replier " +
             "if you want to message to.");
     }
+
+
+    public void annouceUnread(){printText("Please enter the id of the message" +
+            "if you want to read.");}
+
+    public void unreadSuccess(int messageId){printText("Your message with id: " + messageId +
+            " has been successfully read!");}
 
     //////////LouisaModify
     public void signUpVipTalk(){
