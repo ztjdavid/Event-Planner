@@ -115,12 +115,12 @@ public class AttendeeUI extends Presenter{
             "if you want to message to.");
     }
 
-    public void annouceUnread(){System.out.println("Please enter the id of the message" +
+    public void annouceUnread(){printText("Please enter the id of the message" +
             "if you want to read.");}
-    public void annouceMarkUnread(){System.out.println("Message Successfully Marked as Unread.");}
+    public void annouceMarkUnread(){printText("Message Successfully Marked as Unread.");}
 
-    public void unreadSuccess(int messageId){System.out.println("Your message with id: " + messageId +
-            " has been succesfully read!");}
+    public void unreadSuccess(int messageId){printText("Your message with id: " + messageId +
+            " has been successfully read!");}
 
     public void announceEmptyInbox(){ printText("There is No Message in Your Inbox."); }
 
