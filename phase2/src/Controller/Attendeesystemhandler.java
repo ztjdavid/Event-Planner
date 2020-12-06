@@ -346,5 +346,63 @@ public class Attendeesystemhandler {
         }
         attUI.askForBack();}
 
+    protected void signUpMyNewTalks(int a){
+        int input;
+        do{
+            attUI.signUpTalk(a);
+            readAllAvailableTalks(a);
+            input = targetTalksSignUp(a);
+            if (input != -1){
+                if(eventManager.checkVIP(input)){
+                    attUI.signUpVipTalk();
+                    if(attM.getCurrAttendee().getUserType() == 3){
+                        attM.enrol(input);
+                        eventManager.addAttendeev2(input, attM.getCurrAttendee());
+                        attUI.signUpSuc();
+                    }else{attUI.informNotVip();}
+                }else if(!eventManager.checkVIP(input)){
+                    attM.enrol(input);
+                    eventManager.addAttendeev2(input, attM.getCurrAttendee());
+                    attUI.signUpSuc();
+                }
+            }
+        }while(input != -1);
+    }
 
+    protected void readAllMsg() {
+
+        int messageID;
+        ArrayList<Integer> inbox = attM.getInbox();
+
+        if (inbox.size() != 0) {
+            do {
+                String a = MsgM.formatmsgget(attM.getInbox());
+                attUI.show(a);
+                messageID = targetmsg();
+                if (messageID != -1) {
+                    attUI.show(MsgM.getString(messageID));
+                    askToAchieve(messageID);
+                }
+            } while (messageID != -1);
+        } else {
+            attUI.announceEmptyInbox();
+            attUI.askForBack();
+        }
+    }
+
+
+    protected void allUnreadMsg(){
+        int tmsgid;
+        do{
+            readAllUnreadMsg();
+            tmsgid = targetunread();
+            if(tmsgid != -1){
+                MsgM.readMessage(tmsgid);
+                attM.deleteUnreadInbox(tmsgid);
+                attUI.unreadSuccess(tmsgid);
+                attUI.askForBack();
+            }
+
+        }while(tmsgid != -1);
+    }
 }

@@ -99,13 +99,13 @@ public class AttendeeSystem {
     private void EventSignup(int userChoice){
         switch (userChoice){
             case 1:
-                signUpMyNewTalks(1);
+                ah.signUpMyNewTalks(1);
                 break;
             case 2:
-                signUpMyNewTalks(2);
+                ah.signUpMyNewTalks(2);
                 break;
             case 3:
-                signUpMyNewTalks(0);
+                ah.signUpMyNewTalks(0);
                 break;
             case 4:
                 break;
@@ -120,7 +120,7 @@ public class AttendeeSystem {
                 msgToSpeaker();
                 break;
             case 3:
-                readAllMsg();
+                ah.readAllMsg();
                 break;
             case 4:
                 replytomsg();
@@ -129,7 +129,7 @@ public class AttendeeSystem {
                 msgtoreply();
                 break;
             case 6:
-                allUnreadMsg();
+                ah.allUnreadMsg();
                 break;
             case 7:
                 break;
@@ -163,19 +163,6 @@ public class AttendeeSystem {
     }
 
 
-    private int targetmsg(){
-        ArrayList<Integer> validChoices = attendeeM.getinbox();
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = attendeeUI.getrequest(2);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                attendeeUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
 
     private void msgtoreply(){
         int tmsgid;
@@ -205,28 +192,7 @@ public class AttendeeSystem {
     }
 
     ///// Louisa Modified
-    private void signUpMyNewTalks(int a){
-        int input;
-        do{
-            attendeeUI.signUpTalk(a);
-            ah.readAllAvailableTalks(a);
-            input = ah.targetTalksSignUp(a);
-            if (input != -1){
-                if(eventManager.checkVIP(input)){
-                    attendeeUI.signUpVipTalk();
-                    if(attendeeM.getCurrAttendee().getUserType() == 3){
-                        attendeeM.enrol(input);
-                        eventManager.addAttendeev2(input, attendeeM.getCurrAttendee());
-                        attendeeUI.signUpSuc();
-                    }else{attendeeUI.informNotVip();}
-                }else if(!eventManager.checkVIP(input)){
-                    attendeeM.enrol(input);
-                    eventManager.addAttendeev2(input, attendeeM.getCurrAttendee());
-                    attendeeUI.signUpSuc();
-                }
-            }
-        }while(input != -1);
-    }
+
 
     private void cancelMyTalks(){
         int input;
@@ -272,45 +238,6 @@ public class AttendeeSystem {
     }
 
 
-    private void readAllMsg(){
-
-        int messageID;
-        ArrayList<Integer> inbox = attendeeM.getInbox();
-
-        if (inbox.size() != 0) {
-            do {
-                String a = MsgM.formatmsgget(attendeeM.getInbox());
-                attendeeUI.show(a);
-                messageID = targetmsg();
-                if(messageID != -1){
-                    attendeeUI.show(MsgM.getString(messageID));
-                    ah.askToAchieve(messageID);
-                }
-            }while(messageID != -1);
-        } else {
-            attendeeUI.announceEmptyInbox();
-            attendeeUI.askForBack();
-        }
-
-
-    }
-
-///Grey modify
-
-    private void allUnreadMsg(){
-        int tmsgid;
-        do{
-            ah.readAllUnreadMsg();
-            tmsgid = ah.targetunread();
-            if(tmsgid != -1){
-                MsgM.readMessage(tmsgid);
-                attendeeM.deleteUnreadInbox(tmsgid);
-                attendeeUI.unreadSuccess(tmsgid);
-                attendeeUI.askForBack();
-            }
-
-        }while(tmsgid != -1);
-    }
 
 }
 
