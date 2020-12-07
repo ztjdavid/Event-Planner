@@ -1,18 +1,19 @@
 package Gateways;
 
 import UseCase.*;
+import UseCase.IGateWay.IEventGateWay;
 import org.ini4j.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class EventFileGateway {
+public class EventFileLoader{
     private Ini iniFile;
     private EventManager eventM;
     private GatewayHandler gH = new GatewayHandler();
 
-    public EventFileGateway(String pathname, EventManager eventM)throws IOException{
+    public EventFileLoader(String pathname, EventManager eventM)throws IOException{
             this.iniFile = new Ini(new File(pathname));
             this.eventM = eventM;
     }
@@ -37,9 +38,7 @@ public class EventFileGateway {
             // set other variables
             eventM.setEventInfo(id, attendeeList, remainingSeat, seatsOccupied);
         }
-
     }
-
 
 
 

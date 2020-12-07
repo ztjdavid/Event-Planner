@@ -1,6 +1,8 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IUserGateWay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,8 +13,9 @@ public class AccountManager {
     protected static int TotalNumOfAccount = 0;
     protected static HashMap<Integer, Account> accountList = new HashMap<>();
     protected static int currAccountId = -1;
+    private IUserGateWay gateWay;
 
-    public AccountManager(){}
+    public AccountManager(IUserGateWay g){ this.gateWay = g;}
 
     /**
      * Check if the current login account can message a given account.
@@ -46,6 +49,10 @@ public class AccountManager {
                         new Attendee(username, password, TotalNumOfAccount));
                 break;
         }
+        try{
+            gateWay.writeNewAcc(TotalNumOfAccount, username, password, userType);
+        }catch (IOException ignored){}
+
         TotalNumOfAccount += 1;
     }
 

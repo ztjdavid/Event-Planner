@@ -1,6 +1,8 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IEventGateWay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,8 +17,9 @@ public class EventManager {
     protected static int totalTalkCount = 0;
     protected HashMap<Integer, Event> eventList;
     protected static int currentTalkID = 0; // Track which Event this program is working on now.
-
-    public EventManager() {
+    private IEventGateWay gateWay;
+    public EventManager(IEventGateWay g) {
+        this.gateWay = g;
         this.eventList = new HashMap<>();
     }
 
@@ -172,6 +175,12 @@ public class EventManager {
         int talkId = totalTalkCount;
         Event newEvent = new Event(talkId, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
         this.eventList.put(talkId, newEvent);
+
+        try{
+            this.gateWay.writeNewEvent(totalTalkCount, talkTitle, startTime,
+                    roomId, speakerID, eventCapacity, duration, isVip);
+        }catch (IOException ignored){}
+
         totalTalkCount += 1;
         return talkId;
     }
@@ -266,7 +275,7 @@ public class EventManager {
      * @return the int value of the total number of Talks.
      */
 
-    public static int getTotalTalkCount(){
+    public int getTotalTalkCount(){
         return totalTalkCount;
     }
 

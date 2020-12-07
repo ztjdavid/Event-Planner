@@ -1,13 +1,17 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IMsgGateWay;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MessageManager {
     static ArrayList<Message> allmessage;
+    private IMsgGateWay gateWay;
 
-    public MessageManager() {
+    public MessageManager(IMsgGateWay g) {
+        this.gateWay =g;
         allmessage = new ArrayList<>();
     }
 
@@ -25,7 +29,9 @@ public class MessageManager {
         int a = allmessage.size();
         Message b = new Message(sendername, a, senderid, getterid, txt);
         allmessage.add(b);
-
+        try{
+            this.gateWay.writeNewMsg(a, sendername, senderid, getterid, txt);
+        }catch (IOException ignored){}
         return a;
 
     }

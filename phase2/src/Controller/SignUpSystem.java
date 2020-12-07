@@ -13,15 +13,11 @@ public class SignUpSystem {
     protected AccountManager accM;
     protected SignUpUI signUpUI;
     protected StrategyManager strategyM;
-    private UserFileGateway userFileGateway;
 
     public SignUpSystem(AccountManager accM, SignUpUI signUpUI, StrategyManager strategyM) {
         this.accM = accM;
         this.signUpUI = signUpUI;
         this.strategyM = strategyM;
-        try{
-           this.userFileGateway = new UserFileGateway("phase2/DataBase/UserData.ini", accM);
-        }catch (IOException ignored){}
     }
 
     /**
@@ -36,9 +32,6 @@ public class SignUpSystem {
         username = createUsername();
         password = createPassword();
         accM.createAccount(username, password, userType);
-        try{
-            userFileGateway.writeNewAcc(username, password, userType);
-        }catch (IOException ignored){}
         signUpUI.finishSignUp();
 
     }

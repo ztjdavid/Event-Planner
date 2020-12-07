@@ -15,40 +15,38 @@ public class AppSystem {
     protected VipSystem vipsystem;
     protected SpeakerSystem speakerS;
     protected SpeakerUI speakerUI;
-    protected RoomManager roomM;
+    protected RoomManager roomM = new RoomManager();
     protected OrganizerPresenter organizerPresenter;
     protected StrategyManager strategyM;
     protected AccountManager accM;
     protected EventManager eventM;
     protected MessageManager MsgM;
-    protected AttendeeManager attM;
-    protected RequestManager rqstM;
-    protected VIPManager vipM;
+    protected AttendeeManager attM = new AttendeeManager();
+    protected RequestManager rqstM = new RequestManager();
+    protected VIPManager vipM = new VIPManager();
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
     protected AttendeeUI attUI;
-    protected OrganizerManager ognM;
-    protected SpeakerManager spkM;
+    protected OrganizerManager ognM = new OrganizerManager();
+    protected SpeakerManager spkM = new SpeakerManager();
     protected ITextUI textUI;
     protected VipUI vipUI;
     protected VIPsystemhandler vh;
     protected Attendeesystemhandler ah;
     protected OrganizerSystemHandler oh;
     protected SpeakerSystemHandler sh;
-    protected UserFileGateway userG;
-    protected MsgFileGateway msgG;
+    protected UserFileLoader userL;
+    protected MsgFileLoader msgL;
+    protected EventFileLoader eventL;
+    protected UserFileWriter userW;
+    protected MsgFileWriter msgW;
+    protected EventFileWriter eventW;
 
 
 
     public AppSystem(ITextUI textUI){
         this.textUI = textUI;
-        this.attM = new AttendeeManager();
-        this.vipM = new VIPManager();
-        this.spkM = new SpeakerManager();
-        this.ognM = new OrganizerManager();
-        this.roomM = new RoomManager();
-        this.rqstM = new RequestManager();
         this.startUI = new StartUI();
         this.signInUI = new SignInUI();
         this.signUpUI = new SignUpUI();
@@ -56,9 +54,14 @@ public class AppSystem {
         this.attUI = new AttendeeUI(textUI);
         this.vipUI = new VipUI(textUI);
         this.organizerPresenter = new OrganizerPresenter(textUI);
-        this.accM = new AccountManager();
-        this.MsgM = new MessageManager();
-        this.eventM = new EventManager();
+        try{
+            this.userW = new UserFileWriter("phase2/DataBase/UserData.ini");
+            this.msgW = new MsgFileWriter("phase2/DataBase/MsgData.ini");
+            this.eventW = new EventFileWriter("phase2/DataBase/EventData.ini");
+        }catch (IOException ignored){}
+        this.accM = new AccountManager(userW);
+        this.MsgM = new MessageManager(msgW);
+        this.eventM = new EventManager(eventW);
         this.strategyM = new StrategyManager();
         this.vh = new VIPsystemhandler(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM);
         this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM);
@@ -71,10 +74,9 @@ public class AppSystem {
         this.ah = new Attendeesystemhandler(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM);
         this.sh = new SpeakerSystemHandler(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
         try{
-            this.userG = new UserFileGateway("phase2/DataBase/UserData.ini", accM);
-        }catch (IOException ignored){}
-        try{
-            this.msgG = new MsgFileGateway("phase2/DataBase/MsgData.ini", MsgM);
+            this.userL = new UserFileLoader("phase2/DataBase/UserData.ini", accM);
+            this.msgL = new MsgFileLoader("phase2/DataBase/MsgData.ini", MsgM);
+            this.eventL = new EventFileLoader("phase2/DataBase/EventData.ini", eventM);
         }catch (IOException ignored){}
 
     }
@@ -85,8 +87,8 @@ public class AppSystem {
     public void run(){
         // scan files
         try{
-            userG.loadData();
-            msgG.loadData();
+            userL.loadData();
+            msgL.loadData();
         }catch (NumberFormatException ignored) {}
 
         // start

@@ -1,57 +1,25 @@
 package Gateways;
 
 import UseCase.*;
+import UseCase.IGateWay.IUserGateWay;
 import org.ini4j.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class UserFileGateway {
+public class UserFileLoader{
     private Ini iniFile;
     private AccountManager accM;
     private AttendeeManager attM = new AttendeeManager();
     private SpeakerManager spkM = new SpeakerManager();
     private OrganizerManager orgM = new OrganizerManager();
     private GatewayHandler gH = new GatewayHandler();
-    public UserFileGateway(String pathname, AccountManager accM)throws IOException{
+    public UserFileLoader(String pathname, AccountManager accM)throws IOException{
         this.iniFile = new Ini(new File(pathname));
         this.accM = accM;
     }
 
-    public void writeNewAcc(String username, String password, int userType)throws IOException{
-        String id = String.valueOf(accM.getTotalNumOfAccount() - 1);
-        iniFile.put(id, "Type", userType);
-        iniFile.put(id, "Username", username);
-        iniFile.put(id, "Password", password);
-        iniFile.put(id, "Inbox", "");
-        iniFile.put(id, "SentBox", "");
-        if (userType != 0)  iniFile.put(id, "EventList", "");
-        iniFile.store();
-    }
-
-    public void updateInbox(int id, int msgId)throws IOException{
-        String ID = String.valueOf(id);
-        String currInbox = iniFile.get(ID, "Inbox") + msgId + ",";
-        iniFile.put(ID, "Inbox", currInbox);
-        iniFile.store();
-    }
-
-    public void updateSentBox(int id, int msgId)throws IOException{
-        String ID = String.valueOf(id);
-        String currSentBox = iniFile.get(ID, "SentBox") + msgId + ",";
-        iniFile.put(ID, "SentBox", currSentBox);
-        iniFile.store();
-    }
-
-    public void updateEventList(int id, int msgId)throws IOException{
-        if (!accM.isOrganizerAcc(id)){
-            String ID = String.valueOf(id);
-            String currEventList = iniFile.get(ID, "EventList") + msgId + ",";
-            iniFile.put(ID, "EventList", currEventList);
-            iniFile.store();
-        }
-    }
 
     public void loadData()throws NumberFormatException{
         Set<String> idSet = iniFile.keySet(); // get id of all accounts
