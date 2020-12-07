@@ -72,6 +72,14 @@ public class AttendeeUI extends Presenter{
         );
     }
 
+    public void requestdb(){
+        printText("--------------Your Request------------\nHi Attendee! Would you like to:" +
+                "\n1 -> Read all my requests with status" +
+                "\n2 -> Send new request\n3 -> Go back");
+    }
+
+    public void stoprequest(){printText("Stop Request");}
+
     public void show(String a){printText(a);}
 
     public void informEnteringText(){
@@ -106,6 +114,10 @@ public class AttendeeUI extends Presenter{
         return requestInput();
     }
 
+    public String getrequest2(){
+        printText("Please Enter the ID of ONE Event. Enter -1 to cancel and go back. ");
+        return requestInput();
+    }
 
     public void announcereply(){printText("Please enter the id of the message " +
             "if you want to reply to.");
@@ -144,6 +156,8 @@ public class AttendeeUI extends Presenter{
                 "4 -> Go back");
 
     }
+
+
 
 
 

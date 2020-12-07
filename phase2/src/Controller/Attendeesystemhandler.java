@@ -1,7 +1,5 @@
 package Controller;
 
-import Entity.Message;
-import Entity.Speaker;
 import Presenters.AttendeeUI;
 import UseCase.*;
 
@@ -16,9 +14,10 @@ public class Attendeesystemhandler {
     protected StrategyManager strategyM;
     protected AttendeeManager attM;
     protected RoomManager roomM;
+    protected RequestManager reM;
 
     public Attendeesystemhandler(AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attUI,
-                            StrategyManager StrategyManager, AttendeeManager attM, RoomManager roomM) {
+                            StrategyManager StrategyManager, AttendeeManager attM, RoomManager roomM, RequestManager reM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -26,6 +25,7 @@ public class Attendeesystemhandler {
         this.strategyM = StrategyManager;
         this.attM = attM;
         this.roomM = roomM;
+        this.reM = reM;
 
     }
 
@@ -106,27 +106,48 @@ public class Attendeesystemhandler {
         attUI.show(a.toString());}
 
 
+    public void readalltalkssimp(){
+        StringBuilder a = new StringBuilder("Event Information with id:");
+        ArrayList<Integer> alltalks = attM.getAllMyTalksId();
+        for(Integer t:alltalks){
+            a.append(eventManager.gettalkinfosimp(t));}
+        attUI.show(a.toString());
+    }
+
+    public int targettalks(){
+        ArrayList<Integer> validChoices = attM.getAllMyTalksId();
+        validChoices.add(-1);
+        boolean valid = false;
+        String userInput;
+        do{
+            userInput = attUI.getrequest2();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attUI.informinvalidchoice();
+            else { valid = true; }
+        } while(!valid);
+        return Integer.parseInt(userInput);
+    }
 
     /**
      * Get all available events that this account can attend.
      * @return A tlkList containing all events this account can attend.
      */
-    private ArrayList<Integer> getAllAvailableTalks(int a){
+    private ArrayList<Integer> getAllAvailableTalks(int a) {
         boolean is_VIP = false;
         if (accM.isVIPAcc(accM.getCurrAccountId())) is_VIP = true;
         ArrayList<Integer> myTalksId = attM.getAllMyTalksId();
         ArrayList<Integer> allTalksId = eventManager.getListOfEventsByType(a);
         ArrayList<Integer> result = new ArrayList<>();
-        for(Integer t:allTalksId){
-            if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0 )) result.add(t);
+        for (Integer t : allTalksId) {
+            if (!myTalksId.contains(t) && (eventManager.getRemainingSeats() > 0)) result.add(t);
 
         }
 
-        if (!is_VIP){
-            for (Integer i:result){
+        if (!is_VIP) {
+            for (Integer i : result) {
                 if (eventManager.checkVIP(i)) result.remove(Integer.valueOf(i));
-            }}
-        return result;
+            }
+        }return result;
     }
 
     public int targetTalksSignUp(int type){
@@ -144,6 +165,11 @@ public class Attendeesystemhandler {
                 mode = Integer.parseInt(userInput);}
         }
         return mode;}
+
+    public void requestfortalk(String a, int b) {
+        if (b != -1) {reM.createRequest(a, accM.getCurrAccountId(), b);}
+        attUI.stoprequest();
+    }
 
     //////////////CANCEL TALK////////////////
 
