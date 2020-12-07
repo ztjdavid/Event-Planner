@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class UserFileGateway {
-    Ini iniFile;
-    AccountManager accM;
-    AttendeeManager attM = new AttendeeManager();
-    SpeakerManager spkM = new SpeakerManager();
-    OrganizerManager orgM = new OrganizerManager();
+    private Ini iniFile;
+    private AccountManager accM;
+    private AttendeeManager attM = new AttendeeManager();
+    private SpeakerManager spkM = new SpeakerManager();
+    private OrganizerManager orgM = new OrganizerManager();
     public UserFileGateway(String pathname, AccountManager accM)throws IOException{
         this.iniFile = new Ini(new File(pathname));
         this.accM = accM;

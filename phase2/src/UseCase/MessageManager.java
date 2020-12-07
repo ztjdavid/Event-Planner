@@ -145,6 +145,14 @@ public class MessageManager {
         allmessage.remove(messageID);
     }
 
+    public int getTotalNumOfMsg(){ return allmessage.size();}
+
+    public void setMsgInfo(int msgId, int replyId, String replier, boolean haveRead){
+        Message msg = getmessage(msgId);
+        msg.setReply(replyId);
+        msg.setReplyer(replier);
+        msg.setReadStatus(haveRead);
+    }
 }
 
 

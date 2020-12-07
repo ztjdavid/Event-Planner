@@ -78,5 +78,7 @@ public class Message {
      public void setReadStatusRead(){this.haveRead = true;}
 
      public void setReadStatusUnread(){this.haveRead = false;}
-     /////
+
+    //// Gare_TH added. Used in Gateway.
+    public void setReadStatus(boolean status){this.haveRead = status;}
 }
