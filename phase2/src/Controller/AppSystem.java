@@ -37,6 +37,7 @@ public class AppSystem {
     protected OrganizerSystemHandler oh;
     protected SpeakerSystemHandler sh;
     protected UserFileGateway userG;
+    protected MsgFileGateway msgG;
 
 
 
@@ -72,6 +73,9 @@ public class AppSystem {
         try{
             this.userG = new UserFileGateway("phase2/DataBase/UserData.ini", accM);
         }catch (IOException ignored){}
+        try{
+            this.msgG = new MsgFileGateway("phase2/DataBase/MsgData.ini", MsgM);
+        }catch (IOException ignored){}
 
     }
 
@@ -82,6 +86,7 @@ public class AppSystem {
         // scan files
         try{
             userG.loadData();
+            msgG.loadData();
         }catch (NumberFormatException ignored) {}
 
         // start

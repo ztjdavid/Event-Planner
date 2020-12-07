@@ -175,7 +175,8 @@ public class EventManager {
      * @return the ID of the talk iff the talk is successfully created.
      */
 
-    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip){
+    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
+                           int eventCapacity, int duration, boolean isVip){
         int talkId = totalTalkCount;
         Event newEvent = new Event(talkId, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
         this.eventList.put(talkId, newEvent);

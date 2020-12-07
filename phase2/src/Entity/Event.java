@@ -19,7 +19,8 @@ public class Event {
     protected int duration;
     protected boolean IsVip;
 
-    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean IsVip){
+    public Event(int talkId, String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
+                 int eventCapacity, int duration, boolean IsVip){
         this.talkId = talkId;
         this.talkTitle = talkTitle;
         this.startTime = startTime;
