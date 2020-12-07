@@ -1,8 +1,9 @@
 package Controller;
 import Presenters.*;
 import UseCase.*;
-import UI.*;
+import Gateways.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,17 +30,18 @@ public class AppSystem {
     protected AttendeeUI attUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
-    protected TextUI textUI;
+    protected ITextUI textUI;
     protected VipUI vipUI;
     protected VIPsystemhandler vh;
     protected Attendeesystemhandler ah;
     protected OrganizerSystemHandler oh;
     protected SpeakerSystemHandler sh;
+    protected UserFileGateway userG;
 
 
 
-    public AppSystem(){
-        this.textUI = new TextUI();
+    public AppSystem(ITextUI textUI){
+        this.textUI = textUI;
         this.attM = new AttendeeManager();
         this.vipM = new VIPManager();
         this.spkM = new SpeakerManager();
@@ -67,7 +69,9 @@ public class AppSystem {
         this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM, vh);
         this.ah = new Attendeesystemhandler(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM);
         this.sh = new SpeakerSystemHandler(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
-
+        try{
+            this.userG = new UserFileGateway("phase2/DataBase/UserData.ini", accM);
+        }catch (IOException ignored){}
 
     }
 
@@ -75,6 +79,12 @@ public class AppSystem {
      * Start the whole program and guide users to sign up or sign in.
      */
     public void run(){
+        // scan files
+        try{
+            userG.loadData();
+        }catch (NumberFormatException ignored) {}
+
+        // start
         int userChoice;
         do{
             startUI.startup();

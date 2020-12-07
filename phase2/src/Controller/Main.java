@@ -1,8 +1,11 @@
 package Controller;
 
+import UI.TextUI;
+
 public class Main {
     public static void main(String[] args) {
-        AppSystem starApp = new AppSystem();
+        TextUI txtUI = new TextUI();
+        AppSystem starApp = new AppSystem(txtUI);
         starApp.run();
     }
 }
