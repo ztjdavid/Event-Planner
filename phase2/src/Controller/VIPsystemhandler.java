@@ -14,9 +14,10 @@ public class VIPsystemhandler {
     protected StrategyManager strategyM;
     protected VIPManager vipM;
     protected RoomManager roomM;
+    protected RequestManager ReqM;
 
     public VIPsystemhandler(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipUI vipUI,
-                     StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM) {
+                     StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -24,6 +25,7 @@ public class VIPsystemhandler {
         this.strategyM = StrategyManager;
         this.vipM = vipM;
         this.roomM = roomM;
+        this.ReqM = ReqM;
 
     }
 
@@ -78,7 +80,7 @@ public class VIPsystemhandler {
     }
 
     public int chooseMode4(){    //For EventDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
         String userInput;
         int mode = -1;
         boolean valid = false;
@@ -103,7 +105,35 @@ public class VIPsystemhandler {
         }
         vipUI.show(a.toString());}
 
+    public void readAllMyTalksSimp(){
+        StringBuilder a = new StringBuilder("Event you have signed up: ");
+        ArrayList<Integer> allEvent = vipM.getAllEvent();
+        for(Integer t:allEvent){
+            a.append(eventManager.gettalkinfosimp(t));
+        }
+        vipUI.show(a.toString());
+    }
 
+    public int targetevent(){
+        ArrayList<Integer> validChoices = vipM.getAllEvent();
+        validChoices.add(-1);
+        boolean valid = false;
+        String userInput;
+        do{
+            userInput = vipUI.getrequest2();
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                vipUI.informinvalidchoice();
+            else { valid = true; }
+        } while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+    public void requestForTalk(String service, int talkId){
+        if(talkId != -1){
+            ReqM.createRequest(service, accM.getCurrAccountId(), talkId);
+        }
+        vipUI.stoprequest();
+    }
 
     /**
      * Get all available events that this account can attend.

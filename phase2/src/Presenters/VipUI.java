@@ -48,8 +48,8 @@ public class VipUI extends Presenter{
     public void eventmain(){
         printText("----------------Event Interface-----------------\nHi, " +
                 "Would you like to\n1 -> Sign Up a New Event\n2 -> View All My Event\n" +
-                "3 -> Leave an Event\n" +
-                "4 -> Go back");
+                "3 -> Leave an Event\n" + "4 -> Your Requests" +
+                "5 -> Go back");
 
     }
     public void eventselect(){
@@ -60,6 +60,20 @@ public class VipUI extends Presenter{
                 "5 -> VIP Discussion\n" +
                 "6 -> VIP Party\n" + "7 -> Go back"
                 );}
+
+    public void requestmain(){
+        printText("----------------Request Interface-----------------\nHi dear VIP! Would you like to" +
+                "1 -> Read all my requests with status\n" +
+                "2 -> Send a new request\n" +
+                "3 -> Go back\n");
+    }
+
+    public String  getrequest2(){
+        printText("Please Enter the ID of ONE Event. Enter -1 to cancel and go back. ");
+        return requestInput();
+    }
+
+    public void stoprequest(){printText("Stop Request");}
 
     public void show(String a){printText(a);}
 

@@ -15,10 +15,12 @@ public class VipSystem {
     protected StrategyManager strategyM;
     protected VIPManager vipM;
     protected RoomManager roomM;
+    protected RequestManager ReqM;
     protected VIPsystemhandler vh;
 
     public VipSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipUI vipUI,
-                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, VIPsystemhandler vh) {
+                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM,
+                     VIPsystemhandler vh) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -26,6 +28,7 @@ public class VipSystem {
         this.strategyM = StrategyManager;
         this.vipM = vipM;
         this.roomM = roomM;
+        this.ReqM = ReqM;
         this.vh = vh;
 
     }
@@ -39,7 +42,7 @@ public class VipSystem {
             vipUI.startup();
             userChoice = vh.chooseMode1();
             enterBranch(userChoice);
-        } while (userChoice != 5);
+        } while (userChoice != 3);
     }
 
     //Helper methods:
@@ -63,7 +66,7 @@ public class VipSystem {
             vipUI.eventmain();
             userChoice = vh.chooseMode4();
             EventOp(userChoice);
-        } while (userChoice != 7);
+        } while (userChoice != 5);
     }
     private void EventOp(int userChoice){
         switch (userChoice){
@@ -77,9 +80,52 @@ public class VipSystem {
                 cancelMyTalks();
                 break;
             case 4:
+                Request();
+            case 5:
                 break;
         }
     }
+
+    ///// Request Dashboard /////
+    private void Request(){
+        int userChoice;
+        do{
+            vipUI.requestmain();
+            userChoice = vh.chooseMode1();
+            RequestOp(userChoice);
+        } while (userChoice != 3);
+    }
+
+    private void RequestOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                ReadAllRequests();
+            case 2:
+                SendNewRequest();
+            case 3:
+                break;
+        }
+    }
+
+    private void ReadAllRequests(){
+        ReqM.showallre(accM.getCurrAccountId());
+    }
+
+    private void SendNewRequest(){
+        int targetEvent;
+        do{
+            vh.readAllMyTalksSimp();
+            targetEvent = vh.targetevent();
+            if (targetEvent != -1){
+                String text = vh.enterTxt();
+                vh.requestForTalk(text, targetEvent);
+                vipUI.askForBack();
+            }
+        }while(targetEvent != -1);
+    }
+
+    ////////////////////////////
+
     private void SignupDashboard(){
         int userChoice;
         do{
