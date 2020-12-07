@@ -101,7 +101,7 @@ public class Attendeesystemhandler {
         ArrayList<Integer> availableTalksId = getAllAvailableTalks(type);
         for(Integer t:availableTalksId){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));
+            a.append(eventManager.getEventinfoWithName(t, roomName));
         }
         attUI.show(a.toString());}
 
@@ -110,7 +110,7 @@ public class Attendeesystemhandler {
         StringBuilder a = new StringBuilder("Event Information with id:");
         ArrayList<Integer> alltalks = attM.getAllMyTalksId();
         for(Integer t:alltalks){
-            a.append(eventManager.gettalkinfosimp(t));}
+            a.append(eventManager.getEventinfosimp(t));}
         attUI.show(a.toString());
     }
 
@@ -178,7 +178,7 @@ public class Attendeesystemhandler {
         ArrayList<Integer> allTalks = attM.getAllMyTalksId();
         for(Integer t:allTalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));}
+            a.append(eventManager.getEventinfoWithName(t, roomName));}
         attUI.show(a.toString());
     }
 

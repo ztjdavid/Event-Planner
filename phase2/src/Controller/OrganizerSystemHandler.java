@@ -62,7 +62,7 @@ public class OrganizerSystemHandler {
                             organizerPresenter.message12(talkID);
                         } else {
                             organizerPresenter.message9();
-                            eventM.removeTalk(talkID);
+                            eventM.removeEvent(talkID);
                         }
                     } else {
                         organizerPresenter.message2();
@@ -121,7 +121,7 @@ public class OrganizerSystemHandler {
                             organizerPresenter.message12(talkID);
                         } else {
                             organizerPresenter.message9();
-                            eventM.removeTalk(talkID);
+                            eventM.removeEvent(talkID);
                         }
                     } else {
                         organizerPresenter.message2();
@@ -145,7 +145,7 @@ public class OrganizerSystemHandler {
     protected void doCancelEvent(){
         int eventID = organizerPresenter.getEventID();
         if(eventM.checkEventExists(eventID)){
-            eventM.removeTalk(eventID);
+            eventM.removeEvent(eventID);
             organizerPresenter.message4();
         }else{
             organizerPresenter.message5();
@@ -191,7 +191,7 @@ public class OrganizerSystemHandler {
                         organizerPresenter.message12(talkID);
                     } else {
                         organizerPresenter.message9();
-                        eventM.removeTalk(talkID);
+                        eventM.removeEvent(talkID);
                     }
                 }
             }else{

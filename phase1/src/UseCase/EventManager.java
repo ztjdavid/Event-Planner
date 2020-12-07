@@ -188,7 +188,7 @@ public class EventManager {
 
     public String gettalkinfo(int talkid){
         String a = "\n-------------------------";
-        Event event = getTalkWithId(talkid);
+        Event event = getEventWithId(talkid);
         String talktitle = event.getTalkTitle();
         int talktime = event.getStartTime();
         int talkroom = event.getRoomId();
@@ -207,7 +207,7 @@ public class EventManager {
 
     public String gettalkinfoWithName(int talkid, String roomName){
         String a = "\n-------------------------";
-        Event event = getTalkWithId(talkid);
+        Event event = getEventWithId(talkid);
         String talktitle = event.getTalkTitle();
         int talktime = event.getStartTime();
         int talkroom = event.getRoomId();
@@ -225,7 +225,7 @@ public class EventManager {
 
     public String gettalkinfosimp(int talkid){
         String a = "";
-        Event event = getTalkWithId(talkid);
+        Event event = getEventWithId(talkid);
         String talktitle = event.getTalkTitle();
         a = a + "\n Event Title:" + talktitle + "\n The id of this event is  " + talkid;
         return a;
@@ -241,7 +241,7 @@ public class EventManager {
         Set<Integer> att = new HashSet<>();
         for(Integer t:talklist){
 
-            Event event = getTalkWithId(t);
+            Event event = getEventWithId(t);
             att.addAll(event.getAttendeeId());
         }
         return new ArrayList<>(att);
@@ -258,7 +258,7 @@ public class EventManager {
     public ArrayList<Integer> getAllSpeakers(ArrayList<Integer> eventList){
         ArrayList<Integer> speakers = new ArrayList<>();
         for(Integer t:eventList){
-            Event event = getTalkWithId(t);
+            Event event = getEventWithId(t);
             speakers.addAll(event.getSpeakerList());
         }
         return speakers;
@@ -281,7 +281,7 @@ public class EventManager {
      */
 
     public int getStartTime(int talkID){
-        Event event = getTalkWithId(talkID);
+        Event event = getEventWithId(talkID);
         return event.getStartTime();
     }
 
@@ -292,7 +292,7 @@ public class EventManager {
      */
 
     public void setSpeakerTo(int speakerID, int talkID){
-        Event event = getTalkWithId(talkID);
+        Event event = getEventWithId(talkID);
         event.setSpeaker(speakerID);
     }
 

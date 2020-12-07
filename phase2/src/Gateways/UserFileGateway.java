@@ -13,6 +13,7 @@ public class UserFileGateway {
     private AttendeeManager attM = new AttendeeManager();
     private SpeakerManager spkM = new SpeakerManager();
     private OrganizerManager orgM = new OrganizerManager();
+    private GatewayHandler gH = new GatewayHandler();
     public UserFileGateway(String pathname, AccountManager accM)throws IOException{
         this.iniFile = new Ini(new File(pathname));
         this.accM = accM;
@@ -58,8 +59,8 @@ public class UserFileGateway {
             int userType = iniFile.get(id, "Type", int.class);
             String userName = iniFile.get(id, "Username");
             String passW = iniFile.get(id, "Password");
-            ArrayList<Integer> inBox = listDecoder(iniFile.get(id, "Inbox"));
-            ArrayList<Integer> sentBox = listDecoder(iniFile.get(id, "SentBox"));
+            ArrayList<Integer> inBox = gH.listDecoder(iniFile.get(id, "Inbox"));
+            ArrayList<Integer> sentBox = gH.listDecoder(iniFile.get(id, "SentBox"));
             switch (userType){
                 case 1:
                     loadAttendee(id, userName, passW, inBox, sentBox);
@@ -79,19 +80,10 @@ public class UserFileGateway {
         }
     }
 
-    private ArrayList<Integer> listDecoder(String str)throws NumberFormatException{
-        ArrayList<Integer> result = new ArrayList<>();
-        if (str.equals("")) return result;
-
-        String[] strArray = str.split(",");
-        for (String s: strArray) result.add(Integer.parseInt(s));
-        return result;
-    }
-
     private void loadAttendee(String id, String userName, String passW, ArrayList<Integer> inbox,
                               ArrayList<Integer> sentBox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
-        ArrayList<Integer> eventList = listDecoder(iniFile.get(id, "EventList"));
+        ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
         accM.createAccount(userName, passW, 1);
         attM.setAccInfo(ID, inbox, sentBox, eventList);
     }
@@ -99,7 +91,7 @@ public class UserFileGateway {
     private void loadSpeaker(String id, String userName, String passW, ArrayList<Integer> inbox,
                               ArrayList<Integer> sentBox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
-        ArrayList<Integer> eventList = listDecoder(iniFile.get(id, "EventList"));
+        ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
         accM.createAccount(userName, passW, 2);
         spkM.setAccInfo(ID, inbox, sentBox, eventList);
     }
@@ -114,7 +106,7 @@ public class UserFileGateway {
     private void loadVIP(String id, String userName, String passW, ArrayList<Integer> inbox,
                          ArrayList<Integer> sentBox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
-        ArrayList<Integer> eventList = listDecoder(iniFile.get(id, "EventList"));
+        ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
         accM.createAccount(userName, passW, 3);
         attM.setAccInfo(ID, inbox, sentBox, eventList);
     }

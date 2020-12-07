@@ -72,6 +72,25 @@ public class Event {
     public int getRoomId(){return this.roomId;}
 
     /**
+     * Set remaining seat.
+     * @param n remaining seat number.
+     */
+    public void setRemainingSeat(int n) { this.remainingSeat = n;}
+
+    /**
+     * Set seat occupied.
+     * @param n seat occupied number.
+     */
+    public void setSeatsOccupied(int n) { this.seatsOccupied = n;}
+
+
+    /**
+     * Set the attendeeId list.
+     * @param attList given list.
+     */
+    public void setAttendeeList(ArrayList<Integer> attList){ this.attendeeId = attList;}
+
+    /**
      * Set talk room id.
      * @param roomId The new talk room id.
      */

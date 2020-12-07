@@ -101,7 +101,7 @@ public class VIPsystemhandler {
         ArrayList<Integer> availableTalksId = getAllAvailableTalks(type);
         for(Integer t:availableTalksId){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));
+            a.append(eventManager.getEventinfoWithName(t, roomName));
         }
         vipUI.show(a.toString());}
 
@@ -109,7 +109,7 @@ public class VIPsystemhandler {
         StringBuilder a = new StringBuilder("Event you have signed up: ");
         ArrayList<Integer> allEvent = vipM.getAllEvent();
         for(Integer t:allEvent){
-            a.append(eventManager.gettalkinfosimp(t));
+            a.append(eventManager.getEventinfosimp(t));
         }
         vipUI.show(a.toString());
     }
@@ -176,7 +176,7 @@ public class VIPsystemhandler {
         ArrayList<Integer> allTalks = vipM.getEventList(accM.getCurrAccountId());
         for(Integer t:allTalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));}
+            a.append(eventManager.getEventinfoWithName(t, roomName));}
         vipUI.show(a.toString());
     }
 

@@ -79,7 +79,7 @@ public class SpeakerSystemHandler {
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));}
+            a.append(eventManager.getEventinfoWithName(t, roomName));}
         speakerUI.show(a.toString());
     }
 
@@ -87,7 +87,7 @@ public class SpeakerSystemHandler {
         StringBuilder a = new StringBuilder("Event Information with id:");
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
-            a.append(eventManager.gettalkinfosimp(t));}
+            a.append(eventManager.getEventinfosimp(t));}
         speakerUI.show(a.toString());
     }
 
@@ -165,7 +165,7 @@ public class SpeakerSystemHandler {
     }
 
     public void messagetotalk(String a, int b) {
-        if (b != -1) {ArrayList<Integer> att = eventManager.getTalkWithId(b).getAttendeeId();
+        if (b != -1) {ArrayList<Integer> att = eventManager.getEventWithId(b).getAttendeeId();
             msgToList(a, att);}
         speakerUI.stopmessaging();
     }

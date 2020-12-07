@@ -289,7 +289,7 @@ public class AttendeeSystem {
         ArrayList<Integer> allTalks = attendeeM.getAllMyTalksId();
         for(Integer t:allTalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));}
+            a.append(eventManager.getEventinfoWithName(t, roomName));}
         attendeeUI.show(a.toString());
     }
 
@@ -323,7 +323,7 @@ public class AttendeeSystem {
         ArrayList<Integer> availableTalksId = getAllAvailableTalks(type);
         for(Integer t:availableTalksId){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.gettalkinfoWithName(t, roomName));
+            a.append(eventManager.getEventinfoWithName(t, roomName));
         }
         attendeeUI.show(a.toString());}
 

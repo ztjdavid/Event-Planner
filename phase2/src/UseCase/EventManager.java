@@ -1,7 +1,6 @@
 package UseCase;
 import Entity.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,7 +25,7 @@ public class EventManager {
      * @param talkID The current talk Id.
      */
 
-    public void setCurrentTalkID(int talkID){
+    public void setCurrentEventID(int talkID){
         currentTalkID = talkID;
     }
 
@@ -35,7 +34,7 @@ public class EventManager {
      * @return int currentTalkID.
      */
 
-    public Event getCurrentTalkWithID(){
+    public Event getCurrentEventWithID(){
         return this.eventList.get(currentTalkID);
     }
 
@@ -98,7 +97,7 @@ public class EventManager {
      * @return true iff the new time is valid (ie. between 9 and 17)
      */
 
-    public boolean changeTalkTime(int time) {
+    public boolean changeEventTime(int time) {
         if (time > 9 && time <= 17) {
             this.eventList.get(currentTalkID).setStartTime(time);
             return true;
@@ -112,7 +111,7 @@ public class EventManager {
      * @param speakerID The new ID of the new speaker to be updated.
      */
 
-    public void changeTalkSpeaker(int speakerID){
+    public void changeEventSpeaker(int speakerID){
         this.eventList.get(currentTalkID).setSpeaker(speakerID);
     }
 
@@ -126,19 +125,12 @@ public class EventManager {
     }
 
     /**
-     * Check whether a event has a time conflict with the current event.
-     * @param event The event to be checked.
-     * @return true iff the event's time is in conflict with the current event.
-     */
-
-
-    /**
      * Return the Event given the talkID
      * @param talkID The ID of the talk.
      * @return the Event with the given talkID.
      */
 
-    public Event getTalkWithId(int talkID){
+    public Event getEventWithId(int talkID){
         return this.eventList.get(talkID);
     }
 
@@ -190,9 +182,9 @@ public class EventManager {
      * @return the string information of the Event with the given talk ID.(Including talk title, start time, room ID, and number of Attendee.)
      */
 
-    public String gettalkinfo(int talkid){
+    public String getEventinfo(int talkid){
         String a = "\n-------------------------";
-        Event event = getTalkWithId(talkid);
+        Event event = getEventWithId(talkid);
         String talktitle = event.getTalkTitle();
         int talktime = event.getStartTime();
         int talkroom = event.getRoomId();
@@ -209,9 +201,9 @@ public class EventManager {
      * @return the string information of the Event with the given talk ID.(Including talk title, start time, room ID, and number of Attendee.)
      */
 
-    public String gettalkinfoWithName(int talkid, String roomName){
+    public String getEventinfoWithName(int talkid, String roomName){
         String a = "\n-------------------------";
-        Event event = getTalkWithId(talkid);
+        Event event = getEventWithId(talkid);
         String talktitle = event.getTalkTitle();
         int talktime = event.getStartTime();
         int talkroom = event.getRoomId();
@@ -227,9 +219,9 @@ public class EventManager {
      * @return the simplified string information of the Event with the given talk ID.(Including talk title and talk ID.)
      */
 
-    public String gettalkinfosimp(int talkid){
+    public String getEventinfosimp(int talkid){
         String a = "";
-        Event event = getTalkWithId(talkid);
+        Event event = getEventWithId(talkid);
         String talktitle = event.getTalkTitle();
         a = a + "\n Event Title:" + talktitle + "\n The id of this event is  " + talkid;
         return a;
@@ -245,7 +237,7 @@ public class EventManager {
         Set<Integer> att = new HashSet<>();
         for(Integer t:talklist){
 
-            Event event = getTalkWithId(t);
+            Event event = getEventWithId(t);
             att.addAll(event.getAttendeeId());
         }
         return new ArrayList<>(att);
@@ -262,7 +254,7 @@ public class EventManager {
     public ArrayList<Integer> getAllSpeakers(ArrayList<Integer> eventList){
         ArrayList<Integer> speakers = new ArrayList<>();
         for(Integer t:eventList){
-            Event event = getTalkWithId(t);
+            Event event = getEventWithId(t);
             speakers.addAll(event.getSpeakerList());
         }
         return speakers;
@@ -285,7 +277,7 @@ public class EventManager {
      */
 
     public int getStartTime(int talkID){
-        Event event = getTalkWithId(talkID);
+        Event event = getEventWithId(talkID);
         return event.getStartTime();
     }
 
@@ -296,7 +288,7 @@ public class EventManager {
      */
 
     public void setSpeakerTo(int speakerID, int talkID){
-        Event event = getTalkWithId(talkID);
+        Event event = getEventWithId(talkID);
         event.setSpeaker(speakerID);
     }
 
@@ -305,7 +297,7 @@ public class EventManager {
      * @param talkID The ID of the talk.
      */
 
-    public void removeTalk(int talkID){
+    public void removeEvent(int talkID){
         this.eventList.remove(talkID);
     }
 
@@ -347,7 +339,7 @@ public class EventManager {
     }
 
     public boolean checkEventExists(int eventID){
-        return this.eventList.keySet().contains(eventID);
+        return this.eventList.containsKey(eventID);
     }
 
     public int getDuration(int eventID){
@@ -358,6 +350,13 @@ public class EventManager {
     public boolean checkVIP(int eventID){
         Event event = this.eventList.get(eventID);
         return event.getVIP();
+    }
+
+    public void setEventInfo(int id, ArrayList<Integer> attendeeList, int remainingSeat, int seatsOccupied){
+        Event e = getEventWithId(id);
+        e.setAttendeeList(attendeeList);
+        e.setRemainingSeat(remainingSeat);
+        e.setSeatsOccupied(seatsOccupied);
     }
 
 
