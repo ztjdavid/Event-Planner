@@ -97,7 +97,13 @@ public class RoomManager {
      */
     public boolean addNewTalkToRoom(int talkID, int startTime, int roomID, int duration){
         Room room = this.allRooms.get(roomID);
-        return room.scheduleTalk(talkID, startTime, duration);
+        boolean succeed = room.scheduleTalk(talkID, startTime, duration);
+        if (succeed){
+            try{
+                this.gateWay.updateTimetable(roomID, getTimeTable(roomID));
+            }catch (IOException ignored){}
+        }
+        return succeed;
     }
 
     /**
