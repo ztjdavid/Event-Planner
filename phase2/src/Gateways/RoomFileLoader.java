@@ -28,7 +28,7 @@ public class RoomFileLoader {
             String roomName = iniFile.get(ID, "RoomName");
             ArrayList<Integer> timetableKey = gH.listDecoder(iniFile.get(ID, "TimetableKey"));
             ArrayList<Integer> timetableValue = gH.listDecoder(iniFile.get(ID, "TimetableValue"));
-            HashMap<Integer, Integer> timetable = mapAssemble(timetableKey, timetableValue);
+            HashMap<Integer, Integer> timetable = gH.mapAssemble(timetableKey, timetableValue);
             int roomCapacity = iniFile.get(ID, "RoomCapacity", int.class);
             //create room
             roomM.createRoom(roomName, roomCapacity);
@@ -36,15 +36,6 @@ public class RoomFileLoader {
             roomM.setRoomInfo(id, timetable);
         }
 
-
-
-    }
-
-    private HashMap<Integer, Integer> mapAssemble(ArrayList<Integer> key, ArrayList<Integer> value){
-        HashMap<Integer, Integer> result = new HashMap<>();
-        if (key.size() == 0) return result;
-        for (int i = 0; i < key.size(); i++) result.put(key.get(i), value.get(i));
-        return result;
     }
 
 
