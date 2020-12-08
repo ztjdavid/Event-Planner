@@ -14,6 +14,7 @@ import java.util.Set;
  */
 
 public class EventManager {
+    protected  static int idTracker = 0;
     protected static int totalTalkCount = 0;
     protected HashMap<Integer, Event> eventList;
     protected static int currentTalkID = 0; // Track which Event this program is working on now.
@@ -179,22 +180,31 @@ public class EventManager {
      * @param startTime the time (between 9 and 17 in 24-hour format) of the talk.
      * @param roomId the roomId of the talk.
      * @param speakerID the ID of the speaker of the talk.
-     * @return the ID of the talk iff the talk is successfully created.
+     *
      */
 
-    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
-                           int eventCapacity, int duration, boolean isVip){
-        int talkId = totalTalkCount;
-        Event newEvent = new Event(talkId, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
-        this.eventList.put(talkId, newEvent);
+    public void createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
+                           int eventCapacity, int duration, boolean isVip, int id){
+        idTracker = id;
+        createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
+    }
+
+    private int createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip, int id) {
+        Event newEvent = new Event(id, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
+        this.eventList.put(id, newEvent);
 
         try{
-            this.gateWay.writeNewEvent(totalTalkCount, talkTitle, startTime,
+            this.gateWay.writeNewEvent(id, talkTitle, startTime,
                     roomId, speakerID, eventCapacity, duration, isVip);
         }catch (IOException ignored){}
 
-        totalTalkCount += 1;
-        return talkId;
+        return id;
+    }
+
+    public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
+                           int eventCapacity, int duration, boolean isVip){
+        int id = idTracker + 1;
+        return createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
     }
 
     /**
