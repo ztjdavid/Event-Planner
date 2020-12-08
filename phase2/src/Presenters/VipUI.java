@@ -1,9 +1,23 @@
 package Presenters;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class VipUI extends Presenter{
 
     public VipUI(ITextUI textUI){
         super(textUI);
+    }
+
+    public ArrayList<Integer> getchoicelist(int a){
+        if(a == 1){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3));
+            return b;}
+        else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
+            return b;}
+        else if(a == 4){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+            return b;}
+        else{ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+            return b;}
     }
 
 
@@ -48,7 +62,7 @@ public class VipUI extends Presenter{
     public void eventmain(){
         printText("----------------Event Interface-----------------\nHi, " +
                 "Would you like to\n1 -> Sign Up a New Event\n2 -> View All My Event\n" +
-                "3 -> Leave an Event\n" + "4 -> Your Requests" +
+                "3 -> Leave an Event\n" + "4 -> Read Your Requests and Send New Request\n" +
                 "5 -> Go back");
 
     }

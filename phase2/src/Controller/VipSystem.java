@@ -40,7 +40,7 @@ public class VipSystem {
         int userChoice;
         do {
             vipUI.startup();
-            userChoice = vh.chooseMode1();
+            userChoice = vipUI.chooseOption(vipUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             enterBranch(userChoice);
         } while (userChoice != 3);
     }
@@ -64,7 +64,7 @@ public class VipSystem {
         int userChoice;
         do{
             vipUI.eventmain();
-            userChoice = vh.chooseMode4();
+            userChoice = vipUI.chooseOption(vipUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             EventOp(userChoice);
         } while (userChoice != 5);
     }
@@ -91,7 +91,7 @@ public class VipSystem {
         int userChoice;
         do{
             vipUI.requestmain();
-            userChoice = vh.chooseMode1();
+            userChoice = vipUI.chooseOption(vipUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             RequestOp(userChoice);
         } while (userChoice != 3);
     }
@@ -130,7 +130,7 @@ public class VipSystem {
         int userChoice;
         do{
             vipUI.eventselect();
-            userChoice = vh.chooseMode3();
+            userChoice = vipUI.chooseOption(vipUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             EventSignup(userChoice);
         } while (userChoice != 7);
     }
@@ -162,7 +162,7 @@ public class VipSystem {
         int userChoice;
         do{
             vipUI.msgSelect();
-            userChoice = vh.chooseMode2();
+            userChoice = vipUI.chooseOption(vipUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             msgOp(userChoice);
         } while (userChoice != 6);
 
