@@ -35,18 +35,19 @@ public class UserFileLoader{
             String passW = iniFile.get(id, "Password");
             ArrayList<Integer> inBox = gH.listDecoder(iniFile.get(id, "Inbox"));
             ArrayList<Integer> sentBox = gH.listDecoder(iniFile.get(id, "SentBox"));
+            ArrayList<Integer> unreadInbox = gH.listDecoder(iniFile.get(id, "UnreadInbox"));
             switch (userType){
                 case 1:
-                    loadAttendee(id, userName, passW, inBox, sentBox);
+                    loadAttendee(id, userName, passW, inBox, sentBox, unreadInbox);
                     break;
                 case 2:
-                    loadSpeaker(id, userName, passW, inBox, sentBox);
+                    loadSpeaker(id, userName, passW, inBox, sentBox, unreadInbox);
                     break;
                 case 3:
-                    loadVIP(id, userName,passW,inBox,sentBox);
+                    loadVIP(id, userName,passW,inBox,sentBox, unreadInbox);
                     break;
                 case 0:
-                    loadOrganizer(id, userName, passW, inBox, sentBox);
+                    loadOrganizer(id, userName, passW, inBox, sentBox, unreadInbox);
                     break;
                 default:
                     break;
@@ -55,34 +56,34 @@ public class UserFileLoader{
     }
 
     private void loadAttendee(String id, String userName, String passW, ArrayList<Integer> inbox,
-                              ArrayList<Integer> sentBox)throws NumberFormatException{
+                              ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
         ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
         accM.createAccount(userName, passW, 1);
-        attM.setAccInfo(ID, inbox, sentBox, eventList);
+        attM.setAccInfo(ID, inbox, sentBox, eventList, unreadInbox);
     }
 
     private void loadSpeaker(String id, String userName, String passW, ArrayList<Integer> inbox,
-                              ArrayList<Integer> sentBox)throws NumberFormatException{
+                              ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
         ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
         accM.createAccount(userName, passW, 2);
-        spkM.setAccInfo(ID, inbox, sentBox, eventList);
+        spkM.setAccInfo(ID, inbox, sentBox, eventList,unreadInbox);
     }
 
     private void loadOrganizer(String id, String userName, String passW, ArrayList<Integer> inbox,
-                              ArrayList<Integer> sentBox)throws NumberFormatException{
+                              ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
         accM.createAccount(userName, passW, 0);
-        orgM.setAccInfo(ID, inbox, sentBox);
+        orgM.setAccInfo(ID, inbox, sentBox, unreadInbox);
     }
 
     private void loadVIP(String id, String userName, String passW, ArrayList<Integer> inbox,
-                         ArrayList<Integer> sentBox)throws NumberFormatException{
+                         ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
         ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
         accM.createAccount(userName, passW, 3);
-        attM.setAccInfo(ID, inbox, sentBox, eventList);
+        vipM.setAccInfo(ID, inbox, sentBox, eventList, unreadInbox);
     }
 
 }
