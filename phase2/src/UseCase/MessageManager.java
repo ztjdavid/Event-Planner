@@ -70,7 +70,13 @@ public class MessageManager {
         int replyId = createmessage(allmessage.get(messageid).getReplyer(), senderId, receiverId, reply);
         Message msg = getmessage(messageid);
         msg.setReply(replyId);
+        try{
+            this.gateWay.updateReplyId(messageid, replyId);
+        }catch (IOException ignored){}
         msg.setReplyer(replyer);
+        try{
+            this.gateWay.updateReplier(messageid, replyer);
+        }catch (IOException ignored){}
         return replyId;
         }
 
@@ -111,9 +117,16 @@ public class MessageManager {
     ///// Louisa added
     public boolean checkMessageStatus(int messageId){return getmessage(messageId).getReadStatus();}
 
-    public void readMessage(int messageId){getmessage(messageId).setReadStatusRead();}
+    public void readMessage(int messageId){getmessage(messageId).setReadStatusRead();
+        try{
+            this.gateWay.updateReadStatus(messageId, true);
+        }catch (IOException ignored){}
+    }
 
-    public void unreadMessage(int messageId){getmessage(messageId).setReadStatusUnread();}
+    public void unreadMessage(int messageId){getmessage(messageId).setReadStatusUnread();
+        try{
+            this.gateWay.updateReadStatus(messageId, false);
+        }catch (IOException ignored){}}
 
     public String formatAllUnread(ArrayList<Integer> unread){
         StringBuilder a = new StringBuilder("These are the unread messages:\n");
