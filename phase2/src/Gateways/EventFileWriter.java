@@ -34,7 +34,7 @@ public class EventFileWriter implements IEventGateWay {
 
     public void updateAttendeeList(int id, ArrayList<Integer> attList)throws IOException{
         String ID = String.valueOf(id);
-        StringBuilder s = new StringBuilder();
+        StringBuilder s = new StringBuilder("");
         for(Integer attId: attList){
             s.append(attId);
             s.append(",");

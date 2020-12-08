@@ -28,7 +28,7 @@ public class UserFileWriter implements IUserGateWay{
 
     public void updateInbox(int id, ArrayList<Integer> inbox)throws IOException{
         String ID = String.valueOf(id);
-        StringBuilder s = new StringBuilder();
+        StringBuilder s = new StringBuilder("");
         for(Integer msgid: inbox){
             s.append(msgid);
             s.append(",");
@@ -39,7 +39,7 @@ public class UserFileWriter implements IUserGateWay{
 
     public void updateSentBox(int id, ArrayList<Integer> sentBox)throws IOException{
         String ID = String.valueOf(id);
-        StringBuilder s = new StringBuilder();
+        StringBuilder s = new StringBuilder("");
         for(Integer msgid: sentBox){
             s.append(msgid);
             s.append(",");
@@ -50,7 +50,7 @@ public class UserFileWriter implements IUserGateWay{
 
     public void updateEventList(int id, ArrayList<Integer> eList)throws IOException{
         String ID = String.valueOf(id);
-        StringBuilder s = new StringBuilder();
+        StringBuilder s = new StringBuilder("");
         for(Integer eId: eList){
             s.append(eId);
             s.append(",");
