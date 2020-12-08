@@ -44,7 +44,12 @@ public class RequestManager {
         }
     }
 
-    public void changeToAddressed(int requestid) {getRequestWithID(requestid).setStatus(true);}
+    public void changeToAddressed(int requestid) {
+        getRequestWithID(requestid).setStatus(true);
+        try{
+            this.gateWay.updateStatus(requestid, true);
+        }catch (IOException ignored){}
+    }
 
     //for all organizer to see
     public String getRequestInfo(int requestid) {
@@ -58,8 +63,6 @@ public class RequestManager {
                 "\nStatus: " + status;
         return a;
     }
-
-    public void cancelRequest(int requestid){requestList.remove(requestid);}
 
     public boolean checkRequestExist(int requestid){return requestList.containsKey(requestid);}
 
