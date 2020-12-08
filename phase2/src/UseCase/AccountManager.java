@@ -146,7 +146,7 @@ public class AccountManager {
         getAccountWithId(getterid).addInbox(msgid);
         //TODO:
         try{
-            this.gateWay.updateInbox(getterid, getCurrAccount().getInbox());
+            this.gateWay.updateUnreadInbox(getterid, getCurrAccount().getInbox());
         }catch (IOException ignored){}
     }
 
@@ -204,7 +204,7 @@ public class AccountManager {
         getAccountWithId(accountId).addUnreadInbox(unreadId);
         //TODO:
         try{
-            this.gateWay.updateInbox(accountId, getAccountWithId(accountId).getInbox());
+            this.gateWay.updateUnreadInbox(accountId, getAccountWithId(accountId).getInbox());
         }catch (IOException ignored){}
     }
 
@@ -212,9 +212,8 @@ public class AccountManager {
         Account acc = getCurrAccount();
         acc.removeMessage(messageID);
         //TODO:
-
         try{
-            this.gateWay.updateInbox(acc.getUserId(), acc.getInbox());
+            this.gateWay.updateUnreadInbox(acc.getUserId(), acc.getInbox());
         }catch (IOException ignored){}
 
     }
@@ -222,6 +221,10 @@ public class AccountManager {
     public void archiveMessage(int messageID){
         Account acc = getCurrAccount();
         acc.archiveMessage(messageID);
+        //TODO:
+        try{
+            this.gateWay.updateInbox(acc.getUserId(), acc.getInbox());
+        }catch (IOException ignored){}
     }
 
     public ArrayList<Integer> getArchive(){
