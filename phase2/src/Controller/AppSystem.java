@@ -15,7 +15,7 @@ public class AppSystem {
     protected VipSystem vipsystem;
     protected SpeakerSystem speakerS;
     protected SpeakerUI speakerUI;
-    protected RoomManager roomM = new RoomManager();
+    protected RoomManager roomM;
     protected OrganizerPresenter organizerPresenter;
     protected StrategyManager strategyM;
     protected AccountManager accM;
@@ -39,9 +39,11 @@ public class AppSystem {
     protected UserFileLoader userL;
     protected MsgFileLoader msgL;
     protected EventFileLoader eventL;
+    protected RoomFileLoader roomL;
     protected UserFileWriter userW;
     protected MsgFileWriter msgW;
     protected EventFileWriter eventW;
+    protected RoomFileWriter roomW;
 
 
 
@@ -58,10 +60,12 @@ public class AppSystem {
             this.userW = new UserFileWriter("phase2/DataBase/UserData.ini");
             this.msgW = new MsgFileWriter("phase2/DataBase/MsgData.ini");
             this.eventW = new EventFileWriter("phase2/DataBase/EventData.ini");
+            this.roomW = new RoomFileWriter("phase2/DataBase/RoomData.ini");
         }catch (IOException ignored){}
         this.accM = new AccountManager(userW);
         this.MsgM = new MessageManager(msgW);
         this.eventM = new EventManager(eventW);
+        this.roomM = new RoomManager(roomW);
         this.strategyM = new StrategyManager();
         this.vh = new VIPsystemhandler(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM);
         this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM);
@@ -77,6 +81,7 @@ public class AppSystem {
             this.userL = new UserFileLoader("phase2/DataBase/UserData.ini", accM);
             this.msgL = new MsgFileLoader("phase2/DataBase/MsgData.ini", MsgM);
             this.eventL = new EventFileLoader("phase2/DataBase/EventData.ini", eventM);
+            this.roomL = new RoomFileLoader("phase2/DataBase/RoomData.ini", roomM);
         }catch (IOException ignored){}
 
     }
@@ -89,6 +94,7 @@ public class AppSystem {
         try{
             userL.loadData();
             msgL.loadData();
+            roomL.loadData();
         }catch (NumberFormatException ignored) {}
 
         // start

@@ -1,14 +1,18 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IRoomGateWay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RoomManager {
     protected HashMap<Integer, Room> allRooms;
     protected static int totalRoomCount;
+    private IRoomGateWay gateWay;
 
-    public RoomManager(){
+    public RoomManager(IRoomGateWay g){
+        this.gateWay = g;
         this.allRooms = new HashMap<>();
     }
 
@@ -21,6 +25,9 @@ public class RoomManager {
         int ID = totalRoomCount;
         Room room = new Room(roomName, ID, roomCapacity);
         allRooms.put(ID, room);
+        try {
+            this.gateWay.writeNewRoom(ID, roomName, roomCapacity);
+        }catch (IOException ignored){}
         totalRoomCount += 1;
         return ID;
     }
@@ -103,6 +110,11 @@ public class RoomManager {
     public boolean isWithinCapacity(int roomID, int eventCapacity){
         Room room = allRooms.get(roomID);
         return room.getRoomCapacity() >= eventCapacity;
+    }
+
+    public void setRoomInfo(int id, HashMap<Integer, Integer> timetable){
+        Room r = getRoomWithID(id);
+        r.setTimetable(timetable);
     }
 
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Room {
     private final int roomId;
     private String roomName;
-    private final HashMap<Integer, Integer> timetable;
+    private HashMap<Integer, Integer> timetable;
     private final int roomCapacity;
 
     public Room(String roomName, int roomId, int roomCapacity){
@@ -103,5 +103,7 @@ public class Room {
     public int getRoomCapacity(){
         return this.roomCapacity;
     }
+
+    public void setTimetable(HashMap<Integer, Integer> tt){ this.timetable = tt;}
 
 }
