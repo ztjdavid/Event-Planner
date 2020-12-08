@@ -25,20 +25,6 @@ public class OrganizerManager extends AccountManager{
     }
 
     /**
-     * Change the given organizer's username.
-     * @param organizer The organizer who want to change username.
-     * @param username The username that the organizer wants to change into.
-     */
-    public void changeUsername(Organizer organizer, String username){organizer.setUsername(username);}
-
-    /**
-     * Change the given organizer's password
-     * @param organizer The organizer who want to change password.
-     * @param password The password that the organizer wants to change into.
-     */
-    public void changePassword(Organizer organizer, String password){organizer.setPassword(password);}
-
-    /**
      * Create a hashmap of all Attendee in the account list.
      * @return Hashmap of all Attendee with key as user ID and value as username.
      */
