@@ -378,7 +378,6 @@ public class OrganizerSystemHandler {
             organizerPresenter.message21();
         }else if(userInput == 3){
             accM.removeMessage(messageID);
-            MsgM.removeMessage(messageID);
             organizerPresenter.message22();
         }
         organizerPresenter.askForBack();
