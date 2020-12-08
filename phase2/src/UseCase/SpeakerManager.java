@@ -3,6 +3,7 @@ import Entity.*;
 import UseCase.IGateWay.IMsgGateWay;
 import UseCase.IGateWay.IUserGateWay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +31,9 @@ public class SpeakerManager extends AccountManager {
     public void registerNewTalk(int talkID, int speakerID){
         Speaker speaker = (Speaker) accountList.get(speakerID);
         speaker.registerTalk(talkID);
+        try{
+            gateWay.updateEventList(getCurrAccountId(),getCurrSpeaker().getTalkList());
+        }catch (IOException ignored){}
     }
 
 
