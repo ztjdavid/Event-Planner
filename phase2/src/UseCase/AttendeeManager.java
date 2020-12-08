@@ -2,6 +2,7 @@ package UseCase;
 import Entity.*;
 import UseCase.IGateWay.IUserGateWay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -42,6 +43,10 @@ public class AttendeeManager extends AccountManager{
      */
     public void enrol(int talkID){
         getCurrAttendee().addEvent(talkID);
+        //TODO:
+        try{
+            this.gateWay.updateEventList(getCurrAccountId(), getCurrAttendee().getEventList());
+        }catch (IOException ignored){}
     }
 
     /**
@@ -50,6 +55,10 @@ public class AttendeeManager extends AccountManager{
      */
     public void drop(int talkID) {
         getCurrAttendee().cancelEvent(talkID);
+        //TODO:
+        try{
+            this.gateWay.updateEventList(getCurrAccountId(), getCurrAttendee().getEventList());
+        }catch (IOException ignored){}
     }
 
     /**
@@ -104,6 +113,11 @@ public class AttendeeManager extends AccountManager{
     public void deleteUnreadInbox(int msgid){
          ArrayList<Integer> inbox = getCurrAccount().getUnreadInbox();
          inbox.remove(Integer.valueOf(msgid));
+
+         //TODO:
+         try{
+             this.gateWay.updateInbox(getCurrAccountId(), getCurrAttendee().getInbox());
+         }catch (IOException ignored){}
 
     }
 
