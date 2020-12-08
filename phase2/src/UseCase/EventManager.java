@@ -81,11 +81,15 @@ public class EventManager {
 
     /**
      * Remove the attendee from the Event.
-     * @param attendee The unwanted attendee.
+     * @param talkId The talk id.
+     * @param atId The unwanted attendee id.
      */
 
-    public void removeAttendee(Attendee attendee){
-        this.eventList.get(currentTalkID).removeAttendee(attendee.getUserId());
+    public void removeAttendee(int talkId, int atId){
+        this.eventList.get(talkId).removeAttendee(atId);
+        try{
+            this.gateWay.updateAttendeeList(talkId, eventList.get(talkId).getAttendeeId());
+        }catch (IOException ignored){}
     }
 
     /**
@@ -105,30 +109,6 @@ public class EventManager {
         try{
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
         }catch (IOException ignored){};
-    }
-
-    /**
-     * Change the time of the Event.
-     * @param time The new time (in 24-hour format) to be updated.
-     * @return true iff the new time is valid (ie. between 9 and 17)
-     */
-
-    public boolean changeEventTime(int time) {
-        if (time > 9 && time <= 17) {
-            this.eventList.get(currentTalkID).setStartTime(time);
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    /**
-     * Change the speaker of the Event.
-     * @param speakerID The new ID of the new speaker to be updated.
-     */
-
-    public void changeEventSpeaker(int speakerID){
-        this.eventList.get(currentTalkID).setSpeaker(speakerID);
     }
 
     /**
@@ -192,18 +172,15 @@ public class EventManager {
     private int createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip, int id) {
         Event newEvent = new Event(id, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
         this.eventList.put(id, newEvent);
-
-        try{
-            this.gateWay.writeNewEvent(id, talkTitle, startTime,
-                    roomId, speakerID, eventCapacity, duration, isVip);
-        }catch (IOException ignored){}
-
         return id;
     }
 
     public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
                            int eventCapacity, int duration, boolean isVip){
         int id = idTracker + 1;
+        try{
+            this.gateWay.writeNewEvent(id, talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip);
+        }catch (IOException ignored){}
         return createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
     }
 
@@ -313,23 +290,15 @@ public class EventManager {
     }
 
     /**
-     * Set the Event with the given talk ID with the Speaker with the given speaker ID.
-     * @param speakerID The ID of the Speaker
-     * @param talkID The ID of the Event.
-     */
-
-    public void setSpeakerTo(int speakerID, int talkID){
-        Event event = getEventWithId(talkID);
-        event.setSpeaker(speakerID);
-    }
-
-    /**
      * Remove the Event given the talkID
      * @param talkID The ID of the talk.
      */
 
     public void removeEvent(int talkID){
         this.eventList.remove(talkID);
+        try{
+            this.gateWay.removeEvent(talkID);
+        }catch (IOException ignored){}
     }
 
     /**
