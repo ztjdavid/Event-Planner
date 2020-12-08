@@ -33,6 +33,12 @@ public class EventFileWriter implements IEventGateWay {
         iniFile.store();
     }
 
+    public void updateTalkTitle(int id, String title)throws IOException{
+        String ID = String.valueOf(id);
+        iniFile.put(ID, "TalkTitle", title);
+        iniFile.store();
+    }
+
     public void updateAttendeeList(int id, ArrayList<Integer> attList)throws IOException{
         String ID = String.valueOf(id);
         StringBuilder s = new StringBuilder("");
