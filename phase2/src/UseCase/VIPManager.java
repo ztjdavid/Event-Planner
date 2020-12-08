@@ -3,6 +3,7 @@ package UseCase;
 import Entity.*;
 import UseCase.IGateWay.IUserGateWay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class VIPManager extends AccountManager{
@@ -23,13 +24,19 @@ public class VIPManager extends AccountManager{
     public void changePassword(int id, String password){
         getVIPWithId(id).setPassword(password);
     }
-
+    //////NEED
     public void enrolEvent(int userId, int eventId){
         getVIPWithId(userId).addEvent(eventId);
+        try{
+            this.gateWay.updateEventList(getCurrAccountId(), getCurrVIP().getEventList());
+        }catch (IOException ignored){}
     }
-
+    //////NEED
     public void dropEvent(int userId, int eventId){
         getVIPWithId(userId).cancelEvent(eventId);
+        try{
+            this.gateWay.updateEventList(getCurrAccountId(), getCurrVIP().getEventList());
+        }catch (IOException ignored){}
     }
 
     public ArrayList<Integer> getEventList(int id){
@@ -49,10 +56,13 @@ public class VIPManager extends AccountManager{
 
     public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}
 
-
+    ///////NEED
     public void deleteUnreadInbox(int msgid){
         ArrayList<Integer> inbox = getCurrAccount().getUnreadInbox();
         inbox.remove(Integer.valueOf(msgid));
+        try{
+            this.gateWay.updateInbox(getCurrAccountId(), getCurrVIP().getInbox());
+        }catch (IOException ignored){}
 
     }
 
