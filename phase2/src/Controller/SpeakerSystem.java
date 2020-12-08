@@ -39,7 +39,7 @@ public class SpeakerSystem {
         int userChoice;
         do{
             speakerUI.startup();
-            userChoice = sh.chooseMode1();
+            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
         } while (userChoice != 3);
     }
@@ -68,7 +68,7 @@ public class SpeakerSystem {
         int userChoice;
         do {
             speakerUI.eventdb();
-            userChoice = sh.chooseMode1();
+            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             eventop(userChoice);
         } while (userChoice != 3);
     }
@@ -89,7 +89,7 @@ public class SpeakerSystem {
         int userChoice;
         do {
             speakerUI.requestdb();
-            userChoice = sh.chooseMode1();
+            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             requestop(userChoice);
         } while (userChoice != 3);
     }
@@ -127,7 +127,7 @@ public class SpeakerSystem {
         int userChoice;
         do{
             speakerUI.messaging();
-            userChoice = sh.chooseMode2();
+            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             msgOp(userChoice);
         } while (userChoice != 7);
 

@@ -1,5 +1,8 @@
 package Presenters;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SpeakerUI extends Presenter{
 
     public SpeakerUI(ITextUI textUI) {
@@ -37,7 +40,7 @@ public class SpeakerUI extends Presenter{
                             "4 -> Read your replies and send message to repliers\n" +
                             "5 -> Read your messages and reply to senders\n"+
                             "6 -> Read all unread message.\n"+
-                "6 -> Go back.");
+                "7 -> Go back.");
     }
 
     public void eventdb(){
@@ -105,6 +108,15 @@ public class SpeakerUI extends Presenter{
 
     public String getLineTxt(){
         return requestInput();
+    }
+
+    public ArrayList<Integer> getchoicelist(int a){
+        if(a == 1){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3));
+            return b;}
+        else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
+            return b;}
+        else{ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+            return b;}
     }
 
 
