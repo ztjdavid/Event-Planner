@@ -25,6 +25,8 @@ public class AttendeeUI extends Presenter{
             return b;}
         else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
             return b;}
+        else if(a == 4){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+            return b;}
         else{ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
             return b;}
     }

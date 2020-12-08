@@ -87,6 +87,9 @@ public class AttendeeSystem {
                 cancelMyTalks();
                 break;
             case 4:
+                Request();
+                break;
+            case 5:
                 break;
         }
     }
