@@ -166,8 +166,8 @@ public class AttendeeUI extends Presenter{
     public void eventmain(){
         printText("----------------Event Interface-----------------\nHi, " +
                 "Would you like to\n1 -> Sign Up a New Event\n2 -> View All My Event\n" +
-                "3 -> Leave an Event\n" +
-                "4 -> Go back");
+                "3 -> Leave an Event\n" + "4 -> Read Your Requests and Send New Request\n" +
+                "5 -> Go back");
 
     }
 
