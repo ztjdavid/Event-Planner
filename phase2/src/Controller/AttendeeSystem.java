@@ -38,7 +38,7 @@ public class AttendeeSystem {
         int userChoice;
         do {
             attendeeUI.startup();
-            userChoice = ah.chooseMode1();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
         } while (userChoice != 5);
     }
@@ -61,7 +61,7 @@ public class AttendeeSystem {
         int userChoice;
         do{
             attendeeUI.msgSelect();
-            userChoice = ah.chooseMode2();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             msgOp(userChoice);
         } while (userChoice != 7);
 
@@ -71,7 +71,7 @@ public class AttendeeSystem {
         int userChoice;
         do{
             attendeeUI.eventmain();
-            userChoice = ah.chooseMode4();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             EventOp(userChoice);
         } while (userChoice != 7);
     }
@@ -94,7 +94,7 @@ public class AttendeeSystem {
         int userChoice;
         do{
             attendeeUI.eventselect();
-            userChoice = ah.chooseMode3();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(3), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             EventSignup(userChoice);
         } while (userChoice != 4);
     }
@@ -406,7 +406,7 @@ public class AttendeeSystem {
         int userChoice;
         do {
             attendeeUI.requestdb();
-            userChoice = ah.chooseMode1();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             requestop(userChoice);
         } while (userChoice != 3);
     }

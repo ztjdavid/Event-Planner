@@ -1,6 +1,8 @@
 package Presenters;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AttendeeUI extends Presenter{
 
@@ -15,6 +17,16 @@ public class AttendeeUI extends Presenter{
                 "Attendee! Would you like to\n1 -> View your signed up events\n" +
                 "2 -> Sign up for a new events\n" +
                 "3 -> Cancel a events\n4 -> Send message \n5 -> Logout");
+    }
+
+
+    public ArrayList<Integer> getchoicelist(int a){
+        if(a == 1){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3));
+            return b;}
+        else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
+            return b;}
+        else{ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+            return b;}
     }
 
     public void informinvalidchoice(){
