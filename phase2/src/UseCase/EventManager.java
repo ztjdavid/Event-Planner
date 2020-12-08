@@ -67,9 +67,15 @@ public class EventManager {
 
     public void addAttendeev2(int talkid, Attendee attendee){
         this.eventList.get(talkid).addAttendee(attendee.getUserId());
+        try{
+            gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());/////ADD HERE?
+        }catch (IOException ignored){};
     }
     public void addAttendeev2(int talkid, VIP vip){
         this.eventList.get(talkid).addAttendee(vip.getUserId());
+        try{
+            gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
+        }catch (IOException ignored){};
     }
 
     /**
@@ -89,9 +95,15 @@ public class EventManager {
 
     public void removeAttendeev2(int talkid, Attendee attendee){
         this.eventList.get(talkid).removeAttendee(attendee.getUserId());
+        try{
+            gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
+        }catch (IOException ignored){};
     }
     public void removeAttendeev2(int talkid, VIP vip){
         this.eventList.get(talkid).removeAttendee(vip.getUserId());
+        try{
+            gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
+        }catch (IOException ignored){};
     }
 
     /**

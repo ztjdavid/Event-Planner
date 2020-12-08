@@ -8,7 +8,7 @@ public interface IEventGateWay {
                               ArrayList<Integer> speakerList, int eventCapacity,
                               int duration, boolean isVip)throws IOException;
     public void updateAttendeeList(int id, ArrayList<Integer> attList)throws IOException;
-    public void updateRemainingSeat(int id, int rs)throws IOException;
+    public void updateRemainingSeat(int id, int rs)throws IOException;//////NOT YET ADDRESSED
     public void updateSeatsOccupied(int id, int so)throws IOException;
 
 }
