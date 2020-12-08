@@ -51,4 +51,7 @@ public class VIP extends Account{
     @Override
     public int getUserType(){ return 3; }
 
+    public void setEventList(ArrayList<Integer> eventList) {
+        this.eventList = eventList;
+    }
 }

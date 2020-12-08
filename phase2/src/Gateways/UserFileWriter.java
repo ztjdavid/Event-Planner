@@ -22,7 +22,19 @@ public class UserFileWriter implements IUserGateWay{
         iniFile.put(ID, "Password", password);
         iniFile.put(ID, "Inbox", "");
         iniFile.put(ID, "SentBox", "");
+        iniFile.put(ID, "UnreadInbox", "");
         if (userType != 0)  iniFile.put(ID, "EventList", "");
+        iniFile.store();
+    }
+
+    public void updateUnreadInbox(int id, ArrayList<Integer> unreadInbox)throws IOException{
+        String ID = String.valueOf(id);
+        StringBuilder s = new StringBuilder("");
+        for(Integer msgid: unreadInbox){
+            s.append(msgid);
+            s.append(",");
+        }
+        iniFile.put(ID, "UnreadInbox", s.toString());
         iniFile.store();
     }
 

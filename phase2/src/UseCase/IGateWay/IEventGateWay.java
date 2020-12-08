@@ -10,5 +10,7 @@ public interface IEventGateWay {
     public void updateAttendeeList(int id, ArrayList<Integer> attList)throws IOException;
     public void updateRemainingSeat(int id, int rs)throws IOException;//////NOT YET ADDRESSED
     public void updateSeatsOccupied(int id, int so)throws IOException;
+    public void removeEvent(int id)throws IOException;
+    public void updateTalkTitle(int id, String title)throws IOException;
 
 }

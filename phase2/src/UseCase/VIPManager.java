@@ -72,5 +72,14 @@ public class VIPManager extends AccountManager{
         return other.getUserType() != 0 && other.getUserId() != getCurrVIP().getUserId();
     }
 
+    public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
+                           ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox){
+        VIP acc = (VIP) getAccountWithId(id);
+        acc.setInbox(inbox);
+        acc.setSentBox(sentBox);
+        acc.setEventList(eventList);
+        acc.setUnreadInbox(unreadInbox);
+    }
+
 
 }

@@ -102,11 +102,13 @@ public class AttendeeManager extends AccountManager{
      */
     public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentMessage();}
 
-    public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox, ArrayList<Integer> eventList){
+    public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
+                           ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox){
         Attendee acc = (Attendee) getAccountWithId(id);
         acc.setInbox(inbox);
         acc.setSentBox(sentBox);
         acc.setEventList(eventList);
+        acc.setUnreadInbox(unreadInbox);
     }
     ///Grey modify
     public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}

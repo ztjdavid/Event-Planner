@@ -367,7 +367,6 @@ public class Attendeesystemhandler {
             attUI.archiveMsg();
         }else if(userInput == 3){
             accM.removeMessage(msgId);
-            MsgM.removeMessage(msgId);
             attUI.deleteMsg();
         }
         attUI.askForBack();}
