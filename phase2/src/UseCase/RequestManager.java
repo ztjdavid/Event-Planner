@@ -1,6 +1,8 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IRequestGateWay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,14 +11,24 @@ public class RequestManager {
     protected HashMap<Integer, Request> requestList;
     protected static int totalRequestCount = 0;
     protected ArrayList<Request> requestl;
+    private IRequestGateWay gateWay;
 
-    public RequestManager() {this.requestList = new HashMap<>(); this.requestl = new ArrayList<>();}
+    public RequestManager(IRequestGateWay g) {
+        this.requestList = new HashMap<>();
+        this.requestl = new ArrayList<>();
+        this.gateWay = g;
+    }
 
     public void createRequest(String service, int senderid, int talkid){
         int requestid = totalRequestCount;
         Request newRequest = new Request(requestid, service, senderid, talkid);
         this.requestl.add(newRequest);
         this.requestList.put(requestid, newRequest);
+
+        try{
+            this.gateWay.writeNewRequest(requestid, service, senderid, talkid);
+        }catch (IOException ignored){}
+
         totalRequestCount +=1;
     }
 
@@ -75,6 +87,11 @@ public class RequestManager {
 
     public String showallre(int senderid){
         return showall(getrequestofsender(senderid));
+    }
+
+    public void setRequestInfo(int id, boolean status){
+        Request r = getRequestWithID(id);
+        r.setStatus(status);
     }
 
 

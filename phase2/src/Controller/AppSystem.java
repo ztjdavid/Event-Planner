@@ -22,7 +22,7 @@ public class AppSystem {
     protected EventManager eventM;
     protected MessageManager MsgM;
     protected AttendeeManager attM;
-    protected RequestManager rqstM = new RequestManager();
+    protected RequestManager rqstM;
     protected VIPManager vipM;
     protected StartUI startUI;
     protected SignInUI signInUI;
@@ -40,10 +40,12 @@ public class AppSystem {
     protected MsgFileLoader msgL;
     protected EventFileLoader eventL;
     protected RoomFileLoader roomL;
+    protected RequestFileLoader requestL;
     protected UserFileWriter userW;
     protected MsgFileWriter msgW;
     protected EventFileWriter eventW;
     protected RoomFileWriter roomW;
+    protected RequestFileWriter requestW;
 
 
 
@@ -61,6 +63,7 @@ public class AppSystem {
             this.msgW = new MsgFileWriter("phase2/DataBase/MsgData.ini");
             this.eventW = new EventFileWriter("phase2/DataBase/EventData.ini");
             this.roomW = new RoomFileWriter("phase2/DataBase/RoomData.ini");
+            this.requestW = new RequestFileWriter("phase2/DataBase/RequestData.ini");
         }catch (IOException ignored){}
         this.attM = new AttendeeManager(userW);
         this.accM = new AccountManager(userW);
@@ -70,6 +73,7 @@ public class AppSystem {
         this.MsgM = new MessageManager(msgW);
         this.eventM = new EventManager(eventW);
         this.roomM = new RoomManager(roomW);
+        this.rqstM = new RequestManager(requestW);
         this.strategyM = new StrategyManager();
         this.vh = new VIPsystemhandler(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM);
         this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM);
@@ -86,6 +90,7 @@ public class AppSystem {
             this.msgL = new MsgFileLoader("phase2/DataBase/MsgData.ini", MsgM);
             this.eventL = new EventFileLoader("phase2/DataBase/EventData.ini", eventM);
             this.roomL = new RoomFileLoader("phase2/DataBase/RoomData.ini", roomM);
+            this.requestL = new RequestFileLoader("phase2/DataBase/RequestData.ini", rqstM);
         }catch (IOException ignored){}
 
     }
