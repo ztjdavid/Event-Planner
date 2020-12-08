@@ -4,7 +4,6 @@ import Presenters.VipUI;
 import UseCase.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class VIPsystemhandler {
     protected AccountManager accM;
@@ -29,71 +28,6 @@ public class VIPsystemhandler {
 
     }
 
-    ///////////CHOOSING METHOD/////////
-
-    public int chooseMode1(){    //For Main Dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    public int chooseMode2(){    //For MsgDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    public int chooseMode3(){    //For SignupDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    public int chooseMode4(){    //For EventDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = vipUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
 
     ///////////////HELPER FOR SIGN UP EVENT////////////////
     public void readAllAvailableTalks(int type){
@@ -306,6 +240,24 @@ public class VIPsystemhandler {
         }while(!valid);
         return Integer.parseInt(userInput);
     }
+
+
+    protected void askToAchieve(int msgId){
+        int userInput = vipUI.chooseOption(vipUI.getchoicelist(1), "Would you like to:" +
+                "\n1 -> Mark as Unread" +
+                "\n2 -> Move to Archive" +
+                "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
+        if(userInput == 1){
+            vipUI.annouceMarkUnread();
+        } else if(userInput == 2){
+            vipM.removeMessage(msgId);
+            vipM.archiveMessage(msgId);
+            vipUI.archiveMsg();
+        }else if(userInput == 3){
+            vipM.removeMessage(msgId);
+            vipUI.deleteMsg();
+        }
+        vipUI.askForBack();}
 
     ////////////////////MODIFY LATER///////////
     public int targetmsg(){

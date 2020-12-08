@@ -10,15 +10,20 @@ public class VipUI extends Presenter{
     }
 
     public ArrayList<Integer> getchoicelist(int a){
-        if(a == 1){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3));
-            return b;}
-        else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-            return b;}
-        else if(a == 4){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-            return b;}
-        else{ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-            return b;}
+        if(a == 1){
+            return new ArrayList<>(Arrays.asList(1, 2, 3));}
+        else if(a == 2){
+            return new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));}
+        else if(a == 4){
+            return new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));}
+        else{
+            return new ArrayList<>(Arrays.asList(1, 2, 3, 4));}
     }
+
+    public void annouceMarkUnread(){printText("Message Successfully Marked as Unread.");}
+    public void archiveMsg(){ printText("Message Successfully Archived."); }
+    public void deleteMsg(){ printText("Message Successfully Deleted."); }
+    public void announceEmptyInbox(){ printText("There is No Message in Your Inbox."); }
 
 
     public void startup() {

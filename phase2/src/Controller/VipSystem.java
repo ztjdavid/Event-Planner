@@ -1,10 +1,8 @@
 package Controller;
-import Presenters.AttendeeUI;
 import Presenters.VipUI;
 import UseCase.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class VipSystem {
@@ -333,10 +331,23 @@ public class VipSystem {
 
     private void readAllMsg(){
 
-        String a = MsgM.formatmsgget(vipM.getInbox(accM.getCurrAccountId()));
-        vipUI.show(a);
-        vipUI.askForBack();
+        int messageID;
+        ArrayList<Integer> inbox = vipM.getInbox(accM.getCurrAccountId());
 
+        if (inbox.size() != 0) {
+            do {
+                String a = MsgM.formatmsgget(vipM.getInbox(accM.getCurrAccountId()));
+                vipUI.show(a);
+                messageID = vh.targetmsg();
+                if(messageID != -1){
+                    vipUI.show(MsgM.getString(messageID));
+                    vh.askToAchieve(messageID);
+                }
+            }while(messageID != -1);
+        } else {
+            vipUI.announceEmptyInbox();
+            vipUI.askForBack();
+        }
     }
 
     private void allUnreadMsg(){

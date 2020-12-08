@@ -4,7 +4,6 @@ import Presenters.AttendeeUI;
 import UseCase.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Attendeesystemhandler {
     protected AccountManager accM;
@@ -29,71 +28,6 @@ public class Attendeesystemhandler {
 
     }
 
-    ///////////CHOOSING METHOD/////////
-
-    public int chooseMode1(){    //For Main Dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = attUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                attUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    public int chooseMode2(){    //For MsgDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = attUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                attUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    public int chooseMode3(){    //For SignupDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = attUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                attUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    public int chooseMode4(){    //For EventDashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = attUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                attUI.informinvalidchoice();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
 
     ///////////////HELPER FOR SIGN UP EVENT////////////////
     public void readAllAvailableTalks(int type){
@@ -144,9 +78,7 @@ public class Attendeesystemhandler {
         }
 
         if (!is_VIP) {
-            for (Integer i : result) {
-                if (eventManager.checkVIP(i)) result.remove(Integer.valueOf(i));
-            }
+            result.removeIf(i -> eventManager.checkVIP(i));
         }return result;
     }
 
@@ -371,29 +303,6 @@ public class Attendeesystemhandler {
         }
         attUI.askForBack();}
 
-    protected void signUpMyNewTalks(int a){
-        int input;
-        do{
-            attUI.signUpTalk(a);
-            readAllAvailableTalks(a);
-            input = targetTalksSignUp(a);
-            if (input != -1){
-                if(eventManager.checkVIP(input)){
-                    attUI.signUpVipTalk();
-                    if(attM.getCurrAttendee().getUserType() == 3){
-                        attM.enrol(input);
-                        eventManager.addAttendeev2(input, attM.getCurrAttendee());
-                        attUI.signUpSuc();
-                    }else{attUI.informNotVip();}
-                }else if(!eventManager.checkVIP(input)){
-                    attM.enrol(input);
-                    eventManager.addAttendeev2(input, attM.getCurrAttendee());
-                    attUI.signUpSuc();
-                }
-            }
-        }while(input != -1);
-    }
-
     protected void readAllMsg() {
 
         int messageID;
@@ -415,19 +324,4 @@ public class Attendeesystemhandler {
         }
     }
 
-
-    protected void allUnreadMsg(){
-        int tmsgid;
-        do{
-            readAllUnreadMsg();
-            tmsgid = targetunread();
-            if(tmsgid != -1){
-                MsgM.readMessage(tmsgid);
-                attM.deleteUnreadInbox(tmsgid);
-                attUI.unreadSuccess(tmsgid);
-                attUI.askForBack();
-            }
-
-        }while(tmsgid != -1);
-    }
 }
