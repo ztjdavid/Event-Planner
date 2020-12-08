@@ -1,14 +1,14 @@
 package Controller;
-import Presenters.SignInUI;
+import Presenters.SignInP;
 import UseCase.*;
 
 public class SignInSystem {
     protected AccountManager accM;
-    protected SignInUI signInUI;
+    protected SignInP signInP;
 
-    public SignInSystem(AccountManager accM, SignInUI signInUI){
+    public SignInSystem(AccountManager accM, SignInP signInP){
         this.accM = accM;
-        this.signInUI = signInUI;
+        this.signInP = signInP;
     }
 
     /**
@@ -19,13 +19,13 @@ public class SignInSystem {
         boolean isValid = false;
         String username;
         String password;
-        signInUI.startup();
+        signInP.startup();
 
         while(!isValid){
             username = confirmUsername();
-            password = signInUI.requestPassword();
+            password = signInP.requestPassword();
             if (accM.loginAccount(username, password)) isValid = true;
-            else signInUI.informLoginFailed();
+            else signInP.informLoginFailed();
         }
         return accM.getCurrAccount().getUserType();
     }
@@ -37,9 +37,9 @@ public class SignInSystem {
         boolean valid = false;
         String username;
         do{
-            username = signInUI.requestUsername();
+            username = signInP.requestUsername();
             if (accM.existsUsername(username)) valid = true;
-            else signInUI.informAccountNotExist();
+            else signInP.informAccountNotExist();
         }while (!valid);
         return username;
     }

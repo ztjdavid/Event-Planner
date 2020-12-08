@@ -1,9 +1,7 @@
 package Controller;
-import Gateways.*;
-import Presenters.SignUpUI;
+import Presenters.SignUpP;
 import UseCase.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -11,12 +9,12 @@ import java.util.Arrays;
 
 public class SignUpSystem {
     protected AccountManager accM;
-    protected SignUpUI signUpUI;
+    protected SignUpP signUpP;
     protected StrategyManager strategyM;
 
-    public SignUpSystem(AccountManager accM, SignUpUI signUpUI, StrategyManager strategyM) {
+    public SignUpSystem(AccountManager accM, SignUpP signUpP, StrategyManager strategyM) {
         this.accM = accM;
-        this.signUpUI = signUpUI;
+        this.signUpP = signUpP;
         this.strategyM = strategyM;
     }
 
@@ -27,12 +25,12 @@ public class SignUpSystem {
         String username;
         String password;
         int userType;
-        signUpUI.startup();
+        signUpP.startup();
         userType = chooseType();
         username = createUsername();
         password = createPassword();
         accM.createAccount(username, password, userType);
-        signUpUI.finishSignUp();
+        signUpP.finishSignUp();
 
     }
 
@@ -43,9 +41,9 @@ public class SignUpSystem {
         int type = -1;
         boolean valid = false;
         while(!valid){
-            userInput = signUpUI.requestUserType();
+            userInput = signUpP.requestUserType();
             if (!strategyM.isValidChoice(userInput, validTypes))
-                signUpUI.informInValidChoice();
+                signUpP.informInValidChoice();
             else {
                 valid = true;
                 type = Integer.parseInt(userInput);}
@@ -57,11 +55,11 @@ public class SignUpSystem {
         boolean succeed = false;
         String userInput;
         do{
-            userInput = signUpUI.requestUsername();
+            userInput = signUpP.requestUsername();
             if (!accM.existsUsername(userInput)) {
-                signUpUI.informValidUsername();
+                signUpP.informValidUsername();
                 succeed = true;
-            } else signUpUI.informInvalidUsername();
+            } else signUpP.informInvalidUsername();
         }while (!succeed);
         return userInput;
     }
@@ -71,10 +69,10 @@ public class SignUpSystem {
         String userInput2;
         boolean succeed = false;
         do{
-            userInput1 = signUpUI.requestPassword();
-            userInput2 = signUpUI.confirmPassword();
+            userInput1 = signUpP.requestPassword();
+            userInput2 = signUpP.confirmPassword();
             if (userInput1.equals(userInput2)) succeed = true;
-            else signUpUI.informTwoInputsNotMatch();
+            else signUpP.informTwoInputsNotMatch();
         }while (!succeed);
         return userInput1;
     }

@@ -25,8 +25,8 @@ public class AppSystem {
     protected RequestManager rqstM;
     protected VIPManager vipM;
     protected StartUI startUI;
-    protected SignInUI signInUI;
-    protected SignUpUI signUpUI;
+    protected SignInP signInP;
+    protected SignUpP signUpP;
     protected AttendeeUI attUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
@@ -52,8 +52,8 @@ public class AppSystem {
     public AppSystem(ITextUI textUI){
         this.textUI = textUI;
         this.startUI = new StartUI();
-        this.signInUI = new SignInUI();
-        this.signUpUI = new SignUpUI();
+        this.signInP = new SignInP(textUI);
+        this.signUpP = new SignUpP(textUI);
         this.speakerUI = new SpeakerUI(textUI);
         this.attUI = new AttendeeUI(textUI);
         this.vipUI = new VipUI(textUI);
@@ -77,8 +77,8 @@ public class AppSystem {
         this.strategyM = new StrategyManager();
         this.vh = new VIPsystemhandler(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM);
         this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM);
-        this.signInS = new SignInSystem(accM, signInUI);
-        this.signUpS = new SignUpSystem(accM, signUpUI, strategyM);
+        this.signInS = new SignInSystem(accM, signInP);
+        this.signUpS = new SignUpSystem(accM, signUpP, strategyM);
         this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM, ah);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM, oh, rqstM);
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM, sh);

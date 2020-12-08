@@ -1,34 +1,28 @@
 package Presenters;
 import java.util.Scanner;
 
-public class SignInUI {
-    private final Scanner scannerLogin;
-
-    public SignInUI(){
-        this.scannerLogin = new Scanner(System.in);
-    }
+public class SignInP extends Presenter{
+    public SignInP(ITextUI textUI){ super(textUI);}
 
 
     public void startup(){
-        System.out.println("----------------SignInSystem-----------------");
+        printText("----------------SignInSystem-----------------");
     }
 
     public String requestUsername(){
-        System.out.println("Please enter your username:");
-        return scannerLogin.nextLine();
+        return requestInput("Please enter your username:");
     }
 
     public String requestPassword(){
-        System.out.println("Please enter your password:");
-        return scannerLogin.nextLine();
+        return requestInput("Please enter your password:");
     }
 
     public void informAccountNotExist(){
-        System.out.println("Username does not exist.\n");
+       printText("Username does not exist.\n");
     }
 
     public void informLoginFailed(){
-        System.out.println(
+        printText(
                 "###########################################################\n" +
                 "#    Incorrect username or password. Please try again.    #\n" +
                 "###########################################################");

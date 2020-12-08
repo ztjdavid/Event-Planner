@@ -30,6 +30,7 @@ public class EventFileWriter implements IEventGateWay {
         iniFile.put(ID, "SeatsOccupied", 0);
         iniFile.put(ID, "Duration", duration);
         iniFile.put(ID, "IsVip", isVip);
+        iniFile.store();
     }
 
     public void updateAttendeeList(int id, ArrayList<Integer> attList)throws IOException{
@@ -54,15 +55,6 @@ public class EventFileWriter implements IEventGateWay {
         iniFile.put(msgID, "SeatsOccupied", so);
         iniFile.store();
     }
-
-
-
-
-
-
-
-
-
 
 
 }
