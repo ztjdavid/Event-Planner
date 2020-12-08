@@ -1,5 +1,7 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IMsgGateWay;
+import UseCase.IGateWay.IUserGateWay;
 
 import java.util.ArrayList;
 
@@ -7,8 +9,8 @@ import java.util.ArrayList;
  * The SpeakerManager class implements all functionalities of a speaker.
  */
 public class SpeakerManager extends AccountManager {
-    public SpeakerManager() {
-        super();
+    public SpeakerManager(IUserGateWay g) {
+        super(g);
     }
 
     /**

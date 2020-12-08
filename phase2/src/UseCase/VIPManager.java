@@ -1,11 +1,12 @@
 package UseCase;
 
 import Entity.*;
+import UseCase.IGateWay.IUserGateWay;
 
 import java.util.ArrayList;
 
 public class VIPManager extends AccountManager{
-    public VIPManager(){ super();}
+    public VIPManager(IUserGateWay g){ super(g);}
 
     public VIP getCurrVIP() throws ClassCastException{
         return (VIP)getCurrAccount();

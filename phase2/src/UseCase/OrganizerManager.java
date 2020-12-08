@@ -1,5 +1,6 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IUserGateWay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,8 +10,8 @@ import java.util.HashMap;
  */
 public class OrganizerManager extends AccountManager{
 
-    public OrganizerManager(){
-        super();
+    public OrganizerManager(IUserGateWay g){
+        super(g);
     }
 
     /**

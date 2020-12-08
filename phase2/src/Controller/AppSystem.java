@@ -21,15 +21,15 @@ public class AppSystem {
     protected AccountManager accM;
     protected EventManager eventM;
     protected MessageManager MsgM;
-    protected AttendeeManager attM = new AttendeeManager();
+    protected AttendeeManager attM;
     protected RequestManager rqstM = new RequestManager();
-    protected VIPManager vipM = new VIPManager();
+    protected VIPManager vipM;
     protected StartUI startUI;
     protected SignInUI signInUI;
     protected SignUpUI signUpUI;
     protected AttendeeUI attUI;
-    protected OrganizerManager ognM = new OrganizerManager();
-    protected SpeakerManager spkM = new SpeakerManager();
+    protected OrganizerManager ognM;
+    protected SpeakerManager spkM;
     protected ITextUI textUI;
     protected VipUI vipUI;
     protected VIPsystemhandler vh;
@@ -62,7 +62,11 @@ public class AppSystem {
             this.eventW = new EventFileWriter("phase2/DataBase/EventData.ini");
             this.roomW = new RoomFileWriter("phase2/DataBase/RoomData.ini");
         }catch (IOException ignored){}
+        this.attM = new AttendeeManager(userW);
         this.accM = new AccountManager(userW);
+        this.vipM = new VIPManager(userW);
+        this.ognM = new OrganizerManager(userW);
+        this.spkM = new SpeakerManager(userW);
         this.MsgM = new MessageManager(msgW);
         this.eventM = new EventManager(eventW);
         this.roomM = new RoomManager(roomW);
@@ -78,7 +82,7 @@ public class AppSystem {
         this.ah = new Attendeesystemhandler(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM);
         this.sh = new SpeakerSystemHandler(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
         try{
-            this.userL = new UserFileLoader("phase2/DataBase/UserData.ini", accM);
+            this.userL = new UserFileLoader("phase2/DataBase/UserData.ini", accM, attM, spkM, ognM, vipM);
             this.msgL = new MsgFileLoader("phase2/DataBase/MsgData.ini", MsgM);
             this.eventL = new EventFileLoader("phase2/DataBase/EventData.ini", eventM);
             this.roomL = new RoomFileLoader("phase2/DataBase/RoomData.ini", roomM);

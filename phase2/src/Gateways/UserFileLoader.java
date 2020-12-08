@@ -11,13 +11,19 @@ import java.util.Set;
 public class UserFileLoader{
     private Ini iniFile;
     private AccountManager accM;
-    private AttendeeManager attM = new AttendeeManager();
-    private SpeakerManager spkM = new SpeakerManager();
-    private OrganizerManager orgM = new OrganizerManager();
+    private AttendeeManager attM;
+    private SpeakerManager spkM;
+    private OrganizerManager orgM;
+    private VIPManager vipM;
     private GatewayHandler gH = new GatewayHandler();
-    public UserFileLoader(String pathname, AccountManager accM)throws IOException{
+    public UserFileLoader(String pathname, AccountManager accM, AttendeeManager attM, SpeakerManager spkM,
+                          OrganizerManager orgM, VIPManager vipM)throws IOException{
         this.iniFile = new Ini(new File(pathname));
         this.accM = accM;
+        this.attM = attM;
+        this.spkM = spkM;
+        this.orgM = orgM;
+        this.vipM = vipM;
     }
 
 

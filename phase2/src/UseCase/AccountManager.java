@@ -13,7 +13,7 @@ public class AccountManager {
     protected static int TotalNumOfAccount = 0;
     protected static HashMap<Integer, Account> accountList = new HashMap<>();
     protected static int currAccountId = -1;
-    private IUserGateWay gateWay;
+    protected IUserGateWay gateWay;
 
     public AccountManager(IUserGateWay g){ this.gateWay = g;}
 

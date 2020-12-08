@@ -1,5 +1,6 @@
 package UseCase;
 import Entity.*;
+import UseCase.IGateWay.IUserGateWay;
 
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  */
 public class AttendeeManager extends AccountManager{
 
-    public AttendeeManager() {super(); }
+    public AttendeeManager(IUserGateWay g) {super(g); }
 
     /**
      * Get the current Attendee.
