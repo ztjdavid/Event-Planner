@@ -36,19 +36,10 @@ public class SignUpSystem {
 
 
     private int chooseType(){
-        ArrayList<Integer> validTypes = new ArrayList<>(Arrays.asList(0,1,2));
-        String userInput;
-        int type = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = signUpP.requestUserType();
-            if (!strategyM.isValidChoice(userInput, validTypes))
-                signUpP.informInValidChoice();
-            else {
-                valid = true;
-                type = Integer.parseInt(userInput);}
-        }
-        return type;
+        ArrayList<Integer> validTypes = new ArrayList<>(Arrays.asList(0,1,2,3));
+        String invalidChoice = "Please select one type from below:\n"
+                + "0 -> Organizer\n1 -> Attendee\n2 -> Speaker\n3 -> VIP\"";
+        return signUpP.chooseOption(validTypes, "Enter UserType:", invalidChoice);
     }
 
     private String createUsername(){

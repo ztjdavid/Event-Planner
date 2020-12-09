@@ -24,7 +24,7 @@ public class AppSystem {
     protected AttendeeManager attM;
     protected RequestManager rqstM;
     protected VIPManager vipM;
-    protected StartUI startUI;
+    protected StartP startP;
     protected SignInP signInP;
     protected SignUpP signUpP;
     protected AttendeeUI attUI;
@@ -51,7 +51,7 @@ public class AppSystem {
 
     public AppSystem(ITextUI textUI){
         this.textUI = textUI;
-        this.startUI = new StartUI();
+        this.startP = new StartP(textUI);
         this.signInP = new SignInP(textUI);
         this.signUpP = new SignUpP(textUI);
         this.speakerUI = new SpeakerUI(textUI);
@@ -104,19 +104,21 @@ public class AppSystem {
             userL.loadData();
             msgL.loadData();
             roomL.loadData();
+            eventL.loadData();
+            requestL.loadData();
         }catch (NumberFormatException ignored) {}
 
         // start
         int userChoice;
         do{
-            startUI.startup();
+            startP.startup();
             userChoice = chooseMode();
             if (userChoice != 4){
                 int currAccountType = enterBranch(userChoice);
                 enterSystems(currAccountType);
             }
         }while(userChoice != 4);
-        startUI.informQuiting();
+        startP.informQuiting();
     }
 
 
@@ -159,9 +161,9 @@ public class AppSystem {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = startUI.requestModeSelection();
+            userInput = startP.requestModeSelection();
             if (!strategyM.isValidChoice(userInput, validChoices))
-                startUI.informInvalidInput();
+                startP.informInvalidInput();
             else {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
