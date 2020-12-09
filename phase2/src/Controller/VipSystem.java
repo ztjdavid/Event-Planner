@@ -161,7 +161,7 @@ public class VipSystem {
             vipUI.msgSelect();
             userChoice = vipUI.chooseOption(vipUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             msgOp(userChoice);
-        } while (userChoice != 6);
+        } while (userChoice != 7);
 
 
     }

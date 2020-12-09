@@ -16,8 +16,7 @@ public class OrganizerSystem {
     protected RequestManager rqstM;
 
     public OrganizerSystem(AccountManager accM, MessageManager MsgM, OrganizerPresenter organizerPresenter, StrategyManager strategyM,
-                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM,
-                           OrganizerSystemHandler oh, RequestManager rqstM) {
+                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM, RequestManager rqstM) {
         this.accM = accM;
         this.MsgM = MsgM;
         this.strategyM = strategyM;
@@ -26,7 +25,7 @@ public class OrganizerSystem {
         this.spkM = spkM;
         this.eventM = eventM;
         this.roomM = roomM;
-        this.oh = oh;
+        this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM);
         this.rqstM = rqstM;
     }
 

@@ -18,7 +18,7 @@ public class AttendeeSystem {
 
     public AttendeeSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
                           StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM,
-                          RequestManager reM, Attendeesystemhandler ah) {
+                          RequestManager reM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -27,7 +27,7 @@ public class AttendeeSystem {
         this.attendeeM = AttendeeM;
         this.roomM = roomM;
         this.reM = reM;
-        this.ah = ah;
+        this.ah = new Attendeesystemhandler(accM, TalkM, MsgM, attendeeUI, StrategyManager, attendeeM, roomM,reM);
     }
 
     /**
@@ -39,7 +39,7 @@ public class AttendeeSystem {
             attendeeUI.startup();
             userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
-        } while (userChoice != 5);
+        } while (userChoice != 3);
     }
 
     //Helper methods:
@@ -72,7 +72,7 @@ public class AttendeeSystem {
             attendeeUI.eventmain();
             userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             EventOp(userChoice);
-        } while (userChoice != 7);
+        } while (userChoice != 5);
     }
     private void EventOp(int userChoice){
         switch (userChoice){

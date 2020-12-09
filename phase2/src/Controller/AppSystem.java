@@ -32,8 +32,6 @@ public class AppSystem {
     protected SpeakerManager spkM;
     protected ITextUI textUI;
     protected VipUI vipUI;
-    protected Attendeesystemhandler ah;
-    protected OrganizerSystemHandler oh;
     protected UserFileLoader userL;
     protected MsgFileLoader msgL;
     protected EventFileLoader eventL;
@@ -73,14 +71,12 @@ public class AppSystem {
         this.roomM = new RoomManager(roomW);
         this.rqstM = new RequestManager(requestW);
         this.strategyM = new StrategyManager();
-        this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM);
         this.signInS = new SignInSystem(accM, signInP);
         this.signUpS = new SignUpSystem(accM, signUpP, strategyM);
-        this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM, ah);
-        this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM, oh, rqstM);
+        this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM);
+        this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM, rqstM);
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
         this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM);
-        this.ah = new Attendeesystemhandler(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM);
         try{
             this.userL = new UserFileLoader("phase2/DataBase/UserData.ini", accM, attM, spkM, ognM, vipM);
             this.msgL = new MsgFileLoader("phase2/DataBase/MsgData.ini", MsgM);
