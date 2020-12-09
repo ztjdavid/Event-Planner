@@ -3,7 +3,6 @@ import Presenters.SpeakerUI;
 import UseCase.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class SpeakerSystem {
@@ -18,17 +17,17 @@ public class SpeakerSystem {
     protected SpeakerSystemHandler sh;
 
 
-    public SpeakerSystem(AccountManager accM, EventManager eventM, MessageManager MsgM, SpeakerUI SpeakerUI,
-                         StrategyManager StrategyManager, SpeakerManager SpeakerM, RoomManager roomM, RequestManager reM, SpeakerSystemHandler sh) {
-        this.accM = accM;
+    public SpeakerSystem(AccountManager accountManager, EventManager eventM, MessageManager messageManager, SpeakerUI SpeakerUI,
+                         StrategyManager StrategyManager, SpeakerManager speakerManager, RoomManager roomManager, RequestManager requestManager) {
+        this.accM = accountManager;
         this.eventManager = eventM;
-        this.MsgM = MsgM;
+        this.MsgM = messageManager;
         this.speakerUI = SpeakerUI;
         this.strategyM = StrategyManager;
-        this.SpeakerM = SpeakerM;
-        this.roomM = roomM;
-        this.reM = reM;
-        this.sh = sh;
+        this.SpeakerM = speakerManager;
+        this.roomM = roomManager;
+        this.reM = requestManager;
+        this.sh = new SpeakerSystemHandler(accM, eventManager, MsgM, speakerUI, strategyM, SpeakerM, roomM, reM);
 
     }
 
@@ -163,7 +162,7 @@ public class SpeakerSystem {
     private void msgToAttendee(){
         int tAttendeeId;
         do{
-            sh.readallatt();
+            sh.readallatt();///////////
             tAttendeeId = sh.targetgetter();
             if (tAttendeeId != -1){
                 String txt = sh.enterTxt();
@@ -176,7 +175,7 @@ public class SpeakerSystem {
     private void msgToTalk(){
         int targettalk;
         do{
-            sh.readalltalkssimp();
+            sh.readalltalkssimp();////////////
             targettalk= sh.targettalks();
             if (targettalk != -1){
                 String txt = sh.enterTxt();
