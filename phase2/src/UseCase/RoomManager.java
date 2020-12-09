@@ -121,6 +121,12 @@ public class RoomManager {
      */
     public boolean isValidRoomId(int roomId){ return allRooms.containsKey(roomId);}
 
+    /**
+     * Check if the room's capacity is enough for the event
+     * @param roomID The room id to be checked
+     * @param eventCapacity The capacity of the event that will be created
+     * @return A boolean indicating whether the room is capable of holding the event in terms of capacity
+     */
     public boolean isWithinCapacity(int roomID, int eventCapacity){
         Room room = allRooms.get(roomID);
         return room.getRoomCapacity() >= eventCapacity;

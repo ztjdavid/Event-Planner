@@ -153,6 +153,11 @@ public class Event {
         return true;
     }
 
+    /**
+     * Get the type of this current event
+     * @return An integer representing the event type: 0->party; 1->talk; 2->discussion; 3->Vip talk;
+     * 4-> VIP discussion; 5->VIP party
+     */
     public int getEventType(){
         if(this.speakerList.size()==1 && this.IsVip){
             return 3; //3 is Vip talk

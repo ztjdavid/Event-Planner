@@ -100,10 +100,18 @@ public class Room {
         return new HashMap<>(this.timetable);
     }
 
+    /**
+     * Get the capacity of the room
+     * @return An integer representing the capacity of this room
+     */
     public int getRoomCapacity(){
         return this.roomCapacity;
     }
 
+    /**
+     * Set the timetable of the room
+     * @param tt A HashMap where key is the start time, and the value is the event id
+     */
     public void setTimetable(HashMap<Integer, Integer> tt){ this.timetable = tt;}
 
 }

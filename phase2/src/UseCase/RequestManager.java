@@ -18,10 +18,7 @@ public class RequestManager {
         this.requestl = new ArrayList<>();
         this.gateWay = g;
     }
-    /**
-     *
-     *
-     */
+
     public void createRequest(String service, int senderid, int talkid){
         try{
             this.gateWay.writeNewRequest(totalRequestCount, service, senderid, talkid);
@@ -43,14 +40,16 @@ public class RequestManager {
     }
 
     /**
-     *
-     *
+     * Get the request by entering its Id
+     * @param requestid Id of the targeted request
+     * @return The Request with the given request Id
      */
     public Request getRequestWithID(int requestid) { return this.requestList.get(requestid);}
 
     /**
-     *
-     *
+     * Show the status of the request by the given Id
+     * @param requestid Id of the targeted request
+     * @return A String indicating the status of the request is whether "pending" or "addressed"
      */
     public String showStatus(int requestid){
         if (!getRequestWithID(requestid).getStatus()){
@@ -62,8 +61,8 @@ public class RequestManager {
     }
 
     /**
-     *
-     *
+     * Change the status of the request from "pending" to "addressed"
+     * @param requestid Id of the targeted request
      */
     public void changeToAddressed(int requestid) {
         getRequestWithID(requestid).setStatus(true);
@@ -74,8 +73,9 @@ public class RequestManager {
 
     //for all organizer to see
     /**
-     *
-     *
+     * Provide the information of the request including the senderid, talkid, service and status of the request
+     * @param requestid Id of the targeted request
+     * @return A string providing the information of the request
      */
     public String getRequestInfo(int requestid) {
         String a = "";
@@ -91,23 +91,20 @@ public class RequestManager {
 
     public boolean checkRequestExist(int requestid){return requestList.containsKey(requestid);}
 
-    /**
-     *
-     *
-     */
     public HashMap<Integer, Request> getRequestList(){return new HashMap<>(requestList);}
 
     /**
-     *
-     *
+     * Get the Ids of all requests in this request list
+     * @return An arraylist of all request Ids
      */
     public ArrayList<Integer> getRequestID(){
         return new ArrayList<>(this.requestList.keySet());
     }
 
     /**
-     *
-     *
+     * Get the all requests from a targeted sender
+     * @param senderid the Id of the sender
+     * @return An arraylist of all the requests from a sender
      */
     private ArrayList<Request> getrequestofsender(int senderid){
         ArrayList<Request> res = new ArrayList<>();
@@ -118,11 +115,12 @@ public class RequestManager {
     }
 
     /**
-     *
-     *
+     * Provide the information of requests for the given request list
+     * @param requestlist the arraylist of the targeted requests
+     * @return A String providing the information of the targeted requests
      */
     private String showall(ArrayList<Request> requestlist){
-        String a = new String();
+        String a = "";
         a += "These are your requests";
         for(Request re : requestlist){a += "\n" + getRequestInfo(re.getRequestid());}
         return a;
@@ -130,16 +128,18 @@ public class RequestManager {
     }
 
     /**
-     *
-     *
+     * Provide the information of requests from a targeted sender
+     * @param senderid Id of the sender of requests
+     * @return A String providing the information of requests from the sender
      */
     public String showallre(int senderid){
         return showall(getrequestofsender(senderid));
     }
 
     /**
-     *
-     *
+     * Set the status of the given request by its Id to "pending" or "addressed"
+     * @param id the request id
+     * @param  status the status of the request: false -> pending; true -> addressed
      */
     public void setRequestInfo(int id, boolean status){
         Request r = getRequestWithID(id);

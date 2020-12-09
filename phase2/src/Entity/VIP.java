@@ -47,10 +47,17 @@ public class VIP extends Account{
         }
     }
 
-
+    /**
+     * Get the user type of this account.
+     * @return 3 indicating this account is a VIP.
+     */
     @Override
     public int getUserType(){ return 3; }
 
+    /**
+     * Set the event list for the VIP
+     * @param eventList An arraylist of event id that the VIP will attend
+     */
     public void setEventList(ArrayList<Integer> eventList) {
         this.eventList = eventList;
     }

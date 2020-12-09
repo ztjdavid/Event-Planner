@@ -58,6 +58,10 @@ public class Attendee extends Account{
         }
     }
 
+    /**
+     * Set the event list for the attendee
+     * @param eventList An arraylist of event id that the attendee will attend
+     */
     public void setEventList(ArrayList<Integer> eventList) {this.eventList = eventList;}
 
 }

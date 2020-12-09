@@ -48,5 +48,9 @@ public class Speaker extends Account{
         if (!this.eventList.isEmpty()) this.eventList.remove(talkID);
     }
 
+    /**
+     * Set the event list for the speaker
+     * @param eventList An arraylist of event id that the speaker will attend
+     */
     public void setEventList(ArrayList<Integer> eventList) {this.eventList = eventList;}
 }
