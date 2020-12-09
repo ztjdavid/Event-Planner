@@ -134,7 +134,7 @@ public class Attendeesystemhandler {
 
     public void readAllAttendees(){
         ArrayList<Integer> att = getAllAttendees();
-        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up talks. Choose an id to message:\n");
+        StringBuilder a = new StringBuilder("These are the attendees who attend your signed up events. Choose an id to message:\n");
         for(Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
@@ -143,7 +143,7 @@ public class Attendeesystemhandler {
 
     public void readAllSpeakers(){
         ArrayList<Integer> allTalks = attM.getAllMyTalksId();
-        StringBuilder a = new StringBuilder("These are the speakers in talks you attend. Choose an id to message:\n");
+        StringBuilder a = new StringBuilder("These are the speakers in events you attend. Choose an id to message:\n");
         for (Integer t: allTalks){
             ArrayList<Integer> spkLst = new ArrayList<>(eventManager.getSpeakerIDIn(t));
             for(int speaker:spkLst){
