@@ -62,7 +62,7 @@ public class AttendeeSystem {
             attendeeUI.msgSelect();
             userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             msgOp(userChoice);
-        } while (userChoice != 7);
+        } while (userChoice != 8);
 
 
     }
@@ -136,6 +136,9 @@ public class AttendeeSystem {
                 allUnreadMsg();
                 break;
             case 7:
+                ah.readArchived();
+                break;
+            case 8:
                 break;
         }
     }

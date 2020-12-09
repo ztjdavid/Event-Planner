@@ -18,7 +18,10 @@ public class RequestManager {
         this.requestl = new ArrayList<>();
         this.gateWay = g;
     }
-
+    /**
+     *
+     *
+     */
     public void createRequest(String service, int senderid, int talkid){
         try{
             this.gateWay.writeNewRequest(totalRequestCount, service, senderid, talkid);
@@ -39,9 +42,16 @@ public class RequestManager {
         totalRequestCount +=1;
     }
 
-
+    /**
+     *
+     *
+     */
     public Request getRequestWithID(int requestid) { return this.requestList.get(requestid);}
 
+    /**
+     *
+     *
+     */
     public String showStatus(int requestid){
         if (!getRequestWithID(requestid).getStatus()){
             return "pending";
@@ -51,6 +61,10 @@ public class RequestManager {
         }
     }
 
+    /**
+     *
+     *
+     */
     public void changeToAddressed(int requestid) {
         getRequestWithID(requestid).setStatus(true);
         try{
@@ -59,6 +73,10 @@ public class RequestManager {
     }
 
     //for all organizer to see
+    /**
+     *
+     *
+     */
     public String getRequestInfo(int requestid) {
         String a = "";
         Request request = getRequestWithID(requestid);
@@ -73,12 +91,24 @@ public class RequestManager {
 
     public boolean checkRequestExist(int requestid){return requestList.containsKey(requestid);}
 
+    /**
+     *
+     *
+     */
     public HashMap<Integer, Request> getRequestList(){return new HashMap<>(requestList);}
 
+    /**
+     *
+     *
+     */
     public ArrayList<Integer> getRequestID(){
         return new ArrayList<>(this.requestList.keySet());
     }
 
+    /**
+     *
+     *
+     */
     private ArrayList<Request> getrequestofsender(int senderid){
         ArrayList<Request> res = new ArrayList<>();
         for(Request re : requestl){
@@ -87,6 +117,10 @@ public class RequestManager {
         return res;
     }
 
+    /**
+     *
+     *
+     */
     private String showall(ArrayList<Request> requestlist){
         String a = new String();
         a += "These are your requests";
@@ -95,10 +129,18 @@ public class RequestManager {
 
     }
 
+    /**
+     *
+     *
+     */
     public String showallre(int senderid){
         return showall(getrequestofsender(senderid));
     }
 
+    /**
+     *
+     *
+     */
     public void setRequestInfo(int id, boolean status){
         Request r = getRequestWithID(id);
         r.setStatus(status);

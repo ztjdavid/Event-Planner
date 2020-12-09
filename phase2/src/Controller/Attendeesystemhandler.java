@@ -233,20 +233,9 @@ public class Attendeesystemhandler {
     }
 ///////Grey modify
     private ArrayList<Integer> getAllUnread() {
-        ArrayList<Integer> inbox = attM.getInbox();
-        ArrayList<Integer> unread = new ArrayList<>();
-        for (Integer i : inbox) {
-            boolean is_Read = MsgM.checkMessageStatus(i);
-            if (!is_Read) {
-            unread.add(i);
-            accM.addUnread(attM.getCurrAccountId(), i);
-        }
-    }
-
-    return unread;
+        ArrayList<Integer> unread = attM.getUnreadInbox();
+        return unread;
 }
-
-
 
     protected void readAllUnreadMsg(){
         readAllUnread();
@@ -255,7 +244,6 @@ public class Attendeesystemhandler {
     }
 
     private void readAllUnread(){
-
         String all = MsgM.formatAllUnread(getAllUnread());
         attUI.show(all);
     }
@@ -292,6 +280,8 @@ public class Attendeesystemhandler {
                 "\n2 -> Move to Archive" +
                 "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
         if(userInput == 1){
+            int currId = accM.getCurrAccountId();
+            accM.addUnread(currId, msgId);
             attUI.annouceMarkUnread();
         } else if(userInput == 2){
             accM.removeMessage(msgId);
@@ -302,6 +292,13 @@ public class Attendeesystemhandler {
             attUI.deleteMsg();
         }
         attUI.askForBack();}
+
+    protected  void readArchived(){
+        ArrayList<Integer> arrayList = new ArrayList<>(accM.getArchive());
+        String a = MsgM.formatmsgget(arrayList);
+        attUI.show(a);
+        attUI.askForBack();
+    }
 
     protected void readAllMsg() {
 
