@@ -22,12 +22,20 @@ public class RoomManager {
      * @return The ID of the room
      */
     public int createRoom(String roomName, int roomCapacity){
+        try {
+            this.gateWay.writeNewRoom(totalRoomCount, roomName, roomCapacity);
+        }catch (IOException ignored){}
+        return createHelper(roomName, roomCapacity);
+    }
+
+    public int scanInRoom(String roomName, int roomCapacity){
+        return createHelper(roomName, roomCapacity);
+    }
+
+    private int createHelper(String roomName, int roomCapacity) {
         int ID = totalRoomCount;
         Room room = new Room(roomName, ID, roomCapacity);
         allRooms.put(ID, room);
-        try {
-            this.gateWay.writeNewRoom(ID, roomName, roomCapacity);
-        }catch (IOException ignored){}
         totalRoomCount += 1;
         return ID;
     }

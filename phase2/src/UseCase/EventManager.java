@@ -70,13 +70,13 @@ public class EventManager {
         this.eventList.get(talkid).addAttendee(attendee.getUserId());
         try{
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());/////ADD HERE?
-        }catch (IOException ignored){};
+        }catch (IOException ignored){}
     }
     public void addAttendeev2(int talkid, VIP vip){
         this.eventList.get(talkid).addAttendee(vip.getUserId());
         try{
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
-        }catch (IOException ignored){};
+        }catch (IOException ignored){}
     }
 
     /**
@@ -102,13 +102,13 @@ public class EventManager {
         this.eventList.get(talkid).removeAttendee(attendee.getUserId());
         try{
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
-        }catch (IOException ignored){};
+        }catch (IOException ignored){}
     }
     public void removeAttendeev2(int talkid, VIP vip){
         this.eventList.get(talkid).removeAttendee(vip.getUserId());
         try{
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
-        }catch (IOException ignored){};
+        }catch (IOException ignored){}
     }
 
     /**
@@ -163,7 +163,7 @@ public class EventManager {
      *
      */
 
-    public void createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
+    public void scanInEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
                            int eventCapacity, int duration, boolean isVip, int id){
         idTracker = id;
         createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);

@@ -16,14 +16,14 @@ public class AttendeeUI extends Presenter{
         printText("----------------AttendeeSystem-----------------\nHi, " +
                 "Attendee! Would you like to\n1 -> View your signed up events\n" +
                 "2 -> Sign up for a new events\n" +
-                "3 -> Cancel a events\n4 -> Send message \n5 -> Logout");
+                "3 -> Cancel a events\n4 -> Message Dashboard \n5 -> Logout");
     }
 
 
     public ArrayList<Integer> getchoicelist(int a){
         if(a == 1){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3));
             return b;}
-        else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
+        else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
             return b;}
         else if(a == 4){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
             return b;}
@@ -72,8 +72,8 @@ public class AttendeeUI extends Presenter{
                 "3 -> View your inbox\n" +
                 "4 -> Read your replies and send message to repliers\n" +
                 "5 -> Read your messages and reply to senders\n" +
-                "6 -> Read your unread messages and mark those as read\n" +
-                "7 -> Go Back");
+                "6 -> Read all of unread messages \n" +
+                "7 -> Read all of Archived Messages");
     }
 
     public void eventselect(){

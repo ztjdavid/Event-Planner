@@ -26,7 +26,7 @@ public class RequestFileLoader {
             int senderId = iniFile.get(ID, "SenderId", int.class);
             int talkId = iniFile.get(ID, "TalkId", int.class);
             // create request
-            this.requestM.createRequest(service, senderId, talkId);
+            this.requestM.scanInRequest(service, senderId, talkId);
             // set other variables
             this.requestM.setRequestInfo(id, status);
         }

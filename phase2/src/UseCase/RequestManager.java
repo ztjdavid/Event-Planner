@@ -23,14 +23,21 @@ public class RequestManager {
      *
      */
     public void createRequest(String service, int senderid, int talkid){
+        try{
+            this.gateWay.writeNewRequest(totalRequestCount, service, senderid, talkid);
+        }catch (IOException ignored){}
+        createHelper(service, senderid, talkid);
+    }
+
+    public void scanInRequest(String service, int senderid, int talkid){
+        createHelper(service, senderid, talkid);
+    }
+
+    private void createHelper(String service, int senderid, int talkid) {
         int requestid = totalRequestCount;
         Request newRequest = new Request(requestid, service, senderid, talkid);
         this.requestl.add(newRequest);
         this.requestList.put(requestid, newRequest);
-
-        try{
-            this.gateWay.writeNewRequest(requestid, service, senderid, talkid);
-        }catch (IOException ignored){}
 
         totalRequestCount +=1;
     }

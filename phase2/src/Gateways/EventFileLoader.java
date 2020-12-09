@@ -34,7 +34,7 @@ public class EventFileLoader{
             int duration = iniFile.get (ID, "Duration", int.class);
             boolean isVip = iniFile.get(ID, "IsVip", boolean.class);
             // create event
-            eventM.createEvent(talkTitle, startTime, roomId, speakerList, eventCapacity, duration, isVip, id);
+            eventM.scanInEvent(talkTitle, startTime, roomId, speakerList, eventCapacity, duration, isVip, id);
             // set other variables
             eventM.setEventInfo(id, attendeeList, remainingSeat, seatsOccupied);
         }

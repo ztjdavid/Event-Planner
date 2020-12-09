@@ -31,7 +31,7 @@ public class RoomFileLoader {
             HashMap<Integer, Integer> timetable = gH.mapAssemble(timetableKey, timetableValue);
             int roomCapacity = iniFile.get(ID, "RoomCapacity", int.class);
             //create room
-            roomM.createRoom(roomName, roomCapacity);
+            roomM.scanInRoom(roomName, roomCapacity);
             //set other variables
             roomM.setRoomInfo(id, timetable);
         }
