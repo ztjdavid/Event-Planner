@@ -13,11 +13,6 @@ public class SignUpP extends Presenter{
                 "0 -> Organizer\n1 -> Attendee\n2 -> Speaker\n3 -> VIP");
     }
 
-    public void informInValidChoice(){
-       printText("Please select one type from below:\n"
-                + "0 -> Organizer\n1 -> Attendee\n2 -> Speaker\n3 -> VIP\"");
-    }
-
     public void informValidUsername(){
         printText("Nice name!");
     }
@@ -33,10 +28,6 @@ public class SignUpP extends Presenter{
 
     public void finishSignUp(){
         printText("Perfect! Now you can log in to your account.");
-    }
-
-    public String requestUserType(){
-        return requestInput("Enter UserType:");
     }
 
     public String requestUsername(){
