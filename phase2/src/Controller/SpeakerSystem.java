@@ -152,6 +152,7 @@ public class SpeakerSystem {
                 break;
             case 6:
                 allunreadmsg();
+                break;
             case 7:
                 break;
         }
