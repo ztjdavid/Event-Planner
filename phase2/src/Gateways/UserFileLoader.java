@@ -59,7 +59,7 @@ public class UserFileLoader{
                               ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
         ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
-        accM.createAccount(userName, passW, 1);
+        accM.scanInAccount(userName, passW, 1);
         attM.setAccInfo(ID, inbox, sentBox, eventList, unreadInbox);
     }
 
@@ -67,14 +67,14 @@ public class UserFileLoader{
                               ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
         ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
-        accM.createAccount(userName, passW, 2);
+        accM.scanInAccount(userName, passW, 2);
         spkM.setAccInfo(ID, inbox, sentBox, eventList,unreadInbox);
     }
 
     private void loadOrganizer(String id, String userName, String passW, ArrayList<Integer> inbox,
                               ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
-        accM.createAccount(userName, passW, 0);
+        accM.scanInAccount(userName, passW, 0);
         orgM.setAccInfo(ID, inbox, sentBox, unreadInbox);
     }
 
@@ -82,7 +82,7 @@ public class UserFileLoader{
                          ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox)throws NumberFormatException{
         int ID = Integer.parseInt(id);
         ArrayList<Integer> eventList = gH.listDecoder(iniFile.get(id, "EventList"));
-        accM.createAccount(userName, passW, 3);
+        accM.scanInAccount(userName, passW, 3);
         vipM.setAccInfo(ID, inbox, sentBox, eventList, unreadInbox);
     }
 

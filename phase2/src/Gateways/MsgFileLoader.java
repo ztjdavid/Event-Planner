@@ -31,7 +31,7 @@ public class MsgFileLoader{
             boolean haveRead = iniFile.get(id, "HaveRead", boolean.class);
             String txt = iniFile.get(id, "TXT");
             // create message
-            msgM.createmessage(senderName, senderId, getterId, txt);
+            msgM.scanInMessage(senderName, senderId, getterId, txt);
             // set other variables
             msgM.setMsgInfo(ID, replyId, replier, haveRead);
         }

@@ -31,6 +31,17 @@ public class AccountManager {
      * @param userType int representation of the user type, 0 if Organizer, 2 if Speaker, and default Attendee.
      */
     public void createAccount(String username, String password, int userType){
+        try{
+            gateWay.writeNewAcc(TotalNumOfAccount, username, password, userType);
+        }catch (IOException ignored){}
+        createHelper(username, password, userType);
+    }
+
+    public void scanInAccount(String username, String password, int userType){
+        createHelper(username, password, userType);
+    }
+
+    private void createHelper(String username, String password, int userType) {
         switch (userType){
             case 0:
                 accountList.put(TotalNumOfAccount,
@@ -49,10 +60,6 @@ public class AccountManager {
                         new Attendee(username, password, TotalNumOfAccount));
                 break;
         }
-        try{
-            gateWay.writeNewAcc(TotalNumOfAccount, username, password, userType);
-        }catch (IOException ignored){}
-
         TotalNumOfAccount += 1;
     }
 
@@ -160,7 +167,7 @@ public class AccountManager {
         //TODO:
         try{
             this.gateWay.updateSentBox(senderid, getCurrAccount().getSentMessage());
-        }catch (IOException ignored){};
+        }catch (IOException ignored){}
     }
 
     /**

@@ -24,16 +24,25 @@ public class MessageManager {
      */
 
     public int createmessage(String sendername, int senderid, int getterid, String txt) {
+        try{
+            this.gateWay.writeNewMsg(allmessage.size(), sendername, senderid, getterid, txt);
+        }catch (IOException ignored){}
 
+        return createHelper(sendername, senderid, getterid, txt);
 
+    }
+
+    public int scanInMessage(String sendername, int senderid, int getterid, String txt) {
+        return createHelper(sendername, senderid, getterid, txt);
+
+    }
+
+    private int createHelper(String sendername, int senderid, int getterid, String txt) {
         int a = allmessage.size();
         Message b = new Message(sendername, a, senderid, getterid, txt);
         allmessage.add(b);
-        try{
-            this.gateWay.writeNewMsg(a, sendername, senderid, getterid, txt);
-        }catch (IOException ignored){}
-        return a;
 
+        return a;
     }
 
     /**
