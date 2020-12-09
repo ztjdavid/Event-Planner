@@ -17,8 +17,7 @@ public class VipSystem {
     protected VIPsystemhandler vh;
 
     public VipSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipUI vipUI,
-                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM,
-                     VIPsystemhandler vh) {
+                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -27,7 +26,7 @@ public class VipSystem {
         this.vipM = vipM;
         this.roomM = roomM;
         this.ReqM = ReqM;
-        this.vh = vh;
+        this.vh = new VIPsystemhandler(accM, TalkM, MsgM, vipUI, StrategyManager, vipM, roomM, ReqM);
 
     }
 
