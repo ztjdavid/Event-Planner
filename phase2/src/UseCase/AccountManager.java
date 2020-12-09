@@ -145,6 +145,19 @@ public class AccountManager {
     }
 
     /**
+     * Add the message ID to the given message getter's unreadNnbox.
+     * @param getterid message getter's ID as int.
+     * @param msgid message ID as int.
+     */
+    public void addUnreadInbox(int getterid, int msgid){
+        getAccountWithId(getterid).addUnreadInbox(msgid);
+        //TODO:
+        try{
+            this.gateWay.updateUnreadInbox(getterid, getCurrAccount().getUnreadInbox());
+        }catch (IOException ignored){}
+    }
+
+    /**
      * Add the message ID to the given message getter's inbox.
      * @param getterid message getter's ID as int.
      * @param msgid message ID as int.
@@ -153,7 +166,7 @@ public class AccountManager {
         getAccountWithId(getterid).addInbox(msgid);
         //TODO:
         try{
-            this.gateWay.updateUnreadInbox(getterid, getCurrAccount().getInbox());
+            this.gateWay.updateInbox(getterid, getCurrAccount().getInbox());
         }catch (IOException ignored){}
     }
 
@@ -211,7 +224,7 @@ public class AccountManager {
         getAccountWithId(accountId).addUnreadInbox(unreadId);
         //TODO:
         try{
-            this.gateWay.updateUnreadInbox(accountId, getAccountWithId(accountId).getInbox());
+            this.gateWay.updateUnreadInbox(accountId, getAccountWithId(accountId).getUnreadInbox());
         }catch (IOException ignored){}
     }
 
