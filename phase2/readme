@@ -1,0 +1,5 @@
+No one can message to an organizer except the case that a user is replying to a message
+that a organizer sent out. In this case, an organizer can read this message in option 5
+in the message dashboard and choose to mark as unread, delete or archive like the other users.
+To reply to this message, organizer need to remember the ID of the message they want to reply by
+reading the message in option 5 and enter the message ID in option 6.
