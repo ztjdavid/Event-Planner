@@ -169,7 +169,8 @@ public class EventManager {
         nextId = id + 1;
     }
 
-    private void createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip, int id) {
+    private void createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
+                                   int eventCapacity, int duration, boolean isVip, int id) {
         Event newEvent = new Event(id, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
         this.eventList.put(id, newEvent);
     }

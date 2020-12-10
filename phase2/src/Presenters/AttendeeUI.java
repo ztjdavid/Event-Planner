@@ -77,7 +77,8 @@ public class AttendeeUI extends Presenter{
                 "4 -> Read your replies and send message to repliers\n" +
                 "5 -> Read your messages and reply to senders\n" +
                 "6 -> Read all of unread messages \n" +
-                "7 -> Read all of Archived Messages");
+                "7 -> Read all of Archived Messages" +
+                "8 -> Go back");
     }
 
     public void eventselect(){

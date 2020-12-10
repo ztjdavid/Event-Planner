@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class MessageManager {
     static ArrayList<Message> allmessage;
     private IMsgGateWay gateWay;
+    private int nextId = 0;
 
     public MessageManager(IMsgGateWay g) {
         this.gateWay =g;
@@ -24,25 +25,25 @@ public class MessageManager {
      */
 
     public int createmessage(String sendername, int senderid, int getterid, String txt) {
+        int id = nextId;
         try{
             this.gateWay.writeNewMsg(allmessage.size(), sendername, senderid, getterid, txt);
         }catch (IOException ignored){}
 
-        return createHelper(sendername, senderid, getterid, txt);
+        createHelper(id, sendername, senderid, getterid, txt);
+        nextId += 1;
+        return id;
+    }
+
+    public void scanInMessage(int id, String sendername, int senderid, int getterid, String txt) {
+        createHelper(id, sendername, senderid, getterid, txt);
+        nextId = id + 1;
 
     }
 
-    public int scanInMessage(String sendername, int senderid, int getterid, String txt) {
-        return createHelper(sendername, senderid, getterid, txt);
-
-    }
-
-    private int createHelper(String sendername, int senderid, int getterid, String txt) {
-        int a = allmessage.size();
-        Message b = new Message(sendername, a, senderid, getterid, txt);
+    private void createHelper(int id, String sendername, int senderid, int getterid, String txt) {
+        Message b = new Message(sendername, id, senderid, getterid, txt);
         allmessage.add(b);
-
-        return a;
     }
 
     /**
