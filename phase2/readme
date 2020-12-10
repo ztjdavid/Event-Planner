@@ -1,5 +1,62 @@
+
+############# Program Introduction ############
+
+This program is a design of conference system which allow users to do several operations.
+We have four kinds of users: Organizer, Speaker, Attendee, and vip
+Each type of user will login to their own system and only allowed to do operations depend on their type.
+
+Organizer are allowed to access to message system, create speaker account, schedule a event, and create room.
+They are able to message all the attendees and speakers, at once or individually.
+
+Speakers are allowed to read the information of events that they will present(like time, room, etc) and access to messaging system.
+They are able to message all the attendees who attend their own talks, at once or individually.They are also able to reply message from
+ organizer but cannot initiate conversation with organizers.
+
+Attendees are allowed to read information about the event they registered, sign up anc cancel registration for new event, and also access to messaging system.
+They are able to message to other attendees and the speakers of the talks they registered. They are also able to reply message from
+organizer but cannot initiate conversation with organizers.
+
+Vip will do the exactly same thing as attendee. The difference is they can also access to vip-only events.
+
+In our program, the dashboard of each systems are clear and precise to do all the operations above.
+
+############### Features different from phase 1 ################
+a. Speaker, Vip, and Attendee are able to send request about a event to Organizer.
+b. Events has a fix number of capacity.
+c. Vip and attendee are able to apply to be a speaker.
+d. User are able to read message that marked as "unread" and "archived".
+e. Connect to a database to save all information.
+
+################ MUST READ ######################
+################ Library setup ####################
+This program uses ini4j API (http://ini4j.sourceforge.net/index.html) for database functionalities. So, before running the program, you have to set up ini4j API in Intellij. Here is the tutorial of how to set up:
+Select File in the top menu, “File” > “Project Structure”.
+Find the “Library” option on the left side, then click the “+” icon. Choose “Java” and then select “...\phase2\lib\ini4j-0.5.4.jar”.
+“OK” > “Apply”.
+Done! Now you can check a gateway class in the GateWay package and you should see the line “import org.ini4j.*” is not underlined by red.
+
+Instructions:
+1. When you enter our program, please follow the showed instruction. Please do not enter any invalid response.
+2. The valid response of dashboard are mostly integer. For example, if the dashboard shows "3 -> View your inbox" and you want to view all the message you got. Please enter "3".
+3. If this is the first time you use the program, you'd better to signup first.
+4. When you type in a message, if you want to finish typing, please type "end" in a new line.
+5. Please try to avoid creating new things without creating its key parameters. For example, if you want to create a talk
+in room 3, please ensure that room 3 exists.
+
+Here are the instructions of different system:
+
+####Organizer system
 No one can message to an organizer except the case that a user is replying to a message
 that a organizer sent out. In this case, an organizer can read this message in option 5
 in the message dashboard and choose to mark as unread, delete or archive like the other users.
 To reply to this message, organizer need to remember the ID of the message they want to reply by
 reading the message in option 5 and enter the message ID in option 6.
+
+####Speaker, Attendee, Vip system
+-If you want to send a request to organizer, please enter the event dashboard and choose 'request'.
+-You can only read message in options 6 and 7 in message dashboard in speaker system. If you want to sent message or
+please go to options 4 and 5.
+-If you are attendee or vip, who want to apply to be a speaker, you should apply only one time. If you apply twice, your
+application will be changed to your second application. The system will not keep the record of your first application.
+-If your application is approved, you can read your information about application and get a new speaker account. Please
+remember the information. Your current account will not be modified.
