@@ -133,7 +133,8 @@ public class VipSystem {
     }
 
     private void ReadAllRequests(){
-        ReqM.showallre(accM.getCurrAccountId());
+        vipUI.show(ReqM.showallre(accM.getCurrAccountId()));
+        vipUI.askForBack();
     }
 
     private void SendNewRequest(){

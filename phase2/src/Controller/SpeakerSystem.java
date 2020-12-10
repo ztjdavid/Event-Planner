@@ -106,7 +106,9 @@ public class SpeakerSystem {
         }}
 
     private void Readallrequest(){
-        reM.showallre(accM.getCurrAccountId());
+
+        speakerUI.show(reM.showallre(accM.getCurrAccountId()));
+        speakerUI.askForBack();
     }
 
     private void Sendnewrequest(){

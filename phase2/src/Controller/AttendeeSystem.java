@@ -308,7 +308,9 @@ public class AttendeeSystem {
         }}
 
     private void Readallrequest(){
-        reM.showallre(accM.getCurrAccountId());
+
+        attendeeUI.show(reM.showallre(accM.getCurrAccountId()));
+        attendeeUI.askForBack();
     }
 
     private void Sendnewrequest(){
