@@ -62,7 +62,7 @@ public class OrganizerManager extends AccountManager{
      */
     public int messageable1(int receiverID){
         Account receiver = getAccountWithId(receiverID);
-        if(receiver.getUserType() == 2 || receiver.getUserType() == 1){
+        if(receiver.getUserType() == 2 || receiver.getUserType() == 1 || receiver.getUserType() == 3){
             return 1;
         }
         else{

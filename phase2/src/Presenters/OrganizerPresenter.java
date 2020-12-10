@@ -67,7 +67,7 @@ public class OrganizerPresenter extends Presenter{
         Options.add(1);
         int result;
         result = chooseOption(Options, "Is this Event only for VIP? (Enter 0 if true, 1 if false)","Invalid choice, please try again.");
-        return result == 1;
+        return result == 0;
     }
 
     public String getTalkTitle(){
@@ -164,7 +164,7 @@ public class OrganizerPresenter extends Presenter{
             }
             printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration +"\nRoom:" +
                     roomName + "(id: " + roomId + ")" + "\nType:party" + "\nAttendees:\n" + str2);
-        }else{
+        }else if(type == 2){
             StringBuilder str3 = new StringBuilder();
             for(int item:attendees){
                 str3.append(item);
@@ -177,6 +177,37 @@ public class OrganizerPresenter extends Presenter{
             }
             printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration + "\nRoom:" +
                     roomName + "(id: " + roomId + ")" + "\nType:discussion" + "\nAttendees:" + str3 + "\nSpeakers:\n" + str4);
+        }else if(type == 3){
+            StringBuilder str1 = new StringBuilder();
+            for(int item:attendees){
+                str1.append(item);
+                str1.append("\n");
+            }
+            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType:VIP Talk" + "\nSpeaker:" + speakers.get(0) + "\nAttendees:\n" + str1);
+        }else if(type == 4){
+            StringBuilder str3 = new StringBuilder();
+            for(int item:attendees){
+                str3.append(item);
+                str3.append("\n");
+            }
+            StringBuilder str4 = new StringBuilder();
+            for(int item:speakers){
+                str4.append(item);
+                str4.append("\n");
+            }
+            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration + "\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType: VIP Discussion" + "\nAttendees:" + str3 + "\nSpeakers:\n" + str4);
+        }else if(type == 5){
+            StringBuilder str2 = new StringBuilder();
+            for(int item:attendees){
+                str2.append(item);
+                str2.append("\n");
+            }
+            printText("Event Title:" + title + "\nEvent ID:" + ID + "\nStart time:" + startTime + "\nDuration:" +duration +"\nRoom:" +
+                    roomName + "(id: " + roomId + ")" + "\nType: VIP Party" + "\nAttendees:\n" + str2);
+        }else{
+            printText("Event Type Error!");
         }
     }
 

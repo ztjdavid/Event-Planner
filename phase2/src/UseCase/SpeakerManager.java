@@ -32,7 +32,7 @@ public class SpeakerManager extends AccountManager {
         Speaker speaker = (Speaker) accountList.get(speakerID);
         speaker.registerTalk(talkID);
         try{
-            gateWay.updateEventList(getCurrAccountId(),getCurrSpeaker().getTalkList());
+            gateWay.updateEventList(getCurrAccountId(),speaker.getTalkList());
         }catch (IOException ignored){}
     }
 
