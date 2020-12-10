@@ -73,12 +73,28 @@ public class Message {
      public String getReplyer(){return this.replyer;}
 
      ///// Louisa added
+
+    /**
+     * Get to know whether the message has bean read
+     * @return A boolean: true -> have read; false -> haven't read
+     */
      public boolean getReadStatus(){return this.haveRead;}
 
-     public void setReadStatusRead(){this.haveRead = true;}
+    /**
+     * Set the read status to be true (have read)
+     */
+    public void setReadStatusRead(){this.haveRead = true;}
 
+    /**
+     * Set the read status to be false (haven't read)
+     */
      public void setReadStatusUnread(){this.haveRead = false;}
 
     //// Gare_TH added. Used in Gateway.
+
+    /**
+     * Set the read status, used in Gateway
+     * @param status true or false
+     */
     public void setReadStatus(boolean status){this.haveRead = status;}
 }

@@ -116,26 +116,59 @@ public abstract class Account {
         this.inbox.add(mesID);
     }
 
+    /**
+     * Set the message received by this account.
+     * @param inbox An Arraylist of IDs of the messages received.
+     */
     public void setInbox(ArrayList<Integer> inbox){ this.inbox = inbox;}
 
+    /**
+     * Set the message sent by this account.
+     * @param sentBox An Arraylist of IDs of the messages sent.
+     */
     public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
 
     ///// Louisa Added
+
+    /**
+     * Get all unread message IDs received by this account.
+     * @return A copy of inbox containing the unread message IDs.
+     */
     public ArrayList<Integer> getUnreadInbox(){return new ArrayList<>(this.unreadInbox);}
 
+    /**
+     * Set the unread message inbox received by this account.
+     * @param unreadInbox The IDs of the unread messages.
+     */
     public void setUnreadInbox(ArrayList<Integer> unreadInbox){this.unreadInbox = unreadInbox;}
 
+    /**
+     * Add new unread message received by this account to the unread inbox.
+     * @param unreadId The ID of the unread message.
+     */
     public void addUnreadInbox(int unreadId){this.unreadInbox.add(unreadId);}
     /////
 
+    /**
+     * Remove the message from the unread inbox
+     * @param messageID The ID of the message to be removed
+     */
     public void removeMessage(int messageID){
         this.unreadInbox.remove(messageID);
     }
 
+    /**
+     * Archive the unread message by its ID
+     * @param messageID The ID of the message
+     */
     public void archiveMessage(int messageID){
         this.inbox.add(messageID);
     }
 
+    /**
+     * Get the IDs of the archived messages in this account
+     * @return The Arraylist of IDs of archived messages
+     */
     public ArrayList<Integer> archiveMessage(){
         return new ArrayList<>(this.inbox);
     }

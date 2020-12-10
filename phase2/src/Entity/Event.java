@@ -179,10 +179,18 @@ public class Event {
 
     }
 
+    /**
+     * Get the duration for the event
+     * @return An integer representing the duration of the event
+     */
     public int getDuration(){
         return this.duration;
     }
 
+    /**
+     * Check whether the event is for VIP
+     * @return A boolean indicating the event is for VIP or not
+     */
     public boolean getVIP(){return this.IsVip;}
 
 
