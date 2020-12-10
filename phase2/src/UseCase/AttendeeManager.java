@@ -43,8 +43,6 @@ public class AttendeeManager extends AccountManager{
      */
     public void enrol(int talkID){
         getCurrAttendee().addEvent(talkID);
-        //TODO: 只要涉及到更改Object的属性，都需要更新Database。
-        // 更新方式为提供Object的id和【整个】属性对应的东西，比如整个更新完的list等。
         try{
             this.gateWay.updateEventList(getCurrAccountId(), getCurrAttendee().getEventList());
         }catch (IOException ignored){}

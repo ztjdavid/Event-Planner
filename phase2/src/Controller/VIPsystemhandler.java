@@ -250,11 +250,11 @@ public class VIPsystemhandler {
         if(userInput == 1){
             vipUI.annouceMarkUnread();
         } else if(userInput == 2){
-            vipM.removeMessage(msgId);
+            vipM.removeUnreadMsg(msgId);
             vipM.archiveMessage(msgId);
             vipUI.archiveMsg();
         }else if(userInput == 3){
-            vipM.removeMessage(msgId);
+            vipM.removeUnreadMsg(msgId);
             vipUI.deleteMsg();
         }
         vipUI.askForBack();}

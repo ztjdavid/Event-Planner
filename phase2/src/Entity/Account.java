@@ -121,7 +121,7 @@ public abstract class Account {
     public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
 
     ///// Louisa Added
-    public ArrayList<Integer> getUnreadInbox(){return new ArrayList<>(this.inbox);}
+    public ArrayList<Integer> getUnreadInbox(){return new ArrayList<>(this.unreadInbox);}
 
     public void setUnreadInbox(ArrayList<Integer> unreadInbox){this.unreadInbox = unreadInbox;}
 

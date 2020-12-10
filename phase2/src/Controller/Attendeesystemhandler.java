@@ -269,11 +269,11 @@ public class Attendeesystemhandler {
             accM.addUnread(currId, msgId);
             attUI.annouceMarkUnread();
         } else if(userInput == 2){
-            accM.removeMessage(msgId);
+            accM.removeUnreadMsg(msgId);
             accM.archiveMessage(msgId);
             attUI.archiveMsg();
         }else if(userInput == 3){
-            accM.removeMessage(msgId);
+            accM.removeUnreadMsg(msgId);
             attUI.deleteMsg();
         }
         attUI.askForBack();}

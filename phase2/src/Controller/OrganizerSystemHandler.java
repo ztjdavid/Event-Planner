@@ -373,11 +373,11 @@ public class OrganizerSystemHandler {
         if(userInput == 1){
             organizerPresenter.message20();
         } else if(userInput == 2){
-            accM.removeMessage(messageID);
+            accM.removeUnreadMsg(messageID);
             accM.archiveMessage(messageID);
             organizerPresenter.message21();
         }else if(userInput == 3){
-            accM.removeMessage(messageID);
+            accM.removeUnreadMsg(messageID);
             organizerPresenter.message22();
         }
         organizerPresenter.askForBack();
