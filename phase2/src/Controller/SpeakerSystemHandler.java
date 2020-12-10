@@ -127,6 +127,14 @@ public class SpeakerSystemHandler {
 
     //////////////////////MESSAGING SYSTEM/////////////////////////
 
+    protected  void readArchived(){
+        ArrayList<Integer> arrayList = new ArrayList<>(accM.getArchive());
+        String a = MsgM.formatmsgget(arrayList);
+        speakerUI.show(a);
+        speakerUI.askForBack();
+    }
+
+
     public void readallatt(){
         ArrayList<Integer> att = getallattendeev1();
         StringBuilder a = new StringBuilder("These are the attendees who attend your talk. Choose an id to message:");

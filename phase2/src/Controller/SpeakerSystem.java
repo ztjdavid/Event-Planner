@@ -130,7 +130,7 @@ public class SpeakerSystem {
             speakerUI.messaging();
             userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             msgOp(userChoice);
-        } while (userChoice != 7);
+        } while (userChoice != 8);
 
 
     }
@@ -156,6 +156,9 @@ public class SpeakerSystem {
                 allunreadmsg();
                 break;
             case 7:
+                sh.readArchived();
+                break;
+            case 8:
                 break;
         }
     }
