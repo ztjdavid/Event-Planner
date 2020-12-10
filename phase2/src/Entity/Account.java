@@ -13,6 +13,7 @@ public abstract class Account {
     protected ArrayList<Integer> sentMessage;
     protected ArrayList<Integer> inbox;
     protected ArrayList<Integer> unreadInbox;
+    protected Integer application;
 
 
     public Account(String username, String password, int userId){
@@ -22,7 +23,12 @@ public abstract class Account {
         this.sentMessage = new ArrayList<>();
         this.inbox = new ArrayList<>();
         this.unreadInbox = new ArrayList<>();
+        this.application = -1;
     }
+
+    public void setApplication(int application){this.application = application;}
+
+    public int getapplication(){return this.application;}
 
 
     /**
