@@ -88,6 +88,8 @@ public class ApplicationManager {
      * @return string describing an application.
      */
     public String formatInfoToOrganizer(int appId){
+        // (delete after reading) this method does not include status of applications and new account info.
+        // I assume the organizer can only see pending applications. Contact Gareth Chen if need a change.
         Application a = getAppWithId(appId);
         StringBuilder s = new StringBuilder();
         s.append("-------------------------------\n");

@@ -130,7 +130,8 @@ public class AttendeeUI extends Presenter{
     }
 
     public int checkapply(){
-        return Integer.parseInt(requestInput("Are you sure to apply to be a speaker? If yes, enter 1"));
+        return Integer.parseInt(requestInput("Are you sure to apply to be a speaker? " +
+                "If yes, enter 1. Otherwise, enter -1 to go back."));
     }
 
     public void appsend(){
