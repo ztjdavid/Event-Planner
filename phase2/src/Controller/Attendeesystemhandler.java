@@ -202,21 +202,6 @@ public class Attendeesystemhandler {
         attUI.messagesend();
     }
 
-    public String enterTxt(){
-        StringBuilder a = new StringBuilder();
-        boolean exit = false;
-        attUI.informEnteringText();
-        do{
-            String line = attUI.getLineTxt();
-            if (line.equals("end")) exit = true;
-            else{
-                a.append(line);
-                a.append("\n");
-            }
-        } while(!exit);
-        return a.toString();
-    }
-
     ////////////////////MODIFY LATER///////////
     public int targetmsg(){
         ArrayList<Integer> validChoices = attM.getInbox();

@@ -329,7 +329,9 @@ public class VipSystem {
     private void newapp(){
         int input = vipUI.checkapply();
         if (input == 1){
-            String text = vipUI.whyapply();
+            String info = "Please Enter Why You Apply.\n " +
+                    "(End editing by typing a single \"end\" in a new line.)";
+            String text = vipUI.enterMessage(info);
             int a = appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
             accM.changemyapp(a);
             vipUI.appsend();

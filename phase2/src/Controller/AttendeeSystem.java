@@ -217,7 +217,9 @@ public class AttendeeSystem {
             readmsgandrep();
             tmsgid = ah.targetmsg();
             if (tmsgid != -1){
-                String txt = ah.enterTxt();
+                String info = "Please Enter Your Message.\n " +
+                        "(End editing by typing a single \"end\" in a new line.)";
+                String txt = attendeeUI.enterMessage(info);
                 MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
                 attendeeUI.askForBack();
             }
@@ -231,7 +233,9 @@ public class AttendeeSystem {
             readrepandmsg();
             targetId = ah.targetgetter();
             if (targetId != -1){
-                String txt = ah.enterTxt();
+                String info = "Please Enter Your Message.\n " +
+                        "(End editing by typing a single \"end\" in a new line.)";
+                String txt = attendeeUI.enterMessage(info);
                 ah.messageToAtt(txt, targetId);
                 attendeeUI.askForBack();
             }
@@ -313,7 +317,9 @@ public class AttendeeSystem {
             ah.readalltalkssimp();
             targettalk = ah.targettalks();
             if (targettalk != -1){
-                String txt = ah.enterTxt();
+                String info = "Please Enter Your Message.\n " +
+                        "(End editing by typing a single \"end\" in a new line.)";
+                String txt = attendeeUI.enterMessage(info);
                 ah.requestfortalk(txt, targettalk);
                 attendeeUI.askForBack();
             }
@@ -326,7 +332,9 @@ public class AttendeeSystem {
             ah.readAllAttendees();
             tAttendeeId = ah.targetgetter();
             if (tAttendeeId != -1){
-                String txt = ah.enterTxt();
+                String info = "Please Enter Your Message.\n " +
+                        "(End editing by typing a single \"end\" in a new line.)";
+                String txt = attendeeUI.enterMessage(info);
                 ah.messageToAtt(txt, tAttendeeId);
                 attendeeUI.askForBack();
             }
@@ -340,7 +348,9 @@ public class AttendeeSystem {
             ah.readAllSpeakers();
             tSpeakerId = ah.targetgetter();
             if (tSpeakerId != -1){
-                String txt = ah.enterTxt();
+                String info = "Please Enter Your Message.\n " +
+                        "(End editing by typing a single \"end\" in a new line.)";
+                String txt = attendeeUI.enterMessage(info);
                 ah.messageToSp(txt, tSpeakerId);
                 attendeeUI.askForBack();
             }
@@ -404,8 +414,9 @@ public class AttendeeSystem {
     private void newapp(){
         int input = attendeeUI.checkapply();
         if (input == 1){
-            String text = attendeeUI.whyapply();
-
+            String info = "Please Enter Why You Apply.\n " +
+                    "(End editing by typing a single \"end\" in a new line.)";
+            String text = attendeeUI.enterMessage(info);
             int a = appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
             accM.changemyapp(a);
             attendeeUI.appsend();

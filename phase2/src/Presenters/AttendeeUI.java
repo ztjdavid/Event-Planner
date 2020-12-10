@@ -100,14 +100,6 @@ public class AttendeeUI extends Presenter{
 
     public void show(String a){printText(a);}
 
-    public void informEnteringText(){
-        printText("Please Enter Your Message.\n " +
-                "(End editing by typing a single \"end\" in a new line.)");
-    }
-    public String getLineTxt(){
-        return requestInput();
-    }
-
     public void messagesend(){ printText("Message sent\n"); }
 
     public void askForBack(){
@@ -139,12 +131,6 @@ public class AttendeeUI extends Presenter{
 
     public int checkapply(){
         return Integer.parseInt(requestInput("Are you sure to apply to be a speaker? If yes, enter 1"));
-    }
-
-    public String whyapply(){
-        return requestInput("Please Enter Why You Apply.\n " +
-                "(End editing by typing a single \"end\" in a new line.)");
-
     }
 
     public void appsend(){
