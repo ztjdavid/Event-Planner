@@ -28,7 +28,7 @@ public class AttendeeSystem {
         this.attendeeM = AttendeeM;
         this.roomM = roomM;
         this.reM = reM;
-        this.ah = new Attendeesystemhandler(accM, TalkM, MsgM, attendeeUI, StrategyManager, attendeeM, roomM,reM);
+        this.ah = new Attendeesystemhandler(MsgM, accM, TalkM, MsgM, attendeeUI, StrategyManager, attendeeM, roomM,reM);
         this.appM = appM;
     }
 
@@ -391,9 +391,7 @@ public class AttendeeSystem {
             tmsgid = ah.targetunread();
             if(tmsgid != -1){
                 MsgM.readMessage(tmsgid);
-                attendeeM.deleteUnreadInbox(tmsgid);
-                attendeeUI.unreadSuccess(tmsgid);
-                attendeeUI.askForBack();
+                attendeeUI.pause();
             }
 
         }while(tmsgid != -1);

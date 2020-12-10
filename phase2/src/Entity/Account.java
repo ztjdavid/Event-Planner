@@ -95,7 +95,7 @@ public abstract class Account {
      * @param mesID ID of new message sent by this account.
      */
     public void addSentMessage(int mesID){
-        this.sentMessage.add(mesID);
+        if (this.sentMessage.contains(mesID)) this.sentMessage.add(mesID);
     }
 
     /**
@@ -113,7 +113,7 @@ public abstract class Account {
      * @param mesID ID of new message received by this account.
      */
     public void addInbox(int mesID){
-        this.inbox.add(mesID);
+        if(this.inbox.contains(mesID)) this.inbox.add(mesID);
     }
 
     /**
@@ -146,31 +146,26 @@ public abstract class Account {
      * Add new unread message received by this account to the unread inbox.
      * @param unreadId The ID of the unread message.
      */
-    public void addUnreadInbox(int unreadId){this.unreadInbox.add(unreadId);}
+    public void addUnreadInbox(int unreadId){
+        if(this.unreadInbox.contains(unreadId)) this.unreadInbox.add(unreadId);
+    }
     /////
 
     /**
-     * Remove the message from the unread inbox
+     * Remove a message from the unread inbox
      * @param messageID The ID of the message to be removed
      */
-    public void removeMessage(int messageID){
-        this.unreadInbox.remove(messageID);
+    public void removeMsgFromUnreadInbox(int messageID){
+        if(this.unreadInbox.contains(messageID)) this.unreadInbox.remove(messageID);
     }
 
     /**
-     * Archive the unread message by its ID
-     * @param messageID The ID of the message
+     * Remove a message from inbox
+     * @param msgId id of a message
      */
-    public void archiveMessage(int messageID){
-        this.inbox.add(messageID);
+    public void removeMsgFromInbox(int msgId){
+        if(this.inbox.contains(msgId)) this.inbox.remove(msgId);
     }
 
-    /**
-     * Get the IDs of the archived messages in this account
-     * @return The Arraylist of IDs of archived messages
-     */
-    public ArrayList<Integer> archiveMessage(){
-        return new ArrayList<>(this.inbox);
-    }
 
 }

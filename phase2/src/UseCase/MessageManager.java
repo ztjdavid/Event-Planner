@@ -127,13 +127,14 @@ public class MessageManager {
     ///// Louisa added
     public boolean checkMessageStatus(int messageId){return getmessage(messageId).getReadStatus();}
 
-    public void readMessage(int messageId){getmessage(messageId).setReadStatusRead();
+    public void readMessage(int messageId){
+        getmessage(messageId).setReadStatusRead();
         try{
             this.gateWay.updateReadStatus(messageId, true);
         }catch (IOException ignored){}
     }
 
-    public void unreadMessage(int messageId){getmessage(messageId).setReadStatusUnread();
+    public void setAsUnread(int messageId){getmessage(messageId).setReadStatusUnread();
         try{
             this.gateWay.updateReadStatus(messageId, false);
         }catch (IOException ignored){}}

@@ -145,31 +145,42 @@ public class AccountManager {
     }
 
     /**
-     * Add the message ID to the given message getter's inbox.
+     * Add the message ID to the given message getter's UnreadInbox.
      * @param getterid message getter's ID as int.
      * @param msgid message ID as int.
      */
-    public void addinbox(int getterid, int msgid){
-        getAccountWithId(getterid).addInbox(msgid);
-        //TODO:
+    public void addMsgToUnreadInbox(int getterid, int msgid){
+        getAccountWithId(getterid).addUnreadInbox(msgid);
         try{
-            this.gateWay.updateInbox(getterid, getCurrAccount().getInbox());
+            this.gateWay.updateUnreadInbox(getterid, getCurrAccount().getUnreadInbox());
         }catch (IOException ignored){}
     }
 
-    /**
-     * Add the message ID to the given message sender's sent message.
-     * @param senderid message sender's ID as int
-     * @param msgid message ID as int.
-     */
-    public void addsend(int senderid, int msgid){
+    public void addMsgToSentBox(int senderid, int msgid){
         getAccountWithId(senderid).addSentMessage(msgid);
-        //TODO:
         try{
             this.gateWay.updateSentBox(senderid, getCurrAccount().getSentMessage());
         }catch (IOException ignored){}
     }
 
+    public void addMsgToInBox(int senderid, int msgid){
+        getAccountWithId(senderid).addInbox(msgid);
+        try{
+            this.gateWay.updateInbox(senderid, getCurrAccount().getInbox());
+        }catch (IOException ignored){}
+    }
+
+
+    public void deleteMsg(int msgId, int accId){
+        Account acc = getAccountWithId(accId);
+        acc.removeMsgFromInbox(msgId);
+        acc.removeMsgFromUnreadInbox(msgId);
+
+        try {
+            this.gateWay.updateInbox(accId, acc.getInbox());
+            this.gateWay.updateInbox(accId, acc.getUnreadInbox());
+        }catch (IOException ignored){}
+    }
     /**
      * Get the user name of the Account according to the given account ID.
      * @param accID int representation of account ID.
@@ -207,32 +218,20 @@ public class AccountManager {
      */
     public boolean isVIPAcc(int userID){ return getAccountWithId(userID).getUserType() == 3;}
 
-    public void addUnread(int accountId, int unreadId){
-        getAccountWithId(accountId).addUnreadInbox(unreadId);
-        try{
-            this.gateWay.updateUnreadInbox(accountId, getAccountWithId(accountId).getUnreadInbox());
+    /**
+     * Archive a message for a ccount.
+     * @param msgId message id
+     * @param accId account id
+     */
+    public void archiveMsg(int msgId, int accId){
+        Account acc =  getAccountWithId(accId);
+        acc.removeMsgFromUnreadInbox(msgId);
+        acc.addInbox(msgId);
+
+        try {
+            this.gateWay.updateInbox(accId, acc.getInbox());
+            this.gateWay.updateInbox(accId, acc.getUnreadInbox());
         }catch (IOException ignored){}
-    }
-
-    public void removeUnreadMsg(int messageID){
-        Account acc = getCurrAccount();
-        acc.removeMessage(messageID);
-        try{
-            this.gateWay.updateUnreadInbox(acc.getUserId(), acc.getInbox());
-        }catch (IOException ignored){}
-
-    }
-
-    public void archiveMessage(int messageID){
-        Account acc = getCurrAccount();
-        acc.archiveMessage(messageID);
-        try{
-            this.gateWay.updateInbox(acc.getUserId(), acc.getInbox());
-        }catch (IOException ignored){}
-    }
-
-    public ArrayList<Integer> getArchive(){
-        return new ArrayList<>(getCurrAccount().archiveMessage());
     }
 
     public int getmyapp(){return getCurrAccount().getapplication();}
@@ -242,6 +241,11 @@ public class AccountManager {
     public String getPassword(int accID){
         Account account = getAccountWithId(accID);
         return account.getPassword();
+    }
+
+    public ArrayList<Integer> getUnreadInboxWithId(int accId){
+        Account acc = getAccountWithId(accId);
+        return acc.getUnreadInbox();
     }
 
 }

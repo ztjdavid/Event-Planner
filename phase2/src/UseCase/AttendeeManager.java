@@ -108,19 +108,6 @@ public class AttendeeManager extends AccountManager{
         acc.setEventList(eventList);
         acc.setUnreadInbox(unreadInbox);
     }
-    ///Grey modify
-    public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}
-
-    public void deleteUnreadInbox(int msgid){
-         ArrayList<Integer> inbox = getCurrAccount().getUnreadInbox();
-         inbox.remove(Integer.valueOf(msgid));
-
-         try{
-             this.gateWay.updateInbox(getCurrAccountId(), getCurrAttendee().getInbox());
-         }catch (IOException ignored){}
-
-    }
-
 
 }
 
