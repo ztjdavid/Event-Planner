@@ -591,7 +591,7 @@ public class OrganizerSystemHandler {
     }
 
     protected void readArchivedMsg(){
-        ArrayList<Integer> arrayList = new ArrayList<>(accM.getArchive());
+        ArrayList<Integer> arrayList = new ArrayList<>(ognM.getInbox());
         String a = MsgM.formatmsgget(arrayList);
         organizerPresenter.show(a);
         organizerPresenter.askForBack();

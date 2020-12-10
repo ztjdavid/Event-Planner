@@ -146,5 +146,4 @@ public class OrganizerManager extends AccountManager{
     }
 
 
-
 }
