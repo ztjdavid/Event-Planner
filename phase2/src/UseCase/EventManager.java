@@ -14,7 +14,7 @@ import java.util.Set;
  */
 
 public class EventManager {
-    protected  static int idTracker = 0;
+    protected  static int nextId = 0;
     protected static int totalTalkCount = 0;
     protected HashMap<Integer, Event> eventList;
     protected static int currentTalkID = 0; // Track which Event this program is working on now.
@@ -165,8 +165,8 @@ public class EventManager {
 
     public void scanInEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
                            int eventCapacity, int duration, boolean isVip, int id){
-        idTracker = id;
         createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
+        nextId = id + 1;
     }
 
     private int createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip, int id) {
@@ -177,7 +177,7 @@ public class EventManager {
 
     public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
                            int eventCapacity, int duration, boolean isVip){
-        int id = idTracker + 1;
+        int id = nextId;
         try{
             this.gateWay.writeNewEvent(id, talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip);
         }catch (IOException ignored){}

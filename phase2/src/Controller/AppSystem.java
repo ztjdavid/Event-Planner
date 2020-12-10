@@ -30,6 +30,7 @@ public class AppSystem {
     protected AttendeeUI attUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
+    protected ApplicationManager appM;
     protected ITextUI textUI;
     protected VipUI vipUI;
     protected UserFileLoader userL;
@@ -37,12 +38,13 @@ public class AppSystem {
     protected EventFileLoader eventL;
     protected RoomFileLoader roomL;
     protected RequestFileLoader requestL;
+    protected ApplicationLoader appL;
     protected UserFileWriter userW;
     protected MsgFileWriter msgW;
     protected EventFileWriter eventW;
     protected RoomFileWriter roomW;
     protected RequestFileWriter requestW;
-
+    protected ApplicationWriter appW;
 
 
     public AppSystem(ITextUI textUI){
@@ -60,6 +62,7 @@ public class AppSystem {
             this.eventW = new EventFileWriter("phase2/DataBase/EventData.ini");
             this.roomW = new RoomFileWriter("phase2/DataBase/RoomData.ini");
             this.requestW = new RequestFileWriter("phase2/DataBase/RequestData.ini");
+            this.appW = new ApplicationWriter("phase2/DataBase/ApplicationData.ini");
         }catch (IOException ignored){}
         this.attM = new AttendeeManager(userW);
         this.accM = new AccountManager(userW);
@@ -70,6 +73,7 @@ public class AppSystem {
         this.eventM = new EventManager(eventW);
         this.roomM = new RoomManager(roomW);
         this.rqstM = new RequestManager(requestW);
+        this.appM = new ApplicationManager(appW);
         this.strategyM = new StrategyManager();
         this.signInS = new SignInSystem(accM, signInP);
         this.signUpS = new SignUpSystem(accM, signUpP, strategyM);
@@ -83,6 +87,7 @@ public class AppSystem {
             this.eventL = new EventFileLoader("phase2/DataBase/EventData.ini", eventM);
             this.roomL = new RoomFileLoader("phase2/DataBase/RoomData.ini", roomM);
             this.requestL = new RequestFileLoader("phase2/DataBase/RequestData.ini", rqstM);
+            this.appL = new ApplicationLoader("phase2/DataBase/ApplicationData.ini", appM);
         }catch (IOException ignored){}
 
     }
@@ -98,6 +103,7 @@ public class AppSystem {
             roomL.loadData();
             eventL.loadData();
             requestL.loadData();
+            appL.loadData();
         }catch (NumberFormatException ignored) {}
 
         // start
