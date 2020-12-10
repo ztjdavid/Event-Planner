@@ -15,12 +15,14 @@ public class ApplicationManager {
 
     public Application getAppWithId(int id) {return this.appList.get(id);}
 
-    public void createApplication(int applicatorId, String applicatorName, String description){
-        createHelper(nextId, applicatorId, applicatorName, description);
+    public int createApplication(int applicatorId, String applicatorName, String description){
+        int id = nextId;
+        createHelper(id, applicatorId, applicatorName, description);
         try{
-            gateWay.writeNewApplication(nextId, applicatorId, applicatorName, description);
+            gateWay.writeNewApplication(id, applicatorId, applicatorName, description);
         }catch (IOException ignored){}
         nextId += 1;
+        return id;
     }
 
     public void scanInApplication(int appId, int applicatorId, String applicatorName, String description){
@@ -60,7 +62,7 @@ public class ApplicationManager {
         s.append("Application id: ").append(a.getAppId()).append("\n");
         s.append("Applicator id: ").append(a.getApplicatorId()).append("\n");
         s.append("ApplicatorName: ").append(a.getApplicatorName()).append("\n");
-       s.append("Description: \n").append(a.getDescription()).append("\n");
+        s.append("Description: \n").append(a.getDescription()).append("\n");
         return s.toString();
     }
 
