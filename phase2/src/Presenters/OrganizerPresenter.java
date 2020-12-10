@@ -90,8 +90,8 @@ public class OrganizerPresenter extends Presenter{
                 "\n2 -> Message to one speaker" +
                 "\n3 -> Message to all of the attendees" +
                 "\n4 -> Message to all speakers" +
-                "\n5 -> Read your replies and send message to repliers" +
-                "\n6 -> Read all of Unread Messages" +
+                "\n5 -> Read all of Unread Replies" +
+                "\n6 -> Send message to repliers" +
                 "\n7 -> Read all of Archived Messages"+
                 "\n8 -> Go Back");
     }

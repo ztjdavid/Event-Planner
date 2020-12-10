@@ -254,10 +254,10 @@ public class OrganizerSystem {
                 oh.messageToAllAttendee();
                 break;
             case 5:
-                oh.replyToMsg();
+                oh.readAllMsg();
                 break;
             case 6:
-                oh.readAllMsg();
+                oh.replyToMsg();
                 break;
             case 7:
                 oh.readArchivedMsg();
