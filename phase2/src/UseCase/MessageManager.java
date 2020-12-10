@@ -27,7 +27,7 @@ public class MessageManager {
     public int createmessage(String sendername, int senderid, int getterid, String txt) {
         int id = nextId;
         try{
-            this.gateWay.writeNewMsg(allmessage.size(), sendername, senderid, getterid, txt);
+            this.gateWay.writeNewMsg(id, sendername, senderid, getterid, txt);
         }catch (IOException ignored){}
 
         createHelper(id, sendername, senderid, getterid, txt);
