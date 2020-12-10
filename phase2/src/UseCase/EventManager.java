@@ -181,6 +181,7 @@ public class EventManager {
         try{
             this.gateWay.writeNewEvent(id, talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip);
         }catch (IOException ignored){}
+        nextId += 1;
         return createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
     }
 
