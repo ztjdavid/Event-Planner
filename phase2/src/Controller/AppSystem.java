@@ -102,14 +102,16 @@ public class AppSystem {
 
         // start
         int userChoice;
+        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
+        String invalidInfo = "Please select one operation from below:\n1 -> login\n2 -> signup\n3 -> End Program";
         do{
             startP.startup();
-            userChoice = chooseMode();
-            if (userChoice != 4){
+            userChoice = startP.chooseOption(validChoices, "Your choice:", invalidInfo);
+            if (userChoice != 3){
                 int currAccountType = enterBranch(userChoice);
                 enterSystems(currAccountType);
             }
-        }while(userChoice != 4);
+        }while(userChoice != 3);
         startP.informQuiting();
     }
 
@@ -146,41 +148,5 @@ public class AppSystem {
                 break;
         }
     }
-
-    private int chooseMode(){
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        String userInput;
-        int mode = -1;
-        boolean valid = false;
-        while(!valid){
-            userInput = startP.requestModeSelection();
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                startP.informInvalidInput();
-            else {
-                valid = true;
-                mode = Integer.parseInt(userInput);}
-        }
-        return mode;
-    }
-
-    /**
-     * Show all Talks with each Event's title, ID, start time, room name, and room ID.
-     */
-    public void readAllEvents(){
-        organizerPresenter.message7();
-        ArrayList<Integer> talkLst = new ArrayList<>(eventM.getAllEvents());
-        for(int item:talkLst){
-            String title = eventM.getTitle(item);
-            int startTime = eventM.getStartTime(item);
-            String roomName = roomM.getRoomName(eventM.getRoomIdWithId(item));
-            int roomId = eventM.getRoomIdWithId(item);
-            int type = eventM.getEventTypeWithID(item);
-            int duration = eventM.getDuration(item);
-            ArrayList<Integer> speaker = new ArrayList<>(eventM.getSpeakerOfEvent(item));
-            ArrayList<Integer> attendee = new ArrayList<>(eventM.getAttendeeOfEvent(item));
-            organizerPresenter.readTalks(title, item, startTime, roomName, roomId, type, speaker, attendee, duration);
-        }
-    }
-
 
 }
