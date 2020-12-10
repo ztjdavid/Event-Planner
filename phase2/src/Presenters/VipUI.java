@@ -28,7 +28,12 @@ public class VipUI extends Presenter{
 
     public void startup() {
         printText("----------------VIPSystem-----------------\nHi, " +
-                "VIP! Would you like to\n1 -> View, Attend, Leave event\n2 -> Send message \n3 -> Logout");
+                "VIP! Would you like to\n1 -> View, Attend, Leave event\n2 -> Send message \n3 -> Application \n4 -> Log Out");
+    }
+
+    public void appmain() {
+        printText("----------------VIPSystem-----------------\n" +
+                "\n1 -> My Application\n2 -> Apply for Speaker \n3 -> Go back");
     }
 
 
