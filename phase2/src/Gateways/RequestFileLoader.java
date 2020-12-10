@@ -15,7 +15,10 @@ public class RequestFileLoader {
         this.requestM = rm;
     }
 
-
+    /**
+     * Load all request data.
+     * @throws NumberFormatException
+     */
     public void loadData()throws NumberFormatException{
         Set<String> idSet = iniFile.keySet();
         for (String ID: idSet){

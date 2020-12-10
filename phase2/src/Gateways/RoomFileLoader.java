@@ -19,7 +19,10 @@ public class RoomFileLoader {
         this.roomM = rm;
     }
 
-
+    /**
+     * Load all room data.
+     * @throws NumberFormatException
+     */
     public void loadData()throws NumberFormatException{
         Set<String> idSet = iniFile.keySet();
         for (String ID: idSet){

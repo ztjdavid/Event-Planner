@@ -18,6 +18,10 @@ public class MsgFileLoader{
         this.msgM = msgM;
     }
 
+    /**
+     * Load all message data.
+     * @throws NumberFormatException
+     */
     public void loadData()throws NumberFormatException{
         Set<String> idSet = iniFile.keySet();
         for (String id: idSet){

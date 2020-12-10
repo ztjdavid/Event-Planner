@@ -26,7 +26,10 @@ public class UserFileLoader{
         this.vipM = vipM;
     }
 
-
+    /**
+     * Load all account data.
+     * @throws NumberFormatException
+     */
     public void loadData()throws NumberFormatException{
         Set<String> idSet = iniFile.keySet(); // get id of all accounts
         for (String id: idSet){

@@ -17,7 +17,13 @@ public class RoomFileWriter implements IRoomGateWay {
         this.iniFile = new Ini(new File(pathname));
     }
 
-
+    /**
+     * Write new room into database.
+     * @param id id
+     * @param roomName name of the room
+     * @param roomC Capacity of the room
+     * @throws IOException
+     */
     public void writeNewRoom(int id, String roomName, int roomC)throws IOException{
         String ID = String.valueOf(id);
         iniFile.put(ID, "RoomName", roomName);
@@ -27,6 +33,12 @@ public class RoomFileWriter implements IRoomGateWay {
         iniFile.store();
     }
 
+    /**
+     * Update key "TimetableKey" and "TimetableValue" in given section(id).
+     * @param id id
+     * @param timetable timetable
+     * @throws IOException
+     */
     public void updateTimetable(int id, HashMap<Integer, Integer> timetable)throws IOException{
         String ID = String.valueOf(id);
         StringBuilder key = new StringBuilder("");

@@ -18,6 +18,10 @@ public class ApplicationLoader {
         this.iniFile = new Ini(new File(pathname));
     }
 
+    /**
+     * Load all application data.
+     * @throws NumberFormatException
+     */
     public void loadData()throws NumberFormatException{
        Set<String> idSet = iniFile.keySet();
        for (String ID: idSet){

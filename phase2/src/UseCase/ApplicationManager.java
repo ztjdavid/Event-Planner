@@ -15,6 +15,13 @@ public class ApplicationManager {
 
     public Application getAppWithId(int id) {return this.appList.get(id);}
 
+    /**
+     * Create Application.
+     * @param applicatorId id
+     * @param applicatorName name
+     * @param description description
+     * @return
+     */
     public int createApplication(int applicatorId, String applicatorName, String description){
         int id = nextId;
         createHelper(id, applicatorId, applicatorName, description);
@@ -25,11 +32,23 @@ public class ApplicationManager {
         return id;
     }
 
+    /**
+     * Used in gateway to scan a new application.
+     * @param appId id
+     * @param applicatorId applicator's id
+     * @param applicatorName applicator's name
+     * @param description description
+     */
     public void scanInApplication(int appId, int applicatorId, String applicatorName, String description){
         createHelper(appId, applicatorId, applicatorName, description);
         nextId = appId + 1;
     }
 
+    /**
+     * Set the new username in an application.
+     * @param appId id
+     * @param username username
+     */
     public void setNewUsername(int appId, String username){
         Application a = getAppWithId(appId);
         a.setNewUsername(username);
@@ -38,6 +57,11 @@ public class ApplicationManager {
         }catch (IOException ignored){}
     }
 
+    /**
+     * Set the new password in an application.
+     * @param appId id
+     * @param passW password
+     */
     public void setNewPassword(int appId, String passW){
         Application a = getAppWithId(appId);
         a.setNewUsername(passW);
@@ -46,6 +70,10 @@ public class ApplicationManager {
         }catch (IOException ignored){}
     }
 
+    /**
+     * Approve an application.
+     * @param appId id
+     */
     public void Approve(int appId){
         Application a = getAppWithId(appId);
         a.setApproved(true);
@@ -54,8 +82,12 @@ public class ApplicationManager {
         }catch (IOException ignored){}
     }
 
+    /**
+     * Format a string describing an application to an organizer.
+     * @param appId id
+     * @return string describing an application.
+     */
     public String formatInfoToOrganizer(int appId){
-        // 如果需要显示Status和我说下， 我默认只会展示未approved的application.
         Application a = getAppWithId(appId);
         StringBuilder s = new StringBuilder();
         s.append("-------------------------------\n");
@@ -66,6 +98,11 @@ public class ApplicationManager {
         return s.toString();
     }
 
+    /**
+     * Format a string describing an application to an attendee/vip.
+     * @param appId id
+     * @return string describing an application.
+     */
     public String formatInfoToAttendee(int appId){
         Application a = getAppWithId(appId);
         StringBuilder s = new StringBuilder();
@@ -81,6 +118,13 @@ public class ApplicationManager {
         return s.toString();
     }
 
+    /**
+     * Set some instance variables of an application object. (Used in a gateway class)
+     * @param id id
+     * @param approved status
+     * @param username username
+     * @param password password
+     */
     public void setInfo(int id, boolean approved, String username, String password){
         Application a = getAppWithId(id);
         a.setApproved(approved);

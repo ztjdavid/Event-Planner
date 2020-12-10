@@ -16,6 +16,18 @@ public class EventFileWriter implements IEventGateWay {
         this.iniFile = new Ini(new File(pathname));
     }
 
+    /**
+     * Write a new event into database.
+     * @param id id
+     * @param talkTitle talk title
+     * @param startTime start time
+     * @param roomId room id
+     * @param speakerList a list of speakers
+     * @param eventCapacity capacity of this event
+     * @param duration duration
+     * @param isVip if it is a vip-only event
+     * @throws IOException
+     */
     public void writeNewEvent(int id, String talkTitle, int startTime, int roomId,
                               ArrayList<Integer> speakerList, int eventCapacity,
                               int duration, boolean isVip)throws IOException{
@@ -33,6 +45,11 @@ public class EventFileWriter implements IEventGateWay {
         iniFile.store();
     }
 
+    /**
+     * Remove an event from database.
+     * @param id id
+     * @throws IOException
+     */
     public void removeEvent(int id)throws IOException{
         String ID = String.valueOf(id);
         if (iniFile.containsKey(ID)) {
@@ -41,12 +58,24 @@ public class EventFileWriter implements IEventGateWay {
         }
     }
 
+    /**
+     * Update key "TalkTitle" in given section(id).
+     * @param id id
+     * @param title title
+     * @throws IOException
+     */
     public void updateTalkTitle(int id, String title)throws IOException{
         String ID = String.valueOf(id);
         iniFile.put(ID, "TalkTitle", title);
         iniFile.store();
     }
 
+    /**
+     * Update key "AttendeeList" in given section(id).
+     * @param id id
+     * @param attList a list of attendee id
+     * @throws IOException
+     */
     public void updateAttendeeList(int id, ArrayList<Integer> attList)throws IOException{
         String ID = String.valueOf(id);
         StringBuilder s = new StringBuilder("");
@@ -58,12 +87,24 @@ public class EventFileWriter implements IEventGateWay {
         iniFile.store();
     }
 
+    /**
+     * Update key "RemainingSeat" in given section(id).
+     * @param id id
+     * @param rs remaining seat
+     * @throws IOException
+     */
     public void updateRemainingSeat(int id, int rs)throws IOException{
         String msgID = String.valueOf(id);
         iniFile.put(msgID, "RemainingSeat", rs);
         iniFile.store();
     }
 
+    /**
+     * Update key "SeatsOccupied" in section(id).
+     * @param id id
+     * @param so seats occupied
+     * @throws IOException
+     */
     public void updateSeatsOccupied(int id, int so)throws IOException{
         String msgID = String.valueOf(id);
         iniFile.put(msgID, "SeatsOccupied", so);
