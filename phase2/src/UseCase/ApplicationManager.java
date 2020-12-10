@@ -76,5 +76,6 @@ public class ApplicationManager {
 
     private void createHelper(int appId, int applicatorId, String applicatorName, String description){
         Application a = new Application(appId, applicatorId, applicatorName, description);
+        this.appList.put(appId, a);
     }
 }
