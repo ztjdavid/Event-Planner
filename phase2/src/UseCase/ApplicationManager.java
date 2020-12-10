@@ -94,7 +94,7 @@ public class ApplicationManager {
         Application a = getAppWithId(appId);
         StringBuilder s = new StringBuilder();
         s.append("-------------------------------\n");
-        s.append("Application id: ").append(a.getAppId()).append("\n");
+        s.append("Application id: ").append(appId).append("\n");
         s.append("Applicator id: ").append(a.getApplicatorId()).append("\n");
         s.append("ApplicatorName: ").append(a.getApplicatorName()).append("\n");
         s.append("Description: \n").append(a.getDescription()).append("\n");
