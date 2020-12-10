@@ -10,7 +10,8 @@ public class Application {
     private boolean approved = false;
 
     public Application(int appId, int applicatorId, String applicatorName, String txt){
-        this.applicatorId = appId;
+        this.appId = appId;
+        this.applicatorId = applicatorId;
         this.applicatorId = applicatorId;
         this.applicatorName = applicatorName;
         this.description = txt;
