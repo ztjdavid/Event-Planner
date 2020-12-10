@@ -15,9 +15,10 @@ public class VipSystem {
     protected RoomManager roomM;
     protected RequestManager ReqM;
     protected VIPsystemhandler vh;
+    protected ApplicationManager appM;
 
     public VipSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipUI vipUI,
-                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM) {
+                          StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM, ApplicationManager appM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -26,6 +27,7 @@ public class VipSystem {
         this.vipM = vipM;
         this.roomM = roomM;
         this.ReqM = ReqM;
+        this.appM = appM;
         this.vh = new VIPsystemhandler(accM, TalkM, MsgM, vipUI, StrategyManager, vipM, roomM, ReqM);
 
     }
@@ -311,8 +313,29 @@ public class VipSystem {
 
     }
     //////////////////////APPLICATION
-    private void myapp(){}
-    private void newapp(){}
+    private void myapp(){
+        Integer a = accM.getmyapp();
+        String b;
+        if(a == -1){
+            b = "You don't have any processing application";
+        }
+        else {
+            b = appM.formatInfoToAttendee(a);
+        }
+        vipUI.show(b);
+        vipUI.askForBack();
+    }
+
+    private void newapp(){
+        int input = vipUI.checkapply();
+        if (input != -1){
+            String text = vipUI.whyapply();
+            appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
+            vipUI.appsend();
+            vipUI.askForBack();
+
+    }}
+
     ///////////////////////APPLICATION
 
     private void msgToAttendee(){

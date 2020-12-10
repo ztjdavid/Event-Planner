@@ -80,7 +80,7 @@ public class AppSystem {
         this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM, rqstM);
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
-        this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM);
+        this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM, appM);
         try{
             this.userL = new UserFileLoader("phase2/DataBase/UserData.ini", accM, attM, spkM, ognM, vipM);
             this.msgL = new MsgFileLoader("phase2/DataBase/MsgData.ini", MsgM);

@@ -102,7 +102,7 @@ public class VipUI extends Presenter{
     public void show(String a){printText(a);}
 
     public void informEnteringText(){
-        printText("Please Enter Your Message.\n " +
+        requestInput("Please Enter Your Message.\n " +
                 "(End editing by typing a single \"end\" in a new line.)");
     }
     public String getLineTxt(){
@@ -156,6 +156,20 @@ public class VipUI extends Presenter{
 
     public void informNotVip(){
         printText("You do not have the permission to sign up for a VIP event.");
+    }
+
+    public int checkapply(){
+        return Integer.parseInt(requestInput("Are you sure to apply to be a speaker? If not, enter -1"));
+    }
+
+    public String whyapply(){
+        return requestInput("Please Enter Why You Apply.\n " +
+                "(End editing by typing a single \"end\" in a new line.)");
+
+    }
+
+    public void appsend(){
+        printText("Your application has send!");
     }
 
 
