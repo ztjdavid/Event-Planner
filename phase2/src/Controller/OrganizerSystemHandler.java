@@ -601,6 +601,7 @@ public class OrganizerSystemHandler {
         ArrayList<Integer> requestIDs = new ArrayList<>(rqstM.getRequestID());
         StringBuilder a = new StringBuilder();
         for (int item : requestIDs){
+            a.append("Request ID:").append(item).append("\n");
             a.append(rqstM.getRequestInfo(item));
         }
         organizerPresenter.show(a.toString());
@@ -635,6 +636,7 @@ public class OrganizerSystemHandler {
         ArrayList<Integer> AppID = new ArrayList<>(appM.getAppID());
         StringBuilder a = new StringBuilder("These are the Applications Information:\n");
         for (int item : AppID) {
+            a.append("Application ID:").append(item).append("\n");
             a.append(appM.formatInfoToOrganizer(item));
         }
         organizerPresenter.show(a.toString());
