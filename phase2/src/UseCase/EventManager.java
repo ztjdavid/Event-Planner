@@ -244,13 +244,14 @@ public class EventManager {
      */
 
     public ArrayList<Integer> getallattendee(ArrayList<Integer> talklist){
-        Set<Integer> att = new HashSet<>();
+        ArrayList<Integer> att = new ArrayList<>();
         for(Integer t:talklist){
 
             Event event = getEventWithId(t);
+
             att.addAll(event.getAttendeeId());
         }
-        return new ArrayList<>(att);
+        return att;
 
     }
 

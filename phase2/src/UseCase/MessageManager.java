@@ -100,7 +100,7 @@ public class MessageManager {
         for(Integer i: msgget){
             Message msg = getmessage(i);
             if(msg.getReply() == -1){
-                a.append("The message(id:").append(msg.getmessageid()).append(") you send to ").append(getmessage(i).getGetterid()).append(" has not been replied.\n");}
+                a.append("The message(id:").append(msg.getmessageid()).append(") you send to ").append(getmessage(i).getGetterid()).append(":\n" + msg.getTxt() + "\n").append(" Has Not been Replied.\n");}
             else{
                 a.append("This reply is from id ").append(getmessage(i).getGetterid()).append("(").append(msg.getReplyer()).append(")").append(":\n").append(allmessage.get(getmessage(i).getReply()).getTxt());}
         }
