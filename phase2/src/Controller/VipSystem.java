@@ -37,7 +37,7 @@ public class VipSystem {
         int userChoice;
         do {
             vipUI.startup();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
+            userChoice = vipUI.chooseOption(vipUI.getchoicelist(6), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             enterBranch(userChoice);
         } while (userChoice != 3);
     }
@@ -52,11 +52,37 @@ public class VipSystem {
                 MsgDashboard();
                 break;
             case 3:
+                appDashboard();
+                break;
+            case 4:
+                break;
+        }
+    }
+
+    private void appDashboard() {
+        int userChoice;
+        do{
+            vipUI.appmain();
+            userChoice = vipUI.chooseOption(vipUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
+            AppOp(userChoice);
+        } while (userChoice != 5);
+    }
+
+    private void AppOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                myapp();
+                break;
+            case 2:
+                newapp();
+                break;
+            case 3:
                 break;
         }
     }
 
 
+///////////EVENT DASH////////////
     private void EventDashboard(){
         int userChoice;
         do{
@@ -284,6 +310,10 @@ public class VipSystem {
 
 
     }
+    //////////////////////APPLICATION
+    private void myapp(){}
+    private void newapp(){}
+    ///////////////////////APPLICATION
 
     private void msgToAttendee(){
         int tAttendeeId;
