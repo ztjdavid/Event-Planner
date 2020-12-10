@@ -52,7 +52,19 @@ public class ApplicationManager {
         }catch (IOException ignored){}
     }
 
-    public String formatInfo(int appId){
+    public String formatInfoToOrganizer(int appId){
+        // 如果需要显示Status和我说下， 我默认只会展示未approved的application.
+        Application a = getAppWithId(appId);
+        StringBuilder s = new StringBuilder();
+        s.append("-------------------------------\n");
+        s.append("Application id: ").append(a.getAppId()).append("\n");
+        s.append("Applicator id: ").append(a.getApplicatorId()).append("\n");
+        s.append("ApplicatorName: ").append(a.getApplicatorName()).append("\n");
+       s.append("Description: \n").append(a.getDescription()).append("\n");
+        return s.toString();
+    }
+
+    public String formatInfoToAttendee(int appId){
         Application a = getAppWithId(appId);
         StringBuilder s = new StringBuilder();
         s.append("##############################\n");
