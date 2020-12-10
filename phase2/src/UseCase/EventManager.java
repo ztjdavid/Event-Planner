@@ -69,7 +69,7 @@ public class EventManager {
     public void addAttendeev2(int talkid, Attendee attendee){
         this.eventList.get(talkid).addAttendee(attendee.getUserId());
         try{
-            gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());/////ADD HERE?
+            gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
         }catch (IOException ignored){}
     }
     public void addAttendeev2(int talkid, VIP vip){
@@ -169,10 +169,9 @@ public class EventManager {
         nextId = id + 1;
     }
 
-    private int createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip, int id) {
+    private void createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID, int eventCapacity, int duration, boolean isVip, int id) {
         Event newEvent = new Event(id, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
         this.eventList.put(id, newEvent);
-        return id;
     }
 
     public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
@@ -181,8 +180,9 @@ public class EventManager {
         try{
             this.gateWay.writeNewEvent(id, talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip);
         }catch (IOException ignored){}
+        createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
         nextId += 1;
-        return createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
+        return id;
     }
 
     /**
