@@ -41,14 +41,11 @@ public class VIPsystemhandler {
 
     public void readAllMyTalksSimp(){
         StringBuilder a = new StringBuilder("Event you have signed up: ");
-        if(vipM.getAllEvent().isEmpty()){
-            vipUI.show("You did not sign up any event yet");
+        ArrayList<Integer> allEvent = vipM.getAllEvent();
+        for(Integer t:allEvent){
+            a.append(eventManager.getEventinfosimp(t));
         }
-        else {        ArrayList<Integer> allEvent = vipM.getAllEvent();
-            for(Integer t:allEvent){
-                a.append(eventManager.getEventinfosimp(t));
-            }
-            vipUI.show(a.toString());}
+        vipUI.show(a.toString());
 
     }
 
@@ -112,13 +109,10 @@ public class VIPsystemhandler {
     public void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up talks:");
         ArrayList<Integer> allTalks = vipM.getEventList(accM.getCurrAccountId());
-        if(allTalks.isEmpty()){vipUI.show("No signed up event");}
-        else {
-            for(Integer t:allTalks){
-                String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-                a.append(eventManager.getEventinfoWithName(t, roomName));}
-            vipUI.show(a.toString());
-        }
+        for(Integer t:allTalks){
+            String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
+            a.append(eventManager.getEventinfoWithName(t, roomName));}
+        vipUI.show(a.toString());
 
     }
 

@@ -42,14 +42,11 @@ public class Attendeesystemhandler {
 
     public void readalltalkssimp(){
         ArrayList<Integer> alltalks = attM.getAllMyTalksId();
-        if(alltalks.isEmpty()){attUI.show("No signed up event!");}
-        else {
-            StringBuilder a = new StringBuilder("Event Information with id:");
+        StringBuilder a = new StringBuilder("Event Information with id:");
 
-            for(Integer t:alltalks){
-                a.append(eventManager.getEventinfosimp(t));}
-            attUI.show(a.toString());
-        }
+        for(Integer t:alltalks){
+            a.append(eventManager.getEventinfosimp(t));}
+        attUI.show(a.toString());
 
     }
 
@@ -113,13 +110,10 @@ public class Attendeesystemhandler {
     public void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up events:");
         ArrayList<Integer> allTalks = attM.getAllMyTalksId();
-        if(allTalks.isEmpty()){attUI.show("No signed up events");}
-        else {
-            for(Integer t:allTalks){
-                String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-                a.append(eventManager.getEventinfoWithName(t, roomName));}
-            attUI.show(a.toString());
-        }
+        for(Integer t:allTalks){
+            String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
+            a.append(eventManager.getEventinfoWithName(t, roomName));}
+        attUI.show(a.toString());
 
     }
 
