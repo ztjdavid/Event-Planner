@@ -251,5 +251,7 @@ public class AccountManager {
         return new ArrayList<>(getCurrAccount().archiveMessage());
     }
 
+    public int getmyapp(){return getCurrAccount().getapplication();}
+
 }
 
