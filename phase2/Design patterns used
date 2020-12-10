@@ -1,0 +1,18 @@
+
+Design pattern 1: Factory method
+We use factory method in sign up system(SignUpSystem.java) to create different user types.
+We allow user to choose the type they want to create when they are signing up. They will enter their username and password
+to allow SignUpSystem to create an account of the type they choose.
+
+Design pattern 2: Adapter
+The user systems in our program are the Adaptor classes and their handlers are Adaptee classes. This is a kind of Object
+Adapter. For example, VipSystem contain an instance of VipSystemHandler. Most of the methods in VipSystemHandler are helper
+function and methods to interact with lower level classes, like vip manager. We can have shorter classes with more essential
+functionalities by using composition.
+
+Design pattern 3: Dependency Injection
+Since we are using MVP in phase2, we change the way of using UI by creating ITextUI to be the interface of TextUI in presenter
+layer. The class named Presenter in our program contain an instance of ITextUI and all the presenter classes are extend from
+the Presenter to use methods in ITextUI, which means they can let TextUI to print things without disrupt rules of MVP.
+For example, we can called printText() method in SpeakerUI(which is a presenter) since we have instance of ITextUI. However,
+printText() is implemented in TextUI, which is in the UI layer.
