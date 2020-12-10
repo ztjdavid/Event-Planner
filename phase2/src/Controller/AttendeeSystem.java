@@ -403,9 +403,11 @@ public class AttendeeSystem {
 
     private void newapp(){
         int input = attendeeUI.checkapply();
-        if (input != -1){
+        if (input == 1){
             String text = attendeeUI.whyapply();
-            appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
+
+            int a = appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
+            accM.changemyapp(a);
             attendeeUI.appsend();
             attendeeUI.askForBack();
 

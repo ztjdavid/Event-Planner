@@ -328,9 +328,10 @@ public class VipSystem {
 
     private void newapp(){
         int input = vipUI.checkapply();
-        if (input != -1){
+        if (input == 1){
             String text = vipUI.whyapply();
-            appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
+            int a = appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
+            accM.changemyapp(a);
             vipUI.appsend();
             vipUI.askForBack();
 

@@ -253,5 +253,7 @@ public class AccountManager {
 
     public int getmyapp(){return getCurrAccount().getapplication();}
 
+    public void changemyapp(int a){getCurrAccount().setApplication(a);}
+
 }
 
