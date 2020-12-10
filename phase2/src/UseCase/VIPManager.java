@@ -44,7 +44,7 @@ public class VIPManager extends AccountManager{
         return new ArrayList<>(Vip.getEventList());
     }
 
-    public ArrayList<Integer> getAllEvent(){return getCurrVIP().getEventList();}
+    public ArrayList<Integer> getAllEvent(){ return getCurrVIP().getEventList();}
 
     public ArrayList<Integer> getInbox(int id){
         return getVIPWithId(id).getInbox();

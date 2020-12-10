@@ -41,11 +41,15 @@ public class VIPsystemhandler {
 
     public void readAllMyTalksSimp(){
         StringBuilder a = new StringBuilder("Event you have signed up: ");
-        ArrayList<Integer> allEvent = vipM.getAllEvent();
-        for(Integer t:allEvent){
-            a.append(eventManager.getEventinfosimp(t));
+        if(vipM.getAllEvent().isEmpty()){
+            vipUI.show("You did not sign up any event yet");
         }
-        vipUI.show(a.toString());
+        else {        ArrayList<Integer> allEvent = vipM.getAllEvent();
+            for(Integer t:allEvent){
+                a.append(eventManager.getEventinfosimp(t));
+            }
+            vipUI.show(a.toString());}
+
     }
 
     public int targetevent(){
@@ -108,10 +112,14 @@ public class VIPsystemhandler {
     public void readAllMyTalks(){
         StringBuilder a = new StringBuilder("My signed up talks:");
         ArrayList<Integer> allTalks = vipM.getEventList(accM.getCurrAccountId());
-        for(Integer t:allTalks){
-            String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
-            a.append(eventManager.getEventinfoWithName(t, roomName));}
-        vipUI.show(a.toString());
+        if(allTalks.isEmpty()){vipUI.show("No signed up event");}
+        else {
+            for(Integer t:allTalks){
+                String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
+                a.append(eventManager.getEventinfoWithName(t, roomName));}
+            vipUI.show(a.toString());
+        }
+
     }
 
     public int targetTalksCancel(){

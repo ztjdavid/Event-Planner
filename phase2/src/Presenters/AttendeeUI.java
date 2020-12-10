@@ -14,7 +14,7 @@ public class AttendeeUI extends Presenter{
 
     public void startup() {
         printText("----------------AttendeeSystem-----------------\nHi, " +
-                "Attendee! Would you like to\n1 -> View, Attend, Leave event\n2 -> Send message \n3 -> Application \n4 -> Log Out");
+                "Attendee! Would you like to\n1 -> View, Attend, Leave event\n2 -> Message Dashboard\n3 -> Application \n4 -> Log Out");
     }
 
 
