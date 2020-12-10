@@ -1,5 +1,6 @@
 package Controller;
 
+import Entity.Application;
 import Presenters.OrganizerPresenter;
 import UseCase.*;
 
@@ -17,10 +18,11 @@ public class OrganizerSystemHandler {
     protected RoomManager roomM;
     protected OrganizerPresenter organizerPresenter;
     protected RequestManager rqstM;
+    protected ApplicationManager appM;
 
     public OrganizerSystemHandler(AccountManager accM, MessageManager MsgM, StrategyManager strategyM, OrganizerManager ognM,
                                   SpeakerManager spkM, EventManager eventM, RoomManager roomM, OrganizerPresenter organizerPresenter,
-                                  RequestManager rqstM){
+                                  RequestManager rqstM, ApplicationManager appM){
         this.rqstM = rqstM;
         this.accM = accM;
         this.MsgM = MsgM;
@@ -30,6 +32,7 @@ public class OrganizerSystemHandler {
         this.eventM = eventM;
         this.roomM = roomM;
         this.organizerPresenter = organizerPresenter;
+        this.appM = appM;
     }
 
 
@@ -455,7 +458,7 @@ public class OrganizerSystemHandler {
         int spkId;
         do {
             readAllSpk();
-            spkId = targetGetter(5);
+            spkId = targetGetter(6);
             if (spkId != -1) {
                 String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
                         "\n(End editing by typing a single \"end\" in a new line.)");
@@ -511,6 +514,8 @@ public class OrganizerSystemHandler {
             validChoices.addAll(ognM.getInbox());
         } else if(i == 4){
             validChoices.addAll(rqstM.getRequestID());
+        } else if(i == 5){
+            validChoices.addAll(appM.getAppID());
         } else{
             validChoices.addAll(ognM.getSpeakerList());
         }
@@ -606,21 +611,64 @@ public class OrganizerSystemHandler {
         ArrayList<Integer> requestIDs = new ArrayList<>(rqstM.getRequestID());
         if(requestIDs.size() == 0){
             organizerPresenter.message24();
-            organizerPresenter.askForBack();
         }else {
             int requestID;
-            readAllRequest(requestIDs);
+            readRequestIDs(requestIDs);
             requestID = targetGetter(4);
             rqstM.changeToAddressed(requestID);
             organizerPresenter.message25();
-            organizerPresenter.askForBack();
         }
+        organizerPresenter.askForBack();
     }
 
-    private void readAllRequest(ArrayList<Integer> lst){
-        StringBuilder a = new StringBuilder("These are the Requests. Choose an ID to Change Status:\n");
-        for (int item : lst) {
-            a.append(accM.getinfoacc(item));
+    private void readRequestIDs(ArrayList<Integer> lst){
+        StringBuilder a = new StringBuilder("These are the IDs of all of Requests:\n");
+        for(int item : lst){
+            a.append(item);
+            a.append("\n");
+        }
+        organizerPresenter.show(a.toString());
+    }
+
+
+    protected void readApplication(){
+        ArrayList<Integer> AppID = new ArrayList<>(appM.getAppID());
+        StringBuilder a = new StringBuilder("These are the Applications Information:\n");
+        for (int item : AppID) {
+            a.append(appM.formatInfoToOrganizer(item));
+        }
+        organizerPresenter.show(a.toString());
+        organizerPresenter.askForBack();
+    }
+
+    protected void markApplication(){
+        ArrayList<Integer> appIDs = new ArrayList<>(appM.getAppID());
+        if(appIDs.size() == 0){
+            organizerPresenter.message26();
+        }else {
+            int appID;
+            readAppIDs(appIDs);
+            appID = targetGetter(5);
+            boolean isApproved = organizerPresenter.isApproved();
+            if(isApproved){
+                appM.Approve(appID);
+                int speakerID = createSpeaker();
+                appM.setNewUsername(appID, accM.getUserName(speakerID));
+                appM.setNewPassword(appID,accM.getPassword(speakerID));
+                organizerPresenter.message28(speakerID);
+            }else{
+                appM.disapprove(appID);
+                organizerPresenter.message27();
+            }
+        }
+        organizerPresenter.askForBack();
+    }
+
+    private void readAppIDs(ArrayList<Integer> lst){
+        StringBuilder a = new StringBuilder("These are the IDs of all of Applications:\n");
+        for(int item : lst){
+            a.append(item);
+            a.append("\n");
         }
         organizerPresenter.show(a.toString());
     }

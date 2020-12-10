@@ -18,7 +18,8 @@ public class OrganizerPresenter extends Presenter{
                 "\n3 -> Event Dashboard" +
                 "\n4 -> Room Dashboard" +
                 "\n5 -> Request Dashboard" +
-                "\n6 -> Logout");
+                "\n6 -> Application Dashboard" +
+                "\n7 -> Logout");
     }
 
     public int getRoomID(){
@@ -129,6 +130,14 @@ public class OrganizerPresenter extends Presenter{
                 "\nHi, Organizer! Would you like to:" +
                 "\n1 -> Read all Request" +
                 "\n2 -> Change the Status of a Request" +
+                "\n3 -> Go back");
+    }
+
+    public void messaging5(){
+        printText("----------------Application Dashboard-----------------" +
+                "\nHi, Organizer! Would you like to:" +
+                "\n1 -> Read an Application" +
+                "\n2 -> Change the Status of a Application" +
                 "\n3 -> Go back");
     }
 
@@ -393,6 +402,27 @@ public class OrganizerPresenter extends Presenter{
 
     public void message25(){
         printText("Request Status Changed to Addressed Successfully!");
+    }
+
+    public void message26(){
+        printText("There is Currently no Application Recorded.");
+    }
+
+    public boolean isApproved(){
+        ArrayList<Integer> Options = new ArrayList<Integer>();
+        Options.add(0);
+        Options.add(1);
+        int result;
+        result = chooseOption(Options, "Please make a Decision: (Enter 0 if approved, 1 if disapproved)","Invalid choice, please try again.");
+        return result == 0;
+    }
+
+    public void message27(){
+        printText("The Application Has been Successfully Marked as Disapproved!");
+    }
+
+    public void message28(int ID){
+        printText("The Application Has been Successfully Marked as Approved!\n New Speaker ID:" + ID);
     }
 
 }

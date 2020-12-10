@@ -14,9 +14,10 @@ public class OrganizerSystem {
     protected RoomManager roomM;
     protected OrganizerSystemHandler oh;
     protected RequestManager rqstM;
+    protected ApplicationManager appM;
 
     public OrganizerSystem(AccountManager accM, MessageManager MsgM, OrganizerPresenter organizerPresenter, StrategyManager strategyM,
-                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM, RequestManager rqstM) {
+                           OrganizerManager ognM, SpeakerManager spkM, EventManager eventM, RoomManager roomM, RequestManager rqstM, ApplicationManager appM) {
         this.accM = accM;
         this.MsgM = MsgM;
         this.strategyM = strategyM;
@@ -25,8 +26,9 @@ public class OrganizerSystem {
         this.spkM = spkM;
         this.eventM = eventM;
         this.roomM = roomM;
-        this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM);
+        this.oh = new OrganizerSystemHandler(accM, MsgM, strategyM, ognM, spkM, eventM, roomM, organizerPresenter, rqstM, appM);
         this.rqstM = rqstM;
+        this.appM = appM;
     }
 
     /**
@@ -36,10 +38,10 @@ public class OrganizerSystem {
         int userChoice;
         do {
             organizerPresenter.startup();
-            userChoice = organizerPresenter.chooseOption(oh.getChoiceList(6),
+            userChoice = organizerPresenter.chooseOption(oh.getChoiceList(7),
                     "Please Choose a Dashboard:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
-        } while (userChoice != 6);
+        } while (userChoice != 7);
     }
 
     //Helper methods:
@@ -64,6 +66,32 @@ public class OrganizerSystem {
             case 5:
                 requestDashBoard();
             case 6:
+                applicationDashBoard();
+                break;
+            case 7:
+                break;
+        }
+    }
+
+    private void applicationDashBoard(){
+        int userInput;
+        do{
+            organizerPresenter.messaging5();
+            userInput = organizerPresenter.chooseOption(oh.getChoiceList(3),
+                    "Please Choose a Option:", "Invalid Choice! Please Try Again:");
+            ApplicationOp(userInput);
+        }while(userInput != 3);
+    }
+
+    private void ApplicationOp(int userInput){
+        switch (userInput){
+            case 1:
+                oh.readApplication();
+                break;
+            case 2:
+                oh.markApplication();
+                break;
+            default:
                 break;
         }
     }

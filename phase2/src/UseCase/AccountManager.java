@@ -239,5 +239,10 @@ public class AccountManager {
 
     public void changemyapp(int a){getCurrAccount().setApplication(a);}
 
+    public String getPassword(int accID){
+        Account account = getAccountWithId(accID);
+        return account.getPassword();
+    }
+
 }
 

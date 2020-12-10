@@ -4,6 +4,7 @@ import Entity.Application;
 import UseCase.IGateWay.IApplicationGateWay;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ApplicationManager {
@@ -137,5 +138,17 @@ public class ApplicationManager {
     private void createHelper(int appId, int applicatorId, String applicatorName, String description){
         Application a = new Application(appId, applicatorId, applicatorName, description);
         this.appList.put(appId, a);
+    }
+
+    public ArrayList<Integer> getAppID(){
+        return new ArrayList<>(this.appList.keySet());
+    }
+
+    public void disapprove(int appId){
+        Application a = getAppWithId(appId);
+        a.setApproved(false);
+        try{
+            gateWay.updateStatus(appId, false);
+        }catch (IOException ignored){}
     }
 }
