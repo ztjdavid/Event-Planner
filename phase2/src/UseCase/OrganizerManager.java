@@ -141,5 +141,10 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
+    public ArrayList<Integer> getUnreadInbox(){
+        return new ArrayList<>(getCurrOrganizer().getUnreadInbox());
+    }
+
+
 
 }

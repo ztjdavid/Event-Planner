@@ -348,7 +348,7 @@ public class OrganizerSystemHandler {
 
     protected void readAllMsg() {
         int messageID;
-        ArrayList<Integer> inbox = ognM.getInbox();
+        ArrayList<Integer> inbox = ognM.getUnreadInbox();
         StringBuilder a = new StringBuilder("These are the messages. Choose an id to read:\n");
         if (inbox.size() != 0) {
             do {
@@ -511,7 +511,7 @@ public class OrganizerSystemHandler {
             validChoices.addAll(ognM.getAttendeeList());
             validChoices.addAll(ognM.getVIPList());
         } else if (i == 3){
-            validChoices.addAll(ognM.getInbox());
+            validChoices.addAll(ognM.getUnreadInbox());
         } else if(i == 4){
             validChoices.addAll(rqstM.getRequestID());
         } else if(i == 5){
@@ -657,7 +657,7 @@ public class OrganizerSystemHandler {
                 appM.Approve(appID);
                 int speakerID = createSpeaker();
                 appM.setNewUsername(appID, accM.getUserName(speakerID));
-                appM.setNewPassword(appID,accM.getPassword(speakerID));
+                appM.setNewPassword(appID, accM.getPassword(speakerID));
                 organizerPresenter.message28(speakerID);
             }else{
                 appM.disapprove(appID);

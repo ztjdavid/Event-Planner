@@ -65,7 +65,7 @@ public class ApplicationManager {
      */
     public void setNewPassword(int appId, String passW){
         Application a = getAppWithId(appId);
-        a.setNewUsername(passW);
+        a.setNewPassword(passW);
         try{
             gateWay.updateNewPassword(appId, passW);
         }catch (IOException ignored){}
