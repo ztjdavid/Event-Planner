@@ -14,7 +14,7 @@ public class AttendeeUI extends Presenter{
 
     public void startup() {
         printText("----------------AttendeeSystem-----------------\nHi, " +
-                "Attendee! Would you like to\n1 -> View, Attend, Leave event\n2 -> Send message \n3 -> Logout");
+                "Attendee! Would you like to\n1 -> View, Attend, Leave event\n2 -> Send message \n3 -> Application \n4 -> Log Out");
     }
 
 
@@ -63,6 +63,12 @@ public class AttendeeUI extends Presenter{
     public void cancelSuc(){
         printText("You have canceled one of your talks.");
     }
+
+    public void appmain() {
+        printText("----------------Application-----------------\n" +
+                "\n1 -> My Application\n2 -> Apply for Speaker \n3 -> Go back");
+    }
+
 
     public void msgSelect(){
         printText("----------------Message Interface-----------------\nHi, " +
@@ -130,6 +136,21 @@ public class AttendeeUI extends Presenter{
         printText("Please Enter the ID of ONE Event. Enter -1 to cancel and go back. ");
         return requestInput();
     }
+
+    public int checkapply(){
+        return Integer.parseInt(requestInput("Are you sure to apply to be a speaker? If not, enter -1"));
+    }
+
+    public String whyapply(){
+        return requestInput("Please Enter Why You Apply.\n " +
+                "(End editing by typing a single \"end\" in a new line.)");
+
+    }
+
+    public void appsend(){
+        printText("Your application has send!");
+    }
+
 
     public void announcereply(){printText("Please enter the id of the message " +
             "if you want to reply to.");

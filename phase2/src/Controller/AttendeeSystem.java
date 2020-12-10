@@ -15,10 +15,11 @@ public class AttendeeSystem {
     protected RoomManager roomM;
     protected RequestManager reM;
     protected Attendeesystemhandler ah;
+    protected ApplicationManager appM;
 
     public AttendeeSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
                           StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM,
-                          RequestManager reM) {
+                          RequestManager reM, ApplicationManager appM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -28,6 +29,7 @@ public class AttendeeSystem {
         this.roomM = roomM;
         this.reM = reM;
         this.ah = new Attendeesystemhandler(accM, TalkM, MsgM, attendeeUI, StrategyManager, attendeeM, roomM,reM);
+        this.appM = appM;
     }
 
     /**
@@ -37,9 +39,9 @@ public class AttendeeSystem {
         int userChoice;
         do {
             attendeeUI.startup();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(6), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
-        } while (userChoice != 3);
+        } while (userChoice != 4);
     }
 
     //Helper methods:
@@ -50,6 +52,31 @@ public class AttendeeSystem {
                 break;
             case 2:
                 MsgDashboard();
+                break;
+            case 3:
+                appDashboard();
+                break;
+            case 4:
+                break;
+        }
+    }
+
+    private void appDashboard() {
+        int userChoice;
+        do{
+            attendeeUI.appmain();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
+            AppOp(userChoice);
+        } while (userChoice != 3);
+    }
+
+    private void AppOp(int userChoice){
+        switch (userChoice){
+            case 1:
+                myapp();
+                break;
+            case 2:
+                newapp();
                 break;
             case 3:
                 break;
@@ -359,6 +386,32 @@ public class AttendeeSystem {
 
         }while(tmsgid != -1);
     }
+
+    //////////////////////APPLICATION
+    private void myapp(){
+        Integer a = accM.getmyapp();
+        String b;
+        if(a == -1){
+            b = "You don't have any processing application";
+        }
+        else {
+            b = appM.formatInfoToAttendee(a);
+        }
+        attendeeUI.show(b);
+        attendeeUI.askForBack();
+    }
+
+    private void newapp(){
+        int input = attendeeUI.checkapply();
+        if (input != -1){
+            String text = attendeeUI.whyapply();
+            appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
+            attendeeUI.appsend();
+            attendeeUI.askForBack();
+
+        }}
+
+    ///////////////////////
 
 }
 

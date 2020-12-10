@@ -32,7 +32,7 @@ public class VipUI extends Presenter{
     }
 
     public void appmain() {
-        printText("----------------VIPSystem-----------------\n" +
+        printText("----------------Application-----------------\n" +
                 "\n1 -> My Application\n2 -> Apply for Speaker \n3 -> Go back");
     }
 

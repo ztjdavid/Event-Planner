@@ -117,7 +117,6 @@ public class AttendeeManager extends AccountManager{
          ArrayList<Integer> inbox = getCurrAccount().getUnreadInbox();
          inbox.remove(Integer.valueOf(msgid));
 
-         //TODO:
          try{
              this.gateWay.updateInbox(getCurrAccountId(), getCurrAttendee().getInbox());
          }catch (IOException ignored){}

@@ -77,7 +77,7 @@ public class AppSystem {
         this.strategyM = new StrategyManager();
         this.signInS = new SignInSystem(accM, signInP);
         this.signUpS = new SignUpSystem(accM, signUpP, strategyM);
-        this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM);
+        this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM, appM);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM, rqstM);
         this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
         this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM, appM);
