@@ -603,6 +603,7 @@ public class OrganizerSystemHandler {
         for (int item : requestIDs){
             a.append("Request ID:").append(item).append("\n");
             a.append(rqstM.getRequestInfo(item));
+            a.append("\n");
         }
         organizerPresenter.show(a.toString());
         organizerPresenter.askForBack();
