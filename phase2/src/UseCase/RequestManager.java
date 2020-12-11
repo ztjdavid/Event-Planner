@@ -19,6 +19,12 @@ public class RequestManager {
         this.gateWay = g;
     }
 
+    /**
+     * Create request
+     * @param service service the user want to get in the event
+     * @param senderid sender id
+     * @param talkid talk id
+     */
     public void createRequest(String service, int senderid, int talkid){
         try{
             this.gateWay.writeNewRequest(totalRequestCount, service, senderid, talkid);
@@ -26,10 +32,22 @@ public class RequestManager {
         createHelper(service, senderid, talkid);
     }
 
+    /**
+     * Used in gateway to scan a new request
+     * @param service service the user want to get in the event
+     * @param senderid sender id
+     * @param talkid talk id
+     */
     public void scanInRequest(String service, int senderid, int talkid){
         createHelper(service, senderid, talkid);
     }
 
+    /**
+     * Helper to create a request
+     * @param service service the user want to get in the event
+     * @param senderid sender id
+     * @param talkid talk id
+     */
     private void createHelper(String service, int senderid, int talkid) {
         int requestid = totalRequestCount;
         Request newRequest = new Request(requestid, service, senderid, talkid);
