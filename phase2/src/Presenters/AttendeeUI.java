@@ -72,14 +72,25 @@ public class AttendeeUI extends Presenter{
 
     public void msgSelect(){
         printText("----------------Message Interface-----------------\nHi, " +
-                "Would you like to\n1 -> Send Message to a attendee\n2 -> Send a message to the speaker of a talk\n" +
-                "3 -> View your inbox\n" +
-                "4 -> Read your replies and send message to repliers\n" +
-                "5 -> Read your messages and reply to senders\n" +
-                "6 -> Read all of unread messages \n" +
-                "7 -> Read all of Archived Messages" +
-                "8 -> Go back");
+                "Would you like to\n1 -> Read Message\n2 -> Send and Reply message\n" +
+                "3 -> Go back\n");
     }
+
+    public void messaging(){
+        printText("----------------Message Interface-----------------\nHi, " +
+                "Would you like to\n1 -> Send Message to a attendee\n2 -> Send a message to the speaker of a talk\n" +
+                "3 -> Read your replies and send message to repliers\n" +
+                "4 -> Read your messages and reply to senders\n" +
+                "5 -> Go Back");
+    }
+
+    public void reading(){
+        printText("----------------Message Interface-----------------\nHi, " +
+                "Would you like to\n1 -> Read all your messages and mark them\n2 -> Read all unread messages\n" +
+                "3 -> Read all archived messages\n" +
+                "4 -> Go Back");
+    }
+
 
     public void eventselect(){
         printText("----------------Event Interface-----------------\nHi, " +

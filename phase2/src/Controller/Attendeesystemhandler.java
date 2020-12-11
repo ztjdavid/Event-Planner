@@ -221,24 +221,19 @@ public class Attendeesystemhandler {
         }while(!valid);
         return Integer.parseInt(userInput);
     }
-///////Grey modify
-    private ArrayList<Integer> getAllUnread() {
-        ArrayList<Integer> unread = accM.getUnreadInboxWithId(accM.getCurrAccountId());
-        return unread;
-}
 
-    protected void readAllUnreadMsg(){
+    public void readAllUnreadMsg(){
         readAllUnread();
         attUI.annouceUnread();
-
     }
 
     private void readAllUnread(){
-        String all = MsgM.formatAllUnread(getAllUnread());
+
+        String all = MsgM.formatmsgget(accM.getUnreadInboxWithId(accM.getCurrAccountId()));
         attUI.show(all);
     }
 
-    protected int targetunread(){
+    public int targetunread(){
         ArrayList<Integer> validChoices = accM.getUnreadInboxWithId(accM.getCurrAccountId());
         validChoices.add(-1);
         String userInput;
@@ -251,6 +246,33 @@ public class Attendeesystemhandler {
         }while(!valid);
         return Integer.parseInt(userInput);
     }
+
+    public void readAllarchivedMsg(){
+        readallarchived();
+        attUI.annouceUnread();
+
+    }
+
+    private void readallarchived(){
+
+        String all = MsgM.formatmsgget(accM.getarchivedboxWithId(accM.getCurrAccountId()));
+        attUI.show(all);
+    }
+
+    public int targetarchived(){
+        ArrayList<Integer> validChoices = accM.getarchivedboxWithId(accM.getCurrAccountId());
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = attUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
 
     protected ArrayList<Integer> getChoiceList(int size){
         int i = 0;
@@ -265,28 +287,21 @@ public class Attendeesystemhandler {
     }
 
     protected void askToAchieve(int msgId){
-        int userInput = attUI.chooseOption(getChoiceList(3), "Would you like to:" +
+        int userInput = attUI.chooseOption(attUI.getchoicelist(1), "Would you like to:" +
                 "\n1 -> Mark as Unread" +
                 "\n2 -> Move to Archive" +
-                "\n3 -> Delete Message", "Invalid Choice, Please Try Again:");
+                "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
         if(userInput == 1){
-            msgM.setAsUnread(msgId);
             attUI.annouceMarkUnread();
+            attM.addMsgToUnreadInbox(accM.getCurrAccountId(), msgId);
         } else if(userInput == 2){
             accM.archiveMsg(msgId, accM.getCurrAccountId());
             attUI.archiveMsg();
         }else if(userInput == 3){
-            accM.deleteMsg(msgId, accM.getCurrAccountId());
+            attM.deleteMsg(msgId, accM.getCurrAccountId());
             attUI.deleteMsg();
         }
         attUI.askForBack();}
-
-    protected  void readArchived(){
-        ArrayList<Integer> arrayList = new ArrayList<>(accM.getArchive());
-        String a = MsgM.formatmsgget(arrayList);
-        attUI.show(a);
-        attUI.askForBack();
-    }
 
     protected void readAllMsg() {
 
