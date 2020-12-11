@@ -100,6 +100,14 @@ public class AttendeeManager extends AccountManager{
      */
     public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentBox();}
 
+    /**
+     * Set information of the account
+     * @param id Id of the attendee
+     * @param inbox inbox
+     * @param sentBox sent box
+     * @param eventList event list
+     * @param unreadInbox unread inbox
+     */
     public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
                            ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox){
         Attendee acc = (Attendee) getAccountWithId(id);

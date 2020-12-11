@@ -99,6 +99,14 @@ public class SpeakerManager extends AccountManager {
         return new ArrayList<>(speaker.getTalkList());
     }
 
+    /**
+     * Set information of the account
+     * @param id Id of the speaker
+     * @param inbox inbox
+     * @param sentBox sent box
+     * @param eventList event list
+     * @param unreadInbox unread inbox
+     */
     public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
                            ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox){
         Speaker acc = (Speaker) getAccountWithId(id);
@@ -108,6 +116,10 @@ public class SpeakerManager extends AccountManager {
         acc.setUnreadInbox(unreadInbox);
     }
 
+    /**
+     * Get the IDs of the unread messages for the current speaker
+     * @return ArrayList of IDs of unread messages
+     */
     public ArrayList<Integer> getUnread(){return getCurrSpeaker().getUnreadInbox();}
 }
 
