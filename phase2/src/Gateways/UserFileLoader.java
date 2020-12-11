@@ -39,6 +39,7 @@ public class UserFileLoader{
             ArrayList<Integer> inBox = gH.listDecoder(iniFile.get(id, "Inbox"));
             ArrayList<Integer> sentBox = gH.listDecoder(iniFile.get(id, "SentBox"));
             ArrayList<Integer> unreadInbox = gH.listDecoder(iniFile.get(id, "UnreadInbox"));
+            ArrayList<Integer> archiveInbox = gH.listDecoder(iniFile.get(id, "ArchiveBox"));
             switch (userType){
                 case 1:
                     loadAttendee(id, userName, passW, inBox, sentBox, unreadInbox);

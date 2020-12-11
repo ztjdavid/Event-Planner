@@ -1,6 +1,5 @@
 package UseCase;
 import Entity.*;
-import UseCase.IGateWay.IMsgGateWay;
 import UseCase.IGateWay.IUserGateWay;
 
 import java.io.IOException;
@@ -75,7 +74,7 @@ public class SpeakerManager extends AccountManager {
      * Get the messages that the current speaker got.
      * @return A list of message ids.
      */
-    public ArrayList<Integer> getmsgsend(){return getCurrSpeaker().getSentMessage();}
+    public ArrayList<Integer> getmsgsend(){return getCurrSpeaker().getSentBox();}
 
 
 

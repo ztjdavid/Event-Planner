@@ -32,7 +32,6 @@ public class MsgFileWriter implements IMsgGateWay{
         iniFile.put(ID, "SenderId", senderId);
         iniFile.put(ID, "SenderName", senderName);
         iniFile.put(ID, "GetterId", getterId);
-        iniFile.put(ID, "HaveRead", false);
         iniFile.put(ID, "TXT", txt);
         iniFile.store();
     }
@@ -96,20 +95,4 @@ public class MsgFileWriter implements IMsgGateWay{
         iniFile.put(msgID, "GetterId", getterId);
         iniFile.store();
     }
-
-    /**
-     * Update key "HaveRead" in given section(id).
-     * @param msgId id
-     * @param haveRead if this message has been read
-     * @throws IOException
-     */
-    public void updateReadStatus(int msgId, boolean haveRead)throws IOException{
-        String msgID = String.valueOf(msgId);
-        iniFile.put(msgID, "HaveRead", haveRead);
-        iniFile.store();
-    }
-
-
-
-
 }

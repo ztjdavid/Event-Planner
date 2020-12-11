@@ -113,7 +113,7 @@ public class OrganizerManager extends AccountManager{
      * Get the current Organizer's sent messages.
      * @return an arraylist representation of the current Organizer's sent messages.
      */
-    public ArrayList<Integer> getMsgSend(){return getCurrOrganizer().getSentMessage();}
+    public ArrayList<Integer> getMsgSend(){return getCurrOrganizer().getSentBox();}
 
     /**
      * Get all message IDs received by the current Organizer.

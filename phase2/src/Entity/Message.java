@@ -12,7 +12,6 @@ public class Message {
     private int senderid;
     private int getterid;
     private String sendername;
-    private boolean haveRead;
 
     public Message(String sendername, int messageid, int senderid, int getterid, String txt){
         this.messageid = messageid;
@@ -22,7 +21,6 @@ public class Message {
         this.replyId = -1;
         this.sendername = sendername;
         this.replyer = "";
-        this.haveRead = false; // unread by default
     }
 
     /**
@@ -71,30 +69,4 @@ public class Message {
      * @return a string replier name
      */
      public String getReplyer(){return this.replyer;}
-
-     ///// Louisa added
-
-    /**
-     * Get to know whether the message has bean read
-     * @return A boolean: true -> have read; false -> haven't read
-     */
-     public boolean getReadStatus(){return this.haveRead;}
-
-    /**
-     * Set the read status to be true (have read)
-     */
-    public void setReadStatusRead(){this.haveRead = true;}
-
-    /**
-     * Set the read status to be false (haven't read)
-     */
-     public void setReadStatusUnread(){this.haveRead = false;}
-
-    //// Gare_TH added. Used in Gateway.
-
-    /**
-     * Set the read status, used in Gateway
-     * @param status true or false
-     */
-    public void setReadStatus(boolean status){this.haveRead = status;}
 }

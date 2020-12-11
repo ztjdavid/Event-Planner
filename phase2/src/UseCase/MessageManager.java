@@ -124,21 +124,6 @@ public class MessageManager {
         return a;
     }
 
-    ///// Louisa added
-    public boolean checkMessageStatus(int messageId){return getmessage(messageId).getReadStatus();}
-
-    public void readMessage(int messageId){
-        getmessage(messageId).setReadStatusRead();
-        try{
-            this.gateWay.updateReadStatus(messageId, true);
-        }catch (IOException ignored){}
-    }
-
-    public void setAsUnread(int messageId){getmessage(messageId).setReadStatusUnread();
-        try{
-            this.gateWay.updateReadStatus(messageId, false);
-        }catch (IOException ignored){}}
-
     public String formatAllUnread(ArrayList<Integer> unread){
         StringBuilder a = new StringBuilder("These are the unread messages:\n");
         for(Integer i: unread){
@@ -171,17 +156,12 @@ public class MessageManager {
         return message.getReplyer();
     }
 
-    public void removeMessage(int messageID){
-        allmessage.remove(messageID);
-    }
-
     public int getTotalNumOfMsg(){ return allmessage.size();}
 
-    public void setMsgInfo(int msgId, int replyId, String replier, boolean haveRead){
+    public void setMsgInfo(int msgId, int replyId, String replier){
         Message msg = getmessage(msgId);
         msg.setReply(replyId);
         msg.setReplyer(replier);
-        msg.setReadStatus(haveRead);
     }
 }
 

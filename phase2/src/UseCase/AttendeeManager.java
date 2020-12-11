@@ -98,7 +98,7 @@ public class AttendeeManager extends AccountManager{
      * Get the ids of messages send from the current account
      * @return a Arraylist of integer, which contain the ids of the messages that current account send.
      */
-    public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentMessage();}
+    public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentBox();}
 
     public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
                            ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox){

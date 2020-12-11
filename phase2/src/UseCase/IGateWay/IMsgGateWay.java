@@ -9,5 +9,4 @@ public interface IMsgGateWay {
     public void updateSenderId(int msgId, int senderId)throws IOException;
     public void updateSenderName(int msgId, String senderName)throws IOException;
     public void updateGetterId(int msgId, int getterId)throws IOException;
-    public void updateReadStatus(int msgId, boolean haveRead)throws IOException;
 }

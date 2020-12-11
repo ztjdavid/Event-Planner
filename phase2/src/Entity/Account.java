@@ -1,5 +1,4 @@
 package Entity;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -10,9 +9,10 @@ public abstract class Account {
     protected String username;
     protected String password;
     protected final int userId;
-    protected ArrayList<Integer> sentMessage;
+    protected ArrayList<Integer> sentBox;
     protected ArrayList<Integer> inbox;
     protected ArrayList<Integer> unreadInbox;
+    protected ArrayList<Integer> archiveBox;
     protected Integer application;
 
 
@@ -20,9 +20,10 @@ public abstract class Account {
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.sentMessage = new ArrayList<>();
+        this.sentBox = new ArrayList<>();
         this.inbox = new ArrayList<>();
         this.unreadInbox = new ArrayList<>();
+        this.archiveBox = new ArrayList<>();
         this.application = -1;
     }
 
@@ -84,9 +85,17 @@ public abstract class Account {
      * Get all message IDs sent by this account.
      * @return A copy of SentMessage containing message IDs.
      */
-    public ArrayList<Integer> getSentMessage(){
-        return new ArrayList<>(this.sentMessage);
+    public ArrayList<Integer> getSentBox(){
+        return new ArrayList<>(this.sentBox);
     }
+
+    public ArrayList<Integer> getArchiveBox(){return new ArrayList<>(this.archiveBox);}
+
+    public void setArchiveBox(ArrayList<Integer> archiveBox){this.archiveBox = archiveBox;}
+
+    public void addArchiveBox(int msgId) {this.archiveBox.add(msgId);}
+
+    public void removeMsgFromArchiveBox(int msgId) {if(this.archiveBox.contains(msgId)) this.archiveBox.add(msgId);}
 
     /**
      * Add new message sent by this account.
@@ -94,8 +103,8 @@ public abstract class Account {
      * <b>NOTICE: This method is not responsible for checking correctness of the input.</b>
      * @param mesID ID of new message sent by this account.
      */
-    public void addSentMessage(int mesID){
-        if (this.sentMessage.contains(mesID)) this.sentMessage.add(mesID);
+    public void addSentBox(int mesID){
+        if (this.sentBox.contains(mesID)) this.sentBox.add(mesID);
     }
 
     /**
@@ -126,7 +135,7 @@ public abstract class Account {
      * Set the message sent by this account.
      * @param sentBox An Arraylist of IDs of the messages sent.
      */
-    public void setSentBox(ArrayList<Integer> sentBox) { this.sentMessage = sentBox;}
+    public void setSentBox(ArrayList<Integer> sentBox) { this.sentBox = sentBox;}
 
     ///// Louisa Added
 

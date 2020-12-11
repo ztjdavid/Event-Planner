@@ -157,9 +157,9 @@ public class AccountManager {
     }
 
     public void addMsgToSentBox(int senderid, int msgid){
-        getAccountWithId(senderid).addSentMessage(msgid);
+        getAccountWithId(senderid).addSentBox(msgid);
         try{
-            this.gateWay.updateSentBox(senderid, getCurrAccount().getSentMessage());
+            this.gateWay.updateSentBox(senderid, getCurrAccount().getSentBox());
         }catch (IOException ignored){}
     }
 
@@ -170,15 +170,23 @@ public class AccountManager {
         }catch (IOException ignored){}
     }
 
+    public void addMsgToArchiveBox(int accId, int msgId){
+        getAccountWithId(accId).addArchiveBox(msgId);
+        try{
+            this.gateWay.updateArchiveBox(accId, getCurrAccount().getArchiveBox());
+        }catch (IOException ignored){}
+    }
+
 
     public void deleteMsg(int msgId, int accId){
         Account acc = getAccountWithId(accId);
         acc.removeMsgFromInbox(msgId);
         acc.removeMsgFromUnreadInbox(msgId);
-
+        acc.removeMsgFromArchiveBox(msgId);
         try {
             this.gateWay.updateInbox(accId, acc.getInbox());
             this.gateWay.updateInbox(accId, acc.getUnreadInbox());
+            this.gateWay.updateArchiveBox(accId, acc.getArchiveBox());
         }catch (IOException ignored){}
     }
     /**
@@ -225,13 +233,35 @@ public class AccountManager {
      */
     public void archiveMsg(int msgId, int accId){
         Account acc =  getAccountWithId(accId);
+        acc.removeMsgFromInbox(msgId);
+        acc.addArchiveBox(msgId);
+
+        try {
+            this.gateWay.updateInbox(accId, acc.getInbox());
+            this.gateWay.updateArchiveBox(accId, acc.getArchiveBox());
+        }catch (IOException ignored){}
+    }
+
+    public void markAsRead(int accId, int msgId){
+        Account acc = getAccountWithId(accId);
         acc.removeMsgFromUnreadInbox(msgId);
         acc.addInbox(msgId);
 
         try {
             this.gateWay.updateInbox(accId, acc.getInbox());
-            this.gateWay.updateInbox(accId, acc.getUnreadInbox());
-        }catch (IOException ignored){}
+            this.gateWay.updateUnreadInbox(accId, acc.getUnreadInbox());
+        }catch(IOException ignored){}
+    }
+
+    public void markAsUnread(int accId, int msgId){
+        Account acc = getAccountWithId(accId);
+        acc.removeMsgFromInbox(msgId);
+        acc.addUnreadInbox(msgId);
+
+        try {
+            this.gateWay.updateInbox(accId, acc.getInbox());
+            this.gateWay.updateUnreadInbox(accId, acc.getUnreadInbox());
+        }catch(IOException ignored){}
     }
 
     public int getmyapp(){return getCurrAccount().getapplication();}
