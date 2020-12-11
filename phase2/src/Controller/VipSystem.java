@@ -430,7 +430,7 @@ public class VipSystem {
 
     private void messageToSphelper(String a, int speakerId) {
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), speakerId, a);
-        accM.addMsgToInBox(speakerId, msg);
+        accM.addMsgToUnreadInbox(speakerId, msg);
         accM.addMsgToSentBox(accM.getCurrAccountId(), msg);
         vipUI.messagesend();
     }

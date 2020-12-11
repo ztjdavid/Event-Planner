@@ -42,6 +42,7 @@ Instructions:
 4. When you type in a message, if you want to finish typing, please type "end" in a new line.
 5. Please try to avoid creating new things without creating its key parameters. For example, if you want to create a talk
 in room 3, please ensure that room 3 exists.
+6. If you want to read replies from other users, you should enter messaging system and go to send message page to se existing conversation.
 
 Here are the instructions of different system:
 
