@@ -61,12 +61,8 @@ public class VipUI extends Presenter{
 
     public void msgSelect(){
         printText("----------------Message Interface-----------------\nHi, " +
-                "Would you like to\n1 -> Send Message to a attendee\n2 -> Send a message to the speaker of a talk\n" +
-                "3 -> View your inbox\n" +
-                "4 -> Read your replies and send message to repliers\n" +
-                "5 -> Read your messages and reply to senders\n" +
-                "6 -> Read your unread messages and mark those as read\n" +
-                "7 -> Go Back");
+                "Would you like to\n1 -> Read Message\n2 -> Send and Reply message\n" +
+                "3 -> Go back\n");
     }
 
     public void messaging(){

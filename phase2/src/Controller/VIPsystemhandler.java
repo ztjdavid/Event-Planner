@@ -207,7 +207,6 @@ public class VIPsystemhandler {
     public void readAllUnreadMsg(){
         readAllUnread();
         vipUI.annouceUnread();
-
     }
 
     private void readAllUnread(){

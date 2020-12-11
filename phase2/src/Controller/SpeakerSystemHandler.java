@@ -1,7 +1,5 @@
 package Controller;
 
-import Entity.Message;
-import Entity.Speaker;
 import Presenters.SpeakerUI;
 import UseCase.*;
 
@@ -33,32 +31,6 @@ public class SpeakerSystemHandler {
     }
 
     //////////////////CHOOSING METHOD//////////////
-    public int chooseMode1(){    //For Speaker Dashboard.
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3));
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = speakerUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
-    public int chooseMode2(){    // For messaging dashboard.
-        boolean valid = false;
-        String userInput;
-        ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
-        do{
-            userInput = speakerUI.getrequest(1);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
-
     public int chooseMode3(){    // For MessageAll confirmation.
         boolean valid = false;
         String userInput;
@@ -127,13 +99,6 @@ public class SpeakerSystemHandler {
 
     //////////////////////MESSAGING SYSTEM/////////////////////////
 
-    protected  void readArchived(){
-        ArrayList<Integer> arrayList = new ArrayList<>(accM.getArchive());
-        String a = MsgM.formatmsgget(arrayList);
-        speakerUI.show(a);
-        speakerUI.askForBack();
-    }
-
 
     public void readallatt(){
         ArrayList<Integer> att = getallattendeev1();
@@ -167,8 +132,8 @@ public class SpeakerSystemHandler {
     public void messagetoatt(String a, int getterid) {
 
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterid, a);
-        accM.addinbox(getterid, msg);
-        accM.addsend(accM.getCurrAccountId(), msg);
+        accM.addMsgToInBox(getterid, msg);
+        accM.addMsgToSentBox(accM.getCurrAccountId(), msg);
         speakerUI.messagesend();
     }
 
@@ -231,31 +196,73 @@ public class SpeakerSystemHandler {
 
 
     /////////////////UNREAD HELPER////////////////
-
-    public ArrayList<Integer> getAllUnread(int speakerId) {
-        Speaker acc = (Speaker) SpeakerM.getAccountWithId(speakerId);
-        ArrayList<Integer> inbox = acc.getInbox();
-        ArrayList<Integer> unread = new ArrayList<>();
-        for (Integer i : inbox) {
-            Message msg = MsgM.getmessage(i);
-            if (!msg.getReadStatus()) {
-                unread.add(msg.getmessageid());
-            }
+    protected void askToAchieve(int msgId){
+        int userInput = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Would you like to:" +
+                "\n1 -> Mark as Unread" +
+                "\n2 -> Move to Archive" +
+                "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
+        if(userInput == 1){
+            speakerUI.annouceMarkUnread();
+            SpeakerM.addMsgToUnreadInbox(accM.getCurrAccountId(), msgId);
+        } else if(userInput == 2){
+            SpeakerM.archiveMsg(msgId, accM.getCurrAccountId());
+            speakerUI.archiveMsg();
+        }else if(userInput == 3){
+            SpeakerM.deleteMsg(msgId, accM.getCurrAccountId());
+            speakerUI.deleteMsg();
         }
-        return unread;
+        speakerUI.askForBack();}
+
+    public void readAllUnreadMsg(){
+        readAllUnread();
+        speakerUI.annouceUnread();
     }
 
-    public ArrayList<Integer> getAllRead(int speakerId) {
-        Speaker acc = (Speaker) SpeakerM.getAccountWithId(speakerId);
-        ArrayList<Integer> inbox = acc.getInbox();
-        ArrayList<Integer> read = new ArrayList<>();
-        for (Integer i : inbox) {
-            Message msg = MsgM.getmessage(i);
-            if (!msg.getReadStatus()) {
-                read.add(msg.getmessageid());
-            }
-        }
-        return read;
+    private void readAllUnread(){
+
+        String all = MsgM.formatmsgget(accM.getUnreadInboxWithId(accM.getCurrAccountId()));
+        speakerUI.show(all);
     }
+
+    public int targetunread(){
+        ArrayList<Integer> validChoices = accM.getUnreadInboxWithId(accM.getCurrAccountId());
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = speakerUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                speakerUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+    public void readAllarchivedMsg(){
+        readallarchived();
+        speakerUI.annouceUnread();
+
+    }
+
+    private void readallarchived(){
+
+        String all = MsgM.formatmsgget(accM.getarchivedboxWithId(accM.getCurrAccountId()));
+        speakerUI.show(all);
+    }
+
+    public int targetarchived(){
+        ArrayList<Integer> validChoices = accM.getarchivedboxWithId(accM.getCurrAccountId());
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = speakerUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                speakerUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
 
 }

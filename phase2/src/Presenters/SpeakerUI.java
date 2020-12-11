@@ -39,9 +39,14 @@ public class SpeakerUI extends Presenter{
                             "3 -> Message all attendees who register your events\n" +
                             "4 -> Read your replies and send message to repliers\n" +
                             "5 -> Read your messages and reply to senders\n"+
-                            "6 -> Read all unread message.\n"+
-                "7 -> Read all of Archived Messages\n"+
-                "8 -> Go back.");
+                "6 -> Go back.");
+    }
+
+    public void reading(){
+        printText("----------------Message Interface-----------------\nHi, " +
+                "Would you like to\n1 -> Read all your messages and mark them\n2 -> Read all unread messages\n" +
+                "3 -> Read all archived messages\n" +
+                "4 -> Go Back");
     }
 
     public void eventdb(){
@@ -116,9 +121,22 @@ public class SpeakerUI extends Presenter{
             return b;}
         else if(a == 2){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
             return b;}
+        else if(a == 3){ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+            return b;}
         else{ArrayList<Integer> b = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
             return b;}
     }
+    public void annouceMarkUnread(){printText("Message Successfully Marked as Unread.");}
+    public void archiveMsg(){ printText("Message Successfully Archived."); }
+    public void deleteMsg(){ printText("Message Successfully Deleted."); }
+    public void announceEmptyInbox(){ printText("There is No Message in Your Inbox."); }
+
+    public void messagemain(){
+        printText("----------------Message Interface-----------------\nHi, " +
+                "Would you like to\n1 -> Read Message\n2 -> Send and Reply message\n" +
+                "3 -> Go back\n");
+    }
+
 
 
 }
