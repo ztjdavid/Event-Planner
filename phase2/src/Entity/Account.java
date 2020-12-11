@@ -105,7 +105,7 @@ public abstract class Account {
      * @param mesID ID of new message sent by this account.
      */
     public void addSentBox(int mesID){
-        if (this.sentBox.contains(mesID)) this.sentBox.add(mesID);
+        this.sentBox.add(mesID);
     }
 
     /**
@@ -123,7 +123,7 @@ public abstract class Account {
      * @param mesID ID of new message received by this account.
      */
     public void addInbox(int mesID){
-        if(this.inbox.contains(mesID)) this.inbox.add(mesID);
+        this.inbox.add(mesID);
     }
 
     /**
@@ -157,7 +157,7 @@ public abstract class Account {
      * @param unreadId The ID of the unread message.
      */
     public void addUnreadInbox(int unreadId){
-        if(this.unreadInbox.contains(unreadId)) this.unreadInbox.add(unreadId);
+        this.unreadInbox.add(unreadId);
     }
     /////
 
