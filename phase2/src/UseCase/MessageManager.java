@@ -172,6 +172,11 @@ public class MessageManager {
         msg.setReply(replyId);
         msg.setReplyer(replier);
     }
+
+    public int getSender(int messageID){
+        Message msg = getmessage(messageID);
+        return msg.getSenderid();
+    }
 }
 
 
