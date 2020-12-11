@@ -90,10 +90,11 @@ public class OrganizerPresenter extends Presenter{
                 "\n2 -> Message to one speaker" +
                 "\n3 -> Message to all of the attendees" +
                 "\n4 -> Message to all speakers" +
-                "\n5 -> Read all of Unread Replies" +
+                "\n5 -> Read Inbox" +
                 "\n6 -> Send message to repliers" +
                 "\n7 -> Read all of Archived Messages"+
-                "\n8 -> Go Back");
+                "\n8 -> Read Unread Inbox" +
+                "\n9 -> Go Back");
     }
 
     public void messaging2(){
@@ -424,5 +425,8 @@ public class OrganizerPresenter extends Presenter{
     public void message28(int ID){
         printText("The Application Has been Successfully Marked as Approved!\n New Speaker ID:" + ID);
     }
+
+    public void message29(int messageId){printText("Your message with id: " + messageId +
+            " has been successfully read!");}
 
 }

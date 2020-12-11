@@ -233,10 +233,10 @@ public class OrganizerSystem {
         int userInput;
         do {
             organizerPresenter.messaging();
-            userInput = organizerPresenter.chooseOption(oh.getChoiceList(8),
+            userInput = organizerPresenter.chooseOption(oh.getChoiceList(9),
                     "Please Choose a Option:", "Invalid Choice! Please Try Again:");
             messageOp(userInput);
-        } while (userInput != 8);
+        } while (userInput != 9);
     }
 
     private void messageOp(int userInput) {
@@ -263,6 +263,9 @@ public class OrganizerSystem {
                 oh.readArchivedMsg();
                 break;
             case 8:
+                oh.readUnreadMsg();
+                break;
+            case 9:
                 break;
         }
     }
