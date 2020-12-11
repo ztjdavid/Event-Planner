@@ -108,12 +108,14 @@ public class SpeakerManager extends AccountManager {
      * @param unreadInbox unread inbox
      */
     public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
-                           ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox){
+                           ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox,
+                           ArrayList<Integer> archiveInbox){
         Speaker acc = (Speaker) getAccountWithId(id);
         acc.setInbox(inbox);
         acc.setSentBox(sentBox);
         acc.setEventList(eventList);
         acc.setUnreadInbox(unreadInbox);
+        acc.setArchiveBox(archiveInbox);
     }
 
     /**

@@ -130,11 +130,13 @@ public class OrganizerManager extends AccountManager{
      * @param sentBox sent box
      * @param unreadInbox unread inbox
      */
-    public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox){
+    public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
+                           ArrayList<Integer> unreadInbox, ArrayList<Integer> archiveInbox){
         Organizer acc = (Organizer) getAccountWithId(id);
         acc.setInbox(inbox);
         acc.setSentBox(sentBox);
         acc.setUnreadInbox(unreadInbox);
+        acc.setArchiveBox(archiveInbox);
     }
 
     /**
