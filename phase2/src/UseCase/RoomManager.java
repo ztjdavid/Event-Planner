@@ -28,10 +28,22 @@ public class RoomManager {
         return createHelper(roomName, roomCapacity);
     }
 
+    /**
+     * Used in gateway to scan a new room
+     * @param roomName room name
+     * @param roomCapacity room capacity
+     * @return The ID of the room
+     */
     public int scanInRoom(String roomName, int roomCapacity){
         return createHelper(roomName, roomCapacity);
     }
 
+    /**
+     * Helper to create a room
+     * @param roomName room name
+     * @param roomCapacity room capacity
+     * @return The ID of the room
+     */
     private int createHelper(String roomName, int roomCapacity) {
         int ID = totalRoomCount;
         Room room = new Room(roomName, ID, roomCapacity);
@@ -132,6 +144,11 @@ public class RoomManager {
         return room.getRoomCapacity() >= eventCapacity;
     }
 
+    /**
+     * Set information for the room
+     * @param id id of the room
+     * @param timetable timetable of the room
+     */
     public void setRoomInfo(int id, HashMap<Integer, Integer> timetable){
         Room r = getRoomWithID(id);
         r.setTimetable(timetable);

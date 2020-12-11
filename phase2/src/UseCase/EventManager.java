@@ -131,10 +131,10 @@ public class EventManager {
     }
 
     /**
-     * Return an ArrayList of all the Talks.
-     * @return An ArrayList containing all the Talks.
+     * Return an ArrayList of all the Events that belongs to a type.
+     * @param type the type of the events as int
+     * @return An ArrayList containing all the Events that belongs to the specified type.
      */
-
     public ArrayList<Integer> getListOfEventsByType(int type){
         ArrayList<Event> events = new ArrayList<>(this.eventList.values());
         ArrayList<Integer> talks = new ArrayList<>();
@@ -146,6 +146,10 @@ public class EventManager {
         return talks;
     }
 
+    /**
+     * Return an ArrayList of all the Events.
+     * @return An ArrayList containing all the Events.
+     */
     public ArrayList<Integer> getAllEvents(){
         ArrayList<Integer> events = new ArrayList<>();
         for(Event item : this.eventList.values()){
@@ -163,12 +167,34 @@ public class EventManager {
      *
      */
 
+    /**
+     * Used in gateway to scan a new event.
+     * @param talkTitle talk tile
+     * @param startTime start time
+     * @param roomId room Id
+     * @param speakerID speaker Id
+     * @param eventCapacity event capacity
+     * @param duration duration of the event
+     * @param isVip whether this event is only for VIP
+     * @param id id of the event
+     */
     public void scanInEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
                            int eventCapacity, int duration, boolean isVip, int id){
         createEventHelper(talkTitle, startTime, roomId, speakerID, eventCapacity, duration, isVip, id);
         nextId = id + 1;
     }
 
+    /**
+     * Helper to create a new Event
+     * @param talkTitle talk tile
+     * @param startTime start time
+     * @param roomId room Id
+     * @param speakerID speaker Id
+     * @param eventCapacity event capacity
+     * @param duration duration of the event
+     * @param isVip whether this event is only for VIP
+     * @param id id of the event
+     */
     private void createEventHelper(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
                                    int eventCapacity, int duration, boolean isVip, int id) {
         Event newEvent = new Event(id, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
@@ -176,6 +202,17 @@ public class EventManager {
         totalTalkCount += 1;
     }
 
+    /**
+     * Create Event
+     * @param talkTitle talk tile
+     * @param startTime start time
+     * @param roomId room Id
+     * @param speakerID speaker Id
+     * @param eventCapacity event capacity
+     * @param duration duration of the event
+     * @param isVip whether this event is only for VIP
+     * @return int id of the created event
+     */
     public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,
                            int eventCapacity, int duration, boolean isVip){
         int id = nextId;
@@ -321,41 +358,77 @@ public class EventManager {
      * @param talkID The ID of the talk.
      * @return an int representation of the room ID
      */
-
     public int getRoomIdWithId(int talkID){
         Event event = this.eventList.get(talkID);
         return event.getRoomId();
     }
 
+    /**
+     * Get the event type of the Event given the talk ID.
+     * @param talkID The ID of the talk.
+     * @return an int representation of the event type
+     */
     public int getEventTypeWithID(int talkID){
         Event event = this.eventList.get(talkID);
         return event.getEventType();
     }
 
+    /**
+     * Get the speakers of the Event given the event ID.
+     * @param eventID The ID of the event.
+     * @return an Arraylist of int representation of the speakers' Id
+     */
     public ArrayList<Integer> getSpeakerOfEvent(int eventID){
         Event event = this.eventList.get(eventID);
         return new ArrayList<>(event.getSpeakerList());
     }
 
+    /**
+     * Get the attendees of the Event given the event ID.
+     * @param eventID The ID of the event.
+     * @return an Arraylist of int representation of the attendees' Id
+     */
     public ArrayList<Integer> getAttendeeOfEvent(int eventID){
         Event event = this.eventList.get(eventID);
         return new ArrayList<>(event.getAttendeeId());
     }
 
+    /**
+     * Check whether the event exists
+     * @param eventID id of the event to check with
+     * @return boolean true iff the event exists
+     */
     public boolean checkEventExists(int eventID){
         return this.eventList.containsKey(eventID);
     }
 
+    /**
+     * Get the duration of the event
+     * @param eventID event id
+     * @return int represents the duration fo the event
+     */
     public int getDuration(int eventID){
         Event event = this.eventList.get(eventID);
         return event.getDuration();
     }
 
+    /**
+     * Check the event is for VIP
+     * @param eventID event id
+     * @return boolean true iff event is for Vip
+     */
     public boolean checkVIP(int eventID){
         Event event = this.eventList.get(eventID);
         return event.getVIP();
     }
 
+    /**
+     * Set information for the event
+     * @param id id of the event
+     * @param attendeeList attendee list
+     * @param remainingSeat number of remaining seat
+     * @param seatsOccupied number od seats that are taken
+     */
     public void setEventInfo(int id, ArrayList<Integer> attendeeList, int remainingSeat, int seatsOccupied){
         Event e = getEventWithId(id);
         e.setAttendeeList(attendeeList);
