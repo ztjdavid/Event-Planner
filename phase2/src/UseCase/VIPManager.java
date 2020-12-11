@@ -51,7 +51,7 @@ public class VIPManager extends AccountManager{
     }
 
     public ArrayList<Integer> getSentBox(int id){
-        return getVIPWithId(id).getSentMessage();
+        return getVIPWithId(id).getSentBox();
     }
 
     public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}

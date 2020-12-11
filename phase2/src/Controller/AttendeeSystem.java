@@ -28,7 +28,7 @@ public class AttendeeSystem {
         this.attendeeM = AttendeeM;
         this.roomM = roomM;
         this.reM = reM;
-        this.ah = new Attendeesystemhandler(accM, TalkM, MsgM, attendeeUI, StrategyManager, attendeeM, roomM,reM);
+        this.ah = new Attendeesystemhandler(MsgM, accM, TalkM, MsgM, attendeeUI, StrategyManager, attendeeM, roomM,reM);
         this.appM = appM;
     }
 
@@ -83,16 +83,7 @@ public class AttendeeSystem {
         }
     }
 
-    private void MsgDashboard(){
-        int userChoice;
-        do{
-            attendeeUI.msgSelect();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
-            msgOp(userChoice);
-        } while (userChoice != 8);
 
-
-    }
     private void EventDashboard(){
         int userChoice;
         do{
@@ -142,8 +133,42 @@ public class AttendeeSystem {
                 break;
         }
     }
-    private void msgOp(int userChoice){
-        switch (userChoice){
+
+    private void MsgDashboard(){
+        int userChoice;
+        do{
+            attendeeUI.msgSelect();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            msgOP1(userChoice);
+        } while (userChoice != 3);
+
+
+    }
+    ////////////////////////////////
+    private void msgOP1(int userChoice) {
+        switch (userChoice) {
+            case 1:
+                read();
+                break;
+            case 2:
+                message();
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    private void message() {
+        int userChoice;
+        do {
+            attendeeUI.messaging();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            messaging(userChoice);
+        } while (userChoice != 5);
+    }
+
+    private void messaging(int userChoice) {
+        switch (userChoice) {
             case 1:
                 msgToAttendee();
                 break;
@@ -151,24 +176,41 @@ public class AttendeeSystem {
                 msgToSpeaker();
                 break;
             case 3:
-                readAllMsg();
-                break;
-            case 4:
                 replytomsg();
                 break;
-            case 5:
+            case 4:
                 msgtoreply();
                 break;
-            case 6:
-                allUnreadMsg();
-                break;
-            case 7:
-                ah.readArchived();
-                break;
-            case 8:
+            case 5:
                 break;
         }
     }
+
+    private void read() {
+        int userChoice;
+        do {
+            attendeeUI.reading();
+            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            reading(userChoice);
+        } while (userChoice != 4);
+    }
+
+    private void reading(int userChoice) {
+        switch (userChoice) {
+            case 1:
+                readAllMsg();
+                break;
+            case 2:
+                allUnreadMsg();
+                break;
+            case 3:
+                readarchived();
+                break;
+            case 4:
+                break;
+        }
+    }
+    //////////////////////////////////
 
     private void MyTalksDashboard(){
         ah.readAllMyTalks();
@@ -196,20 +238,6 @@ public class AttendeeSystem {
         attendeeUI.show(a);
     }
 
-
-    private int targetmsg(){
-        ArrayList<Integer> validChoices = attendeeM.getinbox();
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = attendeeUI.getrequest(2);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                attendeeUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
 
     private void msgtoreply(){
         int tmsgid;
@@ -359,7 +387,8 @@ public class AttendeeSystem {
         }while(tSpeakerId != -1);
     }
 
-    private void readAllMsg(){
+
+    private void readAllMsg() {
 
         int messageID;
         ArrayList<Integer> inbox = attendeeM.getInbox();
@@ -368,40 +397,47 @@ public class AttendeeSystem {
             do {
                 String a = MsgM.formatmsgget(attendeeM.getInbox());
                 attendeeUI.show(a);
-                messageID = targetmsg();
-                if(messageID != -1){
+                messageID = ah.targetmsg();
+                if (messageID != -1) {
                     attendeeUI.show(MsgM.getString(messageID));
+                    attendeeM.markAsRead(accM.getCurrAccountId(), messageID);
                     ah.askToAchieve(messageID);
                 }
-            }while(messageID != -1);
+            } while (messageID != -1);
         } else {
             attendeeUI.announceEmptyInbox();
             attendeeUI.askForBack();
         }
-
-
     }
-
-///Grey modify
-
-    private void allUnreadMsg(){
+    private void allUnreadMsg() {
         int tmsgid;
-        do{
+        do {
             ah.readAllUnreadMsg();
             tmsgid = ah.targetunread();
-            if(tmsgid != -1){
-                MsgM.readMessage(tmsgid);
-                attendeeM.deleteUnreadInbox(tmsgid);
+            if (tmsgid != -1) {
+                attendeeUI.show(MsgM.formatmsg(tmsgid));
+                attendeeM.markAsRead(accM.getCurrAccountId(), tmsgid);
                 attendeeUI.unreadSuccess(tmsgid);
                 attendeeUI.askForBack();
             }
 
-        }while(tmsgid != -1);
+        } while (tmsgid != -1);
     }
 
+    private void readarchived() {
+        int tmsgid;
+        do {
+            ah.readAllarchivedMsg();
+            tmsgid = ah.targetarchived();
+            if (tmsgid != -1) {
+                attendeeUI.show(MsgM.formatmsg(tmsgid));
+                attendeeUI.askForBack();
+            }
+        } while (tmsgid != -1);
+    }
     //////////////////////APPLICATION
     private void myapp(){
-        Integer a = accM.getmyapp();
+        int a = accM.getmyapp();
         String b;
         if(a == -1){
             b = "You don't have any processing application";

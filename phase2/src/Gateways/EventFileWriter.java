@@ -35,7 +35,7 @@ public class EventFileWriter implements IEventGateWay {
         iniFile.put(ID, "TalkTitle", talkTitle);
         iniFile.put(ID, "StartTime", startTime);
         iniFile.put(ID, "RoomId", roomId);
-        iniFile.put(ID, "SpeakerList", speakerList);
+        iniFile.put(ID, "SpeakerList", "");
         iniFile.put(ID, "AttendeeList", "");
         iniFile.put(ID, "RemainingSeat", 2);
         iniFile.put(ID, "EventCapacity", eventCapacity);

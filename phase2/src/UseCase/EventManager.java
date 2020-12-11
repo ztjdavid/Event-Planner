@@ -173,6 +173,7 @@ public class EventManager {
                                    int eventCapacity, int duration, boolean isVip, int id) {
         Event newEvent = new Event(id, talkTitle,startTime, roomId, speakerID, eventCapacity, duration, isVip);
         this.eventList.put(id, newEvent);
+        totalTalkCount += 1;
     }
 
     public int createEvent(String talkTitle, int startTime, int roomId, ArrayList<Integer> speakerID,

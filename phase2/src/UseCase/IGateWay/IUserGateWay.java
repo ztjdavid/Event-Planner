@@ -9,4 +9,5 @@ public interface IUserGateWay {
     public void updateSentBox(int id, ArrayList<Integer> sentBox)throws IOException;
     public void updateEventList(int id, ArrayList<Integer> eList)throws IOException;
     public void updateUnreadInbox(int id, ArrayList<Integer> unreadInbox)throws IOException;
+    public void updateArchiveBox(int id, ArrayList<Integer> archive)throws IOException;
 }

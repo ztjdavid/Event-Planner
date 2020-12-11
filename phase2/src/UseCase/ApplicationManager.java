@@ -14,6 +14,11 @@ public class ApplicationManager {
 
     public ApplicationManager(IApplicationGateWay g){this.gateWay = g;}
 
+    /**
+     * Get the application by its Id
+     * @param id application Id
+     * @return Application the application as wanted
+     */
     public Application getAppWithId(int id) {return this.appList.get(id);}
 
     /**
@@ -94,7 +99,7 @@ public class ApplicationManager {
         Application a = getAppWithId(appId);
         StringBuilder s = new StringBuilder();
         s.append("-------------------------------\n");
-        s.append("Application id: ").append(a.getAppId()).append("\n");
+        s.append("Application id: ").append(appId).append("\n");
         s.append("Applicator id: ").append(a.getApplicatorId()).append("\n");
         s.append("ApplicatorName: ").append(a.getApplicatorName()).append("\n");
         s.append("Description: \n").append(a.getDescription()).append("\n");
@@ -135,15 +140,30 @@ public class ApplicationManager {
         a.setNewPassword(password);
     }
 
+    /**
+     * Helper to create a new Application
+     * @param appId application's Id
+     * @param applicatorId applicator's Id
+     * @param applicatorName applicator's name
+     * @param description description
+     */
     private void createHelper(int appId, int applicatorId, String applicatorName, String description){
         Application a = new Application(appId, applicatorId, applicatorName, description);
         this.appList.put(appId, a);
     }
 
+    /**
+     * Get the list of all application's Id
+     * @return ArrayList of Integer representing the Ids of all applications
+     */
     public ArrayList<Integer> getAppID(){
         return new ArrayList<>(this.appList.keySet());
     }
 
+    /**
+     * Set the status of the given application to disapprove
+     * @param appId the application Id
+     */
     public void disapprove(int appId){
         Application a = getAppWithId(appId);
         a.setApproved(false);

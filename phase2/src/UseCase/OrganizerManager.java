@@ -113,7 +113,7 @@ public class OrganizerManager extends AccountManager{
      * Get the current Organizer's sent messages.
      * @return an arraylist representation of the current Organizer's sent messages.
      */
-    public ArrayList<Integer> getMsgSend(){return getCurrOrganizer().getSentMessage();}
+    public ArrayList<Integer> getMsgSend(){return getCurrOrganizer().getSentBox();}
 
     /**
      * Get all message IDs received by the current Organizer.
@@ -123,6 +123,13 @@ public class OrganizerManager extends AccountManager{
         return new ArrayList<>(getCurrOrganizer().getInbox());
     }
 
+    /**
+     * Set information of the account
+     * @param id Id of the organizer
+     * @param inbox inbox
+     * @param sentBox sent box
+     * @param unreadInbox unread inbox
+     */
     public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox, ArrayList<Integer> unreadInbox){
         Organizer acc = (Organizer) getAccountWithId(id);
         acc.setInbox(inbox);
@@ -130,6 +137,10 @@ public class OrganizerManager extends AccountManager{
         acc.setUnreadInbox(unreadInbox);
     }
 
+    /**
+     * Get the list of Ids of all VIPs from the account list
+     * @return ArrayList that has all VIPs' IDs
+     */
     public ArrayList<Integer> getVIPList(){
         ArrayList<Integer> lst = new ArrayList<>();
         HashMap<Integer, Account> accList = new HashMap<>(getAccountList());
@@ -141,6 +152,10 @@ public class OrganizerManager extends AccountManager{
         return lst;
     }
 
+    /**
+     * Get the IDs of the unread messages for the current organizer
+     * @return ArrayList of IDs of unread messages
+     */
     public ArrayList<Integer> getUnreadInbox(){
         return new ArrayList<>(getCurrOrganizer().getUnreadInbox());
     }

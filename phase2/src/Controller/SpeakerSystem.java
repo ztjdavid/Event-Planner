@@ -127,16 +127,38 @@ public class SpeakerSystem {
     private void MsgDashboard(){
         int userChoice;
         do{
-            speakerUI.messaging();
+            speakerUI.messagemain();
             userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
-            msgOp(userChoice);
+            msgOP1(userChoice);
         } while (userChoice != 8);
 
 
     }
+    ////////////////////
+    private void msgOP1(int userChoice) {
+        switch (userChoice) {
+            case 1:
+                read();
+                break;
+            case 2:
+                message();
+                break;
+            case 3:
+                break;
+        }
+    }
 
-    private void msgOp(int userChoice){
-        switch (userChoice){
+    private void message() {
+        int userChoice;
+        do {
+            speakerUI.messaging();
+            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(3), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            messaging(userChoice);
+        } while (userChoice != 6);
+    }
+
+    private void messaging(int userChoice) {
+        switch (userChoice) {
             case 1:
                 msgToAttendee();
                 break;
@@ -153,15 +175,36 @@ public class SpeakerSystem {
                 msgtoreply();
                 break;
             case 6:
-                allunreadmsg();
-                break;
-            case 7:
-                sh.readArchived();
-                break;
-            case 8:
                 break;
         }
     }
+
+    private void read() {
+        int userChoice;
+        do {
+            speakerUI.reading();
+            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            reading(userChoice);
+        } while (userChoice != 4);
+    }
+
+    private void reading(int userChoice) {
+        switch (userChoice) {
+            case 1:
+                readAllMsg();
+                break;
+            case 2:
+                allUnreadMsg();
+                break;
+            case 3:
+                readarchived();
+                break;
+            case 4:
+                break;
+        }
+    }
+    ////////////////////
+
 
 
     //Methods for doing a specific user operation.
@@ -225,45 +268,56 @@ public class SpeakerSystem {
             }
         }while(tAttendeeId != -1);
     }
+    ///////////////////////////////////
+    private void readAllMsg() {
 
-    ///// Louisa added
-    private void allunreadmsg(){
+        int messageID;
+        ArrayList<Integer> inbox = SpeakerM.getinbox();
+
+        if (inbox.size() != 0) {
+            do {
+                String a = MsgM.formatmsgget(SpeakerM.getinbox());
+                speakerUI.show(a);
+                messageID = sh.targetmsg();
+                if (messageID != -1) {
+                    speakerUI.show(MsgM.getString(messageID));
+                    SpeakerM.markAsRead(accM.getCurrAccountId(), messageID);
+                    sh.askToAchieve(messageID);
+                }
+            } while (messageID != -1);
+        } else {
+            speakerUI.announceEmptyInbox();
+            speakerUI.askForBack();
+        }
+    }
+
+    private void allUnreadMsg() {
         int tmsgid;
-        do{
-            readAllUnreadMsg();
-            tmsgid = targetunread();
-            if(tmsgid != -1){
-                MsgM.readMessage(tmsgid);
+        do {
+            sh.readAllUnreadMsg();
+            tmsgid = sh.targetunread();
+            if (tmsgid != -1) {
+                speakerUI.show(MsgM.formatmsg(tmsgid));
+                SpeakerM.markAsRead(accM.getCurrAccountId(), tmsgid);
                 speakerUI.unreadSuccess(tmsgid);
                 speakerUI.askForBack();
             }
 
-        }while(tmsgid != -1);
+        } while (tmsgid != -1);
     }
 
-    private void readAllUnreadMsg(){
-        readAllUnread();
-        speakerUI.annouceUnread();
-
+    private void readarchived() {
+        int tmsgid;
+        do {
+            sh.readAllarchivedMsg();
+            tmsgid = sh.targetarchived();
+            if (tmsgid != -1) {
+                speakerUI.show(MsgM.formatmsg(tmsgid));
+                speakerUI.askForBack();
+            }
+        } while (tmsgid != -1);
     }
 
-    private void readAllUnread(){
-        String all = MsgM.formatAllUnread(sh.getAllUnread(SpeakerM.getCurrAccountId()));
-        speakerUI.show(all);
-    }
 
-    private int targetunread(){
-        ArrayList<Integer> validChoices = SpeakerM.getUnread();
-        validChoices.add(-1);
-        String userInput;
-        boolean valid = false;
-        do{
-            userInput = speakerUI.getrequest(2);
-            if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
-            else { valid = true; }
-        }while(!valid);
-        return Integer.parseInt(userInput);
-    }
 
 }

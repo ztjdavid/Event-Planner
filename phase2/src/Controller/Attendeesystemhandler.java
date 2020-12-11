@@ -14,9 +14,11 @@ public class Attendeesystemhandler {
     protected AttendeeManager attM;
     protected RoomManager roomM;
     protected RequestManager reM;
+    protected MessageManager msgM;
 
-    public Attendeesystemhandler(AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attUI,
+    public Attendeesystemhandler(MessageManager msgM, AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attUI,
                             StrategyManager StrategyManager, AttendeeManager attM, RoomManager roomM, RequestManager reM) {
+        this.msgM = msgM;
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
@@ -192,16 +194,16 @@ public class Attendeesystemhandler {
 
     public void messageToSp(String a, int speakerId) {
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), speakerId, a);
-        accM.addinbox(speakerId, msg);
-        accM.addsend(accM.getCurrAccountId(), msg);
+        accM.addMsgToUnreadInbox(speakerId, msg);
+        accM.addMsgToSentBox(accM.getCurrAccountId(), msg);
         attUI.messagesend();
     }
 
     public void messageToAtt(String a, int getterId) {
 
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterId, a);
-        accM.addinbox(getterId, msg);
-        accM.addsend(accM.getCurrAccountId(), msg);
+        accM.addMsgToUnreadInbox(getterId, msg);
+        accM.addMsgToSentBox(accM.getCurrAccountId(), msg);
         attUI.messagesend();
     }
 
@@ -219,25 +221,20 @@ public class Attendeesystemhandler {
         }while(!valid);
         return Integer.parseInt(userInput);
     }
-///////Grey modify
-    private ArrayList<Integer> getAllUnread() {
-        ArrayList<Integer> unread = attM.getUnreadInbox();
-        return unread;
-}
 
-    protected void readAllUnreadMsg(){
+    public void readAllUnreadMsg(){
         readAllUnread();
         attUI.annouceUnread();
-
     }
 
     private void readAllUnread(){
-        String all = MsgM.formatAllUnread(getAllUnread());
+
+        String all = MsgM.formatmsgget(accM.getUnreadInboxWithId(accM.getCurrAccountId()));
         attUI.show(all);
     }
 
-    protected int targetunread(){
-        ArrayList<Integer> validChoices = attM.getUnreadInbox();
+    public int targetunread(){
+        ArrayList<Integer> validChoices = accM.getUnreadInboxWithId(accM.getCurrAccountId());
         validChoices.add(-1);
         String userInput;
         boolean valid = false;
@@ -249,6 +246,33 @@ public class Attendeesystemhandler {
         }while(!valid);
         return Integer.parseInt(userInput);
     }
+
+    public void readAllarchivedMsg(){
+        readallarchived();
+        attUI.annouceUnread();
+
+    }
+
+    private void readallarchived(){
+
+        String all = MsgM.formatmsgget(accM.getarchivedboxWithId(accM.getCurrAccountId()));
+        attUI.show(all);
+    }
+
+    public int targetarchived(){
+        ArrayList<Integer> validChoices = accM.getarchivedboxWithId(accM.getCurrAccountId());
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = attUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                attUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
 
     protected ArrayList<Integer> getChoiceList(int size){
         int i = 0;
@@ -263,30 +287,21 @@ public class Attendeesystemhandler {
     }
 
     protected void askToAchieve(int msgId){
-        int userInput = attUI.chooseOption(getChoiceList(3), "Would you like to:" +
+        int userInput = attUI.chooseOption(attUI.getchoicelist(1), "Would you like to:" +
                 "\n1 -> Mark as Unread" +
                 "\n2 -> Move to Archive" +
                 "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
         if(userInput == 1){
-            int currId = accM.getCurrAccountId();
-            accM.addUnread(currId, msgId);
             attUI.annouceMarkUnread();
+            attM.addMsgToUnreadInbox(accM.getCurrAccountId(), msgId);
         } else if(userInput == 2){
-            accM.removeUnreadMsg(msgId);
-            accM.archiveMessage(msgId);
+            accM.archiveMsg(msgId, accM.getCurrAccountId());
             attUI.archiveMsg();
         }else if(userInput == 3){
-            accM.removeUnreadMsg(msgId);
+            attM.deleteMsg(msgId, accM.getCurrAccountId());
             attUI.deleteMsg();
         }
         attUI.askForBack();}
-
-    protected  void readArchived(){
-        ArrayList<Integer> arrayList = new ArrayList<>(accM.getArchive());
-        String a = MsgM.formatmsgget(arrayList);
-        attUI.show(a);
-        attUI.askForBack();
-    }
 
     protected void readAllMsg() {
 

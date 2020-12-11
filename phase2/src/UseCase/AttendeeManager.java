@@ -98,8 +98,16 @@ public class AttendeeManager extends AccountManager{
      * Get the ids of messages send from the current account
      * @return a Arraylist of integer, which contain the ids of the messages that current account send.
      */
-    public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentMessage();}
+    public ArrayList<Integer> getmsgsend(){return getCurrAccount().getSentBox();}
 
+    /**
+     * Set information of the account
+     * @param id Id of the attendee
+     * @param inbox inbox
+     * @param sentBox sent box
+     * @param eventList event list
+     * @param unreadInbox unread inbox
+     */
     public void setAccInfo(int id, ArrayList<Integer> inbox, ArrayList<Integer> sentBox,
                            ArrayList<Integer> eventList, ArrayList<Integer> unreadInbox){
         Attendee acc = (Attendee) getAccountWithId(id);
@@ -108,19 +116,6 @@ public class AttendeeManager extends AccountManager{
         acc.setEventList(eventList);
         acc.setUnreadInbox(unreadInbox);
     }
-    ///Grey modify
-    public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}
-
-    public void deleteUnreadInbox(int msgid){
-         ArrayList<Integer> inbox = getCurrAccount().getUnreadInbox();
-         inbox.remove(Integer.valueOf(msgid));
-
-         try{
-             this.gateWay.updateInbox(getCurrAccountId(), getCurrAttendee().getInbox());
-         }catch (IOException ignored){}
-
-    }
-
 
 }
 
