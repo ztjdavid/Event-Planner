@@ -37,10 +37,22 @@ public class AccountManager {
         createHelper(username, password, userType);
     }
 
+    /**
+     * Used in gateway to scan a new account.
+     * @param username string representation of the username.
+     * @param password string representation of the password.
+     * @param userType int representation of the user type, 0 if Organizer, 1 if Attendee, 2 if Speaker, 3 if VIP
+     */
     public void scanInAccount(String username, String password, int userType){
         createHelper(username, password, userType);
     }
 
+    /**
+     * Helper to create an account with a usertype.
+     * @param username string representation of the username.
+     * @param password string representation of the password.
+     * @param userType int representation of the user type, 0 if Organizer, 1 if Attendee, 2 if Speaker, 3 if VIP
+     */
     private void createHelper(String username, String password, int userType) {
         switch (userType){
             case 0:
@@ -156,6 +168,11 @@ public class AccountManager {
         }catch (IOException ignored){}
     }
 
+    /**
+     * Add the message ID to the given message sender's SentInbox.
+     * @param senderid message sender's ID as int.
+     * @param msgid message ID as int.
+     */
     public void addMsgToSentBox(int senderid, int msgid){
         getAccountWithId(senderid).addSentBox(msgid);
         try{
@@ -163,6 +180,12 @@ public class AccountManager {
         }catch (IOException ignored){}
     }
 
+    /**
+     * Add the message ID to the given message getter's Inbox.
+     * @param senderid message getter's ID as int.
+     * @param msgid message ID as int.
+     */
+    //should change param senderid -> getterid?
     public void addMsgToInBox(int senderid, int msgid){
         getAccountWithId(senderid).addInbox(msgid);
         try{
@@ -170,6 +193,11 @@ public class AccountManager {
         }catch (IOException ignored){}
     }
 
+    /**
+     * Add the message ID to the ArchiveInbox.
+     * @param accId account id
+     * @param msgId message ID as int.
+     */
     public void addMsgToArchiveBox(int accId, int msgId){
         getAccountWithId(accId).addArchiveBox(msgId);
         try{
@@ -177,7 +205,11 @@ public class AccountManager {
         }catch (IOException ignored){}
     }
 
-
+    /**
+     * Delete the message from both of the inbox and unread inbox in the account given.
+     * @param msgId message Id.
+     * @param accId account Id.
+     */
     public void deleteMsg(int msgId, int accId){
         Account acc = getAccountWithId(accId);
         acc.removeMsgFromInbox(msgId);
@@ -244,6 +276,11 @@ public class AccountManager {
         }catch (IOException ignored){}
     }
 
+    /**
+     * Change the location of the message from Unread Inbox to Inbox, and update the Database
+     * @param accId account id
+     * @param msgId message id
+     */
     public void markAsRead(int accId, int msgId){
         Account acc = getAccountWithId(accId);
         acc.removeMsgFromUnreadInbox(msgId);
@@ -255,25 +292,47 @@ public class AccountManager {
         }catch(IOException ignored){}
     }
 
+    /**
+     * Get the application for the current account
+     * @return int the application ID
+     */
     public int getmyapp(){return getCurrAccount().getapplication();}
 
+    /**
+     * Add the new application to the account
+     * @param a int the application ID
+     */
     public void changemyapp(int a){getCurrAccount().setApplication(a);}
 
+    /**
+     * Get the password of the account
+     * @param accID account id
+     * @return String the password of the account
+     */
     public String getPassword(int accID){
         Account account = getAccountWithId(accID);
         return account.getPassword();
     }
 
+    /**
+     * Get the list of IDs of unread messages in the account
+     * @param accId account ID
+     * @return Arraylist of IDS of unread messages in the account
+     */
     public ArrayList<Integer> getUnreadInboxWithId(int accId){
         Account acc = getAccountWithId(accId);
         return acc.getUnreadInbox();
     }
 
+    /**
+     * Get the list of IDs of archived messages in the account
+     * @param accId account ID
+     * @return Arraylist of IDS of archived messages in the account
+     */
     public ArrayList<Integer> getarchivedboxWithId(int accId){
         Account acc = getAccountWithId(accId);
         return acc.getArchiveBox();
     }
-
 
 }
 

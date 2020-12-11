@@ -78,6 +78,7 @@ public abstract class Account {
      *   0 - Organizer <br>
      *   1 - Attendee <br>
      *   2 - Speaker <br>
+     *   3 - VIP <br>
      */
     public abstract int getUserType();
 
