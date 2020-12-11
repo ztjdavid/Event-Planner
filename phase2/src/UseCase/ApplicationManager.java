@@ -26,7 +26,7 @@ public class ApplicationManager {
      * @param applicatorId id
      * @param applicatorName name
      * @param description description
-     * @return
+     * @return int id of the created application
      */
     public int createApplication(int applicatorId, String applicatorName, String description){
         int id = nextId;

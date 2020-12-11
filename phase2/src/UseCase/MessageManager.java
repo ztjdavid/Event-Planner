@@ -35,12 +35,28 @@ public class MessageManager {
         return id;
     }
 
+    /**
+     * Used in gateway to scan a new message
+     * @param id id of message
+     * @param sendername sender name
+     * @param senderid sender id
+     * @param getterid getter id
+     * @param txt message context
+     */
     public void scanInMessage(int id, String sendername, int senderid, int getterid, String txt) {
         createHelper(id, sendername, senderid, getterid, txt);
         nextId = id + 1;
 
     }
 
+    /**
+     * Helper to create message
+     * @param id id of message
+     * @param sendername sender name
+     * @param senderid sender id
+     * @param getterid getter id
+     * @param txt message context
+     */
     private void createHelper(int id, String sendername, int senderid, int getterid, String txt) {
         Message b = new Message(sendername, id, senderid, getterid, txt);
         allmessage.add(b);
@@ -124,6 +140,11 @@ public class MessageManager {
         return a;
     }
 
+    /**
+     * Return a string showing the message for the given id
+     * @param i id of message
+     * @return a string showing the message context
+     */
     public String formatmsg(int i){
         String a = "Here is the messages:\n";
         a += "\n-------------------------\n";
@@ -145,6 +166,11 @@ public class MessageManager {
 
     /////
 
+    /**
+     * Check whether the message has bean replied
+     * @param messageID message id
+     * @return boolean true iff replied
+     */
     public boolean hasReply(int messageID){
         Message message = allmessage.get(messageID);
         return (message.getReply() != -1);
