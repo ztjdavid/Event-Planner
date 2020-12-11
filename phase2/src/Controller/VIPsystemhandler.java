@@ -203,19 +203,6 @@ public class VIPsystemhandler {
         return a.toString();
     }
 
-    private ArrayList<Integer> getAllUnread() {
-        ArrayList<Integer> inbox = vipM.getInbox(accM.getCurrAccountId());
-        ArrayList<Integer> unread = new ArrayList<>();
-        for (Integer i : inbox) {
-            boolean is_Read = MsgM.checkMessageStatus(i);
-            if (!is_Read) {
-                unread.add(i);
-                accM.addUnread(vipM.getCurrAccountId(), i);
-            }
-        }
-
-        return unread;
-    }
 
     public void readAllUnreadMsg(){
         readAllUnread();
@@ -225,12 +212,38 @@ public class VIPsystemhandler {
 
     private void readAllUnread(){
 
-        String all = MsgM.formatAllUnread(getAllUnread());
+        String all = MsgM.formatmsgget(accM.getUnreadInboxWithId(accM.getCurrAccountId()));
         vipUI.show(all);
     }
 
     public int targetunread(){
-        ArrayList<Integer> validChoices = vipM.getUnreadInbox();
+        ArrayList<Integer> validChoices = accM.getUnreadInboxWithId(accM.getCurrAccountId());
+        validChoices.add(-1);
+        String userInput;
+        boolean valid = false;
+        do{
+            userInput = vipUI.getrequest(2);
+            if (!strategyM.isValidChoice(userInput, validChoices))
+                vipUI.informinvalidchoice();
+            else { valid = true; }
+        }while(!valid);
+        return Integer.parseInt(userInput);
+    }
+
+    public void readAllarchivedMsg(){
+        readallarchived();
+        vipUI.annouceUnread();
+
+    }
+
+    private void readallarchived(){
+
+        String all = MsgM.formatmsgget(accM.getarchivedboxWithId(accM.getCurrAccountId()));
+        vipUI.show(all);
+    }
+
+    public int targetarchived(){
+        ArrayList<Integer> validChoices = accM.getarchivedboxWithId(accM.getCurrAccountId());
         validChoices.add(-1);
         String userInput;
         boolean valid = false;
@@ -251,12 +264,13 @@ public class VIPsystemhandler {
                 "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
         if(userInput == 1){
             vipUI.annouceMarkUnread();
+            vipM.addMsgToUnreadInbox(accM.getCurrAccountId(), msgId);
         } else if(userInput == 2){
-            vipM.removeUnreadMsg(msgId);
-            vipM.archiveMessage(msgId);
+            vipM.markAsRead(accM.getCurrAccountId(), msgId);
+            vipM.addMsgToArchiveBox(accM.getCurrAccountId(), msgId);
             vipUI.archiveMsg();
         }else if(userInput == 3){
-            vipM.removeUnreadMsg(msgId);
+            vipM.markAsRead(accM.getCurrAccountId(), msgId);
             vipUI.deleteMsg();
         }
         vipUI.askForBack();}

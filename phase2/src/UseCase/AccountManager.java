@@ -278,5 +278,11 @@ public class AccountManager {
         return acc.getUnreadInbox();
     }
 
+    public ArrayList<Integer> getarchivedboxWithId(int accId){
+        Account acc = getAccountWithId(accId);
+        return acc.getArchiveBox();
+    }
+
+
 }
 

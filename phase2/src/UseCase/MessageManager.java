@@ -124,8 +124,17 @@ public class MessageManager {
         return a;
     }
 
+    public String formatmsg(int i){
+        String a = "Here is the messages:\n";
+        a += "\n-------------------------\n";
+        a += "The id of this message is " + +getmessage(i).getmessageid()+
+                "\nThis message is from " + getmessage(i).getSendername() + " whose id is " +
+                getmessage(i).getSenderid() + ":\n" + getmessage(i).getTxt();
+        return a;
+    }
+
     public String formatAllUnread(ArrayList<Integer> unread){
-        StringBuilder a = new StringBuilder("These are the unread messages:\n");
+        StringBuilder a = new StringBuilder("These are the messages:\n");
         for(Integer i: unread){
             a.append("\n-------------------------\n");
             Message msg = getmessage(i);
