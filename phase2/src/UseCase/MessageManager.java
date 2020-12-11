@@ -176,23 +176,48 @@ public class MessageManager {
         return (message.getReply() != -1);
     }
 
+    /**
+     * Get the reply id of the message
+     * @param messageID message id
+     * @return int the reply id of the message
+     */
     public int replyID(int messageID){
         Message message = allmessage.get(messageID);
         return message.getReply();
     }
 
+    /**
+     * Get the receiver of the message
+     * @param messageID message id
+     * @return int the receiver's id
+     */
     public int getReceiverID(int messageID){
         Message message = allmessage.get(messageID);
         return message.getGetterid();
     }
 
+    /**
+     * Get the name of the replier with message id
+      * @param messageID message id
+     * @return String of the name of the replier
+     */
     public String getReplier(int messageID){
         Message message = allmessage.get(messageID);
         return message.getReplyer();
     }
 
+    /**
+     * Get the total of number of messages in the message list
+     * @return An integer of the number of the messages
+     */
     public int getTotalNumOfMsg(){ return allmessage.size();}
 
+    /**
+     * Set the information for the message
+     * @param msgId message id
+     * @param replyId reply id
+     * @param replier replier
+     */
     public void setMsgInfo(int msgId, int replyId, String replier){
         Message msg = getmessage(msgId);
         msg.setReply(replyId);
