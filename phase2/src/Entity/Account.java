@@ -96,7 +96,10 @@ public abstract class Account {
 
     public void addArchiveBox(int msgId) {this.archiveBox.add(msgId);}
 
-    public void removeMsgFromArchiveBox(int msgId) {if(this.archiveBox.contains(msgId)) this.archiveBox.add(msgId);}
+    public void removeMsgFromArchiveBox(int msgId) {
+        if(this.archiveBox.contains(msgId))
+            this.archiveBox.remove(Integer.valueOf(msgId));
+    }
 
     /**
      * Add new message sent by this account.
@@ -166,7 +169,7 @@ public abstract class Account {
      * @param messageID The ID of the message to be removed
      */
     public void removeMsgFromUnreadInbox(int messageID){
-        if(this.unreadInbox.contains(messageID)) this.unreadInbox.remove(messageID);
+        if(this.unreadInbox.contains(messageID)) this.unreadInbox.remove(Integer.valueOf(messageID));
     }
 
     /**
@@ -174,7 +177,7 @@ public abstract class Account {
      * @param msgId id of a message
      */
     public void removeMsgFromInbox(int msgId){
-        if(this.inbox.contains(msgId)) this.inbox.remove(msgId);
+        if(this.inbox.contains(msgId)) this.inbox.remove(Integer.valueOf(msgId));
     }
 
 
