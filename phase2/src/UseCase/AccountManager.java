@@ -227,18 +227,20 @@ public class AccountManager {
     public boolean isVIPAcc(int userID){ return getAccountWithId(userID).getUserType() == 3;}
 
     /**
-     * Archive a message for a ccount.
+     * Archive a message for an account.
      * @param msgId message id
      * @param accId account id
      */
     public void archiveMsg(int msgId, int accId){
         Account acc =  getAccountWithId(accId);
         acc.removeMsgFromInbox(msgId);
+        acc.removeMsgFromUnreadInbox(msgId);
         acc.addArchiveBox(msgId);
 
         try {
             this.gateWay.updateInbox(accId, acc.getInbox());
             this.gateWay.updateArchiveBox(accId, acc.getArchiveBox());
+            this.gateWay.updateUnreadInbox(accId, acc.getUnreadInbox());
         }catch (IOException ignored){}
     }
 
@@ -246,17 +248,6 @@ public class AccountManager {
         Account acc = getAccountWithId(accId);
         acc.removeMsgFromUnreadInbox(msgId);
         acc.addInbox(msgId);
-
-        try {
-            this.gateWay.updateInbox(accId, acc.getInbox());
-            this.gateWay.updateUnreadInbox(accId, acc.getUnreadInbox());
-        }catch(IOException ignored){}
-    }
-
-    public void markAsUnread(int accId, int msgId){
-        Account acc = getAccountWithId(accId);
-        acc.removeMsgFromInbox(msgId);
-        acc.addUnreadInbox(msgId);
 
         try {
             this.gateWay.updateInbox(accId, acc.getInbox());

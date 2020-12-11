@@ -466,7 +466,6 @@ public class VipSystem {
             if (tmsgid != -1) {
                 vipUI.show(MsgM.formatmsg(tmsgid));
                 vipM.markAsRead(accM.getCurrAccountId(), tmsgid);
-                vipM.deleteUnreadInbox(tmsgid);
                 vipUI.unreadSuccess(tmsgid);
                 vipUI.askForBack();
             }

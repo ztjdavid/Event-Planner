@@ -266,11 +266,10 @@ public class VIPsystemhandler {
             vipUI.annouceMarkUnread();
             vipM.addMsgToUnreadInbox(accM.getCurrAccountId(), msgId);
         } else if(userInput == 2){
-            vipM.markAsRead(accM.getCurrAccountId(), msgId);
-            vipM.addMsgToArchiveBox(accM.getCurrAccountId(), msgId);
+            vipM.archiveMsg(msgId, accM.getCurrAccountId());
             vipUI.archiveMsg();
         }else if(userInput == 3){
-            vipM.markAsRead(accM.getCurrAccountId(), msgId);
+            vipM.deleteMsg(msgId, accM.getCurrAccountId());
             vipUI.deleteMsg();
         }
         vipUI.askForBack();}
