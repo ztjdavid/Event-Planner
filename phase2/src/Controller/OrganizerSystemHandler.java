@@ -419,7 +419,7 @@ public class OrganizerSystemHandler {
         int userInput = organizerPresenter.chooseOption(getChoiceList(2),
                 "Are you sure to message all Speakers in this system?\nEnter 2 to confirm, 1 to cancel and go back.(Irreversible once confirmed.)",
                 "Invalid Chooice, Please Try Again:");
-        if (userInput == 1) {
+        if (userInput == 2) {
             String txt = organizerPresenter.enterMessage("Please Enter Your Message." +
                     "\n(End editing by typing a single \"end\" in a new line.)");
             sendMessageToAllSpeaker(txt);

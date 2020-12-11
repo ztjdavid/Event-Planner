@@ -248,10 +248,10 @@ public class OrganizerSystem {
                 oh.messageToSpeaker();
                 break;
             case 3:
-                oh.messageToAllSpeaker();
+                oh.messageToAllAttendee();
                 break;
             case 4:
-                oh.messageToAllAttendee();
+                oh.messageToAllSpeaker();
                 break;
             case 5:
                 oh.readAllMsg();
