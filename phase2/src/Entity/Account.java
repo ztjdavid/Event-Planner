@@ -94,7 +94,10 @@ public abstract class Account {
 
     public void setArchiveBox(ArrayList<Integer> archiveBox){this.archiveBox = archiveBox;}
 
-    public void addArchiveBox(int msgId) {this.archiveBox.add(msgId);}
+    public void addArchiveBox(int msgId) {
+        if (!this.archiveBox.contains(msgId))
+            this.archiveBox.add(msgId);
+    }
 
     public void removeMsgFromArchiveBox(int msgId) {
         if(this.archiveBox.contains(msgId))
@@ -108,7 +111,8 @@ public abstract class Account {
      * @param mesID ID of new message sent by this account.
      */
     public void addSentBox(int mesID){
-        this.sentBox.add(mesID);
+        if (!this.sentBox.contains(mesID))
+            this.sentBox.add(mesID);
     }
 
     /**
@@ -126,7 +130,8 @@ public abstract class Account {
      * @param mesID ID of new message received by this account.
      */
     public void addInbox(int mesID){
-        this.inbox.add(mesID);
+        if (!this.inbox.contains(mesID))
+            this.inbox.add(mesID);
     }
 
     /**
@@ -160,7 +165,8 @@ public abstract class Account {
      * @param unreadId The ID of the unread message.
      */
     public void addUnreadInbox(int unreadId){
-        this.unreadInbox.add(unreadId);
+        if( !this.unreadInbox.contains(unreadId))
+            this.unreadInbox.add(unreadId);
     }
     /////
 
