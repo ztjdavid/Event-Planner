@@ -1,6 +1,6 @@
 package Controller;
 
-import Presenters.AttendeeUI;
+import Presenters.AttendeeP;
 import UseCase.*;
 
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ public class Attendeesystemhandler {
     protected AccountManager accM;
     protected EventManager eventManager;
     protected MessageManager MsgM;
-    protected AttendeeUI attUI;
+    protected AttendeeP attUI;
     protected StrategyManager strategyM;
     protected AttendeeManager attM;
     protected RoomManager roomM;
     protected RequestManager reM;
     protected MessageManager msgM;
 
-    public Attendeesystemhandler(MessageManager msgM, AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attUI,
+    public Attendeesystemhandler(MessageManager msgM, AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeP attUI,
                             StrategyManager StrategyManager, AttendeeManager attM, RoomManager roomM, RequestManager reM) {
         this.msgM = msgM;
         this.accM = accM;

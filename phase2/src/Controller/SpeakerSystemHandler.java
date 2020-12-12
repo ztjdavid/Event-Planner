@@ -1,6 +1,6 @@
 package Controller;
 
-import Presenters.SpeakerUI;
+import Presenters.SpeakerP;
 import UseCase.*;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class SpeakerSystemHandler {
     protected MessageManager MsgM;
-    protected SpeakerUI speakerUI;
+    protected SpeakerP speakerP;
     protected SpeakerManager SpeakerM;
     protected AccountManager accM;
     protected EventManager eventManager;
@@ -17,10 +17,10 @@ public class SpeakerSystemHandler {
     protected RequestManager reM;
 
     public SpeakerSystemHandler(AccountManager accM, EventManager eventM, MessageManager MsgM,
-                                SpeakerUI speakerUI, StrategyManager strategyM, SpeakerManager SpeakerM,
+                                SpeakerP speakerP, StrategyManager strategyM, SpeakerManager SpeakerM,
                                 RoomManager roomM, RequestManager reM) {
         this.MsgM = MsgM;
-        this.speakerUI = speakerUI;
+        this.speakerP = speakerP;
         this.SpeakerM = SpeakerM;
         this.accM = accM;
         this.eventManager = eventM;
@@ -36,9 +36,9 @@ public class SpeakerSystemHandler {
         String userInput;
         ArrayList<Integer> validChoices = new ArrayList<>(Arrays.asList(0, 1));
         do{
-            userInput = speakerUI.confirmMsgAll();
+            userInput = speakerP.confirmMsgAll();
             if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
+                speakerP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
@@ -52,7 +52,7 @@ public class SpeakerSystemHandler {
         for(Integer t:alltalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
             a.append(eventManager.getEventinfoWithName(t, roomName));}
-        speakerUI.show(a.toString());
+        speakerP.show(a.toString());
     }
 
     public void readalltalkssimp(){
@@ -60,7 +60,7 @@ public class SpeakerSystemHandler {
         ArrayList<Integer> alltalks = SpeakerM.getalltalk();
         for(Integer t:alltalks){
             a.append(eventManager.getEventinfosimp(t));}
-        speakerUI.show(a.toString());
+        speakerP.show(a.toString());
     }
 
     public int targettalks(){
@@ -69,9 +69,9 @@ public class SpeakerSystemHandler {
         boolean valid = false;
         String userInput;
         do{
-            userInput = speakerUI.getrequest2();
+            userInput = speakerP.getrequest2();
             if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
+                speakerP.informinvalidchoice();
             else { valid = true; }
         } while(!valid);
         return Integer.parseInt(userInput);
@@ -79,15 +79,15 @@ public class SpeakerSystemHandler {
 
     public void requestfortalk(String a, int b) {
         if (b != -1) {reM.createRequest(a, accM.getCurrAccountId(), b);}
-        speakerUI.stoprequest();
+        speakerP.stoprequest();
     }
 
     public String enterTxt(){
         StringBuilder a = new StringBuilder();
         boolean exit = false;
-        speakerUI.informEnteringText();
+        speakerP.informEnteringText();
         do{
-            String line = speakerUI.getLineTxt();
+            String line = speakerP.getLineTxt();
             if (line.equals("end")) exit = true;
             else{
                 a.append(line);
@@ -107,7 +107,7 @@ public class SpeakerSystemHandler {
             a.append(accM.getinfoacc(i));
 
         }
-        speakerUI.show(a.toString());
+        speakerP.show(a.toString());
     }
 
     public int targetgetter(){
@@ -116,9 +116,9 @@ public class SpeakerSystemHandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = speakerUI.getrequest(2);
+            userInput = speakerP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
+                speakerP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
@@ -134,22 +134,22 @@ public class SpeakerSystemHandler {
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterid, a);
         accM.addMsgToInBox(getterid, msg);
         accM.addMsgToSentBox(accM.getCurrAccountId(), msg);
-        speakerUI.messagesend();
+        speakerP.messagesend();
     }
 
     public void messagetotalk(String a, int b) {
         if (b != -1) {ArrayList<Integer> att = eventManager.getEventWithId(b).getAttendeeId();
             msgToList(a, att);}
-        speakerUI.stopmessaging();
+        speakerP.stopmessaging();
     }
 
     private void msgToList(String a, ArrayList<Integer> att){
-        if (att.isEmpty()) speakerUI.noattendees();
+        if (att.isEmpty()) speakerP.noattendees();
         else{
             for (int getterid : att) {
                 messagetoatt(a, getterid);
             }
-            speakerUI.messagesend();
+            speakerP.messagesend();
         }
     }
 
@@ -160,23 +160,23 @@ public class SpeakerSystemHandler {
 
     public void readmsgandrep(){
         readallmsg();
-        speakerUI.announcereply();
+        speakerP.announcereply();
     }
 
     public void readrepandmsg(){
         readallreply();
-        speakerUI.announcemsg();
+        speakerP.announcemsg();
 
     }
 
     private void readallreply(){
         String a = MsgM.formatreply(SpeakerM.getmsgsend());
-        speakerUI.show(a);
+        speakerP.show(a);
     }
 
     private void readallmsg(){
         String a = MsgM.formatmsgget(SpeakerM.getinbox());
-        speakerUI.show(a);
+        speakerP.show(a);
     }
 
     public int targetmsg(){
@@ -185,9 +185,9 @@ public class SpeakerSystemHandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = speakerUI.getrequest(2);
+            userInput = speakerP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
+                speakerP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
@@ -197,31 +197,31 @@ public class SpeakerSystemHandler {
 
     /////////////////UNREAD HELPER////////////////
     protected void askToAchieve(int msgId){
-        int userInput = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Would you like to:" +
+        int userInput = speakerP.chooseOption(speakerP.getchoicelist(1), "Would you like to:" +
                 "\n1 -> Mark as Unread" +
                 "\n2 -> Move to Archive" +
                 "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
         if(userInput == 1){
-            speakerUI.annouceMarkUnread();
+            speakerP.annouceMarkUnread();
             SpeakerM.addMsgToUnreadInbox(accM.getCurrAccountId(), msgId);
         } else if(userInput == 2){
             SpeakerM.archiveMsg(msgId, accM.getCurrAccountId());
-            speakerUI.archiveMsg();
+            speakerP.archiveMsg();
         }else if(userInput == 3){
             SpeakerM.deleteMsg(msgId, accM.getCurrAccountId());
-            speakerUI.deleteMsg();
+            speakerP.deleteMsg();
         }
-        speakerUI.askForBack();}
+        speakerP.askForBack();}
 
     public void readAllUnreadMsg(){
         readAllUnread();
-        speakerUI.annouceUnread();
+        speakerP.annouceUnread();
     }
 
     private void readAllUnread(){
 
         String all = MsgM.formatmsgget(accM.getUnreadInboxWithId(accM.getCurrAccountId()));
-        speakerUI.show(all);
+        speakerP.show(all);
     }
 
     public int targetunread(){
@@ -230,9 +230,9 @@ public class SpeakerSystemHandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = speakerUI.getrequest(2);
+            userInput = speakerP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
+                speakerP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
@@ -240,14 +240,14 @@ public class SpeakerSystemHandler {
 
     public void readAllarchivedMsg(){
         readallarchived();
-        speakerUI.annouceUnread();
+        speakerP.annouceUnread();
 
     }
 
     private void readallarchived(){
 
         String all = MsgM.formatmsgget(accM.getarchivedboxWithId(accM.getCurrAccountId()));
-        speakerUI.show(all);
+        speakerP.show(all);
     }
 
     public int targetarchived(){
@@ -256,9 +256,9 @@ public class SpeakerSystemHandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = speakerUI.getrequest(2);
+            userInput = speakerP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                speakerUI.informinvalidchoice();
+                speakerP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);

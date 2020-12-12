@@ -1,5 +1,5 @@
 package Controller;
-import Presenters.SpeakerUI;
+import Presenters.SpeakerP;
 import UseCase.*;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ public class SpeakerSystem {
     protected AccountManager accM;
     protected EventManager eventManager;
     protected MessageManager MsgM;
-    protected SpeakerUI speakerUI;
+    protected SpeakerP speakerP;
     protected StrategyManager strategyM;
     protected SpeakerManager SpeakerM;
     protected RoomManager roomM;
@@ -17,17 +17,17 @@ public class SpeakerSystem {
     protected SpeakerSystemHandler sh;
 
 
-    public SpeakerSystem(AccountManager accountManager, EventManager eventM, MessageManager messageManager, SpeakerUI SpeakerUI,
+    public SpeakerSystem(AccountManager accountManager, EventManager eventM, MessageManager messageManager, SpeakerP SpeakerP,
                          StrategyManager StrategyManager, SpeakerManager speakerManager, RoomManager roomManager, RequestManager requestManager) {
         this.accM = accountManager;
         this.eventManager = eventM;
         this.MsgM = messageManager;
-        this.speakerUI = SpeakerUI;
+        this.speakerP = SpeakerP;
         this.strategyM = StrategyManager;
         this.SpeakerM = speakerManager;
         this.roomM = roomManager;
         this.reM = requestManager;
-        this.sh = new SpeakerSystemHandler(accM, eventManager, MsgM, speakerUI, strategyM, SpeakerM, roomM, reM);
+        this.sh = new SpeakerSystemHandler(accM, eventManager, MsgM, speakerP, strategyM, SpeakerM, roomM, reM);
 
     }
 
@@ -37,8 +37,8 @@ public class SpeakerSystem {
     public void run(){
         int userChoice;
         do{
-            speakerUI.startup();
-            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            speakerP.startup();
+            userChoice = speakerP.chooseOption(speakerP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
         } while (userChoice != 3);
     }
@@ -60,14 +60,14 @@ public class SpeakerSystem {
 
     private void Readallevent(){
         sh.readalltalks();
-        speakerUI.askForBack();
+        speakerP.askForBack();
     }
     /////////////////////EVENT DB//////////////
     private void EventDashboard(){
         int userChoice;
         do {
-            speakerUI.eventdb();
-            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            speakerP.eventdb();
+            userChoice = speakerP.chooseOption(speakerP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             eventop(userChoice);
         } while (userChoice != 3);
     }
@@ -87,8 +87,8 @@ public class SpeakerSystem {
     private void Request(){
         int userChoice;
         do {
-            speakerUI.requestdb();
-            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            speakerP.requestdb();
+            userChoice = speakerP.chooseOption(speakerP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             requestop(userChoice);
         } while (userChoice != 3);
     }
@@ -107,8 +107,8 @@ public class SpeakerSystem {
 
     private void Readallrequest(){
 
-        speakerUI.show(reM.showallre(accM.getCurrAccountId()));
-        speakerUI.askForBack();
+        speakerP.show(reM.showallre(accM.getCurrAccountId()));
+        speakerP.askForBack();
     }
 
     private void Sendnewrequest(){
@@ -119,7 +119,7 @@ public class SpeakerSystem {
             if (targettalk != -1){
                 String txt = sh.enterTxt();
                 sh.requestfortalk(txt, targettalk);
-                speakerUI.askForBack();
+                speakerP.askForBack();
             }
         } while (targettalk != -1);
     }
@@ -127,8 +127,8 @@ public class SpeakerSystem {
     private void MsgDashboard(){
         int userChoice;
         do{
-            speakerUI.messagemain();
-            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            speakerP.messagemain();
+            userChoice = speakerP.chooseOption(speakerP.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             msgOP1(userChoice);
         } while (userChoice != 3);
 
@@ -151,8 +151,8 @@ public class SpeakerSystem {
     private void message() {
         int userChoice;
         do {
-            speakerUI.messaging();
-            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(3), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            speakerP.messaging();
+            userChoice = speakerP.chooseOption(speakerP.getchoicelist(3), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             messaging(userChoice);
         } while (userChoice != 6);
     }
@@ -182,8 +182,8 @@ public class SpeakerSystem {
     private void read() {
         int userChoice;
         do {
-            speakerUI.reading();
-            userChoice = speakerUI.chooseOption(speakerUI.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            speakerP.reading();
+            userChoice = speakerP.chooseOption(speakerP.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             reading(userChoice);
         } while (userChoice != 4);
     }
@@ -216,7 +216,7 @@ public class SpeakerSystem {
             if (tAttendeeId != -1){
                 String txt = sh.enterTxt();
                 sh.messagetoatt(txt, tAttendeeId);
-                speakerUI.askForBack();
+                speakerP.askForBack();
             }
         }while(tAttendeeId != -1);
     }
@@ -229,7 +229,7 @@ public class SpeakerSystem {
             if (targettalk != -1){
                 String txt = sh.enterTxt();
                 sh.messagetotalk(txt, targettalk);
-                speakerUI.askForBack();
+                speakerP.askForBack();
             }
         } while (targettalk != -1);
     }
@@ -239,7 +239,7 @@ public class SpeakerSystem {
         if (userChoice == 1){
             String txt = sh.enterTxt();
             sh.messageall(txt);
-            speakerUI.askForBack();
+            speakerP.askForBack();
         }
     }
 
@@ -251,7 +251,7 @@ public class SpeakerSystem {
             if (tmsgid != -1){
                 String txt = sh.enterTxt();
                 MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
-                speakerUI.askForBack();
+                speakerP.askForBack();
             }
         }while(tmsgid != -1);
     }
@@ -264,7 +264,7 @@ public class SpeakerSystem {
             if (tAttendeeId != -1){
                 String txt = sh.enterTxt();
                 sh.messagetoatt(txt, tAttendeeId);
-                speakerUI.askForBack();
+                speakerP.askForBack();
             }
         }while(tAttendeeId != -1);
     }
@@ -277,17 +277,17 @@ public class SpeakerSystem {
         if (inbox.size() != 0) {
             do {
                 String a = MsgM.formatmsgget(SpeakerM.getinbox());
-                speakerUI.show(a);
+                speakerP.show(a);
                 messageID = sh.targetmsg();
                 if (messageID != -1) {
-                    speakerUI.show(MsgM.getString(messageID));
+                    speakerP.show(MsgM.getString(messageID));
                     SpeakerM.markAsRead(accM.getCurrAccountId(), messageID);
                     sh.askToAchieve(messageID);
                 }
             } while (messageID != -1);
         } else {
-            speakerUI.announceEmptyInbox();
-            speakerUI.askForBack();
+            speakerP.announceEmptyInbox();
+            speakerP.askForBack();
         }
     }
 
@@ -297,10 +297,10 @@ public class SpeakerSystem {
             sh.readAllUnreadMsg();
             tmsgid = sh.targetunread();
             if (tmsgid != -1) {
-                speakerUI.show(MsgM.formatmsg(tmsgid));
+                speakerP.show(MsgM.formatmsg(tmsgid));
                 SpeakerM.markAsRead(accM.getCurrAccountId(), tmsgid);
-                speakerUI.unreadSuccess(tmsgid);
-                speakerUI.askForBack();
+                speakerP.unreadSuccess(tmsgid);
+                speakerP.askForBack();
             }
 
         } while (tmsgid != -1);
@@ -312,8 +312,8 @@ public class SpeakerSystem {
             sh.readAllarchivedMsg();
             tmsgid = sh.targetarchived();
             if (tmsgid != -1) {
-                speakerUI.show(MsgM.formatmsg(tmsgid));
-                speakerUI.askForBack();
+                speakerP.show(MsgM.formatmsg(tmsgid));
+                speakerP.askForBack();
             }
         } while (tmsgid != -1);
     }

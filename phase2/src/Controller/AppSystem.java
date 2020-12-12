@@ -14,7 +14,7 @@ public class AppSystem {
     protected AttendeeSystem attendeeS;
     protected VipSystem vipsystem;
     protected SpeakerSystem speakerS;
-    protected SpeakerUI speakerUI;
+    protected SpeakerP speakerP;
     protected RoomManager roomM;
     protected OrganizerPresenter organizerPresenter;
     protected StrategyManager strategyM;
@@ -27,12 +27,12 @@ public class AppSystem {
     protected StartP startP;
     protected SignInP signInP;
     protected SignUpP signUpP;
-    protected AttendeeUI attUI;
+    protected AttendeeP attUI;
     protected OrganizerManager ognM;
     protected SpeakerManager spkM;
     protected ApplicationManager appM;
     protected ITextUI textUI;
-    protected VipUI vipUI;
+    protected VipP vipP;
     protected UserFileLoader userL;
     protected MsgFileLoader msgL;
     protected EventFileLoader eventL;
@@ -52,9 +52,9 @@ public class AppSystem {
         this.startP = new StartP(textUI);
         this.signInP = new SignInP(textUI);
         this.signUpP = new SignUpP(textUI);
-        this.speakerUI = new SpeakerUI(textUI);
-        this.attUI = new AttendeeUI(textUI);
-        this.vipUI = new VipUI(textUI);
+        this.speakerP = new SpeakerP(textUI);
+        this.attUI = new AttendeeP(textUI);
+        this.vipP = new VipP(textUI);
         this.organizerPresenter = new OrganizerPresenter(textUI);
         try{
             this.userW = new UserFileWriter("phase2/DataBase/UserData.ini");
@@ -79,8 +79,8 @@ public class AppSystem {
         this.signUpS = new SignUpSystem(accM, signUpP, strategyM);
         this.attendeeS = new AttendeeSystem(accM, eventM, MsgM, attUI, strategyM, attM, roomM, rqstM, appM);
         this.organizerS = new OrganizerSystem(accM, MsgM, organizerPresenter, strategyM, ognM, spkM, eventM, roomM, rqstM, appM);
-        this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerUI, strategyM, spkM, roomM, rqstM);
-        this.vipsystem = new VipSystem(accM, eventM, MsgM, vipUI, strategyM, vipM, roomM, rqstM, appM);
+        this.speakerS = new SpeakerSystem(accM, eventM, MsgM, speakerP, strategyM, spkM, roomM, rqstM);
+        this.vipsystem = new VipSystem(accM, eventM, MsgM, vipP, strategyM, vipM, roomM, rqstM, appM);
         try{
             this.userL = new UserFileLoader("phase2/DataBase/UserData.ini", accM, attM, spkM, ognM, vipM);
             this.msgL = new MsgFileLoader("phase2/DataBase/MsgData.ini", MsgM);

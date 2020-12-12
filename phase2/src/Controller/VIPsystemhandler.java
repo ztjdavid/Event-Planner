@@ -1,6 +1,6 @@
 package Controller;
 
-import Presenters.VipUI;
+import Presenters.VipP;
 import UseCase.*;
 
 import java.util.ArrayList;
@@ -9,18 +9,18 @@ public class VIPsystemhandler {
     protected AccountManager accM;
     protected EventManager eventManager;
     protected MessageManager MsgM;
-    protected VipUI vipUI;
+    protected VipP vipP;
     protected StrategyManager strategyM;
     protected VIPManager vipM;
     protected RoomManager roomM;
     protected RequestManager ReqM;
 
-    public VIPsystemhandler(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipUI vipUI,
+    public VIPsystemhandler(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipP vipP,
                      StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
-        this.vipUI = vipUI;
+        this.vipP = vipP;
         this.strategyM = StrategyManager;
         this.vipM = vipM;
         this.roomM = roomM;
@@ -37,7 +37,7 @@ public class VIPsystemhandler {
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
             a.append(eventManager.getEventinfoWithName(t, roomName));
         }
-        vipUI.show(a.toString());}
+        vipP.show(a.toString());}
 
     public void readAllMyTalksSimp(){
         StringBuilder a = new StringBuilder("Event you have signed up: ");
@@ -45,7 +45,7 @@ public class VIPsystemhandler {
         for(Integer t:allEvent){
             a.append(eventManager.getEventinfosimp(t));
         }
-        vipUI.show(a.toString());
+        vipP.show(a.toString());
 
     }
 
@@ -55,9 +55,9 @@ public class VIPsystemhandler {
         boolean valid = false;
         String userInput;
         do{
-            userInput = vipUI.getrequest2();
+            userInput = vipP.getrequest2();
             if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
+                vipP.informinvalidchoice();
             else { valid = true; }
         } while(!valid);
         return Integer.parseInt(userInput);
@@ -67,7 +67,7 @@ public class VIPsystemhandler {
         if(talkId != -1){
             ReqM.createRequest(service, accM.getCurrAccountId(), talkId);
         }
-        vipUI.stoprequest();
+        vipP.stoprequest();
     }
 
     /**
@@ -95,9 +95,9 @@ public class VIPsystemhandler {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = vipUI.getrequest(3);
+            userInput = vipP.getrequest(3);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
+                vipP.informinvalidchoice();
             else {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
@@ -112,7 +112,7 @@ public class VIPsystemhandler {
         for(Integer t:allTalks){
             String roomName = roomM.getRoomName(eventManager.getRoomIdWithId(t));
             a.append(eventManager.getEventinfoWithName(t, roomName));}
-        vipUI.show(a.toString());
+        vipP.show(a.toString());
 
     }
 
@@ -123,9 +123,9 @@ public class VIPsystemhandler {
         int mode = -1;
         boolean valid = false;
         while(!valid){
-            userInput = vipUI.getrequest(4);
+            userInput = vipP.getrequest(4);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
+                vipP.informinvalidchoice();
             else {
                 valid = true;
                 mode = Integer.parseInt(userInput);}
@@ -140,7 +140,7 @@ public class VIPsystemhandler {
         for(Integer i : att) {
             a.append(accM.getinfoacc(i));
         }
-        vipUI.show(a.toString());
+        vipP.show(a.toString());
     }
 
     public void readAllSpeakers(){
@@ -153,7 +153,7 @@ public class VIPsystemhandler {
                 a.append(each);
             }
         }
-        vipUI.show(a.toString());
+        vipP.show(a.toString());
     }
 
 
@@ -164,9 +164,9 @@ public class VIPsystemhandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = vipUI.getrequest(2);
+            userInput = vipP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
+                vipP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
@@ -191,9 +191,9 @@ public class VIPsystemhandler {
     public String enterTxt(){
         StringBuilder a = new StringBuilder();
         boolean exit = false;
-        vipUI.informEnteringText();
+        vipP.informEnteringText();
         do{
-            String line = vipUI.getLineTxt();
+            String line = vipP.getLineTxt();
             if (line.equals("end")) exit = true;
             else{
                 a.append(line);
@@ -206,13 +206,13 @@ public class VIPsystemhandler {
 
     public void readAllUnreadMsg(){
         readAllUnread();
-        vipUI.annouceUnread();
+        vipP.annouceUnread();
     }
 
     private void readAllUnread(){
 
         String all = MsgM.formatmsgget(accM.getUnreadInboxWithId(accM.getCurrAccountId()));
-        vipUI.show(all);
+        vipP.show(all);
     }
 
     public int targetunread(){
@@ -221,9 +221,9 @@ public class VIPsystemhandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = vipUI.getrequest(2);
+            userInput = vipP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
+                vipP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
@@ -231,14 +231,14 @@ public class VIPsystemhandler {
 
     public void readAllarchivedMsg(){
         readallarchived();
-        vipUI.annouceUnread();
+        vipP.annouceUnread();
 
     }
 
     private void readallarchived(){
 
         String all = MsgM.formatmsgget(accM.getarchivedboxWithId(accM.getCurrAccountId()));
-        vipUI.show(all);
+        vipP.show(all);
     }
 
     public int targetarchived(){
@@ -247,9 +247,9 @@ public class VIPsystemhandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = vipUI.getrequest(2);
+            userInput = vipP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
+                vipP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
@@ -257,21 +257,21 @@ public class VIPsystemhandler {
 
 
     protected void askToAchieve(int msgId){
-        int userInput = vipUI.chooseOption(vipUI.getchoicelist(1), "Would you like to:" +
+        int userInput = vipP.chooseOption(vipP.getchoicelist(1), "Would you like to:" +
                 "\n1 -> Mark as Unread" +
                 "\n2 -> Move to Archive" +
                 "\n3 -> Delete Message", "Invalid Chooice, Please Try Again:");
         if(userInput == 1){
-            vipUI.annouceMarkUnread();
+            vipP.annouceMarkUnread();
             vipM.addMsgToUnreadInbox(accM.getCurrAccountId(), msgId);
         } else if(userInput == 2){
             vipM.archiveMsg(msgId, accM.getCurrAccountId());
-            vipUI.archiveMsg();
+            vipP.archiveMsg();
         }else if(userInput == 3){
             vipM.deleteMsg(msgId, accM.getCurrAccountId());
-            vipUI.deleteMsg();
+            vipP.deleteMsg();
         }
-        vipUI.askForBack();}
+        vipP.askForBack();}
 
     ////////////////////MODIFY LATER///////////
     public int targetmsg(){
@@ -280,9 +280,9 @@ public class VIPsystemhandler {
         String userInput;
         boolean valid = false;
         do{
-            userInput = vipUI.getrequest(2);
+            userInput = vipP.getrequest(2);
             if (!strategyM.isValidChoice(userInput, validChoices))
-                vipUI.informinvalidchoice();
+                vipP.informinvalidchoice();
             else { valid = true; }
         }while(!valid);
         return Integer.parseInt(userInput);
