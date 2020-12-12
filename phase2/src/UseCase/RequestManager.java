@@ -107,8 +107,18 @@ public class RequestManager {
         return a;
     }
 
+    /**
+     * Check if the request exits in the request list.
+     * @param requestid the id of the request
+     * @return True iff the request id is in the request list.
+     */
     public boolean checkRequestExist(int requestid){return requestList.containsKey(requestid);}
 
+    /**
+     * Return a string showing the message for the given id
+     * @param i id of message
+     * @return a string showing the message context
+     */
     public HashMap<Integer, Request> getRequestList(){return new HashMap<>(requestList);}
 
     /**

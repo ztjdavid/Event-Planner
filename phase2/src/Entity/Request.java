@@ -20,6 +20,10 @@ public class Request {
      */
     public int getRequestid(){return this.requestid;}
 
+    /**
+     * Set the request's service with the given string.
+     * @param service the string representation of the service
+     */
     public void setService(String service){this.service = service;}
 
     /**

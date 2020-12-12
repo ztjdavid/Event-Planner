@@ -46,19 +46,22 @@ public class Message {
      */
      public String getTxt(){return this.txt;}
 
-    ///// Louisa modified
     /**
      * Get the reply of this message
      * @return a string which is the reply of this message
      */
      public int getReply(){return this.replyId;}
 
+    /**
+     * Set the message's reply with the reply id.
+     * @param replyId ID of the reply.
+     */
      public void setReply(int replyId){this.replyId = replyId;}
     /**
      * Get the name of the sender of this message
      * @return a string sender name
      */
-    /////
+
      public String getSendername(){return this.sendername;}
     /**
      * Set the name of the replier of this message

@@ -1,5 +1,5 @@
 package Controller;
-import Presenters.AttendeeUI;
+import Presenters.AttendeeP;
 import UseCase.*;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ public class AttendeeSystem {
     protected AccountManager accM;
     protected EventManager eventManager;
     protected MessageManager MsgM;
-    protected AttendeeUI attendeeUI;
+    protected AttendeeP attendeeP;
     protected StrategyManager strategyM;
     protected AttendeeManager attendeeM;
     protected RoomManager roomM;
@@ -17,18 +17,18 @@ public class AttendeeSystem {
     protected Attendeesystemhandler ah;
     protected ApplicationManager appM;
 
-    public AttendeeSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeUI attendeeUI,
+    public AttendeeSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeP attendeeP,
                           StrategyManager StrategyManager, AttendeeManager AttendeeM, RoomManager roomM,
                           RequestManager reM, ApplicationManager appM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
-        this.attendeeUI = attendeeUI;
+        this.attendeeP = attendeeP;
         this.strategyM = StrategyManager;
         this.attendeeM = AttendeeM;
         this.roomM = roomM;
         this.reM = reM;
-        this.ah = new Attendeesystemhandler(MsgM, accM, TalkM, MsgM, attendeeUI, StrategyManager, attendeeM, roomM,reM);
+        this.ah = new Attendeesystemhandler(MsgM, accM, TalkM, MsgM, attendeeP, StrategyManager, attendeeM, roomM,reM);
         this.appM = appM;
     }
 
@@ -38,8 +38,8 @@ public class AttendeeSystem {
     public void run() {
         int userChoice;
         do {
-            attendeeUI.startup();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(6), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            attendeeP.startup();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(6), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
         } while (userChoice != 4);
     }
@@ -64,8 +64,8 @@ public class AttendeeSystem {
     private void appDashboard() {
         int userChoice;
         do{
-            attendeeUI.appmain();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
+            attendeeP.appmain();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:" );
             AppOp(userChoice);
         } while (userChoice != 3);
     }
@@ -87,8 +87,8 @@ public class AttendeeSystem {
     private void EventDashboard(){
         int userChoice;
         do{
-            attendeeUI.eventmain();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            attendeeP.eventmain();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             EventOp(userChoice);
         } while (userChoice != 5);
     }
@@ -113,8 +113,8 @@ public class AttendeeSystem {
     private void SignupDashboard(){
         int userChoice;
         do{
-            attendeeUI.eventselect();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(3), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            attendeeP.eventselect();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(3), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             EventSignup(userChoice);
         } while (userChoice != 4);
     }
@@ -137,14 +137,14 @@ public class AttendeeSystem {
     private void MsgDashboard(){
         int userChoice;
         do{
-            attendeeUI.msgSelect();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            attendeeP.msgSelect();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             msgOP1(userChoice);
         } while (userChoice != 3);
 
 
     }
-    ////////////////////////////////
+
     private void msgOP1(int userChoice) {
         switch (userChoice) {
             case 1:
@@ -161,8 +161,8 @@ public class AttendeeSystem {
     private void message() {
         int userChoice;
         do {
-            attendeeUI.messaging();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            attendeeP.messaging();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             messaging(userChoice);
         } while (userChoice != 5);
     }
@@ -189,8 +189,8 @@ public class AttendeeSystem {
     private void read() {
         int userChoice;
         do {
-            attendeeUI.reading();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            attendeeP.reading();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             reading(userChoice);
         } while (userChoice != 4);
     }
@@ -210,32 +210,31 @@ public class AttendeeSystem {
                 break;
         }
     }
-    //////////////////////////////////
 
     private void MyTalksDashboard(){
         ah.readAllMyTalks();
-        attendeeUI.askForBack();
+        attendeeP.askForBack();
     }
 
     private void readrepandmsg(){
         readallreply();
-        attendeeUI.announcemsg();
+        attendeeP.announcemsg();
 
     }
 
     private void readmsgandrep(){
         readallmsg();
-        attendeeUI.announcereply();
+        attendeeP.announcereply();
     }
 
     private void readallmsg(){
         String a = MsgM.formatmsgget(attendeeM.getinbox());
-        attendeeUI.show(a);
+        attendeeP.show(a);
     }
 
     private void readallreply(){
         String a = MsgM.formatreply(attendeeM.getmsgsend());
-        attendeeUI.show(a);
+        attendeeP.show(a);
     }
 
 
@@ -247,9 +246,9 @@ public class AttendeeSystem {
             if (tmsgid != -1){
                 String info = "Please Enter Your Message.\n " +
                         "(End editing by typing a single \"end\" in a new line.)";
-                String txt = attendeeUI.enterMessage(info);
+                String txt = attendeeP.enterMessage(info);
                 MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
-                attendeeUI.askForBack();
+                attendeeP.askForBack();
             }
         }while(tmsgid != -1);
     }
@@ -263,34 +262,34 @@ public class AttendeeSystem {
             if (targetId != -1){
                 String info = "Please Enter Your Message.\n " +
                         "(End editing by typing a single \"end\" in a new line.)";
-                String txt = attendeeUI.enterMessage(info);
+                String txt = attendeeP.enterMessage(info);
                 ah.messageToAtt(txt, targetId);
-                attendeeUI.askForBack();
+                attendeeP.askForBack();
             }
         }while(targetId != -1);
     }
 
 
 
-    ///// Louisa Modified
     private void signUpMyNewTalks(int a){
         int input;
         do{
-            attendeeUI.signUpTalk(a);
+            attendeeP.signUpTalk(a);
             ah.readAllAvailableTalks(a);
             input = ah.targetTalksSignUp(a);
             if (input != -1){
                 if(eventManager.checkVIP(input)){
-                    attendeeUI.signUpVipTalk();
+                    attendeeP.signUpVipTalk();
                     if(attendeeM.getCurrAttendee().getUserType() == 3){
                         attendeeM.enrol(input);
                         eventManager.addAttendeev2(input, attendeeM.getCurrAttendee());
-                        attendeeUI.signUpSuc();
-                    }else{attendeeUI.informNotVip();}
+                        attendeeP.signUpSuc();
+                    }else{
+                        attendeeP.informNotVip();}
                 }else if(!eventManager.checkVIP(input)){
                     attendeeM.enrol(input);
                     eventManager.addAttendeev2(input, attendeeM.getCurrAttendee());
-                    attendeeUI.signUpSuc();
+                    attendeeP.signUpSuc();
                 }
             }
         }while(input != -1);
@@ -299,26 +298,24 @@ public class AttendeeSystem {
     private void cancelMyTalks(){
         int input;
         do{
-            attendeeUI.cancelTalk();
+            attendeeP.cancelTalk();
             ah.readAllMyTalks();
             input = ah.targetTalksCancel();
             if (input != -1){
                 attendeeM.drop(input);
                 eventManager.removeAttendeev2(input, attendeeM.getCurrAttendee());
-                attendeeUI.cancelSuc();
+                attendeeP.cancelSuc();
             }
         }while(input != -1);
 
 
     }
 
-    // Request
-
     private void Request(){
         int userChoice;
         do {
-            attendeeUI.requestdb();
-            userChoice = attendeeUI.chooseOption(attendeeUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            attendeeP.requestdb();
+            userChoice = attendeeP.chooseOption(attendeeP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             requestop(userChoice);
         } while (userChoice != 3);
     }
@@ -337,8 +334,8 @@ public class AttendeeSystem {
 
     private void Readallrequest(){
 
-        attendeeUI.show(reM.showallre(accM.getCurrAccountId()));
-        attendeeUI.askForBack();
+        attendeeP.show(reM.showallre(accM.getCurrAccountId()));
+        attendeeP.askForBack();
     }
 
     private void Sendnewrequest(){
@@ -349,9 +346,9 @@ public class AttendeeSystem {
             if (targettalk != -1){
                 String info = "Please Enter Your Message.\n " +
                         "(End editing by typing a single \"end\" in a new line.)";
-                String txt = attendeeUI.enterMessage(info);
+                String txt = attendeeP.enterMessage(info);
                 ah.requestfortalk(txt, targettalk);
-                attendeeUI.askForBack();
+                attendeeP.askForBack();
             }
         } while (targettalk != -1);
     }
@@ -364,9 +361,9 @@ public class AttendeeSystem {
             if (tAttendeeId != -1){
                 String info = "Please Enter Your Message.\n " +
                         "(End editing by typing a single \"end\" in a new line.)";
-                String txt = attendeeUI.enterMessage(info);
+                String txt = attendeeP.enterMessage(info);
                 ah.messageToAtt(txt, tAttendeeId);
-                attendeeUI.askForBack();
+                attendeeP.askForBack();
             }
         }while(tAttendeeId != -1);
     }
@@ -380,9 +377,9 @@ public class AttendeeSystem {
             if (tSpeakerId != -1){
                 String info = "Please Enter Your Message.\n " +
                         "(End editing by typing a single \"end\" in a new line.)";
-                String txt = attendeeUI.enterMessage(info);
+                String txt = attendeeP.enterMessage(info);
                 ah.messageToSp(txt, tSpeakerId);
-                attendeeUI.askForBack();
+                attendeeP.askForBack();
             }
         }while(tSpeakerId != -1);
     }
@@ -396,17 +393,17 @@ public class AttendeeSystem {
         if (inbox.size() != 0) {
             do {
                 String a = MsgM.formatmsgget(attendeeM.getInbox());
-                attendeeUI.show(a);
+                attendeeP.show(a);
                 messageID = ah.targetmsg();
                 if (messageID != -1) {
-                    attendeeUI.show(MsgM.getString(messageID));
+                    attendeeP.show(MsgM.getString(messageID));
                     attendeeM.markAsRead(accM.getCurrAccountId(), messageID);
                     ah.askToAchieve(messageID);
                 }
             } while (messageID != -1);
         } else {
-            attendeeUI.announceEmptyInbox();
-            attendeeUI.askForBack();
+            attendeeP.announceEmptyInbox();
+            attendeeP.askForBack();
         }
     }
     private void allUnreadMsg() {
@@ -415,10 +412,10 @@ public class AttendeeSystem {
             ah.readAllUnreadMsg();
             tmsgid = ah.targetunread();
             if (tmsgid != -1) {
-                attendeeUI.show(MsgM.formatmsg(tmsgid));
+                attendeeP.show(MsgM.formatmsg(tmsgid));
                 attendeeM.markAsRead(accM.getCurrAccountId(), tmsgid);
-                attendeeUI.unreadSuccess(tmsgid);
-                attendeeUI.askForBack();
+                attendeeP.unreadSuccess(tmsgid);
+                attendeeP.askForBack();
             }
 
         } while (tmsgid != -1);
@@ -430,11 +427,12 @@ public class AttendeeSystem {
             ah.readAllarchivedMsg();
             tmsgid = ah.targetarchived();
             if (tmsgid != -1) {
-                attendeeUI.show(MsgM.formatmsg(tmsgid));
-                attendeeUI.askForBack();
+                attendeeP.show(MsgM.formatmsg(tmsgid));
+                attendeeP.askForBack();
             }
         } while (tmsgid != -1);
     }
+
     //////////////////////APPLICATION
     private void myapp(){
         int a = accM.getmyapp();
@@ -445,20 +443,20 @@ public class AttendeeSystem {
         else {
             b = appM.formatInfoToAttendee(a);
         }
-        attendeeUI.show(b);
-        attendeeUI.askForBack();
+        attendeeP.show(b);
+        attendeeP.askForBack();
     }
 
     private void newapp(){
-        int input = attendeeUI.checkapply();
+        int input = attendeeP.checkapply();
         if (input == 1){
             String info = "Please Enter Why You Apply.\n " +
                     "(End editing by typing a single \"end\" in a new line.)";
-            String text = attendeeUI.enterMessage(info);
+            String text = attendeeP.enterMessage(info);
             int a = appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
             accM.changemyapp(a);
-            attendeeUI.appsend();
-            attendeeUI.askForBack();
+            attendeeP.appsend();
+            attendeeP.askForBack();
 
         }}
 

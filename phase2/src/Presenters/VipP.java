@@ -3,9 +3,9 @@ package Presenters;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class VipUI extends Presenter{
+public class VipP extends Presenter{
 
-    public VipUI(ITextUI textUI){
+    public VipP(ITextUI textUI){
         super(textUI);
     }
 

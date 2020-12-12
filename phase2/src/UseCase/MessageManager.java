@@ -78,12 +78,16 @@ public class MessageManager {
         return getAllmessage().get(messageid);
     }
 
+    /**
+     * Get the text of the message with the given the message ID.
+     * @param messageid The ID of the message.
+     * @return the Message text.
+     */
     public String getString(int messageid){
         return getAllmessage().get(messageid).getTxt();
     }
 
 
-    ///// Louisa modified
     /**
      * Set the reply to the Message given the message ID. Return the new reply's ID.
      * @param messageid the ID of the message.
@@ -122,7 +126,6 @@ public class MessageManager {
         }
         return a.toString();
     }
-    /////
 
     /**
      * Return a string showing the messages in the given arraylist of message IDs and their senders.
@@ -141,7 +144,7 @@ public class MessageManager {
     }
 
     /**
-     * Return a string showing the message for the given id
+     * Return a string showing the message information for the given id
      * @param i id of message
      * @return a string showing the message context
      */
@@ -154,6 +157,11 @@ public class MessageManager {
         return a;
     }
 
+    /**
+     * Return a string showing the unread message information for the given id
+     * @param unread id of unread message
+     * @return a string showing the unread message context
+     */
     public String formatAllUnread(ArrayList<Integer> unread){
         StringBuilder a = new StringBuilder("These are the messages:\n");
         for(Integer i: unread){
@@ -164,7 +172,6 @@ public class MessageManager {
         return a.toString();
     }
 
-    /////
 
     /**
      * Check whether the message has bean replied
@@ -224,6 +231,11 @@ public class MessageManager {
         msg.setReplyer(replier);
     }
 
+    /**
+     * Return the sender id of the message with the given id
+     * @param messageID id of message
+     * @return the id of the sender
+     */
     public int getSender(int messageID){
         Message msg = getmessage(messageID);
         return msg.getSenderid();

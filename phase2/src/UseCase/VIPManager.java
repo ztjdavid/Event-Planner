@@ -26,15 +26,6 @@ public class VIPManager extends AccountManager{
         return (VIP)getAccountWithId(id);
     }
 
-    public void changeUsername(int id, String username){
-        getVIPWithId(id).setUsername(username);
-    }
-
-    public void changePassword(int id, String password){
-        getVIPWithId(id).setPassword(password);
-    }
-    //////NEED
-
     /**
      * Enrol the VIP into the event
      * @param userId VIP's id
@@ -46,7 +37,6 @@ public class VIPManager extends AccountManager{
             this.gateWay.updateEventList(getCurrAccountId(), getCurrVIP().getEventList());
         }catch (IOException ignored){}
     }
-    //////NEED
 
     /**
      * Cancel the event that the VIP has enrolled
@@ -100,7 +90,6 @@ public class VIPManager extends AccountManager{
      */
     public ArrayList<Integer> getUnreadInbox(){return getCurrAccount().getUnreadInbox();}
 
-    ///////NEED
 
     /**
      * Delete the message in UnreadInbox with its id

@@ -72,6 +72,12 @@ public class EventManager {
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
         }catch (IOException ignored){}
     }
+
+    /**
+     * Add the given Vip's ID to the Event's attendee list given the talk ID.
+     * @param talkid ID of the talk.
+     * @param vip Vip who want to attend the talk.
+     */
     public void addAttendeev2(int talkid, VIP vip){
         this.eventList.get(talkid).addAttendee(vip.getUserId());
         try{
@@ -104,6 +110,12 @@ public class EventManager {
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
         }catch (IOException ignored){}
     }
+
+    /**
+     * Remove the given Vip's ID from the Event's attendee list given the talk ID.
+     * @param talkid ID of the talk.
+     * @param vip Vip who need to be removed from the talk.
+     */
     public void removeAttendeev2(int talkid, VIP vip){
         this.eventList.get(talkid).removeAttendee(vip.getUserId());
         try{
@@ -157,15 +169,6 @@ public class EventManager {
         }
         return events;
     }
-
-    /**
-     * Creates a talk and updates the talkList.
-     * @param talkTitle the title of the talk.
-     * @param startTime the time (between 9 and 17 in 24-hour format) of the talk.
-     * @param roomId the roomId of the talk.
-     * @param speakerID the ID of the speaker of the talk.
-     *
-     */
 
     /**
      * Used in gateway to scan a new event.

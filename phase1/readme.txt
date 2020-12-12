@@ -1,3 +1,13 @@
+Library setup:
+This program uses ini4j API (http://ini4j.sourceforge.net/index.html) for database functionalities.
+So, before running the program, you have to set up ini4j API in Intellij. Here is the tutorial of how to set up:
+1. Select File in the top menu, “File” > “Project Structure”.
+2. Find the “Library” option on the left side, then click the “+” icon. Choose “Java”
+    and then select “...\phase2\lib\ini4j-0.5.4.jar”.
+3. “OK” > “Apply”.
+4. Done! Now you can check a gateway class in the GateWay package and you should
+    see the line “import org.ini4j.*” is not underlined by red.
+
 Program Introduction:
 This program is a design of conference system which allow users to do several operations.
 We have three kinds of users: Organizer, Speaker, Attendee.

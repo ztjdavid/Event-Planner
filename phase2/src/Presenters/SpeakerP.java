@@ -3,9 +3,9 @@ package Presenters;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SpeakerUI extends Presenter{
+public class SpeakerP extends Presenter{
 
-    public SpeakerUI(ITextUI textUI) {
+    public SpeakerP(ITextUI textUI) {
         super(textUI);
     }
 

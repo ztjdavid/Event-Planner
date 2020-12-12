@@ -4,10 +4,10 @@ package Presenters;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AttendeeUI extends Presenter{
+public class AttendeeP extends Presenter{
 
 
-    public AttendeeUI(ITextUI textUI) {
+    public AttendeeP(ITextUI textUI) {
         super(textUI);
     }
 

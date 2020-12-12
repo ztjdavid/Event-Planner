@@ -1,5 +1,5 @@
 package Controller;
-import Presenters.VipUI;
+import Presenters.VipP;
 import UseCase.*;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ public class VipSystem {
     protected AccountManager accM;
     protected EventManager eventManager;
     protected MessageManager MsgM;
-    protected VipUI vipUI;
+    protected VipP vipP;
     protected StrategyManager strategyM;
     protected VIPManager vipM;
     protected RoomManager roomM;
@@ -17,18 +17,18 @@ public class VipSystem {
     protected VIPsystemhandler vh;
     protected ApplicationManager appM;
 
-    public VipSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipUI vipUI,
+    public VipSystem(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipP vipP,
                      StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM, ApplicationManager appM) {
         this.accM = accM;
         this.eventManager = TalkM;
         this.MsgM = MsgM;
-        this.vipUI = vipUI;
+        this.vipP = vipP;
         this.strategyM = StrategyManager;
         this.vipM = vipM;
         this.roomM = roomM;
         this.ReqM = ReqM;
         this.appM = appM;
-        this.vh = new VIPsystemhandler(accM, TalkM, MsgM, vipUI, StrategyManager, vipM, roomM, ReqM);
+        this.vh = new VIPsystemhandler(accM, TalkM, MsgM, vipP, StrategyManager, vipM, roomM, ReqM);
 
     }
 
@@ -38,8 +38,8 @@ public class VipSystem {
     public void run() {
         int userChoice;
         do {
-            vipUI.startup();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(6), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.startup();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(6), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             enterBranch(userChoice);
         } while (userChoice != 4);
     }
@@ -64,8 +64,8 @@ public class VipSystem {
     private void appDashboard() {
         int userChoice;
         do {
-            vipUI.appmain();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.appmain();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             AppOp(userChoice);
         } while (userChoice != 3);
     }
@@ -88,8 +88,8 @@ public class VipSystem {
     private void EventDashboard() {
         int userChoice;
         do {
-            vipUI.eventmain();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.eventmain();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             EventOp(userChoice);
         } while (userChoice != 5);
     }
@@ -116,8 +116,8 @@ public class VipSystem {
     private void Request() {
         int userChoice;
         do {
-            vipUI.requestmain();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.requestmain();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             RequestOp(userChoice);
         } while (userChoice != 3);
     }
@@ -134,8 +134,8 @@ public class VipSystem {
     }
 
     private void ReadAllRequests() {
-        vipUI.show(ReqM.showallre(accM.getCurrAccountId()));
-        vipUI.askForBack();
+        vipP.show(ReqM.showallre(accM.getCurrAccountId()));
+        vipP.askForBack();
     }
 
     private void SendNewRequest() {
@@ -146,7 +146,7 @@ public class VipSystem {
             if (targetEvent != -1) {
                 String text = vh.enterTxt();
                 vh.requestForTalk(text, targetEvent);
-                vipUI.askForBack();
+                vipP.askForBack();
             }
         } while (targetEvent != -1);
     }
@@ -156,8 +156,8 @@ public class VipSystem {
     private void SignupDashboard() {
         int userChoice;
         do {
-            vipUI.eventselect();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.eventselect();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(2), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             EventSignup(userChoice);
         } while (userChoice != 7);
     }
@@ -190,8 +190,8 @@ public class VipSystem {
     private void MsgDashboard() {
         int userChoice;
         do {
-            vipUI.msgSelect();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.msgSelect();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(1), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             msgOP1(userChoice);
         } while (userChoice != 3);
 
@@ -215,8 +215,8 @@ public class VipSystem {
     private void message() {
         int userChoice;
         do {
-            vipUI.messaging();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.messaging();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(4), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             messaging(userChoice);
         } while (userChoice != 5);
     }
@@ -243,8 +243,8 @@ public class VipSystem {
     private void read() {
         int userChoice;
         do {
-            vipUI.reading();
-            userChoice = vipUI.chooseOption(vipUI.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
+            vipP.reading();
+            userChoice = vipP.chooseOption(vipP.getchoicelist(7), "Please Choose an Option:", "Invalid Choice! Please Try Again:");
             reading(userChoice);
         } while (userChoice != 4);
     }
@@ -269,28 +269,28 @@ public class VipSystem {
 
     private void MyTalksDashboard() {
         vh.readAllMyTalks();
-        vipUI.askForBack();
+        vipP.askForBack();
     }
 
     private void readrepandmsg() {
         readallreply();
-        vipUI.announcemsg();
+        vipP.announcemsg();
 
     }
 
     private void readmsgandrep() {
         readallmsg();
-        vipUI.announcereply();
+        vipP.announcereply();
     }
 
     private void readallmsg() {
         String a = MsgM.formatmsgget(vipM.getInbox(accM.getCurrAccountId()));
-        vipUI.show(a);
+        vipP.show(a);
     }
 
     private void readallreply() {
         String a = MsgM.formatreply(vipM.getSentBox(accM.getCurrAccountId()));
-        vipUI.show(a);
+        vipP.show(a);
     }
 
 
@@ -302,7 +302,7 @@ public class VipSystem {
             if (tmsgid != -1) {
                 String txt = vh.enterTxt();
                 MsgM.setreply(tmsgid, txt, accM.getCurrAccountName());
-                vipUI.askForBack();
+                vipP.askForBack();
             }
         } while (tmsgid != -1);
     }
@@ -316,7 +316,7 @@ public class VipSystem {
             if (targetId != -1) {
                 String txt = vh.enterTxt();
                 messageToAtt(txt, targetId);
-                vipUI.askForBack();
+                vipP.askForBack();
             }
         } while (targetId != -1);
     }
@@ -325,23 +325,23 @@ public class VipSystem {
     private void signUpMyNewTalks(int a) {
         int input;
         do {
-            vipUI.signUpTalk();
+            vipP.signUpTalk();
             vh.readAllAvailableTalks(a);
             input = vh.targetTalksSignUp(a);
             if (input != -1) {
                 if (eventManager.checkVIP(input)) {
-                    vipUI.signUpVipTalk();
+                    vipP.signUpVipTalk();
                     if (vipM.getCurrVIP().getUserType() == 3) {
                         vipM.enrolEvent(accM.getCurrAccountId(), input);
                         eventManager.addAttendeev2(input, vipM.getCurrVIP());
-                        vipUI.signUpSuc();
+                        vipP.signUpSuc();
                     } else {
-                        vipUI.informNotVip();
+                        vipP.informNotVip();
                     }
                 } else if (!eventManager.checkVIP(input)) {
                     vipM.enrolEvent(accM.getCurrAccountId(), input);
                     eventManager.addAttendeev2(input, vipM.getCurrVIP());
-                    vipUI.signUpSuc();
+                    vipP.signUpSuc();
                 }
             }
         } while (input != -1);
@@ -351,13 +351,13 @@ public class VipSystem {
     private void cancelMyTalks() {
         int input;
         do {
-            vipUI.cancelTalk();
+            vipP.cancelTalk();
             vh.readAllMyTalks();
             input = vh.targetTalksCancel();
             if (input != -1) {
                 vipM.dropEvent(accM.getCurrAccountId(), input);
                 eventManager.removeAttendeev2(input, vipM.getCurrVIP());
-                vipUI.cancelSuc();
+                vipP.cancelSuc();
             }
         } while (input != -1);
 
@@ -373,20 +373,20 @@ public class VipSystem {
         } else {
             b = appM.formatInfoToAttendee(a);
         }
-        vipUI.show(b);
-        vipUI.askForBack();
+        vipP.show(b);
+        vipP.askForBack();
     }
 
     private void newapp() {
-        int input = vipUI.checkapply();
+        int input = vipP.checkapply();
         if (input == 1) {
             String info = "Please Enter Why You Apply.\n " +
                     "(End editing by typing a single \"end\" in a new line.)";
-            String text = vipUI.enterMessage(info);
+            String text = vipP.enterMessage(info);
             int a = appM.createApplication(accM.getCurrAccountId(), accM.getUserName(accM.getCurrAccountId()), text);
             accM.changemyapp(a);
-            vipUI.appsend();
-            vipUI.askForBack();
+            vipP.appsend();
+            vipP.askForBack();
 
         }
     }
@@ -401,7 +401,7 @@ public class VipSystem {
             if (tAttendeeId != -1) {
                 String txt = vh.enterTxt();
                 messageToAtt(txt, tAttendeeId);
-                vipUI.askForBack();
+                vipP.askForBack();
             }
         } while (tAttendeeId != -1);
     }
@@ -412,7 +412,7 @@ public class VipSystem {
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), getterId, a);
         accM.addMsgToInBox(getterId, msg);
         accM.addMsgToSentBox(accM.getCurrAccountId(), msg);
-        vipUI.messagesend();
+        vipP.messagesend();
     }
 
     private void msgToSpeaker() {
@@ -423,7 +423,7 @@ public class VipSystem {
             if (tSpeakerId != -1) {
                 String txt = vh.enterTxt();
                 messageToSphelper(txt, tSpeakerId);
-                vipUI.askForBack();
+                vipP.askForBack();
             }
         } while (tSpeakerId != -1);
     }
@@ -432,7 +432,7 @@ public class VipSystem {
         int msg = MsgM.createmessage(accM.getCurrAccountName(), accM.getCurrAccountId(), speakerId, a);
         accM.addMsgToUnreadInbox(speakerId, msg);
         accM.addMsgToSentBox(accM.getCurrAccountId(), msg);
-        vipUI.messagesend();
+        vipP.messagesend();
     }
 
 
@@ -444,17 +444,17 @@ public class VipSystem {
         if (inbox.size() != 0) {
             do {
                 String a = MsgM.formatmsgget(vipM.getInbox(accM.getCurrAccountId()));
-                vipUI.show(a);
+                vipP.show(a);
                 messageID = vh.targetmsg();
                 if (messageID != -1) {
-                    vipUI.show(MsgM.getString(messageID));
+                    vipP.show(MsgM.getString(messageID));
                     vipM.markAsRead(accM.getCurrAccountId(), messageID);
                     vh.askToAchieve(messageID);
                 }
             } while (messageID != -1);
         } else {
-            vipUI.announceEmptyInbox();
-            vipUI.askForBack();
+            vipP.announceEmptyInbox();
+            vipP.askForBack();
         }
     }
 
@@ -464,10 +464,10 @@ public class VipSystem {
             vh.readAllUnreadMsg();
             tmsgid = vh.targetunread();
             if (tmsgid != -1) {
-                vipUI.show(MsgM.formatmsg(tmsgid));
+                vipP.show(MsgM.formatmsg(tmsgid));
                 vipM.markAsRead(accM.getCurrAccountId(), tmsgid);
-                vipUI.unreadSuccess(tmsgid);
-                vipUI.askForBack();
+                vipP.unreadSuccess(tmsgid);
+                vipP.askForBack();
             }
 
         } while (tmsgid != -1);
@@ -479,8 +479,8 @@ public class VipSystem {
             vh.readAllarchivedMsg();
             tmsgid = vh.targetarchived();
             if (tmsgid != -1) {
-                vipUI.show(MsgM.formatmsg(tmsgid));
-                vipUI.askForBack();
+                vipP.show(MsgM.formatmsg(tmsgid));
+                vipP.askForBack();
             }
         } while (tmsgid != -1);
     }

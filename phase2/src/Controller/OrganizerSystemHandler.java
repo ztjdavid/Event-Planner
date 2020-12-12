@@ -20,6 +20,9 @@ public class OrganizerSystemHandler {
     protected RequestManager rqstM;
     protected ApplicationManager appM;
 
+    /**
+     * Helper of the Organizer System
+     */
     public OrganizerSystemHandler(AccountManager accM, MessageManager MsgM, StrategyManager strategyM, OrganizerManager ognM,
                                   SpeakerManager spkM, EventManager eventM, RoomManager roomM, OrganizerPresenter organizerPresenter,
                                   RequestManager rqstM, ApplicationManager appM){

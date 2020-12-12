@@ -182,14 +182,13 @@ public class AccountManager {
 
     /**
      * Add the message ID to the given message getter's Inbox.
-     * @param senderid message getter's ID as int.
+     * @param getterid message getter's ID as int.
      * @param msgid message ID as int.
      */
-    //should change param senderid -> getterid?
-    public void addMsgToInBox(int senderid, int msgid){
-        getAccountWithId(senderid).addInbox(msgid);
+    public void addMsgToInBox(int getterid, int msgid){
+        getAccountWithId(getterid).addInbox(msgid);
         try{
-            this.gateWay.updateInbox(senderid, getCurrAccount().getInbox());
+            this.gateWay.updateInbox(getterid, getCurrAccount().getInbox());
         }catch (IOException ignored){}
     }
 

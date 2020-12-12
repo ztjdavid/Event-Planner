@@ -1,5 +1,6 @@
 package Presenters;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -128,6 +129,11 @@ public class Presenter {
         return choiceList.contains(num);
     }
 
+    /**
+     * Get the reponce of the requesting information.
+     * @param requestInfo The information that is requesting.
+     * @return the entered information.
+     */
     public String enterMessage(String requestInfo) {
         StringBuilder a = new StringBuilder();
         boolean exit = false;
