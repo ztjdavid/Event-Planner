@@ -36,6 +36,12 @@ public class UserFileWriter implements IUserGateWay{
         iniFile.store();
     }
 
+    /**
+     * Update key "archive" in given section(id).
+     * @param id id
+     * @param archive archive box
+     * @throws IOException
+     */
     public void updateArchiveBox(int id, ArrayList<Integer> archive)throws IOException{
         String ID = String.valueOf(id);
         StringBuilder s = new StringBuilder("");
