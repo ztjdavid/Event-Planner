@@ -104,6 +104,12 @@ public class EventManager {
             gateWay.updateAttendeeList(talkid, eventList.get(talkid).getAttendeeId());
         }catch (IOException ignored){}
     }
+
+    /**
+     * Remove the given Vip's ID from the Event's attendee list given the talk ID.
+     * @param talkid ID of the talk.
+     * @param vip Vip who need to be removed from the talk.
+     */
     public void removeAttendeev2(int talkid, VIP vip){
         this.eventList.get(talkid).removeAttendee(vip.getUserId());
         try{
