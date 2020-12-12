@@ -27,8 +27,15 @@ public abstract class Account {
         this.application = -1;
     }
 
+    /**
+     * Set the application for this account.
+     * @param application The new username.
+     */
     public void setApplication(int application){this.application = application;}
 
+    /**
+     * Get the application for this account.
+     */
     public int getapplication(){return this.application;}
 
 
@@ -83,22 +90,36 @@ public abstract class Account {
     public abstract int getUserType();
 
     /**
-     * Get all message IDs sent by this account.
-     * @return A copy of SentMessage containing message IDs.
+     * Get an arraylist of all message IDs sent by this account.
+     * @return A copy of SentBox containing message IDs.
      */
-    public ArrayList<Integer> getSentBox(){
-        return new ArrayList<>(this.sentBox);
-    }
+    public ArrayList<Integer> getSentBox(){ return new ArrayList<>(this.sentBox); }
 
+    /**
+     * Get an arraylist of all archived message IDs of this account.
+     * @return A copy of ArchiveBox containing message IDs.
+     */
     public ArrayList<Integer> getArchiveBox(){return new ArrayList<>(this.archiveBox);}
 
+    /**
+     * Set the Archive box with the given arraylist.
+     * @param archiveBox An arraylist containing archived message ids.
+     */
     public void setArchiveBox(ArrayList<Integer> archiveBox){this.archiveBox = archiveBox;}
 
+    /**
+     * Add the given message id to the account's archive box.
+     * @param msgId the id of the message.
+     */
     public void addArchiveBox(int msgId) {
         if (!this.archiveBox.contains(msgId))
             this.archiveBox.add(msgId);
     }
 
+    /**
+     * Remove the given message id from the account's archive box.
+     * @param msgId the id of the message.
+     */
     public void removeMsgFromArchiveBox(int msgId) {
         if(this.archiveBox.contains(msgId))
             this.archiveBox.remove(Integer.valueOf(msgId));
@@ -145,8 +166,6 @@ public abstract class Account {
      * @param sentBox An Arraylist of IDs of the messages sent.
      */
     public void setSentBox(ArrayList<Integer> sentBox) { this.sentBox = sentBox;}
-
-    ///// Louisa Added
 
     /**
      * Get all unread message IDs received by this account.
