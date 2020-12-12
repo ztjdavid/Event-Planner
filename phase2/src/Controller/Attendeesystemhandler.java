@@ -16,6 +16,9 @@ public class Attendeesystemhandler {
     protected RequestManager reM;
     protected MessageManager msgM;
 
+    /**
+     * Helper of the Attendee System
+     */
     public Attendeesystemhandler(MessageManager msgM, AccountManager accM, EventManager TalkM, MessageManager MsgM, AttendeeP attUI,
                             StrategyManager StrategyManager, AttendeeManager attM, RoomManager roomM, RequestManager reM) {
         this.msgM = msgM;

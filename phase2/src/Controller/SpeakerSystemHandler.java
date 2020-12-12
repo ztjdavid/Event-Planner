@@ -16,6 +16,9 @@ public class SpeakerSystemHandler {
     protected RoomManager roomM;
     protected RequestManager reM;
 
+    /**
+     * Helper of the Speaker System
+     */
     public SpeakerSystemHandler(AccountManager accM, EventManager eventM, MessageManager MsgM,
                                 SpeakerP speakerP, StrategyManager strategyM, SpeakerManager SpeakerM,
                                 RoomManager roomM, RequestManager reM) {

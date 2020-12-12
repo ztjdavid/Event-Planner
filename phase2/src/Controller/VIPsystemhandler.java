@@ -15,6 +15,9 @@ public class VIPsystemhandler {
     protected RoomManager roomM;
     protected RequestManager ReqM;
 
+    /**
+     * Helper of the VIP System
+     */
     public VIPsystemhandler(AccountManager accM, EventManager TalkM, MessageManager MsgM, VipP vipP,
                      StrategyManager StrategyManager, VIPManager vipM, RoomManager roomM, RequestManager ReqM) {
         this.accM = accM;

@@ -144,7 +144,7 @@ public class AttendeeSystem {
 
 
     }
-    ////////////////////////////////
+
     private void msgOP1(int userChoice) {
         switch (userChoice) {
             case 1:
@@ -210,7 +210,6 @@ public class AttendeeSystem {
                 break;
         }
     }
-    //////////////////////////////////
 
     private void MyTalksDashboard(){
         ah.readAllMyTalks();
@@ -272,7 +271,6 @@ public class AttendeeSystem {
 
 
 
-    ///// Louisa Modified
     private void signUpMyNewTalks(int a){
         int input;
         do{
@@ -312,8 +310,6 @@ public class AttendeeSystem {
 
 
     }
-
-    // Request
 
     private void Request(){
         int userChoice;
@@ -436,6 +432,7 @@ public class AttendeeSystem {
             }
         } while (tmsgid != -1);
     }
+
     //////////////////////APPLICATION
     private void myapp(){
         int a = accM.getmyapp();
